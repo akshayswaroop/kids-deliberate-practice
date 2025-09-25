@@ -57,10 +57,8 @@ export default function HomePage({
             </div>
           </div>
         </div>
-        <div style={{ flex: 1, padding: '8px', overflow: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ width: '100%', maxWidth: 'none', background: '#fff', borderRadius: 16, boxShadow: '0 2px 16px rgba(0,0,0,0.06)', padding: '24px', margin: '0 auto', maxHeight: '100%', overflow: 'auto' }}>
-            <PracticePanel mainWord={mainWord} transliteration={transliteration} choices={choices} onCorrect={onCorrect} onWrong={onWrong} />
-          </div>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: '#fff', margin: '4px', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
+          <PracticePanel mainWord={mainWord} transliteration={transliteration} choices={choices} onCorrect={onCorrect} onWrong={onWrong} />
         </div>
       </div>
     );
@@ -76,10 +74,8 @@ export default function HomePage({
           <ModeSelector compact mode={mode} onSetMode={onSetMode} />
           <a href="#diagnostics" style={{ position: 'absolute', right: 12, top: 12, color: '#fff', fontWeight: 600, fontSize: 14, textDecoration: 'underline', background: 'rgba(0,0,0,0.15)', borderRadius: 8, padding: '6px 10px' }}>Diagnostics</a>
         </div>
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '8px' }}>
-          <div style={{ width: '100%', maxWidth: 'calc(100vw - 320px)', background: '#fff', borderRadius: 16, boxShadow: '0 2px 16px #0001', padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-            <PracticePanel mainWord={mainWord} transliteration={transliteration} choices={choices} onCorrect={onCorrect} onWrong={onWrong} />
-          </div>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'stretch', background: '#fff', margin: '4px', borderRadius: 12, boxShadow: '0 2px 12px #0001' }}>
+          <PracticePanel mainWord={mainWord} transliteration={transliteration} choices={choices} onCorrect={onCorrect} onWrong={onWrong} />
         </div>
       </div>
     );
@@ -89,8 +85,8 @@ export default function HomePage({
   return (
     <div style={{ minHeight: '100vh', background: '#f8fafc', fontFamily: 'system-ui, sans-serif', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <h1 style={{ fontSize: '2rem', fontWeight: 800, color: '#b98bff', marginBottom: 24, textAlign: 'center' }}>Kids Deliberate Practice</h1>
-      <div style={{ width: '100%', maxWidth: 'calc(100vw - 32px)', background: '#fff', borderRadius: 16, boxShadow: '0 2px 16px #0001', padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-        <div style={{ display: 'flex', gap: 8, width: '100%', justifyContent: 'center', marginBottom: 4, flexWrap: 'wrap' }}>
+      <div style={{ width: '100%', maxWidth: 'calc(100vw - 24px)', background: '#fff', borderRadius: 12, boxShadow: '0 2px 12px #0001', padding: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+        <div style={{ display: 'flex', gap: 6, width: '100%', justifyContent: 'center', marginBottom: 2, flexWrap: 'wrap' }}>
           <ProfileForm compact users={users} currentUserId={currentUserId} onCreateUser={onCreateUser} onSwitchUser={onSwitchUser} />
           <ModeSelector compact mode={mode} onSetMode={onSetMode} />
         </div>

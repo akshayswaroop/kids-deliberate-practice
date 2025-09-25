@@ -3,36 +3,35 @@ import ProgressBubble from './ProgressBubble';
 
 export default function PracticeCard({ mainWord, transliteration, choices, onCorrect, onWrong }) {
   return (
-        <div style={{
-      backgroundColor: 'white',
-      borderRadius: '20px',
-      padding: '24px 16px',
+    <div style={{
+      backgroundColor: 'transparent',
+      borderRadius: '16px',
+      padding: '20px 16px 16px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      gap: 24,
+      justifyContent: 'space-between',
+      gap: 16,
       width: '100%',
+      height: '100%',
       maxWidth: '100%',
       margin: '0 auto',
-      boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
       boxSizing: 'border-box',
       overflow: 'hidden'
     }}>
-      {/* Large main word at the top */}
-            {/* Prominent main word */}
+      {/* Compact main word section */}
       <div style={{
         textAlign: 'center',
         color: '#2c3e50',
-        padding: '12px 16px',
         width: '100%',
         maxWidth: '100%',
         boxSizing: 'border-box'
       }}>
         <div style={{ 
-          fontSize: `clamp(${Math.max(56, Math.min(88, 32 + mainWord.length * 2))}px, 8vw, 96px)`,
+          fontSize: `clamp(${Math.max(56, Math.min(88, 32 + mainWord.length * 2))}px, 8vw, 100px)`,
           fontWeight: 'bold',
-          marginBottom: '12px',
-          lineHeight: 1.0,
+          marginBottom: transliteration ? '8px' : '0px',
+          lineHeight: 0.9,
           letterSpacing: '-0.02em',
           wordBreak: 'break-word',
           maxWidth: '100%'
@@ -41,43 +40,46 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
         </div>
         {transliteration && (
           <div style={{
-            fontSize: 'clamp(18px, 3.5vw, 24px)',
+            fontSize: 'clamp(14px, 2.8vw, 20px)',
             color: '#7f8c8d',
             fontStyle: 'italic',
-            marginTop: '8px'
+            marginTop: '4px'
           }}>
             {transliteration}
           </div>
         )}
       </div>
 
-      {/* Responsive grid of progress bubbles (scales to 12+) */}
+      {/* Multi-row grid of progress bubbles - optimized for space */}
       <div style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
-        gap: 24,
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 1fr))',
+        gridAutoRows: 'min-content',
+        gap: 20,
         width: '100%',
-        padding: '0 16px',
+        padding: '0 12px',
         maxWidth: '100%',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        justifyItems: 'center',
+        alignItems: 'start',
+        flex: 1,
+        alignContent: 'center'
       }}>
         {choices.map((choice) => (
           <ProgressBubble
             key={choice.id}
             label={choice.label}
             progress={choice.progress}
-            size={112}
+            size={Math.max(72, Math.min(96, 60 + choice.label.length * 4))}
           />
         ))}
       </div>
 
-      {/* Action buttons */}
+      {/* Compact action buttons */}
       <div style={{
         display: 'flex',
-        gap: 12,
-        marginTop: 12
+        gap: 8,
+        marginTop: 4
       }}>
         <button
           onClick={onCorrect}
@@ -85,18 +87,18 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
             backgroundColor: '#27ae60',
             color: 'white',
             border: 'none',
-            borderRadius: '12px',
-            padding: '10px 16px',
-            fontSize: '16px',
+            borderRadius: '10px',
+            padding: '8px 14px',
+            fontSize: '15px',
             fontWeight: 600,
             cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(39, 174, 96, 0.25)',
+            boxShadow: '0 1px 4px rgba(39, 174, 96, 0.25)',
             transition: 'all 0.2s ease',
-            minWidth: '140px'
+            minWidth: '120px'
           }}
           onMouseOver={(e) => {
             e.target.style.backgroundColor = '#229954';
-            e.target.style.transform = 'translateY(-2px)';
+            e.target.style.transform = 'translateY(-1px)';
           }}
           onMouseOut={(e) => {
             e.target.style.backgroundColor = '#27ae60';
@@ -112,18 +114,18 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
             backgroundColor: '#e74c3c',
             color: 'white',
             border: 'none',
-            borderRadius: '12px',
-            padding: '10px 16px',
-            fontSize: '16px',
+            borderRadius: '10px',
+            padding: '8px 14px',
+            fontSize: '15px',
             fontWeight: 600,
             cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(231, 76, 60, 0.25)',
+            boxShadow: '0 1px 4px rgba(231, 76, 60, 0.25)',
             transition: 'all 0.2s ease',
-            minWidth: '140px'
+            minWidth: '120px'
           }}
           onMouseOver={(e) => {
             e.target.style.backgroundColor = '#c0392b';
-            e.target.style.transform = 'translateY(-2px)';
+            e.target.style.transform = 'translateY(-1px)';
           }}
           onMouseOut={(e) => {
             e.target.style.backgroundColor = '#e74c3c';

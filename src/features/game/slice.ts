@@ -3,23 +3,27 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './state';
 import { getInitialWords } from '../../app/bootstrapState';
 
-const defaultUserId = 'user1';
+const defaultUserId = 'Mishika';
+const userDefaults = () => ({
+  words: getInitialWords(),
+  sessions: {},
+  activeSessions: {},
+  settings: {
+    selectionWeights: {
+      struggle: 0.5,
+      new: 0.4,
+      mastered: 0.1,
+    },
+    sessionSize: 12,
+    languages: ['english'], // Default to English only
+  },
+});
+
 const initialState: RootState = {
   users: {
-    [defaultUserId]: {
-      words: getInitialWords(),
-      sessions: {},
-      activeSessions: {},
-      settings: {
-        selectionWeights: {
-          struggle: 0.5,
-          new: 0.4,
-          mastered: 0.1,
-        },
-        sessionSize: 12,
-        languages: ['english'], // Default to English only
-      },
-    },
+    Mishika: userDefaults(),
+    Eva: userDefaults(),
+    Akshay: userDefaults(),
   },
   currentUserId: defaultUserId,
 };

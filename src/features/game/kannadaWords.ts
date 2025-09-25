@@ -96,7 +96,7 @@ export const RAW_KANNADA_CARDS = [
   { id: "aankh", wordKannada: "ಆಁಖ", transliteration: "Ā̃kh", transliterationHi: "आँख" },
   { id: "haath", wordKannada: "ಹಾಥ", transliteration: "Hāth", transliterationHi: "हाथ" },
   { id: "pair", wordKannada: "ಪೈರ", transliteration: "Pair", transliterationHi: "पैर" },
-  { id: "bolna", wordKannada: "බೋಲನಾ", transliteration: "Bolnā", transliterationHi: "बोलना" },
+  { id: "bolna", wordKannada: "ಬೋಲನಾ", transliteration: "Bolnā", transliterationHi: "बोलना" },
   { id: "sunnā", wordKannada: "ಸುನನಾ", transliteration: "Sunnā", transliterationHi: "सुनना" },
   { id: "dekhna", wordKannada: "ದೇಖನಾ", transliteration: "Dekhnā", transliterationHi: "देखना" },
   { id: "ānā", wordKannada: "ಆನಾ", transliteration: "Ānā", transliterationHi: "आना" },
