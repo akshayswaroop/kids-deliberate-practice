@@ -1,10 +1,28 @@
+import ReactJson from '@microlink/react-json-view';
+
+
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectMasteryPercent, selectCurrentWord, selectSessionProgress } from './features/game/selectors';
-import { attempt, nextCard, addSession } from './features/game/slice';
-import type { RootState, Word } from './features/game/state';
+import { attempt, nextCard, addSession, selectUser } from './features/game/slice';
+import type { RootState, Word, UserState } from './features/game/state';
+
+
 
 function App() {
+
+
+  // Add user UI state and handler
+  const [newUserId, setNewUserId] = useState('');
+
+  // Add user function
+  const addUser = () => {
+    if (newUserId.trim() && !users[newUserId.trim()]) {
+      dispatch({ type: 'game/addUser', payload: { userId: newUserId.trim() } });
+      setNewUserId('');
+      setSessionId(null);
+    }
+  };
   // Helper to get mastered words
   function getMasteredWords(wordsObj: Record<string, Word>): Set<string> {
     const mastered = new Set<string>();
@@ -43,10 +61,19 @@ function App() {
     window.location.reload();
   };
   const dispatch = useDispatch();
-  const words = useSelector((state: { game: RootState }) => state.game.words);
-  const sessions = useSelector((state: { game: RootState }) => state.game.sessions);
-  const activeSessions = useSelector((state: { game: RootState }) => state.game.activeSessions);
+  const users = useSelector((state: { game: RootState }) => state.game.users);
+  const currentUserId = useSelector((state: { game: RootState }) => state.game.currentUserId);
+  const userIds = Object.keys(users);
+  const userState: UserState = users[currentUserId];
+  const words = userState.words;
+  const sessions = userState.sessions;
   const [sessionId, setSessionId] = useState<string | null>(null);
+  // User selection handler
+  const handleUserChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newUserId = e.target.value;
+    dispatch(selectUser({ userId: newUserId }));
+    setSessionId(null); // reset session view on user switch
+  };
 
   // Start a session with first 5 words
   function pickRandomWords(wordsObj: Record<string, Word>, count: number) {
@@ -78,16 +105,42 @@ function App() {
   // Current word in session
   let currentWord: Word | undefined;
   let progress: { current: number; total: number } | undefined;
+  const rootState = useSelector((state: { game: RootState }) => state.game);
   if (sessionId && sessions[sessionId]) {
     try {
-      currentWord = selectCurrentWord({ words, sessions, activeSessions, settings: sessions[sessionId].settings }, sessionId);
-      progress = selectSessionProgress({ words, sessions, activeSessions, settings: sessions[sessionId].settings }, sessionId);
+      currentWord = selectCurrentWord(rootState, sessionId);
+      progress = selectSessionProgress(rootState, sessionId);
     } catch {}
   }
 
   return (
-    <div style={{ padding: 32, fontFamily: 'system-ui, sans-serif', background: '#18181b', minHeight: '100vh', color: '#fff' }}>
+  <div style={{ padding: 32, fontFamily: 'system-ui, sans-serif', background: '#18181b', minHeight: '100vh', color: '#fff' }}>
       <h1 style={{ marginBottom: 24 }}>Diagnostics & Practice Dashboard</h1>
+      {/* Diagnostics State Viewer */}
+      <div style={{ background: '#232326', borderRadius: 12, padding: 24, marginBottom: 24, boxShadow: '0 2px 8px #0002', maxHeight: 400, overflow: 'auto' }}>
+        <h2 style={{ marginTop: 0, fontSize: 18 }}>Live State Viewer</h2>
+  <ReactJson src={rootState} theme="monokai" collapsed={2} enableClipboard={true} displayDataTypes={false} name={false} />
+      </div>
+      <div style={{ marginBottom: 24 }}>
+        <label htmlFor="user-select" style={{ fontWeight: 500, marginRight: 8 }}>Select User:</label>
+        <select id="user-select" value={currentUserId} onChange={handleUserChange} style={{ padding: '6px 12px', borderRadius: 6, marginRight: 12 }}>
+          {userIds.map(uid => (
+            <option key={uid} value={uid}>{uid}</option>
+          ))}
+        </select>
+        <input
+          type="text"
+          placeholder="New user ID"
+          value={newUserId}
+          onChange={e => setNewUserId(e.target.value)}
+          style={{ padding: '6px 12px', borderRadius: 6, marginRight: 8 }}
+        />
+        <button
+          onClick={addUser}
+          style={{ background: '#22c55e', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 12px', fontWeight: 500, cursor: 'pointer' }}
+          disabled={!newUserId.trim() || !!users[newUserId.trim()]}
+        >Add User</button>
+      </div>
       <div style={{ display: 'flex', gap: 32, alignItems: 'flex-start', flexWrap: 'wrap' }}>
         {/* Word List Card */}
         <div style={{ background: '#232326', borderRadius: 12, padding: 24, minWidth: 320, boxShadow: '0 2px 8px #0002' }}>
@@ -97,13 +150,13 @@ function App() {
               ? sessions[sessionId].wordIds.map(id => (
                   <li key={id} style={{ padding: '4px 0', borderBottom: '1px solid #222' }}>
                     <span style={{ fontWeight: 500 }}>{words[id].text}</span>
-                    <span style={{ float: 'right', fontWeight: 400 }}>{selectMasteryPercent({ words, sessions, activeSessions, settings: sessions[sessionId].settings }, id)}%</span>
+                    <span style={{ float: 'right', fontWeight: 400 }}>{selectMasteryPercent(rootState, id)}%</span>
                   </li>
                 ))
               : Object.values(words).slice(0, 10).map(word => (
                   <li key={word.id} style={{ padding: '4px 0', borderBottom: '1px solid #222' }}>
                     <span style={{ fontWeight: 500 }}>{word.text}</span>
-                    <span style={{ float: 'right', fontWeight: 400 }}>{selectMasteryPercent({ words, sessions, activeSessions, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 5 } }, word.id)}%</span>
+                    <span style={{ float: 'right', fontWeight: 400 }}>{selectMasteryPercent(rootState, word.id)}%</span>
                   </li>
                 ))}
           </ul>
@@ -153,7 +206,7 @@ function App() {
               {progress?.current === progress?.total &&
                 sessionId &&
                 sessions[sessionId]?.wordIds.every(
-                  (id: string) => selectMasteryPercent({ words, sessions, activeSessions, settings: sessions[sessionId].settings }, id) === 100
+                  (id: string) => selectMasteryPercent(rootState, id) === 100
                 ) && (
                   <div style={{ marginTop: 20 }}>
                     <button onClick={startNextSession} style={{ background: '#2563eb', color: '#fff', border: 'none', borderRadius: 6, padding: '10px 20px', fontWeight: 500, cursor: 'pointer' }}>Next Session</button>
