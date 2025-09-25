@@ -1,0 +1,62 @@
+import { describe, it, expect } from 'vitest';
+import reducer, { setMode, attempt, nextCard } from '../slice';
+import type { RootState } from '../state';
+
+function makeInitial(): RootState {
+  return {
+    words: {
+      w1: { id: 'w1', text: 'one', language: 'en', attempts: [] },
+      w2: { id: 'w2', text: 'two', language: 'en', attempts: [] },
+    },
+    sessions: {
+      s1: {
+        wordIds: ['w1', 'w2'],
+        currentIndex: 0,
+        revealed: false,
+        mode: 'practice',
+        createdAt: 0,
+        settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2 },
+      },
+    },
+    activeSessions: {},
+    settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2 },
+  };
+}
+
+describe('setMode', () => {
+  it('sets activeSessions for mode', () => {
+    const state = makeInitial();
+    const next = reducer(state, setMode({ mode: 'practice', sessionId: 's1' }));
+    expect(next.activeSessions.practice).toBe('s1');
+  });
+});
+
+describe('attempt', () => {
+  it('pushes attempt and updates session', () => {
+    const state = makeInitial();
+    const next = reducer(state, attempt({ sessionId: 's1', wordId: 'w1', result: 'correct' }));
+    expect(next.words.w1.attempts).toHaveLength(1);
+    expect(next.words.w1.attempts[0].result).toBe('correct');
+    expect(next.sessions.s1.revealed).toBe(true);
+    expect(next.sessions.s1.lastAttempt).toBe('correct');
+  });
+});
+
+describe('nextCard', () => {
+  it('increments currentIndex and resets reveal/lastAttempt', () => {
+    const state = makeInitial();
+    state.sessions.s1.currentIndex = 0;
+    state.sessions.s1.revealed = true;
+    state.sessions.s1.lastAttempt = 'wrong';
+    const next = reducer(state, nextCard({ sessionId: 's1' }));
+    expect(next.sessions.s1.currentIndex).toBe(1);
+    expect(next.sessions.s1.revealed).toBe(false);
+    expect(next.sessions.s1.lastAttempt).toBeUndefined();
+  });
+  it('does not increment past last card', () => {
+    const state = makeInitial();
+    state.sessions.s1.currentIndex = 1;
+    const next = reducer(state, nextCard({ sessionId: 's1' }));
+    expect(next.sessions.s1.currentIndex).toBe(1);
+  });
+});
