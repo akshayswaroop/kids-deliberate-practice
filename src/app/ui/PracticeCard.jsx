@@ -37,8 +37,12 @@ function MasteryTile({ label, progress, isActive }) {
         width: `${fillWidth}%`,
         background: isActive ? activeGradient : rainbowGradient,
         transformOrigin: 'left center',
+        /* Reduce saturation by ~15% to make rainbow friendlier and less harsh */
+        filter: 'saturate(0.85)',
+        /* Slightly reduce opacity so the effect is playful but not overpowering */
+        opacity: isActive ? 0.86 : 0.8,
         transition: 'width 420ms cubic-bezier(.2,.9,.2,1), background 260ms ease',
-        opacity: isActive ? 0.98 : 0.92
+        
       }} />
 
       {/* subtle inner shading (reduced white overlay so gradient stays vivid) */}
