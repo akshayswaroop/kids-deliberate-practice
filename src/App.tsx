@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import HomePage from './app/ui/HomePage';
 import ReactJson from '@microlink/react-json-view';
@@ -55,8 +55,18 @@ function App() {
   const onCorrect = () => {};
   const onWrong = () => {};
 
-  // Navigation
-  const hash = typeof window !== 'undefined' ? window.location.hash : '';
+  // Navigation: track location.hash in component state so anchor links re-render the app
+  const [hash, setHash] = useState<string>(typeof window !== 'undefined' ? window.location.hash : '');
+
+  useEffect(() => {
+    const onHashChange = () => setHash(window.location.hash || '');
+    // Listen for hash changes (user clicking anchors, history.back, etc.)
+    window.addEventListener('hashchange', onHashChange);
+    // Also handle the case where the app initially loaded with a hash
+    onHashChange();
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
   if (hash === '#diagnostics') {
     return <DiagnosticsPanel rootState={rootState} />;
   }
