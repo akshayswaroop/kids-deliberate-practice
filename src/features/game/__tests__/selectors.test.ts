@@ -21,12 +21,16 @@ describe("selectMasteryPercent", () => {
     };
 
     const state: RootState = {
-      words: { w1: word },
-      sessions: {},
-      activeSessions: {},
-      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12 },
+      users: {
+        user1: {
+          words: { w1: word },
+          sessions: {},
+          activeSessions: {},
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12 },
+        },
+      },
+      currentUserId: 'user1',
     };
-
     expect(selectMasteryPercent(state, "w1")).toBe(40);
   });
 
@@ -39,12 +43,16 @@ describe("selectMasteryPercent", () => {
     };
 
     const state: RootState = {
-      words: { w2: word },
-      sessions: {},
-      activeSessions: {},
-      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12 },
+      users: {
+        user1: {
+          words: { w2: word },
+          sessions: {},
+          activeSessions: {},
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12 },
+        },
+      },
+      currentUserId: 'user1',
     };
-
     expect(selectMasteryPercent(state, "w2")).toBe(100);
   });
 });
@@ -64,12 +72,16 @@ describe("selectCurrentWord", () => {
       settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2 },
     };
     const state: RootState = {
-      words,
-      sessions: { s1: session },
-      activeSessions: { practice: "s1" },
-      settings: session.settings,
+      users: {
+        user1: {
+          words,
+          sessions: { s1: session },
+          activeSessions: { practice: "s1" },
+          settings: session.settings,
+        },
+      },
+      currentUserId: 'user1',
     };
-
     const currentWord = selectCurrentWord(state, "s1");
     expect(currentWord).toBe(words["w2"]);
   });
@@ -86,12 +98,16 @@ describe("selectSessionProgress", () => {
       settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2 },
     };
     const state: RootState = {
-      words: {},
-      sessions: { s1: session },
-      activeSessions: { practice: "s1" },
-      settings: session.settings,
+      users: {
+        user1: {
+          words: {},
+          sessions: { s1: session },
+          activeSessions: { practice: "s1" },
+          settings: session.settings,
+        },
+      },
+      currentUserId: 'user1',
     };
-
     const progress = selectSessionProgress(state, "s1");
     expect(progress).toEqual({ current: 2, total: 2 });
   });

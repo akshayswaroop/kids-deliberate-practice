@@ -5,7 +5,8 @@ export function selectSessionWords(
   allWords: Word[],
   weights: { struggle: number; new: number; mastered: number },
   size: number,
-  rng: () => number
+  rng: () => number,
+  masterySelector: (word: Word) => number = (word) => selectMasteryPercent({ users: { user1: { words: { [word.id]: word }, sessions: {}, activeSessions: {}, settings: { selectionWeights: weights, sessionSize: size } } }, currentUserId: 'user1' }, word.id)
 ): string[] {
   // Buckets
   const now = Date.now();
@@ -14,7 +15,7 @@ export function selectSessionWords(
   const mastered: Word[] = [];
 
   for (const word of allWords) {
-    const mastery = selectMasteryPercent({ words: { [word.id]: word }, sessions: {}, activeSessions: {}, settings: { selectionWeights: weights, sessionSize: size } }, word.id);
+    const mastery = masterySelector(word);
     if (word.attempts.length === 0) {
       newWords.push(word);
     } else if (mastery < 60) {

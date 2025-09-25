@@ -33,9 +33,14 @@ export type Session = {
   settings: SessionSettings;
 };
 
-export type RootState = {
+export type UserState = {
   words: Record<string, Word>;
   sessions: Record<string, Session>;
   activeSessions: Record<string, string>;
   settings: SessionSettings;
+};
+
+export type RootState = {
+  users: Record<string, UserState>;
+  currentUserId: string;
 };

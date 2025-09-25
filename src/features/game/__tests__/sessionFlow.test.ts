@@ -16,16 +16,21 @@ function pickRandomWords(words: Record<string, any>, count: number, seed = 42) {
 describe('Session flow: master 12 words, then next 12', () => {
   it('should master 12 words and move to next set', () => {
     let state: RootState = {
-      words: getInitialWords(),
-      sessions: {},
-      activeSessions: {},
-      settings: {
-        selectionWeights: { struggle: 1, new: 1, mastered: 1 },
-        sessionSize: 12,
+      users: {
+        user1: {
+          words: getInitialWords(),
+          sessions: {},
+          activeSessions: {},
+          settings: {
+            selectionWeights: { struggle: 1, new: 1, mastered: 1 },
+            sessionSize: 12,
+          },
+        },
       },
+      currentUserId: 'user1',
     };
     // Pick first 12 random words
-    const first12 = pickRandomWords(state.words, 12);
+  const first12 = pickRandomWords(state.users.user1.words, 12);
     const sessionId1 = 'session1';
     const session1: Session = {
       wordIds: first12,
@@ -33,10 +38,10 @@ describe('Session flow: master 12 words, then next 12', () => {
       revealed: false,
       mode: 'practice',
       createdAt: Date.now(),
-      settings: state.settings,
+  settings: state.users.user1.settings,
     };
-    state = reducer(state, addSession({ sessionId: sessionId1, session: session1 }));
-    state = reducer(state, { type: 'game/setMode', payload: { mode: 'practice', sessionId: sessionId1 } });
+  state = reducer(state, addSession({ sessionId: sessionId1, session: session1 }));
+  state = reducer(state, { type: 'game/setMode', payload: { mode: 'practice', sessionId: sessionId1 } });
     // Answer all 12 words correctly until mastered
     for (let i = 0; i < 12; i++) {
       for (let c = 0; c < 5; c++) { // 5 correct attempts to reach 100%
@@ -48,11 +53,11 @@ describe('Session flow: master 12 words, then next 12', () => {
     }
     // All 12 should be mastered
     for (const id of first12) {
-      expect(state.words[id].attempts.filter(a => a.result === 'correct').length).toBeGreaterThanOrEqual(5);
+      expect(state.users.user1.words[id].attempts.filter(a => a.result === 'correct').length).toBeGreaterThanOrEqual(5);
     }
     // Pick next 12 random words (excluding mastered)
-    const masteredSet = new Set(first12);
-    const next12 = Object.keys(state.words).filter(id => !masteredSet.has(id)).slice(0, 12);
+  const masteredSet = new Set(first12);
+  const next12 = Object.keys(state.users.user1.words).filter(id => !masteredSet.has(id)).slice(0, 12);
     const sessionId2 = 'session2';
     const session2: Session = {
       wordIds: next12,
@@ -60,7 +65,7 @@ describe('Session flow: master 12 words, then next 12', () => {
       revealed: false,
       mode: 'practice',
       createdAt: Date.now(),
-      settings: state.settings,
+  settings: state.users.user1.settings,
     };
     state = reducer(state, addSession({ sessionId: sessionId2, session: session2 }));
     state = reducer(state, { type: 'game/setMode', payload: { mode: 'practice', sessionId: sessionId2 } });
@@ -75,7 +80,7 @@ describe('Session flow: master 12 words, then next 12', () => {
     }
     // All next 12 should be mastered
     for (const id of next12) {
-      expect(state.words[id].attempts.filter(a => a.result === 'correct').length).toBeGreaterThanOrEqual(5);
+      expect(state.users.user1.words[id].attempts.filter(a => a.result === 'correct').length).toBeGreaterThanOrEqual(5);
     }
   });
 });

@@ -14,7 +14,15 @@ describe('selectSessionWords', () => {
     ];
     const weights = { struggle: 1, new: 1, mastered: 1 };
     const size = 3;
-    const selected = selectSessionWords(words, weights, size, rng);
+    // Provide a masterySelector for test context
+    const masterySelector = (word: Word) => {
+      if (word.attempts.length === 0) return 0;
+      const correct = word.attempts.filter(a => a.result === 'correct').length;
+      const wrong = word.attempts.filter(a => a.result === 'wrong').length;
+      let mastery = correct * 20 - wrong * 20;
+      return Math.max(0, Math.min(100, mastery));
+    };
+    const selected = selectSessionWords(words, weights, size, rng, masterySelector);
     expect(selected).toHaveLength(3);
     expect(new Set(selected).size).toBe(3); // no duplicates
     // Deterministic output

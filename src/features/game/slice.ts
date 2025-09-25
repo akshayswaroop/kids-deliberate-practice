@@ -3,42 +3,81 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './state';
 import { getInitialWords } from '../../app/bootstrapState';
 
+const defaultUserId = 'user1';
 const initialState: RootState = {
-  words: getInitialWords(),
-  sessions: {},
-  activeSessions: {},
-  settings: {
-    selectionWeights: {
-      struggle: 0.5,
-      new: 0.4,
-      mastered: 0.1,
+  users: {
+    [defaultUserId]: {
+      words: getInitialWords(),
+      sessions: {},
+      activeSessions: {},
+      settings: {
+        selectionWeights: {
+          struggle: 0.5,
+          new: 0.4,
+          mastered: 0.1,
+        },
+        sessionSize: 12,
+      },
     },
-    sessionSize: 12,
   },
+  currentUserId: defaultUserId,
 };
 
 const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
+    selectUser(state, action: PayloadAction<{ userId: string }>) {
+      if (state.users[action.payload.userId]) {
+        state.currentUserId = action.payload.userId;
+      }
+    },
+    addUser(state, action: PayloadAction<{ userId: string }>) {
+        const newUserId = action.payload.userId.trim();
+        // Prevent adding empty userId or duplicate userId
+        if (!newUserId || state.users[newUserId]) {
+          return;
+        }
+        state.users[newUserId] = {
+          words: getInitialWords(),
+          sessions: {},
+          activeSessions: {},
+          settings: {
+            selectionWeights: {
+              struggle: 0.5,
+              new: 0.4,
+              mastered: 0.1,
+            },
+            sessionSize: 12,
+          },
+        };
+        state.currentUserId = newUserId;
+    },
     setMode(state, action: PayloadAction<{ mode: string; sessionId: string }>) {
-      state.activeSessions[action.payload.mode] = action.payload.sessionId;
+      const user = state.users[state.currentUserId];
+      if (user) {
+        user.activeSessions[action.payload.mode] = action.payload.sessionId;
+      }
     },
     attempt(state, action: PayloadAction<{ sessionId: string; wordId: string; result: 'correct' | 'wrong' }>) {
+      const user = state.users[state.currentUserId];
+      if (!user) return;
       const { sessionId, wordId, result } = action.payload;
-      const word = state.words[wordId];
+      const word = user.words[wordId];
       if (word) {
         word.attempts.push({ timestamp: Date.now(), result });
       }
-      const session = state.sessions[sessionId];
+      const session = user.sessions[sessionId];
       if (session) {
         session.revealed = true;
         session.lastAttempt = result;
       }
     },
     nextCard(state, action: PayloadAction<{ sessionId: string }>) {
+      const user = state.users[state.currentUserId];
+      if (!user) return;
       const { sessionId } = action.payload;
-      const session = state.sessions[sessionId];
+      const session = user.sessions[sessionId];
       if (session) {
         if (session.currentIndex < session.wordIds.length - 1) {
           session.currentIndex += 1;
@@ -47,12 +86,13 @@ const gameSlice = createSlice({
         session.lastAttempt = undefined;
       }
     },
-
     addSession(state, action: PayloadAction<{ sessionId: string; session: import('./state').Session }>) {
-      state.sessions[action.payload.sessionId] = action.payload.session;
+      const user = state.users[state.currentUserId];
+      if (!user) return;
+      user.sessions[action.payload.sessionId] = action.payload.session;
     },
   },
 });
 
-export const { setMode, attempt, nextCard, addSession } = gameSlice.actions;
+export const { selectUser, setMode, attempt, nextCard, addSession, addUser } = gameSlice.actions;
 export default gameSlice.reducer;

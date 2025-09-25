@@ -11,10 +11,11 @@ function loadGameState(): RootState | undefined {
 }
 import type { RootState } from '../features/game/state';
 
-// Middleware to persist state on each attempt
+
+// Middleware to persist state on any game action
 const persistMiddleware = (storeAPI: any) => (next: any) => (action: any) => {
   const result = next(action);
-  if (action.type === 'game/attempt') {
+  if (action.type.startsWith('game/')) {
     const state = storeAPI.getState();
     try {
       localStorage.setItem('gameState', JSON.stringify(state.game));
@@ -25,11 +26,17 @@ const persistMiddleware = (storeAPI: any) => (next: any) => (action: any) => {
   return result;
 };
 
+
+
+const loaded = loadGameState();
+const preloadedState = loaded ? { game: loaded as RootState } : undefined;
+
 export const store = configureStore({
   reducer: {
     game: gameReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(persistMiddleware),
+  preloadedState,
 });
 
 export type AppDispatch = typeof store.dispatch;
