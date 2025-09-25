@@ -15,12 +15,14 @@ export function selectMasteryPercent(state: RootState, wordId: string): number {
   return mastery;
 }
 
-export function selectCurrentWord(state: RootState, sessionId: string): Word {
+export function selectCurrentWord(state: RootState, sessionId: string): Word | undefined {
   const user = state.users[state.currentUserId];
-  if (!user) throw new Error("User not found");
+  if (!user) return undefined;
   const session = user.sessions[sessionId];
-  if (!session) throw new Error("Session not found");
+  if (!session) return undefined;
+  if (session.currentIndex >= session.wordIds.length) return undefined;
   const wordId = session.wordIds[session.currentIndex];
+  if (!wordId || !user.words[wordId]) return undefined;
   return user.words[wordId];
 }
 

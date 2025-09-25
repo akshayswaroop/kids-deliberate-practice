@@ -17,15 +17,15 @@ function MasteryTile({ label, progress, isActive }) {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: 6,
+      padding: 12, // Increased from 6 to 12 for generous padding
       boxSizing: 'border-box',
       borderRadius: 12,
       background: '#fff',
-      border: isActive ? '2px solid rgba(15,23,42,0.12)' : '1px solid rgba(2,6,23,0.06)',
-      boxShadow: isActive ? '0 18px 40px rgba(15,23,42,0.18)' : '0 8px 24px rgba(2,6,23,0.06)',
+      border: isActive ? '3px solid #4f46e5' : '1px solid rgba(2,6,23,0.06)', // Stronger border for active tile
+      boxShadow: isActive ? '0 18px 40px rgba(79,70,229,0.25), 0 0 0 4px rgba(79,70,229,0.15)' : '0 8px 24px rgba(2,6,23,0.06)', // Glow effect for active
       position: 'relative',
       overflow: 'hidden',
-      transform: isActive ? 'scale(1.04)' : 'scale(1)',
+      transform: isActive ? 'scale(1.06)' : 'scale(1)', // Slightly bigger scale
       transition: 'transform 260ms ease, box-shadow 260ms ease, border 260ms ease'
     }}>
       {/* gradient fill */}
@@ -57,12 +57,12 @@ function MasteryTile({ label, progress, isActive }) {
       <div style={{
         position: 'relative',
         zIndex: 2,
-        fontSize: 'clamp(18px, 2.4vw, 26px)',
-        fontWeight: 800,
+        fontSize: 'clamp(22px, 3vw, 32px)', // Increased by ~20% from 18-26px to 22-32px
+        fontWeight: 900, // Even bolder for early readers
         textAlign: 'center',
-        color: '#0b1220',
-        padding: '6px 10px',
-        textShadow: '0 1px 0 rgba(255,255,255,0.6)',
+        color: isActive ? '#4f46e5' : '#0b1220', // Distinct color for active word
+        padding: '8px 12px', // Increased padding
+        textShadow: isActive ? '0 2px 4px rgba(79,70,229,0.3)' : '0 1px 0 rgba(255,255,255,0.6)',
         // Prevent breaking words mid-syllable: allow wrapping only at whitespace, clamp to 2 lines
         whiteSpace: 'normal',
         wordBreak: 'normal',
@@ -80,6 +80,54 @@ function MasteryTile({ label, progress, isActive }) {
 export default function PracticeCard({ mainWord, transliteration, choices, onCorrect, onWrong, onNext }) {
   const [columns, setColumns] = React.useState(6);
   const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
+
+  // Animation helper functions
+  const createConfettiBurst = () => {
+    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3'];
+    
+    // Find the main word element to center confetti on it
+    const targetWordElement = document.querySelector('.target-word-glow');
+    const rect = targetWordElement ? targetWordElement.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight * 0.2, width: 200, height: 80 };
+    
+    const container = document.createElement('div');
+    container.className = 'confetti-burst';
+    container.style.left = `${rect.left + rect.width / 2}px`;
+    container.style.top = `${rect.top + rect.height / 2}px`;
+    container.style.transform = 'translate(-50%, -50%)';
+    container.style.width = '300px';
+    container.style.height = '300px';
+    document.body.appendChild(container);
+
+    // Increased quantity from 20 to 40 particles
+    for (let i = 0; i < 40; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'confetti-particle';
+      particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      
+      // Spread particles in a circle around the main word
+      const angle = (i / 40) * Math.PI * 2;
+      const radius = Math.random() * 80 + 20; // Random radius between 20-100px
+      const startX = Math.cos(angle) * radius;
+      const startY = Math.sin(angle) * radius;
+      
+      particle.style.left = `${150 + startX}px`; // Center of 300px container
+      particle.style.top = `${150 + startY}px`;
+      particle.style.animationDelay = `${Math.random() * 300}ms`;
+      particle.style.animationDuration = `${1200 + Math.random() * 800}ms`;
+      container.appendChild(particle);
+    }
+
+    setTimeout(() => document.body.removeChild(container), 2500);
+  };
+
+  const triggerBounceAnimation = () => {
+    // Add bounce class to all non-active tiles
+    const tiles = document.querySelectorAll('.mastery-tile:not(.active)');
+    tiles.forEach(tile => {
+      tile.classList.add('bounce');
+      setTimeout(() => tile.classList.remove('bounce'), 600);
+    });
+  };
 
   React.useEffect(() => {
     if (isDebug) {
@@ -132,6 +180,28 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
         .mastery-tile{transition:transform 220ms ease, box-shadow 220ms ease, opacity 320ms ease}
         .mastery-tile:hover{transform:translateY(-4px) scale(1.02); box-shadow:0 14px 36px rgba(2,6,23,0.12)}
         .mastery-tile.active{animation:pulseGlow 2000ms infinite ease-in-out;}
+        
+        /* Enhanced animations for child-friendly experience */
+        .target-word-glow{animation:subtleGlow 3000ms infinite ease-in-out;}
+        @keyframes subtleGlow{0%{box-shadow:0 4px 20px rgba(79,70,229,0.15)}50%{box-shadow:0 6px 30px rgba(79,70,229,0.25), 0 0 20px rgba(139,92,246,0.1)}100%{box-shadow:0 4px 20px rgba(79,70,229,0.15)}}
+        
+        .mastery-flag{animation:rainbowShimmer 3000ms linear infinite;}
+        @keyframes rainbowShimmer{0%{opacity:0.9}50%{opacity:1}100%{opacity:0.9}}
+        
+        /* Bounce animation for wrong choices */
+        .mastery-tile.bounce{animation:playfulBounce 600ms ease-out;}
+        @keyframes playfulBounce{0%{transform:scale(1)}25%{transform:scale(0.95) rotate(-2deg)}50%{transform:scale(1.05) rotate(1deg)}75%{transform:scale(0.98)}100%{transform:scale(1)}}
+        
+        /* Enhanced confetti burst animation */
+        .confetti-burst{position:fixed;pointer-events:none;z-index:9999;}
+        .confetti-particle{position:absolute;width:10px;height:10px;background:#ff6b6b;border-radius:50%;animation:confettiFall 2000ms ease-out forwards;}
+        @keyframes confettiFall{
+          0%{transform:translateY(0) translateX(0) rotateZ(0deg) scale(1);opacity:1}
+          25%{transform:translateY(-30px) translateX(var(--random-x, 0px)) rotateZ(90deg) scale(1.2);opacity:1}
+          50%{transform:translateY(50px) translateX(var(--random-x, 0px)) rotateZ(180deg) scale(1);opacity:0.8}
+          100%{transform:translateY(250px) translateX(var(--random-x, 0px)) rotateZ(360deg) scale(0.5);opacity:0}
+        }
+        
         .rainbow-anim{background-size:300% 100%; animation:rainShift 2200ms linear infinite}
         .rainbow-anim-slow{background-size:200% 100%; animation:rainShift 5200ms linear infinite}
         @keyframes pulseGlow{0%{filter:brightness(1)}50%{filter:brightness(1.06)}100%{filter:brightness(1)}}
@@ -143,11 +213,13 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
         @keyframes fadeIn{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:translateY(0)}}
         .tile-inner{box-shadow:inset 0 -6px 18px rgba(0,0,0,0.04)}
 
-        /* Footer button feedback */
+        /* Enhanced footer button feedback */
         .mastery-footer-button{border:0; outline:0; cursor:pointer; border-radius:10px; transition:transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease}
         .mastery-footer-button:hover{transform:translateY(-3px) scale(1.02)}
         .mastery-footer-button:active{transform:translateY(0) scale(.995)}
         .mastery-footer-button:focus-visible{box-shadow:0 0 0 4px rgba(2,6,23,0.06);}
+        .mastery-footer-button.primary{animation:gentlePulse 2000ms infinite ease-in-out;}
+        @keyframes gentlePulse{0%{box-shadow:0 8px 20px rgba(16,185,129,0.14)}50%{box-shadow:0 12px 30px rgba(16,185,129,0.25), 0 0 15px rgba(16,185,129,0.1)}100%{box-shadow:0 8px 20px rgba(16,185,129,0.14)}}
         .mastery-footer-button.primary:focus-visible{box-shadow:0 0 0 6px rgba(16,185,129,0.14)}
         .mastery-footer-button.secondary:focus-visible{box-shadow:0 0 0 6px rgba(239,68,68,0.12)}
       `}</style>
@@ -157,9 +229,11 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
         color: '#2c3e50',
         width: '100%',
         maxWidth: '100%',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        marginTop: '8px', // Reduced from default to bring word closer to top
+        marginBottom: '16px' // Add breathing room below
       }}>
-          <div style={{ 
+          <div className="target-word-glow" style={{ 
             fontSize: 'clamp(40px, 7vw, 96px)',
             fontWeight: 900,
             marginTop: 0,
@@ -167,18 +241,27 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
             lineHeight: 0.98,
             letterSpacing: '-0.02em',
             maxWidth: '100%',
+            // Make target word visually distinct
+            background: 'linear-gradient(135deg, rgba(79,70,229,0.1), rgba(139,92,246,0.05))',
+            borderRadius: '16px',
+            padding: '12px 20px',
+            border: '2px solid rgba(79,70,229,0.2)',
+            boxShadow: '0 4px 20px rgba(79,70,229,0.15)',
             // Allow wrapping at whitespace for long phrases; avoid breaking inside words
             whiteSpace: 'normal',
-            wordBreak: 'normal'
+            wordBreak: 'normal',
+            position: 'relative',
+            overflow: 'hidden'
           }}>
           {mainWord}
         </div>
         {transliteration && (
           <div style={{
-            fontSize: 'clamp(14px, 2.8vw, 20px)',
-            color: '#7f8c8d',
+            fontSize: 'clamp(16px, 3vw, 22px)', // Slightly larger
+            color: '#6366f1',
             fontStyle: 'italic',
-            marginTop: '4px'
+            fontWeight: 600,
+            marginTop: '8px'
           }}>
             {transliteration}
           </div>
@@ -190,13 +273,14 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
         display: 'grid',
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
         gridAutoRows: 'minmax(96px, 1fr)',
-        gap: 10,
+        gap: 14, // Increased from 10 to 14 for better separation for kids' eyes
         width: '100%',
-        padding: '0 8px',
+        padding: '0 12px', // Increased padding
         maxWidth: '100%',
         boxSizing: 'border-box',
         flex: 1,
-        alignContent: 'center'
+        alignContent: 'center',
+        marginBottom: '24px' // Add breathing room below tiles
       }}>
         {choices.slice(0, 12).map((choice) => (
           <div key={choice.id} style={{ width: '100%', height: '100%' }}>
@@ -206,8 +290,8 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
           </div>
         ))}
       </div>
-      {/* spacer so grid has breathing room above sticky bar */}
-      <div style={{ height: 18 }} />
+      {/* Increased spacer - 1.5x the gap for better button separation */}
+      <div style={{ height: 36 }} />
 
       {/* Footer action bar: visually fixed but contained by extra bottom padding (prevents overlap) */}
       <div style={{
@@ -226,7 +310,12 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
         minWidth: 280
       }}>
         <button
-          onClick={() => { if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); } onCorrect && onCorrect(); }}
+          onClick={() => { 
+            if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); } 
+            // Create confetti burst effect
+            createConfettiBurst();
+            onCorrect && onCorrect(); 
+          }}
           aria-label="Mark as read — great job"
           className="mastery-footer-button primary"
           style={{
@@ -234,8 +323,8 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
             color: 'white',
             border: 'none',
             borderRadius: 10,
-            padding: '10px 14px',
-            fontSize: 15,
+            padding: '12px 16px', // Slightly larger padding
+            fontSize: 16, // Slightly larger font
             fontWeight: 800,
             cursor: 'pointer',
             display: 'flex',
@@ -245,11 +334,16 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
             boxShadow: '0 8px 20px rgba(16,185,129,0.14)'
           }}
         >
-          <span style={{fontSize:18}}>🎉</span>
+          <span style={{fontSize:20}}>🎉</span>
           <span>Read it well!</span>
         </button>
         <button
-          onClick={() => { if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); } onWrong && onWrong(); }}
+          onClick={() => { 
+            if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); } 
+            // Add bounce animation to wrong choices
+            triggerBounceAnimation();
+            onWrong && onWrong(); 
+          }}
           aria-label="Try again later — would you like to repeat this?"
           className="mastery-footer-button secondary"
           style={{
@@ -257,8 +351,8 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
             color: 'white',
             border: 'none',
             borderRadius: 10,
-            padding: '10px 14px',
-            fontSize: 15,
+            padding: '12px 16px', // Slightly larger padding
+            fontSize: 16, // Slightly larger font
             fontWeight: 800,
             cursor: 'pointer',
             display: 'flex',
@@ -268,7 +362,7 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
             boxShadow: '0 8px 20px rgba(239,68,68,0.12)'
           }}
         >
-          <span style={{fontSize:18}}>🔁</span>
+          <span style={{fontSize:20}}>🔁</span>
           <span>Try again later</span>
         </button>
         <button

@@ -156,8 +156,10 @@ function App() {
   if (sessionId && userSessions[sessionId]) {
     try {
       const word = selectCurrentWord(rootState as any, sessionId as any);
-      mainWord = word.text || word.id;
-      transliteration = (word.transliteration) || undefined;
+      if (word) {
+        mainWord = word.text || word.id;
+        transliteration = (word.transliteration) || undefined;
+      }
       const session = userSessions[sessionId];
       choices = session.wordIds.map((wid: string) => {
         const w = userState.words[wid];

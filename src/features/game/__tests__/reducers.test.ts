@@ -58,10 +58,16 @@ describe('nextCard', () => {
     expect(next.users.user1.sessions.s1.revealed).toBe(false);
     expect(next.users.user1.sessions.s1.lastAttempt).toBeUndefined();
   });
-  it('does not increment past last card', () => {
+  it('randomly selects from unmastered words', () => {
     const state = makeInitial();
-    state.users.user1.sessions.s1.currentIndex = 1;
+    // Set up session with 2 words, both unmastered
+    state.users.user1.sessions.s1.wordIds = ['word1', 'word2'];
+    state.users.user1.words.word1 = { id: 'word1', text: 'word1', language: 'english', attempts: [] };
+    state.users.user1.words.word2 = { id: 'word2', text: 'word2', language: 'english', attempts: [] };
+    state.users.user1.sessions.s1.currentIndex = 0;
+    
     const next = reducer(state, nextCard({ sessionId: 's1' }));
-    expect(next.users.user1.sessions.s1.currentIndex).toBe(1);
+    // Should select one of the unmastered words (0 or 1)
+    expect([0, 1]).toContain(next.users.user1.sessions.s1.currentIndex);
   });
 });

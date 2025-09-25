@@ -85,9 +85,35 @@ const gameSlice = createSlice({
       const { sessionId } = action.payload;
       const session = user.sessions[sessionId];
       if (session) {
-        if (session.currentIndex < session.wordIds.length - 1) {
-          session.currentIndex += 1;
+        // Find unmastered words in the session (mastery < 100%)
+        const unmasteredIndices: number[] = [];
+        for (let i = 0; i < session.wordIds.length; i++) {
+          const wordId = session.wordIds[i];
+          const word = user.words[wordId];
+          if (word) {
+            // Calculate mastery for this word
+            let mastery = 0;
+            for (const attempt of word.attempts) {
+              if (attempt.result === "correct") mastery += 20;
+              else if (attempt.result === "wrong") mastery -= 20;
+              mastery = Math.max(0, Math.min(100, mastery));
+            }
+            // Include this word if not yet mastered
+            if (mastery < 100) {
+              unmasteredIndices.push(i);
+            }
+          }
         }
+        
+        // If there are unmastered words, randomly pick one
+        if (unmasteredIndices.length > 0) {
+          const randomIndex = Math.floor(Math.random() * unmasteredIndices.length);
+          session.currentIndex = unmasteredIndices[randomIndex];
+        } else {
+          // If all words are mastered, cycle through all words
+          session.currentIndex = (session.currentIndex + 1) % session.wordIds.length;
+        }
+        
         session.revealed = false;
         session.lastAttempt = undefined;
       }
