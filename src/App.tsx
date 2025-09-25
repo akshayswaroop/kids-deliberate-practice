@@ -1,9 +1,11 @@
 
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUser, addUser, setLanguagePreferences, addSession, attempt, nextCard } from './features/game/slice';
+import { selectUser, addUser, setLanguagePreferences, addSession, attempt, nextCard, setMode as setModeAction } from './features/game/slice';
 import HomePage from './app/ui/HomePage';
 import ReactJson from '@microlink/react-json-view';
+import { selectCurrentWord, selectWordsByLanguage, selectMasteryPercent, selectCurrentLanguagePreferences } from './features/game/selectors';
+import { selectSessionWords } from './features/game/sessionGen';
 
 import type { RootState } from './features/game/state';
 
@@ -119,15 +121,80 @@ function App() {
   };
 
   // PracticePanel props (stubbed for now)
-  const mainWord = 'cat';
-  const choices = [
-    { id: '1', label: 'cat', progress: 100 },
-    { id: '2', label: 'dog', progress: 60 },
-    { id: '3', label: 'sun', progress: 0 },
-    { id: '4', label: 'run', progress: 80 },
-  ];
-  const onCorrect = () => {};
-  const onWrong = () => {};
+  // Determine language preferences and available words
+  const currentLanguages = selectCurrentLanguagePreferences(rootState as any);
+  const availableWords = selectWordsByLanguage(rootState as any, currentLanguages as any);
+
+  // Find or create a session for current mode
+  const userSessions = userState.sessions || {};
+  const activeSessions = userState.activeSessions || {};
+  let sessionId = activeSessions[mode];
+  if (!sessionId) {
+    // Create a session using sessionGen (fallback simple pick if empty)
+    const allWordsArr = Object.values(availableWords || {});
+      if (allWordsArr.length > 0) {
+        const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, userState.settings.sessionSize || 12, Math.random as any);
+        sessionId = 'session_' + Date.now();
+        const session = {
+          wordIds: ids,
+          currentIndex: 0,
+          revealed: false,
+          mode: 'practice',
+          createdAt: Date.now(),
+          settings: userState.settings,
+        };
+        dispatch(addSession({ sessionId, session } as any));
+        // Record this session as the active session for the current mode so we don't recreate it repeatedly
+        dispatch(setModeAction({ mode, sessionId } as any));
+      }
+  }
+
+  // Current word and choices derived from session
+  let mainWord = '...';
+  let transliteration: string | undefined = undefined;
+  let choices: Array<{ id: string; label: string; progress: number }> = [];
+  if (sessionId && userSessions[sessionId]) {
+    try {
+      const word = selectCurrentWord(rootState as any, sessionId as any);
+      mainWord = word.text || word.id;
+      transliteration = (word.transliteration) || undefined;
+      const session = userSessions[sessionId];
+      choices = session.wordIds.map((wid: string) => {
+        const w = userState.words[wid];
+        return { id: wid, label: w ? (w.text || wid) : wid, progress: selectMasteryPercent(rootState as any, wid as any) };
+      });
+    } catch (e) {
+      // fallback to first available words
+      const arr = Object.values(availableWords || {});
+      if (arr.length > 0) {
+        mainWord = arr[0].text;
+        choices = arr.slice(0, 4).map(w => ({ id: w.id, label: w.text, progress: selectMasteryPercent(rootState as any, w.id) }));
+      }
+    }
+  } else {
+    const arr = Object.values(availableWords || {});
+    if (arr.length > 0) {
+      mainWord = arr[0].text;
+      choices = arr.slice(0, 4).map(w => ({ id: w.id, label: w.text, progress: selectMasteryPercent(rootState as any, w.id) }));
+    }
+  }
+
+  const onCorrect = () => {
+    if (!sessionId) return;
+    // attempt on current word
+    const session = (userSessions && userSessions[sessionId]) || null;
+    if (!session) return;
+    const wordId = session.wordIds[session.currentIndex];
+    dispatch(attempt({ sessionId, wordId, result: 'correct' } as any));
+  };
+
+  const onWrong = () => {
+    if (!sessionId) return;
+    const session = (userSessions && userSessions[sessionId]) || null;
+    if (!session) return;
+    const wordId = session.wordIds[session.currentIndex];
+    dispatch(attempt({ sessionId, wordId, result: 'wrong' } as any));
+  };
 
   // Navigation: track location.hash in component state so anchor links re-render the app
   const [hash, setHash] = useState<string>(typeof window !== 'undefined' ? window.location.hash : '');
@@ -153,6 +220,7 @@ function App() {
       onSetMode={handleSetMode}
       mode={mode}
       mainWord={mainWord}
+      transliteration={transliteration}
       choices={choices}
       onCorrect={onCorrect}
       onWrong={onWrong}

@@ -16,6 +16,7 @@ interface HomePageProps {
   mode: string;
   mainWord: string;
   choices: Array<{ id: string; label: string; progress: number }>;
+  transliteration?: string;
   onCorrect: () => void;
   onWrong: () => void;
   layout?: 'topbar' | 'sidebar' | 'center';
@@ -30,6 +31,7 @@ export default function HomePage({
   mode,
   mainWord,
   choices,
+  transliteration,
   onCorrect,
   onWrong,
   layout = 'topbar',
@@ -57,7 +59,7 @@ export default function HomePage({
         </div>
         <div style={{ flex: 1, padding: '8px', overflow: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ width: '100%', maxWidth: 'none', background: '#fff', borderRadius: 16, boxShadow: '0 2px 16px rgba(0,0,0,0.06)', padding: '24px', margin: '0 auto', maxHeight: '100%', overflow: 'auto' }}>
-            <PracticePanel mainWord={mainWord} choices={choices} onCorrect={onCorrect} onWrong={onWrong} />
+            <PracticePanel mainWord={mainWord} transliteration={transliteration} choices={choices} onCorrect={onCorrect} onWrong={onWrong} />
           </div>
         </div>
       </div>
@@ -76,7 +78,7 @@ export default function HomePage({
         </div>
         <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '8px' }}>
           <div style={{ width: '100%', maxWidth: 'calc(100vw - 320px)', background: '#fff', borderRadius: 16, boxShadow: '0 2px 16px #0001', padding: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-            <PracticePanel mainWord={mainWord} choices={choices} onCorrect={onCorrect} onWrong={onWrong} />
+            <PracticePanel mainWord={mainWord} transliteration={transliteration} choices={choices} onCorrect={onCorrect} onWrong={onWrong} />
           </div>
         </div>
       </div>
@@ -92,7 +94,7 @@ export default function HomePage({
           <ProfileForm compact users={users} currentUserId={currentUserId} onCreateUser={onCreateUser} onSwitchUser={onSwitchUser} />
           <ModeSelector compact mode={mode} onSetMode={onSetMode} />
         </div>
-        <PracticePanel mainWord={mainWord} choices={choices} onCorrect={onCorrect} onWrong={onWrong} />
+        <PracticePanel mainWord={mainWord} transliteration={transliteration} choices={choices} onCorrect={onCorrect} onWrong={onWrong} />
       </div>
     </div>
   );
