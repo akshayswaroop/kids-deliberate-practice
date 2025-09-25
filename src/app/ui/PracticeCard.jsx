@@ -1,50 +1,74 @@
 import React from 'react';
 import ProgressBubble from './ProgressBubble';
 
-export default function PracticeCard({ mainWord, choices, onCorrect, onWrong }) {
+export default function PracticeCard({ mainWord, transliteration, choices, onCorrect, onWrong }) {
   return (
-    <div style={{
+        <div style={{
+      backgroundColor: 'white',
+      borderRadius: '20px',
+      padding: '24px 16px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: '32px',
-      gap: '32px',
-      minHeight: '100vh',
-      backgroundColor: '#f8f9fa',
-      fontFamily: 'system-ui, -apple-system, sans-serif'
+      gap: 24,
+      width: '100%',
+      maxWidth: '100%',
+      margin: '0 auto',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+      boxSizing: 'border-box',
+      overflow: 'hidden'
     }}>
       {/* Large main word at the top */}
+            {/* Prominent main word */}
       <div style={{
-        fontSize: '72px',
-        fontWeight: 'bold',
-        color: '#2c3e50',
         textAlign: 'center',
-        textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
-        lineHeight: 1.2,
-        marginTop: '20px'
+        color: '#2c3e50',
+        padding: '12px 16px',
+        width: '100%',
+        maxWidth: '100%',
+        boxSizing: 'border-box'
       }}>
-        {mainWord}
+        <div style={{ 
+          fontSize: `clamp(${Math.max(56, Math.min(88, 32 + mainWord.length * 2))}px, 8vw, 96px)`,
+          fontWeight: 'bold',
+          marginBottom: '12px',
+          lineHeight: 1.0,
+          letterSpacing: '-0.02em',
+          wordBreak: 'break-word',
+          maxWidth: '100%'
+        }}>
+          {mainWord}
+        </div>
+        {transliteration && (
+          <div style={{
+            fontSize: 'clamp(18px, 3.5vw, 24px)',
+            color: '#7f8c8d',
+            fontStyle: 'italic',
+            marginTop: '8px'
+          }}>
+            {transliteration}
+          </div>
+        )}
       </div>
 
-      {/* Grid of progress bubbles */}
+      {/* Responsive grid of progress bubbles (scales to 12+) */}
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(64px, 1fr))',
-        gap: '16px',
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        gap: 24,
         width: '100%',
-        maxWidth: '800px',
-        justifyItems: 'center',
-        padding: '20px',
-        backgroundColor: 'white',
-        borderRadius: '16px',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+        padding: '0 16px',
+        maxWidth: '100%',
+        boxSizing: 'border-box'
       }}>
         {choices.map((choice) => (
           <ProgressBubble
             key={choice.id}
             label={choice.label}
             progress={choice.progress}
-            size={56}
+            size={112}
           />
         ))}
       </div>
@@ -52,9 +76,8 @@ export default function PracticeCard({ mainWord, choices, onCorrect, onWrong }) 
       {/* Action buttons */}
       <div style={{
         display: 'flex',
-        gap: '24px',
-        marginTop: 'auto',
-        paddingBottom: '20px'
+        gap: 12,
+        marginTop: 12
       }}>
         <button
           onClick={onCorrect}
@@ -63,13 +86,13 @@ export default function PracticeCard({ mainWord, choices, onCorrect, onWrong }) 
             color: 'white',
             border: 'none',
             borderRadius: '12px',
-            padding: '16px 32px',
-            fontSize: '18px',
-            fontWeight: '600',
+            padding: '10px 16px',
+            fontSize: '16px',
+            fontWeight: 600,
             cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(39, 174, 96, 0.3)',
+            boxShadow: '0 2px 8px rgba(39, 174, 96, 0.25)',
             transition: 'all 0.2s ease',
-            minWidth: '160px'
+            minWidth: '140px'
           }}
           onMouseOver={(e) => {
             e.target.style.backgroundColor = '#229954';
@@ -90,13 +113,13 @@ export default function PracticeCard({ mainWord, choices, onCorrect, onWrong }) 
             color: 'white',
             border: 'none',
             borderRadius: '12px',
-            padding: '16px 32px',
-            fontSize: '18px',
-            fontWeight: '600',
+            padding: '10px 16px',
+            fontSize: '16px',
+            fontWeight: 600,
             cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(231, 76, 60, 0.3)',
+            boxShadow: '0 2px 8px rgba(231, 76, 60, 0.25)',
             transition: 'all 0.2s ease',
-            minWidth: '160px'
+            minWidth: '140px'
           }}
           onMouseOver={(e) => {
             e.target.style.backgroundColor = '#c0392b';
