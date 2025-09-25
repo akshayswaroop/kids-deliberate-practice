@@ -77,8 +77,23 @@ function MasteryTile({ label, progress, isActive }) {
   );
 }
 
-export default function PracticeCard({ mainWord, transliteration, choices, onCorrect, onWrong }) {
+export default function PracticeCard({ mainWord, transliteration, choices, onCorrect, onWrong, onNext }) {
   const [columns, setColumns] = React.useState(6);
+  const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
+
+  React.useEffect(() => {
+    if (isDebug) {
+      // eslint-disable-next-line no-console
+      console.debug('[PracticeCard] mount mainWord=', mainWord, 'choicesCount=', choices ? choices.length : 0);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (isDebug) {
+      // eslint-disable-next-line no-console
+      console.debug('[PracticeCard] mainWord changed ->', mainWord);
+    }
+  }, [mainWord]);
 
   React.useEffect(() => {
     function updateCols() {
@@ -211,7 +226,7 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
         minWidth: 280
       }}>
         <button
-          onClick={onCorrect}
+          onClick={() => { if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); } onCorrect && onCorrect(); }}
           aria-label="Mark as read — great job"
           className="mastery-footer-button primary"
           style={{
@@ -234,7 +249,7 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
           <span>Read it well!</span>
         </button>
         <button
-          onClick={onWrong}
+          onClick={() => { if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); } onWrong && onWrong(); }}
           aria-label="Try again later — would you like to repeat this?"
           className="mastery-footer-button secondary"
           style={{
@@ -255,6 +270,29 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
         >
           <span style={{fontSize:18}}>🔁</span>
           <span>Try again later</span>
+        </button>
+        <button
+          onClick={() => { if (isDebug) { console.debug('[PracticeCard] onNext clicked', mainWord); } onNext && onNext(); }}
+          aria-label="Next word"
+          className="mastery-footer-button"
+          style={{
+            backgroundColor: '#6366f1',
+            color: 'white',
+            border: 'none',
+            borderRadius: 10,
+            padding: '10px 14px',
+            fontSize: 15,
+            fontWeight: 800,
+            cursor: 'pointer',
+            display: 'flex',
+            gap: 8,
+            alignItems: 'center',
+            transition: 'transform 180ms ease, box-shadow 180ms ease',
+            boxShadow: '0 8px 20px rgba(99,102,241,0.12)'
+          }}
+        >
+          <span style={{fontSize:18}}>⏭️</span>
+          <span>Next</span>
         </button>
       </div>
     </div>

@@ -220,6 +220,7 @@ function App() {
       onSetMode={handleSetMode}
       mode={mode}
       mainWord={mainWord}
+      sessionId={sessionId}
       transliteration={transliteration}
       choices={choices}
       onCorrect={onCorrect}
