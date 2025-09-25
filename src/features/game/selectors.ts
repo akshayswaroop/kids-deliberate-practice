@@ -37,3 +37,52 @@ export function selectSessionProgress(
     total: session.wordIds.length,
   };
 }
+
+// Language filtering selectors
+export function selectWordsByLanguage(state: RootState, languages: string[]): Record<string, Word> {
+  const user = state.users[state.currentUserId];
+  if (!user) return {};
+  
+  const filteredWords: Record<string, Word> = {};
+  
+  for (const [wordId, word] of Object.entries(user.words)) {
+    if (languages.includes(word.language) || languages.includes('mixed')) {
+      filteredWords[wordId] = word;
+    }
+  }
+  
+  return filteredWords;
+}
+
+export function selectCurrentLanguagePreferences(state: RootState): string[] {
+  const user = state.users[state.currentUserId];
+  if (!user) return ['english'];
+  return user.settings.languages;
+}
+
+export function selectWordsByMasteryBucket(state: RootState, languages: string[]): {
+  struggle: Word[];
+  new: Word[];
+  mastered: Word[];
+} {
+  const words = selectWordsByLanguage(state, languages);
+  const buckets = { struggle: [] as Word[], new: [] as Word[], mastered: [] as Word[] };
+  
+  for (const word of Object.values(words)) {
+    const mastery = selectMasteryPercent(state, word.id);
+    
+    if (word.attempts.length === 0) {
+      buckets.new.push(word);
+    } else if (mastery < 60) {
+      buckets.struggle.push(word);
+    } else if (mastery === 100) {
+      // Check if it's time for spaced review
+      const now = Date.now();
+      if (!word.nextReviewAt || now >= word.nextReviewAt) {
+        buckets.mastered.push(word);
+      }
+    }
+  }
+  
+  return buckets;
+}

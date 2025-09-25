@@ -17,6 +17,7 @@ const initialState: RootState = {
           mastered: 0.1,
         },
         sessionSize: 12,
+        languages: ['english'], // Default to English only
       },
     },
   },
@@ -49,6 +50,7 @@ const gameSlice = createSlice({
               mastered: 0.1,
             },
             sessionSize: 12,
+            languages: ['english'], // Default to English only
           },
         };
         state.currentUserId = newUserId;
@@ -91,8 +93,13 @@ const gameSlice = createSlice({
       if (!user) return;
       user.sessions[action.payload.sessionId] = action.payload.session;
     },
+    setLanguagePreferences(state, action: PayloadAction<{ languages: string[] }>) {
+      const user = state.users[state.currentUserId];
+      if (!user) return;
+      user.settings.languages = action.payload.languages;
+    },
   },
 });
 
-export const { selectUser, setMode, attempt, nextCard, addSession, addUser } = gameSlice.actions;
+export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences } = gameSlice.actions;
 export default gameSlice.reducer;

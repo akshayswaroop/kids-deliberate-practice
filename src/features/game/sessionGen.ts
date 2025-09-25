@@ -6,7 +6,7 @@ export function selectSessionWords(
   weights: { struggle: number; new: number; mastered: number },
   size: number,
   rng: () => number,
-  masterySelector: (word: Word) => number = (word) => selectMasteryPercent({ users: { user1: { words: { [word.id]: word }, sessions: {}, activeSessions: {}, settings: { selectionWeights: weights, sessionSize: size } } }, currentUserId: 'user1' }, word.id)
+  masterySelector: (word: Word) => number = (word) => selectMasteryPercent({ users: { user1: { words: { [word.id]: word }, sessions: {}, activeSessions: {}, settings: { selectionWeights: weights, sessionSize: size, languages: ['english'] } } }, currentUserId: 'user1' }, word.id)
 ): string[] {
   // Buckets
   const now = Date.now();

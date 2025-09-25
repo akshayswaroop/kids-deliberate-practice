@@ -26,7 +26,7 @@ describe("selectMasteryPercent", () => {
           words: { w1: word },
           sessions: {},
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12 },
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12, languages: ["english"] },
         },
       },
       currentUserId: 'user1',
@@ -48,7 +48,7 @@ describe("selectMasteryPercent", () => {
           words: { w2: word },
           sessions: {},
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12 },
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12, languages: ["english"] },
         },
       },
       currentUserId: 'user1',
@@ -69,7 +69,7 @@ describe("selectCurrentWord", () => {
       revealed: false,
       mode: "practice",
       createdAt: 0,
-      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2 },
+      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ["english"] },
     };
     const state: RootState = {
       users: {
@@ -95,7 +95,7 @@ describe("selectSessionProgress", () => {
       revealed: false,
       mode: "practice",
       createdAt: 0,
-      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2 },
+      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ["english"] },
     };
     const state: RootState = {
       users: {

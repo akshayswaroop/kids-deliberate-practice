@@ -7,8 +7,12 @@ export type Attempt = {
 
 export type Word = {
   id: string;
-  text: string;
+  text: string; // For English words, this is the main text. For Kannada, this could be transliteration for display
   language: string;
+  // Kannada-specific fields
+  wordKannada?: string; // ರಾಮ
+  transliteration?: string; // Rāma  
+  transliterationHi?: string; // राम
   attempts: Attempt[];
   nextReviewAt?: number;
   reviewInterval?: number;
@@ -21,6 +25,8 @@ export type SessionSettings = {
     mastered: number;
   };
   sessionSize: number;
+  // Language filtering for sessions
+  languages: string[]; // ["english", "kannada"] or ["mixed"]
 };
 
 export type Session = {

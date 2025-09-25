@@ -3,8 +3,8 @@ import ReactJson from '@microlink/react-json-view';
 
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectMasteryPercent, selectCurrentWord, selectSessionProgress } from './features/game/selectors';
-import { attempt, nextCard, addSession, selectUser } from './features/game/slice';
+import { selectMasteryPercent, selectCurrentWord, selectSessionProgress, selectWordsByLanguage } from './features/game/selectors';
+import { attempt, nextCard, addSession, selectUser, setLanguagePreferences } from './features/game/slice';
 import type { RootState, Word, UserState } from './features/game/state';
 
 
@@ -34,11 +34,12 @@ function App() {
     return mastered;
   }
 
-  // Next session: pick 12 not yet mastered
+  // Next session: pick 12 not yet mastered (language-aware)
   const startNextSession = () => {
-    const mastered = getMasteredWords(words);
-    const remaining = Object.keys(words).filter(id => !mastered.has(id));
-    const ids = pickRandomWords(Object.fromEntries(remaining.map(id => [id, words[id]])), 12);
+    const languageFilteredWords = selectWordsByLanguage(rootState, currentLanguages);
+    const mastered = getMasteredWords(languageFilteredWords);
+    const remaining = Object.keys(languageFilteredWords).filter(id => !mastered.has(id));
+    const ids = pickRandomWords(Object.fromEntries(remaining.map(id => [id, languageFilteredWords[id]])), 12);
     if (ids.length === 0) return;
     const newSessionId = 'session_' + Date.now();
     dispatch(addSession({
@@ -49,7 +50,7 @@ function App() {
         revealed: false,
         mode: 'practice',
         createdAt: Date.now(),
-        settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12 },
+        settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12, languages: currentLanguages },
       },
     }));
     setSessionId(newSessionId);
@@ -68,6 +69,20 @@ function App() {
   const words = userState.words;
   const sessions = userState.sessions;
   const [sessionId, setSessionId] = useState<string | null>(null);
+  
+  // Language preferences
+  const currentLanguages = userState.settings.languages || ['english'];
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedLanguage = e.target.value;
+    let newLanguages: string[];
+    if (selectedLanguage === 'mixed') {
+      newLanguages = ['english', 'kannada'];
+    } else {
+      newLanguages = [selectedLanguage];
+    }
+    dispatch(setLanguagePreferences({ languages: newLanguages }));
+    setSessionId(null); // reset session when language changes
+  };
   // User selection handler
   const handleUserChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newUserId = e.target.value;
@@ -86,7 +101,8 @@ function App() {
   }
 
   const startSession = () => {
-    const ids = pickRandomWords(words, 12);
+    const languageFilteredWords = selectWordsByLanguage(rootState, currentLanguages);
+    const ids = pickRandomWords(languageFilteredWords, 12);
     const newSessionId = 'session_' + Date.now();
     dispatch(addSession({
       sessionId: newSessionId,
@@ -96,7 +112,7 @@ function App() {
         revealed: false,
         mode: 'practice',
         createdAt: Date.now(),
-        settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12 },
+        settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 12, languages: currentLanguages },
       },
     }));
     setSessionId(newSessionId);
@@ -141,6 +157,25 @@ function App() {
           disabled={!newUserId.trim() || !!users[newUserId.trim()]}
         >Add User</button>
       </div>
+      
+      {/* Language Selection */}
+      <div style={{ marginBottom: 24 }}>
+        <label htmlFor="language-select" style={{ fontWeight: 500, marginRight: 8 }}>Language Mode:</label>
+        <select 
+          id="language-select" 
+          value={currentLanguages.length === 2 ? 'mixed' : currentLanguages[0]} 
+          onChange={handleLanguageChange} 
+          style={{ padding: '6px 12px', borderRadius: 6, marginRight: 12 }}
+        >
+          <option value="english">English Only</option>
+          <option value="kannada">Kannada Only</option>
+          <option value="mixed">Mixed (Both Languages)</option>
+        </select>
+        <span style={{ fontSize: 14, color: '#888' }}>
+          Current: {currentLanguages.join(' + ')}
+        </span>
+      </div>
+      
       <div style={{ display: 'flex', gap: 32, alignItems: 'flex-start', flexWrap: 'wrap' }}>
         {/* Word List Card */}
         <div style={{ background: '#232326', borderRadius: 12, padding: 24, minWidth: 320, boxShadow: '0 2px 8px #0002' }}>
@@ -149,13 +184,39 @@ function App() {
             {sessionId && sessions[sessionId]
               ? sessions[sessionId].wordIds.map(id => (
                   <li key={id} style={{ padding: '4px 0', borderBottom: '1px solid #222' }}>
-                    <span style={{ fontWeight: 500 }}>{words[id].text}</span>
+                    <span style={{ fontWeight: 500 }}>
+                      {words[id].text}
+                      {words[id].language === 'kannada' && (
+                        <div style={{ fontSize: 12, color: '#10b981', fontWeight: 300 }}>
+                          {words[id].transliteration}
+                        </div>
+                      )}
+                      <span style={{ 
+                        fontSize: 12, 
+                        color: words[id].language === 'kannada' ? '#fbbf24' : '#60a5fa',
+                        marginLeft: 6,
+                        fontWeight: 300
+                      }}>({words[id].language === 'kannada' ? 'KN' : 'EN'})</span>
+                    </span>
                     <span style={{ float: 'right', fontWeight: 400 }}>{selectMasteryPercent(rootState, id)}%</span>
                   </li>
                 ))
               : Object.values(words).slice(0, 10).map(word => (
                   <li key={word.id} style={{ padding: '4px 0', borderBottom: '1px solid #222' }}>
-                    <span style={{ fontWeight: 500 }}>{word.text}</span>
+                    <span style={{ fontWeight: 500 }}>
+                      {word.text}
+                      {word.language === 'kannada' && (
+                        <div style={{ fontSize: 12, color: '#10b981', fontWeight: 300 }}>
+                          {word.transliteration}
+                        </div>
+                      )}
+                      <span style={{ 
+                        fontSize: 12, 
+                        color: word.language === 'kannada' ? '#fbbf24' : '#60a5fa',
+                        marginLeft: 6,
+                        fontWeight: 300
+                      }}>({word.language === 'kannada' ? 'KN' : 'EN'})</span>
+                    </span>
                     <span style={{ float: 'right', fontWeight: 400 }}>{selectMasteryPercent(rootState, word.id)}%</span>
                   </li>
                 ))}
@@ -178,7 +239,20 @@ function App() {
           )}
           {currentWord && (
             <div style={{ marginTop: 20, background: '#18181b', borderRadius: 8, padding: 16 }}>
-              <div style={{ fontSize: 18, marginBottom: 12 }}>Current Word: <b>{currentWord.text}</b></div>
+              <div style={{ fontSize: 18, marginBottom: 12 }}>
+                Current Word: 
+                {currentWord.language === 'kannada' ? (
+                  <div style={{ marginTop: 8 }}>
+                    <div style={{ fontSize: 24, fontWeight: 'bold', color: '#fbbf24' }}>{currentWord.text}</div>
+                    <div style={{ fontSize: 16, color: '#10b981' }}>{currentWord.transliteration}</div>
+                    {currentWord.transliterationHi && (
+                      <div style={{ fontSize: 14, color: '#8b5cf6' }}>{currentWord.transliterationHi}</div>
+                    )}
+                  </div>
+                ) : (
+                  <b style={{ color: '#60a5fa' }}>{currentWord.text}</b>
+                )}
+              </div>
               <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
                 <button
                   onClick={() => sessionId && dispatch(attempt({ sessionId, wordId: currentWord!.id, result: 'correct' }))}
