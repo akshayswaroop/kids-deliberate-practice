@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './state';
+import { getInitialWords } from '../../app/bootstrapState';
 
 const initialState: RootState = {
-  words: {},
+  words: getInitialWords(),
   sessions: {},
   activeSessions: {},
   settings: {
@@ -46,8 +47,12 @@ const gameSlice = createSlice({
         session.lastAttempt = undefined;
       }
     },
+
+    addSession(state, action: PayloadAction<{ sessionId: string; session: import('./state').Session }>) {
+      state.sessions[action.payload.sessionId] = action.payload.session;
+    },
   },
 });
 
-export const { setMode, attempt, nextCard } = gameSlice.actions;
+export const { setMode, attempt, nextCard, addSession } = gameSlice.actions;
 export default gameSlice.reducer;
