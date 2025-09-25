@@ -16,3 +16,8 @@
 - **Reducers**: Mechanical updates (no domain math).
 - **Selectors**: Domain rules (pure calculations).
 - **UI**: Dumb view that calls selectors and dispatches actions.
+
+### Layout & Presentation
+
+- The app exposes a `HomePage` container with three responsive layout variants: `topbar`, `sidebar`, and `center`. Presentation components are built as pure props-only React components and developed via Storybook.
+- Root CSS no longer constrains max-width; the UI is designed to use full viewport width with controlled padding/gutters to avoid overflow and preserve readability.

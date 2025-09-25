@@ -11,6 +11,12 @@ Currently, two official plugins are available:
 
 The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
+## Storybook & Diagnostics
+
+This project uses Storybook to develop and test presentation components in isolation (stories live under `src/app/ui/*.stories.*`).
+
+During development you can open an interactive Diagnostics panel in the running app by appending `#diagnostics` to the URL (e.g. `http://localhost:5173/#diagnostics`). The Diagnostics view provides a live JSON state viewer and quick controls for switching users, creating sessions, and emitting attempts to exercise reducers.
+
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
