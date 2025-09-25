@@ -1,21 +1,66 @@
-# React + TypeScript + Vite
+# Kids Deliberate Practice - Multi-Language Learning App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Redux-first React application for deliberate practice with spaced repetition, supporting both English and Kannada languages with proper script display and transliterations.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Multi-language Support**: English and Kannada words with proper Unicode script rendering
+- **Spaced Repetition**: Intelligent algorithm for optimal learning retention
+- **Multi-user Profiles**: Separate progress tracking for different users (Mishika, Eva, Akshay)
+- **Responsive UI**: Optimized layout with CSS Grid and responsive bubble sizing
+- **Progress Tracking**: Visual mastery indicators with rainbow gradient progress bubbles
+- **Language Modes**: Switch between English-only, Kannada-only, or mixed practice modes
 
-## React Compiler
+## 🚀 Quick Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# Install dependencies
+npm install
 
-## Storybook & Diagnostics
+# Start development server
+npm run dev
 
+# Build for production
+npm run build
+
+# Run tests
+npm run test
+
+# Launch Storybook for component development
+npm run storybook
+```
+
+## 🎨 Development Tools
+
+### Storybook & Component Development
 This project uses Storybook to develop and test presentation components in isolation (stories live under `src/app/ui/*.stories.*`).
 
-During development you can open an interactive Diagnostics panel in the running app by appending `#diagnostics` to the URL (e.g. `http://localhost:5173/#diagnostics`). The Diagnostics view provides a live JSON state viewer and quick controls for switching users, creating sessions, and emitting attempts to exercise reducers.
+### Interactive Diagnostics
+During development you can open an interactive Diagnostics panel in the running app by appending `#diagnostics` to the URL (e.g. `http://localhost:5173/#diagnostics`). The Diagnostics view provides:
+- Live JSON state viewer
+- Quick controls for switching users  
+- Session creation and management
+- Attempt simulation for testing reducers
+
+## 🏗️ Architecture
+
+### Redux-First Design
+- **Calculations** (`selectors.ts`): Pure functions for domain logic and mastery calculation
+- **Actions** (`slice.ts`): State mutations with minimal logic
+- **Data** (`state.ts`): Immutable data structures and type definitions
+- **Presentation**: Pure UI components tested in Storybook isolation
+
+### Multi-Language Support
+- **Kannada Script**: Proper Unicode rendering with 100+ curated words
+- **Transliterations**: Hindi and English transliterations as learning hints  
+- **Language Filtering**: User preferences for English, Kannada, or mixed modes
+- **Unicode Quality**: Fixed character encoding issues (Sinhala → Kannada corrections)
+
+### Optimized UI Layout
+- **Space Efficient**: CSS Grid with responsive bubble sizing (64-112px based on content)
+- **Multi-row Display**: Automatic wrapping for optimal horizontal space usage
+- **Full Viewport**: Components use `minHeight: 100vh` for maximum space utilization
+- **Minimal Padding**: Reduced excessive spacing throughout component hierarchy
 
 ## Expanding the ESLint configuration
 
