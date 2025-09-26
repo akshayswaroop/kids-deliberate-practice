@@ -191,6 +191,7 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   sessionId: string | null;
   mainWord: string;
   transliteration?: string;
+  transliterationHi?: string;
   choices: Array<{ id: string; label: string; progress: number }>;
 } {
   if (!state.currentUserId) {
@@ -222,7 +223,7 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
       return {
         sessionId: null,
         mainWord: firstWord.wordKannada || firstWord.text || '...',
-        transliteration: firstWord.transliteration,
+        // Don't show transliteration in fallback case (no session yet)
         choices: wordsArray.slice(0, 4).map(w => ({ 
           id: w.id, 
           label: w.wordKannada || w.text, 
@@ -240,11 +241,17 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
 
   const currentWord = selectCurrentWord(state, sessionId);
   const choices = selectPracticeChoices(state, sessionId);
+  const session = user.sessions[sessionId];
+  
+  // Only show transliteration for Kannada mode after attempt (session.revealed = true)
+  const isKannadaMode = mode === 'kannada';
+  const shouldShowTransliteration = isKannadaMode && session?.revealed === true;
   
   return {
     sessionId,
     mainWord: currentWord ? (currentWord.wordKannada || currentWord.text || '...') : '...',
-    transliteration: currentWord?.transliteration,
+    transliteration: shouldShowTransliteration ? currentWord?.transliteration : undefined,
+    transliterationHi: shouldShowTransliteration ? currentWord?.transliterationHi : undefined,
     choices
   };
 }

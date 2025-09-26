@@ -20,6 +20,7 @@ interface HomePageProps {
   mainWord: string;
   choices: Array<{ id: string; label: string; progress: number }>;
   transliteration?: string;
+  transliterationHi?: string;
   onCorrect: () => void;
   onWrong: () => void;
   onNext: () => void;
@@ -39,6 +40,7 @@ export default function HomePage({
   mainWord,
   choices,
   transliteration,
+  transliterationHi,
   onCorrect,
   onWrong,
   onNext,
@@ -95,7 +97,7 @@ export default function HomePage({
           </div>
         </div>
         <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: '#fff', margin: '4px', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
-          <PracticePanel mainWord={mainWord} transliteration={transliteration} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} />
+          <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} />
         </div>
       </div>
     );
@@ -122,7 +124,7 @@ export default function HomePage({
           <a href="#diagnostics" style={{ position: 'absolute', right: 12, top: 12, color: '#fff', fontWeight: 600, fontSize: 14, textDecoration: 'underline', background: 'rgba(0,0,0,0.15)', borderRadius: 8, padding: '6px 10px' }}>Diagnostics</a>
         </div>
         <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'stretch', background: '#fff', margin: '4px', borderRadius: 12, boxShadow: '0 2px 12px #0001' }}>
-          <PracticePanel mainWord={mainWord} transliteration={transliteration} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} />
+          <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} />
         </div>
       </div>
     );
@@ -147,7 +149,7 @@ export default function HomePage({
           />
           <ModeSelector compact mode={mode} onSetMode={onSetMode} />
         </div>
-  <PracticePanel mainWord={mainWord} transliteration={transliteration} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} />
+  <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} />
       </div>
     </div>
   );

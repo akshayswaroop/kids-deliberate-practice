@@ -4,6 +4,7 @@ import PracticeCard from './PracticeCard.jsx';
 interface PracticePanelProps {
   mainWord: string;
   transliteration?: string;
+  transliterationHi?: string;
   choices: Array<{ id: string; label: string; progress: number }>;
   onCorrect: () => void;
   onWrong: () => void;
@@ -14,6 +15,7 @@ interface PracticePanelProps {
 export default function PracticePanel({ 
   mainWord, 
   transliteration, 
+  transliterationHi,
   choices, 
   onCorrect, 
   onWrong, 
@@ -25,6 +27,7 @@ export default function PracticePanel({
       <PracticeCard
         mainWord={mainWord}
         transliteration={transliteration}
+        transliterationHi={transliterationHi}
         choices={choices}
         onCorrect={onCorrect}
         onWrong={onWrong}
