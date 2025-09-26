@@ -27,7 +27,7 @@ describe("selectMasteryPercent", () => {
           words: { w1: word },
           sessions: {},
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ["english"] },
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 6 }, languages: ["english"] },
         },
       },
       currentUserId: 'user1',
@@ -49,7 +49,7 @@ describe("selectMasteryPercent", () => {
           words: { w2: word },
           sessions: {},
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ["english"] },
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 6 }, languages: ["english"] },
         },
       },
       currentUserId: 'user1',
@@ -70,7 +70,7 @@ describe("selectCurrentWord", () => {
       revealed: false,
       mode: "practice",
       createdAt: 0,
-      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ["english"] },
+      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ["english"] },
     };
     const state: RootState = {
       users: {
@@ -96,7 +96,7 @@ describe("selectSessionProgress", () => {
       revealed: false,
       mode: "practice",
       createdAt: 0,
-      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ["english"] },
+      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ["english"] },
     };
     const state: RootState = {
       users: {
@@ -136,10 +136,10 @@ describe('selectAreAllSessionWordsMastered', () => {
             ]}
           },
           sessions: {
-            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] } }
+            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ['english'] } }
           },
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] }
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ['english'] }
         }
       },
       currentUserId: 'user1'
@@ -167,10 +167,10 @@ describe('selectAreAllSessionWordsMastered', () => {
             ]}
           },
           sessions: {
-            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] } }
+            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ['english'] } }
           },
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] }
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ['english'] }
         }
       },
       currentUserId: 'user1'

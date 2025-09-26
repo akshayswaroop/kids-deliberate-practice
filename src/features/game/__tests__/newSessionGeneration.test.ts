@@ -21,7 +21,7 @@ function makeInitialStateWithWords(): RootState {
         activeSessions: {},
         settings: {
           selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
-          sessionSize: 3,
+          sessionSizes: { english: 3 },
           languages: ['english'],
         },
       },
@@ -71,7 +71,7 @@ describe('New Session Generation', () => {
     const newWordIds = selectSessionWords(
       allWordsArr, 
       state.users.testUser.settings.selectionWeights, 
-      state.users.testUser.settings.sessionSize, 
+      state.users.testUser.settings.sessionSizes.english, 
       Math.random
     );
     

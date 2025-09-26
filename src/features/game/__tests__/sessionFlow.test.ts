@@ -23,7 +23,7 @@ describe('Session flow: master 12 words, then next 12', () => {
           activeSessions: {},
           settings: {
             selectionWeights: { struggle: 1, new: 1, mastered: 1 },
-            sessionSize: 6,
+            sessionSizes: { english: 6 },
             languages: ['english'],
           },
         },
