@@ -14,8 +14,6 @@ interface HomePageProps {
   onCreateUser: (username: string) => void;
   onSwitchUser: (userId: string) => void;
   onSetMode: (mode: string) => void;
-  sessionSize?: number;
-  onSetSessionSize?: (n: number) => void;
   mode: string;
   mainWord: string;
   choices: Array<{ id: string; label: string; progress: number }>;
@@ -36,8 +34,6 @@ export default function HomePage({
   onCreateUser,
   onSwitchUser,
   onSetMode,
-  sessionSize,
-  onSetSessionSize,
   mode,
   mainWord,
   choices,
@@ -85,20 +81,6 @@ export default function HomePage({
             </div>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
               <ModeSelector compact mode={mode} onSetMode={onSetMode} />
-              {/* Session size selector: 3,6,9,12 */}
-              <div>
-                <select
-                  aria-label="session-size"
-                  value={sessionSize ?? 6}
-                  onChange={e => onSetSessionSize && onSetSessionSize(Number(e.target.value))}
-                  style={{ padding: '6px 10px', borderRadius: 8, border: 'none', fontSize: 14, fontWeight: 600, boxShadow: '0 2px 4px rgba(0,0,0,0.08)' }}
-                >
-                  <option value={3}>3 items</option>
-                  <option value={6}>6 items</option>
-                  <option value={9}>9 items</option>
-                  <option value={12}>12 items</option>
-                </select>
-              </div>
             </div>
           </div>
         </div>

@@ -18,10 +18,11 @@ export const makeUser = (displayName?: string) => ({
       mastered: 0.1,
     },
     sessionSizes: { 
-      english: 6,   // Default for English
-      kannada: 6,   // Default for Kannada  
-      mathtables: 6, // Default for Math Tables
-      mixed: 6      // Default for mixed mode
+      english: 12,   // Default for English
+      kannada: 12,   // Default for Kannada  
+      mathtables: 12, // Default for Math Tables
+      humanbody: 12, // Default for Human Body
+      mixed: 12      // Default for mixed mode
     },
     languages: ['english'], // Default to English only
     complexityLevels: {

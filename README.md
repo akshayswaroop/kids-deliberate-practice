@@ -6,11 +6,12 @@ A Redux-first React application for deliberate practice with spaced repetition, 
 
 - **Multi-language Support**: English and Kannada words with proper Unicode script rendering
 - **Spaced Repetition**: Intelligent algorithm for optimal learning retention
-- **Multi-user Profiles**: Separate progress tracking for different users (Mishika, Eva, Akshay)
- - **Multi-user Profiles**: Separate progress tracking for different users (use opaque user ids with optional display names)
+- **Multi-user Profiles**: Separate progress tracking for different users (use opaque user ids with optional display names)
+- **Fixed Session Size**: Simplified experience with exactly 12 questions per session
+- **Progressive Learning**: Complexity level system ensures proper learning progression
 - **Responsive UI**: Optimized layout with CSS Grid and responsive bubble sizing
 - **Progress Tracking**: Visual mastery indicators with rainbow gradient progress bubbles
-- **Language Modes**: Switch between English-only, Kannada-only, or mixed practice modes
+- **Language Modes**: Switch between English, Kannada, Math Tables, or Human Body practice modes
 
 ## 🚀 Quick Start
 
@@ -86,10 +87,16 @@ During development you can open an interactive Diagnostics panel in the running 
 - On first run the app shows an Onboarding screen to create the initial user rather than baking a default user into the app state.
 - A fast Vitest detection test was added to `src/features/game/__tests__/noHardcodedUserNames.test.ts` that scans `src/` (excluding `__tests__` and `src/assets`) to prevent re-introducing forbidden literal names into source files. Keep test fixtures and sample user names inside `__tests__` only.
 
+### Session Management
+- **Fixed Session Size**: All practice sessions contain exactly 12 questions for consistent experience
+- **Progressive Learning**: Words filtered by current complexity level only - no mixing of difficulty levels
+- **Proper Learning Path**: Students must master current level before advancing to harder content
+- **Simplified UX**: No configuration dropdowns - focus on learning, not settings
+
 ### Multi-Language Support
 - **Kannada Script**: Proper Unicode rendering with 100+ curated words
 - **Transliterations**: Hindi and English transliterations as learning hints  
-- **Language Filtering**: User preferences for English, Kannada, or mixed modes
+- **Language Filtering**: User preferences for English, Kannada, Math Tables, or Human Body modes
 - **Unicode Quality**: Fixed character encoding issues (Sinhala → Kannada corrections)
 
 ### Optimized UI Layout

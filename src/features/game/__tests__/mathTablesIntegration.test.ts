@@ -63,9 +63,10 @@ describe('Math Tables Integration', () => {
     const level1MathWords = selectWordsByComplexityLevel(mockState, ['mathtables']);
     const level1Array = Object.values(level1MathWords);
     
-    // Should only get level 1 math words (1x and 2x tables = 20 words)
+    // Should get only level 1 math words (current level only)
+    // Level 1: 1x and 2x tables = 20 words
     expect(level1Array).toHaveLength(20);
-    expect(level1Array.every(word => word.complexityLevel === 1)).toBe(true);
+    expect(level1Array.every(word => word.complexityLevel === 1)).toBe(true); // Only level 1
     expect(level1Array.every(word => word.language === 'mathtables')).toBe(true);
   });
 });

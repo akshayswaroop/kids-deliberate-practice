@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setMode as setModeAction, setSessionSize, addSession, attempt, nextCard } from './features/game/slice';
+import { setMode as setModeAction, addSession, attempt, nextCard } from './features/game/slice';
 import HomePage from './app/ui/HomePage';
 import Onboarding from './app/ui/Onboarding';
 import { 
@@ -47,14 +47,6 @@ function App() {
   const handleSetMode = (newMode: string) => {
     dispatch({ type: 'game/setLanguagePreferences', payload: { languages: [newMode] } });
     setMode(newMode);
-  };
-
-  const handleSetSessionSize = (n: number) => {
-    // Update the user's setting for the current mode
-    dispatch(setSessionSize({ mode, sessionSize: n } as any));
-    // Clear the active session for the current mode so a new session gets generated
-    // (we use an empty string which is falsy so the session-creation branch runs)
-    dispatch(setModeAction({ mode, sessionId: '' } as any));
   };
 
   // Use selectors to get clean, derived data
@@ -154,8 +146,6 @@ function App() {
       onCreateUser={handleCreateUser}
       onSwitchUser={handleSwitchUser}
       onSetMode={handleSetMode}
-      sessionSize={selectSessionSizeForMode(rootState as any, mode)}
-      onSetSessionSize={handleSetSessionSize}
       mode={mode}
       mainWord={practiceData.mainWord}
       transliteration={practiceData.transliteration}

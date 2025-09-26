@@ -31,9 +31,9 @@ describe('Session Size Per-Mode', () => {
   it('should remember different session sizes for different modes', () => {
     let state = makeInitialState();
     
-    // Start with default sessionSize of 6
-    expect(selectSessionSizeForMode(state, 'english')).toBe(6);
-    expect(selectSessionSizeForMode(state, 'kannada')).toBe(6);
+    // Fixed session size is always 12 for all modes
+    expect(selectSessionSizeForMode(state, 'english')).toBe(12);
+    expect(selectSessionSizeForMode(state, 'kannada')).toBe(12);
     
     // User switches to English mode and sets sessionSize to 3
     state = reducer(state, setSessionSize({ mode: 'english', sessionSize: 3 }));
@@ -41,8 +41,8 @@ describe('Session Size Per-Mode', () => {
     // User switches to Kannada mode and sets sessionSize to 9
     state = reducer(state, setSessionSize({ mode: 'kannada', sessionSize: 9 }));
     
-    // With the fix, each mode should remember its own sessionSize
-    expect(selectSessionSizeForMode(state, 'english')).toBe(3); // Should be 3
-    expect(selectSessionSizeForMode(state, 'kannada')).toBe(9); // Should be 9
+    // Session size is now fixed at 12 for all modes - no per-mode configuration
+    expect(selectSessionSizeForMode(state, 'english')).toBe(12); // Fixed at 12
+    expect(selectSessionSizeForMode(state, 'kannada')).toBe(12); // Fixed at 12
   });
 });

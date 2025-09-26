@@ -267,4 +267,33 @@ When resuming work on this project:
 - Added an Onboarding screen that prompts for a (optional) display name and creates the initial user rather than relying on a baked-in default user.
 - Added a detection test `src/features/game/__tests__/noHardcodedUserNames.test.ts` to prevent re-introduction of literal names into `src/` files; keep fixtures and sample users inside `__tests__`.
 
-The implementation is **production-ready** with comprehensive multi-language support, proper error handling, and maintainable architecture.
+## Latest Updates (September 26, 2025) - Session Management Simplification
+
+### Problem Solved
+- **Issue**: Human Body mode only showing 5 choice boxes despite selecting 6, 9, or 12 questions
+- **Root Cause**: Limited questions available at complexity level 1
+- **Solution**: Fixed session size to 12 questions + proper progressive learning
+
+### Changes Made
+1. **Fixed Session Size**: All sessions now contain exactly 12 questions
+   - Removed session size dropdown from UI
+   - Updated `selectSessionSizeForMode()` to always return 12
+   - Simplified UX by eliminating configuration complexity
+
+2. **Progressive Learning Enhancement**: 
+   - Maintained complexity level filtering to current level only
+   - Ensures proper level-by-level progression without mixing difficulties
+   - Students must master current level before advancing
+
+3. **Updated Documentation**:
+   - `domain rules.md`: Added progressive learning rules and fixed session size
+   - `architecture.md`: Updated state structure and session management info
+   - `README.md`: Added session management features section
+
+### Technical Implementation
+- **File Changes**: `selectors.ts`, `slice.ts`, `HomePage.tsx`, `App.tsx`
+- **Test Updates**: All tests updated to expect 12 questions
+- **State Management**: Removed session size configuration logic
+- **UI Simplification**: Removed dropdown component and related handlers
+
+The implementation is **production-ready** with comprehensive multi-language support, proper error handling, simplified UX, and maintainable architecture.

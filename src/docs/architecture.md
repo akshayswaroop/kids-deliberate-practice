@@ -5,11 +5,11 @@
 - **words**:  
   `Record<wordId, { id, text, language, attempts: [{ timestamp: number, result: "correct" | "wrong" }], nextReviewAt?: number, reviewInterval?: number }>`
 - **sessions**:  
-  `Record<sessionId, { wordIds: string[], currentIndex: number, revealed: boolean, lastAttempt?: "correct" | "wrong", mode: string, createdAt: number, settings: { selectionWeights: { struggle: number, new: number, mastered: number }, sessionSize: number } }>`
+  `Record<sessionId, { wordIds: string[], currentIndex: number, revealed: boolean, lastAttempt?: "correct" | "wrong", mode: string, createdAt: number, settings: { selectionWeights: { struggle: number, new: number, mastered: number }, sessionSizes: Record<string, number>, languages: string[], complexityLevels: Record<string, number> } }>`
 - **activeSessions**:  
   `Record<mode, sessionId>`
 - **settings**:  
-  `{ selectionWeights, sessionSize }`
+  `{ selectionWeights, sessionSizes: Record<string, number>, languages: string[], complexityLevels: Record<string, number> }`
 
 ### Rules
 
@@ -17,8 +17,11 @@
 - **Selectors**: Domain rules (pure calculations).
 - **UI**: Dumb view that calls selectors and dispatches actions.
 
-### Layout & Presentation
-
+### Session Management
+- **Fixed Session Size**: All sessions contain exactly 12 questions
+- **Language Support**: English, Kannada, Math Tables, and Human Body modes
+- **Progressive Learning**: Complexity level filtering ensures proper learning progression
+- **No Configuration UI**: Session size is hardcoded to simplify UX
 
 ### Developer Note
 

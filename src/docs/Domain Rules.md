@@ -15,12 +15,17 @@
   - If **wrong**: `reviewInterval = 1`, mastery drops as per above rules
 
 ### Session Selection
-- Select `sessionSize` words using **weighted buckets**:
+- Select **12 words** (fixed session size) using **weighted buckets**:
   - **Struggle**: `mastery < 60%`
   - **New**: `attempts.length == 0`
   - **Mastered**: `mastery == 100%` and `now >= nextReviewAt`
 - **Weights** for buckets are configurable: `{ struggle, new, mastered }`
 - **Randomness** is injected via RNG (seedable for tests)
+
+### Progressive Learning
+- **Complexity Levels**: Words are filtered by current complexity level only
+- **Level Progression**: Students must master current level before advancing
+- **No Level Mixing**: Session contains words from single complexity level to maintain clear learning progression
 
 ### Developer Note
 

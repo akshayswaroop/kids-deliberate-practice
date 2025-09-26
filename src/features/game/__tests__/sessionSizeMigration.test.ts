@@ -24,9 +24,9 @@ describe('SessionSize Migration', () => {
     };
 
     // Selector should handle legacy structure gracefully
-    expect(selectSessionSizeForMode(legacyState, 'english')).toBe(9);
-    expect(selectSessionSizeForMode(legacyState, 'kannada')).toBe(9);
-    expect(selectSessionSizeForMode(legacyState, 'mixed')).toBe(9);
+    expect(selectSessionSizeForMode(legacyState, 'english')).toBe(12);
+    expect(selectSessionSizeForMode(legacyState, 'kannada')).toBe(12);
+    expect(selectSessionSizeForMode(legacyState, 'mixed')).toBe(12);
 
     // When user sets a new sessionSize, it should migrate to the new structure
     const migratedState = reducer(legacyState, setSessionSize({ mode: 'english', sessionSize: 3 }));
@@ -40,11 +40,11 @@ describe('SessionSize Migration', () => {
     // Old sessionSize property should be removed
     expect((migratedState.users.legacyUser.settings as any).sessionSize).toBeUndefined();
 
-    // Setting different modes should work correctly after migration
+    // Session size is now fixed at 12 for all modes - no migration needed
     const finalState = reducer(migratedState, setSessionSize({ mode: 'kannada', sessionSize: 12 }));
-    expect(selectSessionSizeForMode(finalState, 'english')).toBe(3);
+    expect(selectSessionSizeForMode(finalState, 'english')).toBe(12);
     expect(selectSessionSizeForMode(finalState, 'kannada')).toBe(12);
-    expect(selectSessionSizeForMode(finalState, 'mixed')).toBe(9);
+    expect(selectSessionSizeForMode(finalState, 'mixed')).toBe(12);
   });
 
   it('should handle users with no sessionSize at all', () => {
@@ -64,9 +64,9 @@ describe('SessionSize Migration', () => {
       currentUserId: 'minimalUser',
     };
 
-    // Should fallback to default of 6
-    expect(selectSessionSizeForMode(minimalState, 'english')).toBe(6);
-    expect(selectSessionSizeForMode(minimalState, 'kannada')).toBe(6);
+    // Session size is fixed at 12 for all modes
+    expect(selectSessionSizeForMode(minimalState, 'english')).toBe(12);
+    expect(selectSessionSizeForMode(minimalState, 'kannada')).toBe(12);
 
     // Setting sessionSize should create the sessionSizes structure
     const updatedState = reducer(minimalState, setSessionSize({ mode: 'english', sessionSize: 4 }));

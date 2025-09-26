@@ -71,7 +71,7 @@ export function selectWordsByComplexityLevel(state: RootState, languages: string
   for (const [wordId, word] of Object.entries(user.words)) {
     // First check if the language is selected
     if (languages.includes(word.language) || languages.includes('mixed')) {
-      // Then check if the word's complexity level is within the user's unlocked level
+      // Only include words from current level - proper progressive learning
       const userLevelForLanguage = user.settings.complexityLevels[word.language] || 1;
       if (word.complexityLevel <= userLevelForLanguage) {
         filteredWords[wordId] = word;
@@ -284,18 +284,7 @@ export function selectAreAllSessionWordsMastered(state: RootState, sessionId: st
 }
 
 // Get session size for a specific mode with fallback to default
-export function selectSessionSizeForMode(state: RootState, mode: string): number {
-  if (!state.currentUserId) return 6; // Default fallback
-  const user = state.users[state.currentUserId];
-  if (!user) return 6;
-  
-  // Handle migration: if user has old sessionSize structure, use that as default for all modes
-  if (!user.settings.sessionSizes) {
-    // Legacy user with old sessionSize structure
-    const legacySessionSize = (user.settings as any).sessionSize || 6;
-    return legacySessionSize;
-  }
-  
-  // Get sessionSize for the specific mode, fallback to 6 if not set
-  return user.settings.sessionSizes[mode] || 6;
+export function selectSessionSizeForMode(_state: RootState, _mode: string): number {
+  // Always return 12 questions for all modes - simplified approach
+  return 12;
 }

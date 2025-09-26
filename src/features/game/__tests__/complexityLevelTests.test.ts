@@ -54,11 +54,11 @@ describe('Complexity Level System', () => {
     expect(wordIds).toContain('k1'); // Level 1 Kannada
     expect(wordIds).toContain('k2'); // Level 1 Kannada
     
-    // Should NOT include level 2+ words
+    // Should not include level 2+ words
     expect(wordIds).not.toContain('w3'); // Level 2 English
     expect(wordIds).not.toContain('w4'); // Level 2 English
-    expect(wordIds).not.toContain('w5'); // Level 3 English
     expect(wordIds).not.toContain('k3'); // Level 2 Kannada
+    expect(wordIds).not.toContain('w5'); // Level 3 English
   });
 
   it('should include higher level words when user progresses', () => {
@@ -70,19 +70,19 @@ describe('Complexity Level System', () => {
     const words = selectWordsByComplexityLevel(state, ['english', 'kannada']);
     const wordIds = Object.keys(words);
     
-    // Should include level 1 and 2 English words
+    // Should include level 1 and 2 English words (up to current level 2)
     expect(wordIds).toContain('w1'); // Level 1 English
     expect(wordIds).toContain('w2'); // Level 1 English  
     expect(wordIds).toContain('w3'); // Level 2 English
     expect(wordIds).toContain('w4'); // Level 2 English
     
-    // Should NOT include level 3 English words yet
+    // Should not include level 3+ words
     expect(wordIds).not.toContain('w5'); // Level 3 English
     
-    // Kannada should still be at level 1
+    // Kannada should only include level 1 (still at level 1)
     expect(wordIds).toContain('k1'); // Level 1 Kannada
     expect(wordIds).toContain('k2'); // Level 1 Kannada
-    expect(wordIds).not.toContain('k3'); // Level 2 Kannada
+    expect(wordIds).not.toContain('k3'); // Level 2 Kannada (not included as Kannada is still level 1)
   });
 
   it('should detect when user should progress to next level', () => {
@@ -152,13 +152,13 @@ describe('Complexity Level System', () => {
     const words = selectWordsByComplexityLevel(state, ['mixed']);
     const wordIds = Object.keys(words);
     
-    // Should include level 1 words from all languages
+    // Should include level 1 words from all languages (current level only)
     expect(wordIds).toContain('w1'); // Level 1 English
     expect(wordIds).toContain('w2'); // Level 1 English
     expect(wordIds).toContain('k1'); // Level 1 Kannada
     expect(wordIds).toContain('k2'); // Level 1 Kannada
     
-    // Should NOT include level 2+ words
+    // Should not include level 2+ words
     expect(wordIds).not.toContain('w3'); // Level 2 English
     expect(wordIds).not.toContain('k3'); // Level 2 Kannada
   });
