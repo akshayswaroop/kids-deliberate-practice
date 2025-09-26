@@ -9,18 +9,20 @@ import {
 import type { RootState, Word, Session } from "../state";
 
 describe("selectMasteryPercent", () => {
-  it("calculates mastery using +20/−20 clamp rule", () => {
+  it("converts step to percentage correctly", () => {
     const word: Word = {
       id: "w1",
       text: "test",
       language: "en",
       complexityLevel: 1,
       attempts: [
-        { timestamp: 1, result: "correct" }, // +20
-        { timestamp: 2, result: "wrong" },   // −20 → 0
-        { timestamp: 3, result: "correct" }, // +20
-        { timestamp: 4, result: "correct" }, // +20 → 40
+        { timestamp: 1, result: "correct" }, 
+        { timestamp: 2, result: "wrong" },   
+        { timestamp: 3, result: "correct" }, 
+        { timestamp: 4, result: "correct" }, 
       ],
+      step: 2, // At step 2 after some practice
+      cooldownSessionsLeft: 0,
     };
 
     const state: RootState = {
@@ -34,16 +36,19 @@ describe("selectMasteryPercent", () => {
       },
       currentUserId: 'user1',
     };
+    // Step 2 = 2/5 * 100 = 40%
     expect(selectMasteryPercent(state, "w1")).toBe(40);
   });
 
-  it("clamps mastery between 0 and 100", () => {
+  it("clamps percentage between 0 and 100", () => {
     const word: Word = {
       id: "w2",
       text: "test2",
       language: "en",
       complexityLevel: 1,
-      attempts: Array(10).fill({ timestamp: 1, result: "correct" }), // would exceed 100
+      attempts: Array(10).fill({ timestamp: 1, result: "correct" }), // Many correct attempts
+      step: 5, // Mastered
+      cooldownSessionsLeft: 0,
     };
 
     const state: RootState = {
@@ -57,6 +62,7 @@ describe("selectMasteryPercent", () => {
       },
       currentUserId: 'user1',
     };
+    // Step 5 = 5/5 * 100 = 100%
     expect(selectMasteryPercent(state, "w2")).toBe(100);
   });
 });
@@ -64,8 +70,8 @@ describe("selectMasteryPercent", () => {
 describe("selectCurrentWord", () => {
   it("returns the current word from session", () => {
     const words: Record<string, Word> = {
-      w1: { id: "w1", text: "one", language: "en", complexityLevel: 1, attempts: [] },
-      w2: { id: "w2", text: "two", language: "en", complexityLevel: 1, attempts: [] },
+      w1: { id: "w1", text: "one", language: "en", complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
+      w2: { id: "w2", text: "two", language: "en", complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
     };
     const session: Session = {
       wordIds: ["w1", "w2"],
@@ -128,15 +134,15 @@ describe('selectAreAllSessionWordsMastered', () => {
               { timestamp: 2, result: 'correct' },
               { timestamp: 3, result: 'correct' },
               { timestamp: 4, result: 'correct' },
-              { timestamp: 5, result: 'correct' }  // 5 correct = 100%
-            ]},
+              { timestamp: 5, result: 'correct' }  // 5 correct = mastered
+            ], step: 5, cooldownSessionsLeft: 0 },
             w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [
               { timestamp: 1, result: 'correct' },
               { timestamp: 2, result: 'correct' },
               { timestamp: 3, result: 'correct' },
               { timestamp: 4, result: 'correct' },
-              { timestamp: 5, result: 'correct' }  // 5 correct = 100%
-            ]}
+              { timestamp: 5, result: 'correct' }  // 5 correct = mastered
+            ], step: 5, cooldownSessionsLeft: 0 }
           },
           sessions: {
             s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } } }
@@ -161,13 +167,13 @@ describe('selectAreAllSessionWordsMastered', () => {
               { timestamp: 2, result: 'correct' },
               { timestamp: 3, result: 'correct' },
               { timestamp: 4, result: 'correct' },
-              { timestamp: 5, result: 'correct' }  // 5 correct = 100%
-            ]},
+              { timestamp: 5, result: 'correct' }  // 5 correct = mastered
+            ], step: 5, cooldownSessionsLeft: 0 },
             w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [
               { timestamp: 1, result: 'correct' },
               { timestamp: 2, result: 'correct' },
-              { timestamp: 3, result: 'correct' }  // 3 correct = 60%
-            ]}
+              { timestamp: 3, result: 'correct' }  // 3 correct = step 3
+            ], step: 3, cooldownSessionsLeft: 0 }
           },
           sessions: {
             s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } } }

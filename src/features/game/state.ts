@@ -19,6 +19,14 @@ export type Word = {
   notes?: string; // Additional information revealed after attempting
   category?: string; // Topic category (e.g., "skeleton_bones", "general_body")
   attempts: Attempt[];
+  
+  // Step-based mastery fields (new spec)
+  step: number; // 0-5, where 5 indicates mastery
+  lastPracticedAt?: number; // timestamp of last practice attempt
+  lastRevisedAt?: number; // timestamp of last revision attempt
+  cooldownSessionsLeft: number; // sessions remaining before eligible for revision
+  
+  // Legacy fields (will be computed from step if needed)
   nextReviewAt?: number;
   reviewInterval?: number;
 };

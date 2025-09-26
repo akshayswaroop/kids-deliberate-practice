@@ -5,33 +5,26 @@ export function selectSessionWords(
   weights: { struggle: number; new: number; mastered: number },
   size: number,
   rng: () => number,
-  // Default mastery selector that derives mastery from the word's own attempts (safe, no user assumptions).
-  masterySelector: (word: Word) => number = (word) => {
-    let mastery = 0;
-    for (const attempt of word.attempts) {
-      if (attempt.result === 'correct') mastery += 20;
-      else if (attempt.result === 'wrong') mastery -= 20;
-      mastery = Math.max(0, Math.min(100, mastery));
-    }
-    return mastery;
-  }
+  _now: number = Date.now() // Injected for determinism but not used yet
 ): string[] {
-  // Buckets
-  const now = Date.now();
-  const struggle: Word[] = [];
-  const newWords: Word[] = [];
-  const mastered: Word[] = [];
+  // Buckets based on new step-based system
+  const struggle: Word[] = []; // Active words: 1 ≤ step ≤ 4
+  const newWords: Word[] = []; // New words: step = 0, attempts.length = 0
+  const mastered: Word[] = []; // Revision words: step = 5, cooldownSessionsLeft = 0
 
   for (const word of allWords) {
-    const mastery = masterySelector(word);
-    if (word.attempts.length === 0) {
+    if (word.step === 0 && word.attempts.length === 0) {
       newWords.push(word);
-    } else if (mastery < 60) {
+    } else if (word.step >= 1 && word.step <= 4) {
       struggle.push(word);
-    } else if (mastery === 100 && word.nextReviewAt !== undefined && now >= word.nextReviewAt) {
+    } else if (word.step === 5 && word.cooldownSessionsLeft === 0) {
       mastered.push(word);
     }
   }
+
+  // Sort buckets by priority (oldest first for better spaced repetition)
+  struggle.sort((a, b) => (a.lastPracticedAt || 0) - (b.lastPracticedAt || 0));
+  mastered.sort((a, b) => (a.lastRevisedAt || 0) - (b.lastRevisedAt || 0));
 
   // Proportional sampling
   const totalWeight = weights.struggle + weights.new + weights.mastered;
@@ -55,13 +48,35 @@ export function selectSessionWords(
   selected.push(...sample([...newWords], newCount));
   selected.push(...sample([...mastered], masteredCount));
 
-  // If not enough, fill from remaining words (no duplicates)
+  // Fill shortages: Active → New → Revision (never duplicate words)
   const allIds = new Set(selected);
-  const remaining = allWords.filter(w => !allIds.has(w.id));
-  while (selected.length < size && remaining.length > 0) {
-    const idx = Math.floor(rng() * remaining.length);
-    selected.push(remaining[idx].id);
-    remaining.splice(idx, 1);
+  if (selected.length < size) {
+    // Try filling from Active first
+    const remainingStruggle = struggle.filter(w => !allIds.has(w.id));
+    while (selected.length < size && remainingStruggle.length > 0) {
+      const idx = Math.floor(rng() * remainingStruggle.length);
+      selected.push(remainingStruggle[idx].id);
+      allIds.add(remainingStruggle[idx].id);
+      remainingStruggle.splice(idx, 1);
+    }
+    
+    // Then fill from New
+    const remainingNew = newWords.filter(w => !allIds.has(w.id));
+    while (selected.length < size && remainingNew.length > 0) {
+      const idx = Math.floor(rng() * remainingNew.length);
+      selected.push(remainingNew[idx].id);
+      allIds.add(remainingNew[idx].id);
+      remainingNew.splice(idx, 1);
+    }
+    
+    // Finally fill from Revision
+    const remainingMastered = mastered.filter(w => !allIds.has(w.id));
+    while (selected.length < size && remainingMastered.length > 0) {
+      const idx = Math.floor(rng() * remainingMastered.length);
+      selected.push(remainingMastered[idx].id);
+      allIds.add(remainingMastered[idx].id);
+      remainingMastered.splice(idx, 1);
+    }
   }
 
   return selected.slice(0, size);

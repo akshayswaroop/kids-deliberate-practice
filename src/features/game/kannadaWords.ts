@@ -102,7 +102,9 @@ export function createKannadaWords(): Record<string, Word> {
       wordKannada: card.wordKannada,
       transliteration: card.transliteration,
       transliterationHi: card.transliterationHi,
-      attempts: []
+      attempts: [],
+      step: 0, // Start at step 0
+      cooldownSessionsLeft: 0, // Start with no cooldown
     };
   });
   

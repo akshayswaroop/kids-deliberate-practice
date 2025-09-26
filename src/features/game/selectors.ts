@@ -1,19 +1,20 @@
 import type { RootState, Word } from "./state";
 
-// Mastery calculation per DOMAIN_RULES.md
-export function selectMasteryPercent(state: RootState, wordId: string): number {
+// Step-based mastery calculation per new spec (0-5 where 5 = mastered)
+export function selectMasteryStep(state: RootState, wordId: string): number {
   if (!state.currentUserId) return 0;
   const user = state.users[state.currentUserId];
   if (!user) return 0;
   const word = user.words[wordId];
   if (!word) return 0;
-  let mastery = 0;
-  for (const attempt of word.attempts) {
-    if (attempt.result === "correct") mastery += 20;
-    else if (attempt.result === "wrong") mastery -= 20;
-    mastery = Math.max(0, Math.min(100, mastery));
-  }
-  return mastery;
+  return word.step;
+}
+
+// Legacy mastery percentage function (convert step to percentage for UI compatibility)
+export function selectMasteryPercent(state: RootState, wordId: string): number {
+  const step = selectMasteryStep(state, wordId);
+  // Convert step (0-5) to percentage (0-100) for UI compatibility
+  return (step / 5) * 100;
 }
 
 export function selectCurrentWord(state: RootState, sessionId: string): Word | undefined {
@@ -113,11 +114,8 @@ export function selectShouldProgressLevel(state: RootState, language: string): b
   // If no words at current level, don't progress
   if (currentLevelWords.length === 0) return false;
   
-  // Check if at least 80% of current level words are mastered (100% mastery)
-  const masteredWords = currentLevelWords.filter(word => {
-    const mastery = selectMasteryPercent(state, word.id);
-    return mastery === 100;
-  });
+  // Check if at least 80% of current level words are mastered (step = 5)
+  const masteredWords = currentLevelWords.filter(word => word.step === 5);
   
   const masteryRate = masteredWords.length / currentLevelWords.length;
   return masteryRate >= 0.8; // 80% threshold for progression
@@ -133,18 +131,15 @@ export function selectWordsByMasteryBucket(state: RootState, languages: string[]
   const buckets = { struggle: [] as Word[], new:[] as Word[], mastered: [] as Word[] };
   
   for (const word of Object.values(words)) {
-    const mastery = selectMasteryPercent(state, word.id);
-    
-    if (word.attempts.length === 0) {
+    if (word.step === 0 && word.attempts.length === 0) {
+      // New: step = 0, attempts.length = 0
       buckets.new.push(word);
-    } else if (mastery < 60) {
+    } else if (word.step >= 1 && word.step <= 4) {
+      // Active: 1 ≤ step ≤ 4 (renamed from "struggle" to "active" but keeping same bucket name for compatibility)
       buckets.struggle.push(word);
-    } else if (mastery === 100) {
-      // Check if it's time for spaced review
-      const now = Date.now();
-      if (!word.nextReviewAt || now >= word.nextReviewAt) {
-        buckets.mastered.push(word);
-      }
+    } else if (word.step === 5 && word.cooldownSessionsLeft === 0) {
+      // Revision: step = 5, cooldownSessionsLeft = 0
+      buckets.mastered.push(word);
     }
   }
   
@@ -270,7 +265,7 @@ export function selectResponsiveColumns(windowWidth: number): number {
   return 6;
 }
 
-// Check if all words in a session are fully mastered (100%)
+// Check if all words in a session are fully mastered (step = 5)
 export function selectAreAllSessionWordsMastered(state: RootState, sessionId: string): boolean {
   if (!state.currentUserId) return false;
   const user = state.users[state.currentUserId];
@@ -279,8 +274,8 @@ export function selectAreAllSessionWordsMastered(state: RootState, sessionId: st
   if (!session) return false;
   
   return session.wordIds.every(wordId => {
-    const mastery = selectMasteryPercent(state, wordId);
-    return mastery === 100;
+    const word = user.words[wordId];
+    return word && word.step === 5;
   });
 }
 

@@ -24,6 +24,8 @@ export function createHumanBodyWords(): Record<string, Word> {
       notes: questionData.notes,
       category: questionData.category,
       attempts: [],
+      step: 0, // Start at step 0
+      cooldownSessionsLeft: 0, // Start with no cooldown
     };
     acc[questionData.id] = word;
     return acc;

@@ -9,13 +9,13 @@ function makeInitialStateWithWords(): RootState {
       testUser: {
         words: {
           // First batch of words (will be mastered in first session)
-          w1: { id: 'w1', text: 'apple', language: 'english', complexityLevel: 1, attempts: [] },
-          w2: { id: 'w2', text: 'banana', language: 'english', complexityLevel: 1, attempts: [] },
-          w3: { id: 'w3', text: 'cherry', language: 'english', complexityLevel: 1, attempts: [] },
+          w1: { id: 'w1', text: 'apple', language: 'english', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
+          w2: { id: 'w2', text: 'banana', language: 'english', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
+          w3: { id: 'w3', text: 'cherry', language: 'english', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
           // Second batch of words (available for next session)
-          w4: { id: 'w4', text: 'date', language: 'english', complexityLevel: 1, attempts: [] },
-          w5: { id: 'w5', text: 'elderberry', language: 'english', complexityLevel: 1, attempts: [] },
-          w6: { id: 'w6', text: 'fig', language: 'english', complexityLevel: 1, attempts: [] },
+          w4: { id: 'w4', text: 'date', language: 'english', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
+          w5: { id: 'w5', text: 'elderberry', language: 'english', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
+          w6: { id: 'w6', text: 'fig', language: 'english', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
         },
         sessions: {},
         activeSessions: {},
