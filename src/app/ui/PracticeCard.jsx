@@ -9,6 +9,14 @@ function MasteryTile({ label, progress, isActive }) {
   const activeGradient = 'linear-gradient(90deg, #ff0000 0%, #ff7f00 16.66%, #ffd700 33.33%, #00c853 50%, #0091ea 66.66%, #3f51b5 83.33%, #8e24aa 100%)';
   const fillWidth = Math.min(100, Math.max(0, progress));
 
+  // Dynamic sizing for tile label to allow longer text to fit inside the tiles
+  const labelText = String(label || '');
+  const labelLen = labelText.length;
+  let tileFontSize = 'clamp(22px, 3vw, 32px)';
+  let tileLineClamp = 2;
+  if (labelLen > 28) { tileFontSize = 'clamp(12px, 2.2vw, 14px)'; tileLineClamp = 4; }
+  else if (labelLen > 20) { tileFontSize = 'clamp(14px, 2.4vw, 18px)'; tileLineClamp = 3; }
+
   return (
     <div style={{
       width: '100%',
@@ -61,18 +69,18 @@ function MasteryTile({ label, progress, isActive }) {
       <div style={{
         position: 'relative',
         zIndex: 2,
-        fontSize: 'clamp(22px, 3vw, 32px)', // Increased by ~20% from 18-26px to 22-32px
+        fontSize: tileFontSize,
         fontWeight: 900, // Even bolder for early readers
         textAlign: 'center',
         color: isActive ? '#4f46e5' : '#0b1220', // Distinct color for active word
         padding: '8px 12px', // Increased padding
         textShadow: isActive ? '0 2px 4px rgba(79,70,229,0.3)' : '0 1px 0 rgba(255,255,255,0.6)',
-        // Prevent breaking words mid-syllable: allow wrapping only at whitespace, clamp to 2 lines
+        // Allow wrapping and multiple lines for long labels
         whiteSpace: 'normal',
-        wordBreak: 'normal',
-        overflowWrap: 'normal',
+        wordBreak: 'break-word',
+        overflowWrap: 'break-word',
         display: '-webkit-box',
-        WebkitLineClamp: 2,
+        WebkitLineClamp: tileLineClamp,
         WebkitBoxOrient: 'vertical',
         overflow: 'hidden',
         textOverflow: 'ellipsis'
@@ -226,28 +234,50 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         marginTop: '8px', // Reduced from default to bring word closer to top
         marginBottom: '16px' // Add breathing room below
       }}>
-          <div className="target-word-glow" style={{ 
-            fontSize: 'clamp(40px, 7vw, 96px)',
-            fontWeight: 900,
-            marginTop: 0,
-            marginBottom: transliteration ? '6px' : '0px',
-            lineHeight: 0.98,
-            letterSpacing: '-0.02em',
-            maxWidth: '100%',
-            // Make target word visually distinct
-            background: 'linear-gradient(135deg, rgba(79,70,229,0.1), rgba(139,92,246,0.05))',
-            borderRadius: '16px',
-            padding: '12px 20px',
-            border: '2px solid rgba(79,70,229,0.2)',
-            boxShadow: '0 4px 20px rgba(79,70,229,0.15)',
-            // Allow wrapping at whitespace for long phrases; avoid breaking inside words
-            whiteSpace: 'normal',
-            wordBreak: 'normal',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
-          {mainWord}
-        </div>
+          {(() => {
+            const text = String(mainWord || '');
+            const len = text.length;
+            // Default clamp for short questions; reduce for longer ones so they fit
+            let fontSize = 'clamp(40px, 7vw, 96px)';
+            let lineHeight = 0.98;
+            let padding = '12px 20px';
+            if (len > 60) {
+              fontSize = 'clamp(16px, 3.6vw, 28px)';
+              lineHeight = 1.08;
+              padding = '8px 12px';
+            } else if (len > 40) {
+              fontSize = 'clamp(20px, 4.5vw, 36px)';
+              lineHeight = 1.04;
+              padding = '10px 14px';
+            } else if (len > 28) {
+              fontSize = 'clamp(28px, 5.5vw, 48px)';
+              lineHeight = 1.02;
+              padding = '10px 16px';
+            }
+
+            return (
+              <div className="target-word-glow" style={{ 
+                fontSize,
+                fontWeight: 900,
+                marginTop: 0,
+                marginBottom: transliteration ? '6px' : '0px',
+                lineHeight,
+                letterSpacing: '-0.02em',
+                maxWidth: '100%',
+                // Make target word visually distinct
+                background: 'linear-gradient(135deg, rgba(79,70,229,0.08), rgba(139,92,246,0.03))',
+                borderRadius: '16px',
+                padding,
+                border: '2px solid rgba(79,70,229,0.12)',
+                boxShadow: '0 4px 18px rgba(79,70,229,0.12)',
+                // Allow wrapping and multiple lines for long questions
+                whiteSpace: 'normal',
+                wordBreak: 'break-word',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>{mainWord}</div>
+            );
+          })()}
         {(transliteration || transliterationHi) && (
           <div style={{
             fontSize: 'clamp(16px, 3vw, 22px)', // Slightly larger
@@ -311,7 +341,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                 color: '#374151',
                 lineHeight: 1.5,
                 fontStyle: 'italic',
-                textAlign: 'left'
+                textAlign: 'center'
               }}>
                 {notes}
               </div>
