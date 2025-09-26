@@ -243,9 +243,10 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   const choices = selectPracticeChoices(state, sessionId);
   const session = user.sessions[sessionId];
   
-  // Only show transliteration for Kannada mode after attempt (session.revealed = true)
+  // Show transliteration/answer for different modes when session is revealed
   const isKannadaMode = mode === 'kannada';
-  const shouldShowTransliteration = isKannadaMode && session?.revealed === true;
+  const isMathTablesMode = mode === 'mathtables';
+  const shouldShowTransliteration = (isKannadaMode || isMathTablesMode) && session?.revealed === true;
   
   return {
     sessionId,

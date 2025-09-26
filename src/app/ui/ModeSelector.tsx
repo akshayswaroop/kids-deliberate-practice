@@ -27,6 +27,7 @@ export default function ModeSelector({ mode, onSetMode, compact = false }: ModeS
       >
         <option value="english">🇺🇸 English</option>
         <option value="kannada">🇮🇳 Kannada</option>
+        <option value="mathtables">🔢 Math Tables</option>
       </select>
     </div>
   );

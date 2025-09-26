@@ -18,6 +18,7 @@ function makeInitialState(): RootState {
             kannada: 6,   // Default for Kannada  
             mixed: 6      // Default for mixed mode
           },
+          complexityLevels: { english: 1, kannada: 1, hindi: 1 },
           languages: ['english'],
         },
       },

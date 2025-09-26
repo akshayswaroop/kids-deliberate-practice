@@ -20,12 +20,14 @@ export const makeUser = (displayName?: string) => ({
     sessionSizes: { 
       english: 6,   // Default for English
       kannada: 6,   // Default for Kannada  
+      mathtables: 6, // Default for Math Tables
       mixed: 6      // Default for mixed mode
     },
     languages: ['english'], // Default to English only
     complexityLevels: {
       'english': 1,  // Start with Level 1 English (simple CVC words)
       'kannada': 1,  // Start with Level 1 Kannada (simple words without complex matras)
+      'mathtables': 1, // Start with Level 1 Math Tables (1x and 2x tables)
       'hindi': 1     // Future support for Hindi
     }
   },
