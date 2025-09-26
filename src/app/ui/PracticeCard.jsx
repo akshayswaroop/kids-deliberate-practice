@@ -81,7 +81,7 @@ function MasteryTile({ label, progress, isActive }) {
   );
 }
 
-export default function PracticeCard({ mainWord, transliteration, transliterationHi, choices, onCorrect, onWrong, onNext, columns = 6, mode }) {
+export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, columns = 6, mode }) {
   const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
 
   // Animation helper functions
@@ -278,6 +278,42 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ fontSize: '14px', fontWeight: 500, color: '#4b5563' }}>Hindi:</span>
                 <span>{transliterationHi}</span>
+              </div>
+            )}
+          </div>
+        )}
+        {/* Human Body mode: Show answer and notes when revealed */}
+        {mode === 'humanbody' && (answer || notes) && (
+          <div style={{
+            marginTop: '12px',
+            padding: '12px 16px',
+            background: 'linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.05))',
+            borderRadius: '12px',
+            border: '2px solid rgba(34,197,94,0.2)',
+            boxShadow: '0 4px 12px rgba(34,197,94,0.1)',
+            maxWidth: '100%'
+          }}>
+            {answer && (
+              <div style={{
+                fontSize: 'clamp(18px, 4vw, 24px)',
+                fontWeight: 700,
+                color: '#065f46',
+                marginBottom: notes ? '8px' : '0',
+                textAlign: 'center'
+              }}>
+                <span style={{ fontSize: '16px', fontWeight: 500, color: '#4b5563' }}>Answer: </span>
+                {answer}
+              </div>
+            )}
+            {notes && (
+              <div style={{
+                fontSize: 'clamp(14px, 3vw, 16px)',
+                color: '#374151',
+                lineHeight: 1.5,
+                fontStyle: 'italic',
+                textAlign: 'left'
+              }}>
+                {notes}
               </div>
             )}
           </div>

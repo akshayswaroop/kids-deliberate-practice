@@ -1,5 +1,4 @@
 import { describe, it, expect } from 'vitest';
-import { createMathTablesWords } from '../mathTables';
 import { getInitialWords } from '../../../app/bootstrapState';
 import { selectWordsByLanguage, selectWordsByComplexityLevel } from '../selectors';
 import type { RootState } from '../state';

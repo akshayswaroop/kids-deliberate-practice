@@ -160,6 +160,8 @@ function App() {
       mainWord={practiceData.mainWord}
       transliteration={practiceData.transliteration}
       transliterationHi={practiceData.transliterationHi}
+      answer={practiceData.answer}
+      notes={practiceData.notes}
       choices={practiceData.choices}
       onCorrect={onCorrect}
       onWrong={onWrong}

@@ -5,6 +5,8 @@ interface PracticePanelProps {
   mainWord: string;
   transliteration?: string;
   transliterationHi?: string;
+  answer?: string;
+  notes?: string;
   choices: Array<{ id: string; label: string; progress: number }>;
   onCorrect: () => void;
   onWrong: () => void;
@@ -17,6 +19,8 @@ export default function PracticePanel({
   mainWord, 
   transliteration, 
   transliterationHi,
+  answer,
+  notes,
   choices, 
   onCorrect, 
   onWrong, 
@@ -30,6 +34,8 @@ export default function PracticePanel({
         mainWord={mainWord}
         transliteration={transliteration}
         transliterationHi={transliterationHi}
+        answer={answer}
+        notes={notes}
         choices={choices}
         onCorrect={onCorrect}
         onWrong={onWrong}

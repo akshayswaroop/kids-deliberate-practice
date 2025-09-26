@@ -2,6 +2,7 @@ import wordsList from '../assets/words.en.json';
 import type { Word } from '../features/game/state';
 import { createKannadaWords } from '../features/game/kannadaWords';
 import { createMathTablesWords } from '../features/game/mathTables';
+import { createHumanBodyWords } from '../features/game/humanBody';
 
 // English complexity level mapping based on progressive learning principles
 const ENGLISH_COMPLEXITY_MAPPING: Record<string, number> = {
@@ -42,6 +43,9 @@ export function getInitialWords(): Record<string, Word> {
   // Math Tables words from the structured dataset
   const mathTablesWords = createMathTablesWords();
   
+  // Human Body questions from the grade 3 dataset
+  const humanBodyWords = createHumanBodyWords();
+  
   // Combine all language word sets
-  return { ...englishWords, ...kannadaWords, ...mathTablesWords };
+  return { ...englishWords, ...kannadaWords, ...mathTablesWords, ...humanBodyWords };
 }

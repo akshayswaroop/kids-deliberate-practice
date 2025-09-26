@@ -192,6 +192,8 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   mainWord: string;
   transliteration?: string;
   transliterationHi?: string;
+  answer?: string;
+  notes?: string;
   choices: Array<{ id: string; label: string; progress: number }>;
 } {
   if (!state.currentUserId) {
@@ -246,13 +248,17 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   // Show transliteration/answer for different modes when session is revealed
   const isKannadaMode = mode === 'kannada';
   const isMathTablesMode = mode === 'mathtables';
+  const isHumanBodyMode = mode === 'humanbody';
   const shouldShowTransliteration = (isKannadaMode || isMathTablesMode) && session?.revealed === true;
+  const shouldShowAnswer = isHumanBodyMode && session?.revealed === true;
   
   return {
     sessionId,
     mainWord: currentWord ? (currentWord.wordKannada || currentWord.text || '...') : '...',
     transliteration: shouldShowTransliteration ? currentWord?.transliteration : undefined,
     transliterationHi: shouldShowTransliteration ? currentWord?.transliterationHi : undefined,
+    answer: shouldShowAnswer ? currentWord?.answer : undefined,
+    notes: shouldShowAnswer ? currentWord?.notes : undefined,
     choices
   };
 }
