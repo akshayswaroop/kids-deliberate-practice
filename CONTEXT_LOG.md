@@ -259,4 +259,12 @@ When resuming work on this project:
 5. **Test language features**: Use language selector to switch between modes
 6. **Reference this log**: All implementation details and decisions documented above
 
+---
+
+## Recent Note (September 26, 2025)
+
+- Removed hard-coded human names from core `src/` files. Users are now represented by opaque `userId` keys with an optional `displayName` used only for UI labels.
+- Added an Onboarding screen that prompts for a (optional) display name and creates the initial user rather than relying on a baked-in default user.
+- Added a detection test `src/features/game/__tests__/noHardcodedUserNames.test.ts` to prevent re-introduction of literal names into `src/` files; keep fixtures and sample users inside `__tests__`.
+
 The implementation is **production-ready** with comprehensive multi-language support, proper error handling, and maintainable architecture.
