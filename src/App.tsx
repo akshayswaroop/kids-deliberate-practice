@@ -11,7 +11,8 @@ import {
   selectShouldShowOnboarding,
   selectActiveSessionForMode,
   selectCurrentPracticeData,
-  selectResponsiveColumns
+  selectResponsiveColumns,
+  selectAreAllSessionWordsMastered
 } from './features/game/selectors';
 import { selectSessionWords } from './features/game/sessionGen';
 import { setSessionSize } from './features/game/slice';
@@ -219,7 +220,38 @@ function App() {
   const onNext = () => {
     const activeSessionId = practiceData.sessionId;
     if (!activeSessionId) return;
-    dispatch(nextCard({ sessionId: activeSessionId } as any));
+    
+    // Check if all words in current session are mastered before dispatching nextCard
+    const currentSession = userState.sessions[activeSessionId];
+    if (!currentSession) return;
+    
+    // Use selector to check if all words are mastered (pure calculation)
+    const allWordsMastered = selectAreAllSessionWordsMastered(rootState as any, activeSessionId);
+    
+    if (allWordsMastered) {
+      // Generate a new session using the existing session generation logic
+      const currentLanguages = selectCurrentLanguagePreferences(rootState as any);
+      const availableWords = selectWordsByLanguage(rootState as any, currentLanguages as any);
+      const allWordsArr = Object.values(availableWords || {});
+      if (allWordsArr.length > 0) {
+        const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, userState.settings.sessionSize || 6, Math.random as any);
+        const newSessionId = 'session_' + Date.now();
+        const session = {
+          wordIds: ids,
+          currentIndex: 0,
+          revealed: false,
+          mode: 'practice',
+          createdAt: Date.now(),
+          settings: userState.settings,
+        };
+        dispatch(addSession({ sessionId: newSessionId, session } as any));
+        // Record this session as the active session for the current mode
+        dispatch(setModeAction({ mode, sessionId: newSessionId } as any));
+      }
+    } else {
+      // Normal nextCard behavior for sessions with unmastered words
+      dispatch(nextCard({ sessionId: activeSessionId } as any));
+    }
   };
 
   // Navigation: track location.hash in component state so anchor links re-render the app

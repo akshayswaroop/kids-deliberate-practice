@@ -3,6 +3,7 @@ import {
   selectMasteryPercent,
   selectCurrentWord,
   selectSessionProgress,
+  selectAreAllSessionWordsMastered,
 } from "../selectors";
 import type { RootState, Word, Session } from "../state";
 
@@ -110,5 +111,71 @@ describe("selectSessionProgress", () => {
     };
     const progress = selectSessionProgress(state, "s1");
     expect(progress).toEqual({ current: 2, total: 2 });
+  });
+});
+
+describe('selectAreAllSessionWordsMastered', () => {
+  it('returns true when all words in session are 100% mastered', () => {
+    const state: RootState = {
+      users: {
+        user1: {
+          words: {
+            w1: { id: 'w1', text: 'one', language: 'en', attempts: [
+              { timestamp: 1, result: 'correct' },
+              { timestamp: 2, result: 'correct' },
+              { timestamp: 3, result: 'correct' },
+              { timestamp: 4, result: 'correct' },
+              { timestamp: 5, result: 'correct' }  // 5 correct = 100%
+            ]},
+            w2: { id: 'w2', text: 'two', language: 'en', attempts: [
+              { timestamp: 1, result: 'correct' },
+              { timestamp: 2, result: 'correct' },
+              { timestamp: 3, result: 'correct' },
+              { timestamp: 4, result: 'correct' },
+              { timestamp: 5, result: 'correct' }  // 5 correct = 100%
+            ]}
+          },
+          sessions: {
+            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] } }
+          },
+          activeSessions: {},
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] }
+        }
+      },
+      currentUserId: 'user1'
+    };
+    
+    expect(selectAreAllSessionWordsMastered(state, 's1')).toBe(true);
+  });
+
+  it('returns false when some words in session are not mastered', () => {
+    const state: RootState = {
+      users: {
+        user1: {
+          words: {
+            w1: { id: 'w1', text: 'one', language: 'en', attempts: [
+              { timestamp: 1, result: 'correct' },
+              { timestamp: 2, result: 'correct' },
+              { timestamp: 3, result: 'correct' },
+              { timestamp: 4, result: 'correct' },
+              { timestamp: 5, result: 'correct' }  // 5 correct = 100%
+            ]},
+            w2: { id: 'w2', text: 'two', language: 'en', attempts: [
+              { timestamp: 1, result: 'correct' },
+              { timestamp: 2, result: 'correct' },
+              { timestamp: 3, result: 'correct' }  // 3 correct = 60%
+            ]}
+          },
+          sessions: {
+            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] } }
+          },
+          activeSessions: {},
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] }
+        }
+      },
+      currentUserId: 'user1'
+    };
+    
+    expect(selectAreAllSessionWordsMastered(state, 's1')).toBe(false);
   });
 });

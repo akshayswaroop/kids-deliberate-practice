@@ -48,15 +48,17 @@ describe('attempt', () => {
 });
 
 describe('nextCard', () => {
-  it('increments currentIndex and resets reveal/lastAttempt', () => {
+  it('selects valid index and resets reveal/lastAttempt', () => {
     const state = makeInitial();
     state.users.user1.sessions.s1.currentIndex = 0;
     state.users.user1.sessions.s1.revealed = true;
     state.users.user1.sessions.s1.lastAttempt = 'wrong';
     const next = reducer(state, nextCard({ sessionId: 's1' }));
-    expect(next.users.user1.sessions.s1.currentIndex).toBe(1);
+    // Should select one of the available words (0 or 1, since both are unmastered)
+    expect([0, 1]).toContain(next.users.user1.sessions.s1.currentIndex);
     expect(next.users.user1.sessions.s1.revealed).toBe(false);
     expect(next.users.user1.sessions.s1.lastAttempt).toBeUndefined();
+    expect(next.users.user1.sessions.s1.needsNewSession).toBe(false);
   });
   it('randomly selects from unmastered words', () => {
     const state = makeInitial();
@@ -69,5 +71,31 @@ describe('nextCard', () => {
     const next = reducer(state, nextCard({ sessionId: 's1' }));
     // Should select one of the unmastered words (0 or 1)
     expect([0, 1]).toContain(next.users.user1.sessions.s1.currentIndex);
+  });
+
+  it('should indicate when new session is needed (all words mastered)', () => {
+    const state = makeInitial();
+    // Make all words in session fully mastered (100%)
+    state.users.user1.words.w1.attempts = [
+      { timestamp: 1, result: 'correct' },
+      { timestamp: 2, result: 'correct' },
+      { timestamp: 3, result: 'correct' },
+      { timestamp: 4, result: 'correct' },
+      { timestamp: 5, result: 'correct' },
+    ];
+    state.users.user1.words.w2.attempts = [
+      { timestamp: 1, result: 'correct' },
+      { timestamp: 2, result: 'correct' },
+      { timestamp: 3, result: 'correct' },
+      { timestamp: 4, result: 'correct' },
+      { timestamp: 5, result: 'correct' },
+    ];
+    
+    const next = reducer(state, nextCard({ sessionId: 's1' }));
+    
+    // When all words are mastered, the action should set a flag indicating 
+    // that a new session is needed rather than cycling through existing words
+    // This test will initially FAIL because current implementation cycles through words
+    expect(next.users.user1.sessions.s1.needsNewSession).toBe(true);
   });
 });

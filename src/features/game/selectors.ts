@@ -197,3 +197,17 @@ export function selectResponsiveColumns(windowWidth: number): number {
   if (windowWidth < 900) return 3;
   return 6;
 }
+
+// Check if all words in a session are fully mastered (100%)
+export function selectAreAllSessionWordsMastered(state: RootState, sessionId: string): boolean {
+  if (!state.currentUserId) return false;
+  const user = state.users[state.currentUserId];
+  if (!user) return false;
+  const session = user.sessions[sessionId];
+  if (!session) return false;
+  
+  return session.wordIds.every(wordId => {
+    const mastery = selectMasteryPercent(state, wordId);
+    return mastery === 100;
+  });
+}

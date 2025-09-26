@@ -100,9 +100,10 @@ const gameSlice = createSlice({
         if (unmasteredIndices.length > 0) {
           const randomIndex = Math.floor(Math.random() * unmasteredIndices.length);
           session.currentIndex = unmasteredIndices[randomIndex];
+          session.needsNewSession = false;
         } else {
-          // If all words are mastered, cycle through all words
-          session.currentIndex = (session.currentIndex + 1) % session.wordIds.length;
+          // If all words are mastered, signal that a new session is needed
+          session.needsNewSession = true;
         }
 
         session.revealed = false;

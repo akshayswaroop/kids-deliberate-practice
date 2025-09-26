@@ -37,6 +37,8 @@ export type Session = {
   mode: string;
   createdAt: number;
   settings: SessionSettings;
+  // Flag indicating that all words are mastered and a new session should be generated
+  needsNewSession?: boolean;
 };
 
 export type UserState = {
