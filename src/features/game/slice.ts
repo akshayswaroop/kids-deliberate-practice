@@ -17,7 +17,11 @@ export const makeUser = (displayName?: string) => ({
       new: 0.4,
       mastered: 0.1,
     },
-    sessionSize: 6,
+    sessionSizes: { 
+      english: 6,   // Default for English
+      kannada: 6,   // Default for Kannada  
+      mixed: 6      // Default for mixed mode
+    },
     languages: ['english'], // Default to English only
   },
 });
@@ -124,12 +128,25 @@ const gameSlice = createSlice({
       if (!user) return;
       user.settings.languages = action.payload.languages;
     },
-    setSessionSize: function (state, action: PayloadAction<{ sessionSize: number }>) {
+    setSessionSize: function (state, action: PayloadAction<{ mode: string; sessionSize: number }>) {
       const uid = state.currentUserId;
       if (!uid) return;
       const user = state.users[uid];
       if (!user) return;
-      user.settings.sessionSize = action.payload.sessionSize;
+      
+      // Handle migration: if user has old sessionSize structure, migrate to new structure
+      if (!user.settings.sessionSizes) {
+        const legacySessionSize = (user.settings as any).sessionSize || 6;
+        user.settings.sessionSizes = {
+          english: legacySessionSize,
+          kannada: legacySessionSize,
+          mixed: legacySessionSize
+        };
+        // Remove old sessionSize property
+        delete (user.settings as any).sessionSize;
+      }
+      
+      user.settings.sessionSizes[action.payload.mode] = action.payload.sessionSize;
     },
   },
 });

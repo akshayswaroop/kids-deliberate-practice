@@ -211,3 +211,20 @@ export function selectAreAllSessionWordsMastered(state: RootState, sessionId: st
     return mastery === 100;
   });
 }
+
+// Get session size for a specific mode with fallback to default
+export function selectSessionSizeForMode(state: RootState, mode: string): number {
+  if (!state.currentUserId) return 6; // Default fallback
+  const user = state.users[state.currentUserId];
+  if (!user) return 6;
+  
+  // Handle migration: if user has old sessionSize structure, use that as default for all modes
+  if (!user.settings.sessionSizes) {
+    // Legacy user with old sessionSize structure
+    const legacySessionSize = (user.settings as any).sessionSize || 6;
+    return legacySessionSize;
+  }
+  
+  // Get sessionSize for the specific mode, fallback to 6 if not set
+  return user.settings.sessionSizes[mode] || 6;
+}

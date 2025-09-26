@@ -12,7 +12,8 @@ import {
   selectActiveSessionForMode,
   selectCurrentPracticeData,
   selectResponsiveColumns,
-  selectAreAllSessionWordsMastered
+  selectAreAllSessionWordsMastered,
+  selectSessionSizeForMode
 } from './features/game/selectors';
 import { selectSessionWords } from './features/game/sessionGen';
 import { setSessionSize } from './features/game/slice';
@@ -28,7 +29,7 @@ function DiagnosticsPanel() {
   const currentUserId = rootState.currentUserId as string | null;
   const userState = currentUserId && users[currentUserId]
     ? users[currentUserId]
-    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSize: 6 } };
+    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSizes: { english: 6, kannada: 6, mixed: 6 } } };
   const [newUserId, setNewUserId] = useState('');
   const [selectedMode, setSelectedMode] = useState(userState.settings.languages[0] || 'english');
 
@@ -40,7 +41,7 @@ function DiagnosticsPanel() {
   const startSession = () => {
     // Simple session: pick first N words from user's words
     const words = userState.words || {};
-    const size = (userState.settings && userState.settings.sessionSize) || 6;
+    const size = selectSessionSizeForMode(rootState as any, selectedMode);
     const ids = Object.keys(words).slice(0, size);
     const sessionId = 'session_' + Date.now();
     const session = {
@@ -49,7 +50,11 @@ function DiagnosticsPanel() {
       revealed: false,
       mode: 'practice',
       createdAt: Date.now(),
-      settings: { selectionWeights: userState.settings.selectionWeights, sessionSize: ids.length, languages: userState.settings.languages },
+      settings: { 
+        selectionWeights: userState.settings.selectionWeights, 
+        sessionSizes: userState.settings.sessionSizes || { english: 6, kannada: 6, mixed: 6 }, 
+        languages: userState.settings.languages 
+      },
     };
     // use action creator
     dispatch(addSession({ sessionId, session } as any));
@@ -137,7 +142,7 @@ function App() {
   const currentUserId = rootState.currentUserId as string | null;
   const userState = currentUserId && users[currentUserId]
     ? users[currentUserId]
-    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSize: 6 } };
+    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSizes: { english: 6, kannada: 6, mixed: 6 } } };
   const [mode, setMode] = useState(userState.settings.languages[0] || 'english');
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
@@ -162,8 +167,8 @@ function App() {
   };
 
   const handleSetSessionSize = (n: number) => {
-    // Update the user's setting
-    dispatch(setSessionSize({ sessionSize: n } as any));
+    // Update the user's setting for the current mode
+    dispatch(setSessionSize({ mode, sessionSize: n } as any));
     // Clear the active session for the current mode so a new session gets generated
     // (we use an empty string which is falsy so the session-creation branch runs)
     dispatch(setModeAction({ mode, sessionId: '' } as any));
@@ -182,7 +187,7 @@ function App() {
     const availableWords = selectWordsByLanguage(rootState as any, currentLanguages as any);
     const allWordsArr = Object.values(availableWords || {});
     if (allWordsArr.length > 0) {
-      const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, userState.settings.sessionSize || 6, Math.random as any);
+      const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, selectSessionSizeForMode(rootState as any, mode), Math.random as any);
       const newSessionId = 'session_' + Date.now();
       const session = {
         wordIds: ids,
@@ -234,7 +239,7 @@ function App() {
       const availableWords = selectWordsByLanguage(rootState as any, currentLanguages as any);
       const allWordsArr = Object.values(availableWords || {});
       if (allWordsArr.length > 0) {
-        const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, userState.settings.sessionSize || 6, Math.random as any);
+        const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, selectSessionSizeForMode(rootState as any, mode), Math.random as any);
         const newSessionId = 'session_' + Date.now();
         const session = {
           wordIds: ids,
@@ -280,7 +285,7 @@ function App() {
       onCreateUser={handleCreateUser}
       onSwitchUser={handleSwitchUser}
       onSetMode={handleSetMode}
-      sessionSize={userState.settings.sessionSize}
+      sessionSize={selectSessionSizeForMode(rootState as any, mode)}
       onSetSessionSize={handleSetSessionSize}
       mode={mode}
       mainWord={practiceData.mainWord}

@@ -24,7 +24,8 @@ export type SessionSettings = {
     new: number;
     mastered: number;
   };
-  sessionSize: number;
+  // Store session size per mode/language instead of single global value
+  sessionSizes: Record<string, number>; // mode -> sessionSize (e.g., { english: 6, kannada: 3, mixed: 9 })
   // Language filtering for sessions
   languages: string[]; // ["english", "kannada"] or ["mixed"]
 };
