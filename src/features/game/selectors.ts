@@ -141,6 +141,8 @@ export function selectWordsByMasteryBucket(state: RootState, languages: string[]
       // Revision: step = 5, cooldownSessionsLeft = 0
       buckets.mastered.push(word);
     }
+    // Note: Words with step = 5 and cooldownSessionsLeft > 0 are intentionally excluded
+    // from regular buckets but can be used as emergency fallback in sessionGen.ts
   }
   
   return buckets;

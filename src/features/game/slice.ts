@@ -13,9 +13,9 @@ export const makeUser = (displayName?: string) => ({
   activeSessions: {},
   settings: {
     selectionWeights: {
-      struggle: 0.5,
-      new: 0.4,
-      mastered: 0.1,
+      struggle: 0.2,  // 20% Active (spec)
+      new: 0.7,       // 70% New (spec)
+      mastered: 0.1,  // 10% Revision (spec)
     },
     sessionSizes: { 
       english: 12,   // Default for English

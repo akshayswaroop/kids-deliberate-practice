@@ -77,6 +77,19 @@ export function selectSessionWords(
       allIds.add(remainingMastered[idx].id);
       remainingMastered.splice(idx, 1);
     }
+    
+    // Emergency fallback: if still not enough words, include mastered words with cooldowns
+    if (selected.length < size) {
+      const masteredWithCooldowns = allWords.filter(w => 
+        w.step === 5 && w.cooldownSessionsLeft > 0 && !allIds.has(w.id)
+      );
+      while (selected.length < size && masteredWithCooldowns.length > 0) {
+        const idx = Math.floor(rng() * masteredWithCooldowns.length);
+        selected.push(masteredWithCooldowns[idx].id);
+        allIds.add(masteredWithCooldowns[idx].id);
+        masteredWithCooldowns.splice(idx, 1);
+      }
+    }
   }
 
   return selected.slice(0, size);

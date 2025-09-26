@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setMode as setModeAction, addSession, attempt, nextCard } from './features/game/slice';
+import { setMode as setModeAction, addSession, attempt, nextCard, decrementCooldowns } from './features/game/slice';
 import HomePage from './app/ui/HomePage';
 import Onboarding from './app/ui/Onboarding';
 import { 
@@ -25,7 +25,7 @@ function App() {
   const currentUserId = rootState.currentUserId as string | null;
   const userState = currentUserId && users[currentUserId]
     ? users[currentUserId]
-    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSizes: { english: 6, kannada: 6, mixed: 6 } } };
+    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.2, new: 0.7, mastered: 0.1 }, sessionSizes: { english: 6, kannada: 6, mixed: 6 } } };
   const [mode, setMode] = useState(userState.settings.languages[0] || 'english');
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
@@ -45,7 +45,6 @@ function App() {
     dispatch({ type: 'game/selectUser', payload: { userId } });
   };
   const handleSetMode = (newMode: string) => {
-    dispatch({ type: 'game/setLanguagePreferences', payload: { languages: [newMode] } });
     setMode(newMode);
   };
 
@@ -57,12 +56,12 @@ function App() {
   // Handle session creation if needed (this should eventually move to a side effect)
   const sessionId = selectActiveSessionForMode(rootState as any, mode);
   if (!sessionId && currentUserId) {
-    // Create a session using sessionGen (fallback simple pick if empty)
-    const currentLanguages = selectCurrentLanguagePreferences(rootState as any);
-    const availableWords = selectWordsByComplexityLevel(rootState as any, currentLanguages as any);
+    // Create a session using sessionGen for the current mode (not user's language preferences)
+    const modeLanguages = [mode]; // Use current mode as the language filter
+    const availableWords = selectWordsByComplexityLevel(rootState as any, modeLanguages as any);
     const allWordsArr = Object.values(availableWords || {});
     if (allWordsArr.length > 0) {
-      const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, selectSessionSizeForMode(rootState as any, mode), Math.random as any);
+      const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.2, new: 0.7, mastered: 0.1 }, selectSessionSizeForMode(rootState as any, mode), Math.random as any);
       const newSessionId = 'session_' + Date.now();
       const session = {
         wordIds: ids,
@@ -109,12 +108,15 @@ function App() {
     const allWordsMastered = selectAreAllSessionWordsMastered(rootState as any, activeSessionId);
     
     if (allWordsMastered) {
+      // Decrement cooldowns for all words in the completed session
+      dispatch(decrementCooldowns({ wordIds: currentSession.wordIds }));
+      
       // Generate a new session using the existing session generation logic
-      const currentLanguages = selectCurrentLanguagePreferences(rootState as any);
-      const availableWords = selectWordsByComplexityLevel(rootState as any, currentLanguages as any);
+      const modeLanguages = [mode]; // Use current mode instead of user's general language preferences
+      const availableWords = selectWordsByComplexityLevel(rootState as any, modeLanguages as any);
       const allWordsArr = Object.values(availableWords || {});
       if (allWordsArr.length > 0) {
-        const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, selectSessionSizeForMode(rootState as any, mode), Math.random as any);
+        const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.2, new: 0.7, mastered: 0.1 }, selectSessionSizeForMode(rootState as any, mode), Math.random as any);
         const newSessionId = 'session_' + Date.now();
         const session = {
           wordIds: ids,
