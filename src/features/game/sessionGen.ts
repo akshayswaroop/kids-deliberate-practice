@@ -1,12 +1,20 @@
 import type { Word } from './state';
-import { selectMasteryPercent } from './selectors';
 
 export function selectSessionWords(
   allWords: Word[],
   weights: { struggle: number; new: number; mastered: number },
   size: number,
   rng: () => number,
-  masterySelector: (word: Word) => number = (word) => selectMasteryPercent({ users: { user1: { words: { [word.id]: word }, sessions: {}, activeSessions: {}, settings: { selectionWeights: weights, sessionSize: size, languages: ['english'] } } }, currentUserId: 'user1' }, word.id)
+  // Default mastery selector that derives mastery from the word's own attempts (safe, no user assumptions).
+  masterySelector: (word: Word) => number = (word) => {
+    let mastery = 0;
+    for (const attempt of word.attempts) {
+      if (attempt.result === 'correct') mastery += 20;
+      else if (attempt.result === 'wrong') mastery -= 20;
+      mastery = Math.max(0, Math.min(100, mastery));
+    }
+    return mastery;
+  }
 ): string[] {
   // Buckets
   const now = Date.now();

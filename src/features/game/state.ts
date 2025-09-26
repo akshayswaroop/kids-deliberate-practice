@@ -40,6 +40,8 @@ export type Session = {
 };
 
 export type UserState = {
+  // Optional human-friendly display name for UI (not used as the state key)
+  displayName?: string;
   words: Record<string, Word>;
   sessions: Record<string, Session>;
   activeSessions: Record<string, string>;
@@ -48,5 +50,6 @@ export type UserState = {
 
 export type RootState = {
   users: Record<string, UserState>;
-  currentUserId: string;
+  // No default user required; allow null until a user is created/selected
+  currentUserId: string | null;
 };

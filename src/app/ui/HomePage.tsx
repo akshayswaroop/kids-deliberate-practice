@@ -9,7 +9,7 @@ import type { UserState } from '../../features/game/state';
 
 interface HomePageProps {
   users: Record<string, UserState>;
-  currentUserId: string;
+  currentUserId: string | null;
   onCreateUser: (username: string) => void;
   onSwitchUser: (userId: string) => void;
   onSetMode: (mode: string) => void;

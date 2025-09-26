@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 interface ProfileFormProps {
   users: Record<string, any>;
-  currentUserId: string;
-  onCreateUser: (username: string) => void;
+  currentUserId: string | null;
+  onCreateUser: (username: string, displayName?: string) => void;
   onSwitchUser: (userId: string) => void;
   compact?: boolean;
 }
@@ -18,8 +18,8 @@ export default function ProfileForm({ users, currentUserId, onCreateUser, onSwit
       {/* User Selection */}
       <select 
         id="user-select" 
-        value={currentUserId} 
-        onChange={e => onSwitchUser(e.target.value)} 
+        value={currentUserId ?? ''} 
+        onChange={e => { if (e.target.value) onSwitchUser(e.target.value); }} 
         style={{ 
           padding: compact ? '6px 12px' : '8px 16px', 
           borderRadius: 8, 
@@ -32,8 +32,9 @@ export default function ProfileForm({ users, currentUserId, onCreateUser, onSwit
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
         }}
       >
+        <option value="">— Select or create user —</option>
         {userIds.map(uid => (
-          <option key={uid} value={uid}>{uid}</option>
+          <option key={uid} value={uid}>{users[uid]?.displayName || uid}</option>
         ))}
       </select>
       
@@ -72,7 +73,8 @@ export default function ProfileForm({ users, currentUserId, onCreateUser, onSwit
             }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && username.trim() && !users[username.trim()]) {
-                onCreateUser(username.trim());
+                const id = `user_${Date.now()}`;
+                onCreateUser(id, username.trim());
                 setUsername('');
                 setShowCreateForm(false);
               }
@@ -81,7 +83,8 @@ export default function ProfileForm({ users, currentUserId, onCreateUser, onSwit
           <button
             onClick={() => {
               if (username.trim() && !users[username.trim()]) {
-                onCreateUser(username.trim());
+                const id = `user_${Date.now()}`;
+                onCreateUser(id, username.trim());
                 setUsername('');
                 setShowCreateForm(false);
               }

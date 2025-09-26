@@ -3,8 +3,11 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './state';
 import { getInitialWords } from '../../app/bootstrapState';
 
-const defaultUserId = 'Mishika';
-const userDefaults = () => ({
+// Use semantic/opaque user ids in core state instead of real names.
+export const DEFAULT_USER_ID = 'user_default';
+
+export const makeUser = (displayName?: string) => ({
+  displayName,
   words: getInitialWords(),
   sessions: {},
   activeSessions: {},
@@ -20,12 +23,9 @@ const userDefaults = () => ({
 });
 
 const initialState: RootState = {
-  users: {
-    Mishika: userDefaults(),
-    Eva: userDefaults(),
-    Akshay: userDefaults(),
-  },
-  currentUserId: defaultUserId,
+  // Start with no users by default. Let the UI create a user on first use.
+  users: {},
+  currentUserId: null,
 };
 
 const gameSlice = createSlice({
@@ -37,37 +37,27 @@ const gameSlice = createSlice({
         state.currentUserId = action.payload.userId;
       }
     },
-    addUser: function (state, action: PayloadAction<{ userId: string }>) {
+    addUser: function (state, action: PayloadAction<{ userId: string; displayName?: string }>) {
       const newUserId = action.payload.userId.trim();
       // Prevent adding empty userId or duplicate userId
       if (!newUserId || state.users[newUserId]) {
         return;
       }
-      state.users[newUserId] = {
-        words: getInitialWords(),
-        sessions: {},
-        activeSessions: {},
-        settings: {
-          selectionWeights: {
-            struggle: 0.5,
-            new: 0.4,
-            mastered: 0.1,
-          },
-          sessionSize: 12,
-          languages: ['english'], // Default to English only
-        },
-      };
+      state.users[newUserId] = makeUser(action.payload.displayName);
       state.currentUserId = newUserId;
     },
     setMode: function (state, action: PayloadAction<{ mode: string; sessionId: string }>) {
-      const user = state.users[state.currentUserId];
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
       if (user) {
         user.activeSessions[action.payload.mode] = action.payload.sessionId;
       }
     },
     attempt: function (state, action: PayloadAction<{ sessionId: string; wordId: string; result: 'correct' | 'wrong' }>) {
-      const user = state.users[state.currentUserId];
-      if (!user) return;
+  const uid = state.currentUserId;
+  if (!uid) return;
+  const user = state.users[uid];
       const { sessionId, wordId, result } = action.payload;
       const word = user.words[wordId];
       if (word) {
@@ -80,8 +70,9 @@ const gameSlice = createSlice({
       }
     },
     nextCard: function (state, action: PayloadAction<{ sessionId: string }>) {
-      const user = state.users[state.currentUserId];
-      if (!user) return;
+  const uid = state.currentUserId;
+  if (!uid) return;
+  const user = state.users[uid];
       const { sessionId } = action.payload;
       const session = user.sessions[sessionId];
       if (session) {
@@ -119,12 +110,16 @@ const gameSlice = createSlice({
       }
     },
     addSession: function (state, action: PayloadAction<{ sessionId: string; session: import('./state').Session }>) {
-      const user = state.users[state.currentUserId];
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
       if (!user) return;
       user.sessions[action.payload.sessionId] = action.payload.session;
     },
     setLanguagePreferences: function (state, action: PayloadAction<{ languages: string[] }>) {
-      const user = state.users[state.currentUserId];
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
       if (!user) return;
       user.settings.languages = action.payload.languages;
     },

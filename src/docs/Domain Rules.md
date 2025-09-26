@@ -21,3 +21,7 @@
   - **Mastered**: `mastery == 100%` and `now >= nextReviewAt`
 - **Weights** for buckets are configurable: `{ struggle, new, mastered }`
 - **Randomness** is injected via RNG (seedable for tests)
+
+### Developer Note
+
+- User identity in state is represented by an opaque `userId`. Do not hard-code user names in `src/` files; use `displayName` for human-facing labels when needed. A detection test `noHardcodedUserNames.test.ts` scans the `src/` directory to prevent forbidden literal names from being added to source files.

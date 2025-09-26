@@ -12,7 +12,7 @@ interface PracticePanelProps {
   choices: Array<{ id: string; label: string; progress: number }>;
   onCorrect: () => void;
   onWrong: () => void;
-  sessionId: string;
+  sessionId?: string;
 }
 
 export default function PracticePanel({ mainWord: mainWordProp, transliteration: transliterationProp, choices: choicesProp, onCorrect, onWrong, sessionId }: PracticePanelProps) {

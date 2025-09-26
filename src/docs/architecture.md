@@ -23,4 +23,4 @@
 ### Developer Note
 
 - Users are stored in state keyed by an opaque `userId` (string). Do not rely on human names as state keys. A `displayName` field exists on the `UserState` and is optional; UI components should prefer `displayName || userId` when rendering user labels.
-- Hard-coded user names such as `user1`, `Mishika`, or `Eva` were intentionally removed from `src/` code. Tests and fixtures may still use these literals inside `__tests__`.
+- Hard-coded user names were intentionally removed from `src/` code. Tests and fixtures may still use these literals inside `__tests__`.

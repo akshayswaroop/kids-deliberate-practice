@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser, addUser, setLanguagePreferences, addSession, attempt, nextCard, setMode as setModeAction } from './features/game/slice';
 import HomePage from './app/ui/HomePage';
+import Onboarding from './app/ui/Onboarding';
 import ReactJson from '@microlink/react-json-view';
 import { selectCurrentWord, selectWordsByLanguage, selectMasteryPercent, selectCurrentLanguagePreferences } from './features/game/selectors';
 import { selectSessionWords } from './features/game/sessionGen';
@@ -17,8 +18,10 @@ function DiagnosticsPanel({ rootState }: DiagnosticsPanelProps) {
   const dispatch = useDispatch();
   const users = rootState.users || {};
   const userIds = Object.keys(users);
-  const currentUserId = rootState.currentUserId;
-  const userState = users[currentUserId] || { words: {}, sessions: {}, settings: { languages: ['english'] } };
+  const currentUserId = rootState.currentUserId as string | null;
+  const userState = currentUserId && users[currentUserId]
+    ? users[currentUserId]
+    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSize: 12 } };
   const [newUserId, setNewUserId] = useState('');
   const [selectedMode, setSelectedMode] = useState(userState.settings.languages[0] || 'english');
 
@@ -66,11 +69,12 @@ function DiagnosticsPanel({ rootState }: DiagnosticsPanelProps) {
       </div>
       <div style={{ display: 'flex', gap: 12, marginTop: 18, alignItems: 'center', flexWrap: 'wrap' }}>
         <label style={{ color: '#cbd5e1' }}>User:</label>
-        <select value={currentUserId} onChange={e => dispatch(selectUser({ userId: e.target.value }))} style={{ padding: '6px 8px', borderRadius: 6 }}>
-          {userIds.map(id => <option key={id} value={id}>{id}</option>)}
+        <select value={currentUserId ?? ''} onChange={e => { if (e.target.value) dispatch(selectUser({ userId: e.target.value })); }} style={{ padding: '6px 8px', borderRadius: 6 }}>
+          <option value="">— Select or create user —</option>
+          {userIds.map(id => <option key={id} value={id}>{users[id]?.displayName || id}</option>)}
         </select>
         <input placeholder="new user id" value={newUserId} onChange={e => setNewUserId(e.target.value)} style={{ padding: '6px 8px', borderRadius: 6 }} />
-        <button onClick={() => { if (newUserId.trim()) { dispatch(addUser({ userId: newUserId.trim() })); setNewUserId(''); } }} style={{ padding: '6px 10px', borderRadius: 6, background: '#4f46e5', color: '#fff' }}>Add User</button>
+  <button onClick={() => { if (newUserId.trim()) { dispatch(addUser({ userId: newUserId.trim() })); setNewUserId(''); } }} style={{ padding: '6px 10px', borderRadius: 6, background: '#4f46e5', color: '#fff' }}>Add User</button>
 
         <label style={{ color: '#cbd5e1' }}>Mode:</label>
         <select value={selectedMode} onChange={e => { setSelectedMode(e.target.value); dispatch(setLanguagePreferences({ languages: [e.target.value] })); }} style={{ padding: '6px 8px', borderRadius: 6 }}>
@@ -102,15 +106,18 @@ function DiagnosticsPanel({ rootState }: DiagnosticsPanelProps) {
 function App() {
   const dispatch = useDispatch();
   const rootState = useSelector((state: { game: any }) => state.game);
-  const users = rootState.users;
-  const currentUserId = rootState.currentUserId;
-  const userState = users[currentUserId] || { words: {}, sessions: {}, settings: { languages: ['english'] } };
+  const users = rootState.users || {};
+  const currentUserId = rootState.currentUserId as string | null;
+  const userState = currentUserId && users[currentUserId]
+    ? users[currentUserId]
+    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSize: 12 } };
   const [mode, setMode] = useState(userState.settings.languages[0] || 'english');
   // Removed unused setShowDiagnostics
 
   // Handlers
-  const handleCreateUser = (username: string) => {
-    dispatch({ type: 'game/addUser', payload: { userId: username } });
+  const handleCreateUser = (username: string, displayName?: string) => {
+    // Preserve optional displayName as-is. If undefined, we store no displayName so UI can fall back to id.
+    dispatch({ type: 'game/addUser', payload: { userId: username, displayName } });
   };
   const handleSwitchUser = (userId: string) => {
     dispatch({ type: 'game/selectUser', payload: { userId } });
@@ -132,7 +139,7 @@ function App() {
   if (!sessionId) {
     // Create a session using sessionGen (fallback simple pick if empty)
     const allWordsArr = Object.values(availableWords || {});
-      if (allWordsArr.length > 0) {
+      if (allWordsArr.length > 0 && currentUserId) {
         const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, userState.settings.sessionSize || 12, Math.random as any);
         sessionId = 'session_' + Date.now();
         const session = {
@@ -213,6 +220,10 @@ function App() {
   if (hash === '#diagnostics') {
     return <DiagnosticsPanel rootState={rootState} />;
   }
+  if (!currentUserId) {
+    return <Onboarding onCreate={(userId, displayName) => { handleCreateUser(userId, displayName); handleSwitchUser(userId); }} />;
+  }
+
   return (
     <HomePage
       users={users}
