@@ -30,7 +30,7 @@ function makeInitialWithComplexityLevels(): RootState {
         activeSessions: {},
         settings: { 
           selectionWeights: { struggle: 1, new: 1, mastered: 1 }, 
-          sessionSize: 6, 
+          sessionSizes: { english: 6, kannada: 6, mixed: 6 },
           languages: ['english', 'kannada'],
           complexityLevels: { english: 1, kannada: 1, hindi: 1 }
         },
