@@ -60,6 +60,28 @@ export function selectWordsByLanguage(state: RootState, languages: string[]): Re
   return filteredWords;
 }
 
+// Progressive learning: filter words by complexity level
+export function selectWordsByComplexityLevel(state: RootState, languages: string[]): Record<string, Word> {
+  if (!state.currentUserId) return {};
+  const user = state.users[state.currentUserId];
+  if (!user) return {};
+  
+  const filteredWords: Record<string, Word> = {};
+  
+  for (const [wordId, word] of Object.entries(user.words)) {
+    // First check if the language is selected
+    if (languages.includes(word.language) || languages.includes('mixed')) {
+      // Then check if the word's complexity level is within the user's unlocked level
+      const userLevelForLanguage = user.settings.complexityLevels[word.language] || 1;
+      if (word.complexityLevel <= userLevelForLanguage) {
+        filteredWords[wordId] = word;
+      }
+    }
+  }
+  
+  return filteredWords;
+}
+
 export function selectCurrentLanguagePreferences(state: RootState): string[] {
   if (!state.currentUserId) return ['english'];
   const user = state.users[state.currentUserId];
@@ -67,13 +89,48 @@ export function selectCurrentLanguagePreferences(state: RootState): string[] {
   return user.settings.languages;
 }
 
+// Get current complexity levels for each language
+export function selectComplexityLevels(state: RootState): Record<string, number> {
+  if (!state.currentUserId) return { english: 1, kannada: 1, hindi: 1 };
+  const user = state.users[state.currentUserId];
+  if (!user) return { english: 1, kannada: 1, hindi: 1 };
+  return user.settings.complexityLevels;
+}
+
+// Check if user should progress to next complexity level for a language
+export function selectShouldProgressLevel(state: RootState, language: string): boolean {
+  if (!state.currentUserId) return false;
+  const user = state.users[state.currentUserId];
+  if (!user) return false;
+  
+  const currentLevel = user.settings.complexityLevels[language] || 1;
+  
+  // Get all words at current level for this language
+  const currentLevelWords = Object.values(user.words).filter(word => 
+    word.language === language && word.complexityLevel === currentLevel
+  );
+  
+  // If no words at current level, don't progress
+  if (currentLevelWords.length === 0) return false;
+  
+  // Check if at least 80% of current level words are mastered (100% mastery)
+  const masteredWords = currentLevelWords.filter(word => {
+    const mastery = selectMasteryPercent(state, word.id);
+    return mastery === 100;
+  });
+  
+  const masteryRate = masteredWords.length / currentLevelWords.length;
+  return masteryRate >= 0.8; // 80% threshold for progression
+}
+
 export function selectWordsByMasteryBucket(state: RootState, languages: string[]): {
   struggle: Word[];
   new: Word[];
   mastered: Word[];
 } {
-  const words = selectWordsByLanguage(state, languages);
-  const buckets = { struggle: [] as Word[], new: [] as Word[], mastered: [] as Word[] };
+  // Use complexity level filtering instead of just language filtering
+  const words = selectWordsByComplexityLevel(state, languages);
+  const buckets = { struggle: [] as Word[], new:[] as Word[], mastered: [] as Word[] };
   
   for (const word of Object.values(words)) {
     const mastery = selectMasteryPercent(state, word.id);

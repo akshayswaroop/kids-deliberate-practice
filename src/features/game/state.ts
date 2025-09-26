@@ -9,6 +9,7 @@ export type Word = {
   id: string;
   text: string; // For English words, this is the main text. For Kannada, this could be transliteration for display
   language: string;
+  complexityLevel: number; // 1-based progressive learning level (1 = easiest, higher = more complex)
   // Kannada-specific fields
   wordKannada?: string; // ರಾಮ
   transliteration?: string; // Rāma  
@@ -28,6 +29,8 @@ export type SessionSettings = {
   sessionSizes: Record<string, number>; // mode -> sessionSize (e.g., { english: 6, kannada: 3, mixed: 9 })
   // Language filtering for sessions
   languages: string[]; // ["english", "kannada"] or ["mixed"]
+  // Progressive learning: track unlocked complexity level per language
+  complexityLevels: Record<string, number>; // e.g., { "english": 2, "kannada": 3, "hindi": 1 }
 };
 
 export type Session = {
