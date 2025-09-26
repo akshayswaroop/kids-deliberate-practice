@@ -7,8 +7,8 @@ function makeInitial(): RootState {
     users: {
       user1: {
         words: {
-          w1: { id: 'w1', text: 'one', language: 'en', attempts: [] },
-          w2: { id: 'w2', text: 'two', language: 'en', attempts: [] },
+          w1: { id: 'w1', text: 'one', language: 'en', complexityLevel: 1, attempts: [] },
+          w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [] },
         },
         sessions: {
           s1: {
@@ -17,11 +17,11 @@ function makeInitial(): RootState {
             revealed: false,
             mode: 'practice',
             createdAt: 0,
-            settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] },
+            settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
           },
         },
         activeSessions: {},
-        settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] },
+        settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
       },
     },
     currentUserId: 'user1',
@@ -64,8 +64,8 @@ describe('nextCard', () => {
     const state = makeInitial();
     // Set up session with 2 words, both unmastered
     state.users.user1.sessions.s1.wordIds = ['word1', 'word2'];
-    state.users.user1.words.word1 = { id: 'word1', text: 'word1', language: 'english', attempts: [] };
-    state.users.user1.words.word2 = { id: 'word2', text: 'word2', language: 'english', attempts: [] };
+    state.users.user1.words.word1 = { id: 'word1', text: 'word1', language: 'english', complexityLevel: 1, attempts: [] };
+    state.users.user1.words.word2 = { id: 'word2', text: 'word2', language: 'english', complexityLevel: 1, attempts: [] };
     state.users.user1.sessions.s1.currentIndex = 0;
     
     const next = reducer(state, nextCard({ sessionId: 's1' }));

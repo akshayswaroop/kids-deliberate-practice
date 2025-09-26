@@ -26,7 +26,7 @@ function makeInitial(): RootState {
         words: getInitialWords(),
         sessions: {},
         activeSessions: {},
-  settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ['english'] },
+  settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
       },
     },
     currentUserId: 'user1',
@@ -45,7 +45,7 @@ describe('multi-user session persistence', () => {
       revealed: false,
       mode: 'practice',
       createdAt: 0,
-  settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ['english'] },
+  settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
     };
     state = reducer(state, addSession({ sessionId: 's1', session: session1 }));
     // User1: attempt first 3 words
@@ -64,7 +64,7 @@ describe('multi-user session persistence', () => {
       revealed: false,
       mode: 'practice',
       createdAt: 1,
-  settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ['english'] },
+  settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
     };
     state = reducer(state, addSession({ sessionId: 's2', session: session2 }));
     // User2: attempt first 5 words

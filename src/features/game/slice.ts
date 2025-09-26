@@ -19,6 +19,11 @@ export const makeUser = (displayName?: string) => ({
     },
     sessionSize: 6,
     languages: ['english'], // Default to English only
+    complexityLevels: {
+      'english': 1,  // Start with Level 1 English (simple CVC words)
+      'kannada': 1,  // Start with Level 1 Kannada (simple words without complex matras)
+      'hindi': 1     // Future support for Hindi
+    }
   },
 });
 
@@ -131,8 +136,28 @@ const gameSlice = createSlice({
       if (!user) return;
       user.settings.sessionSize = action.payload.sessionSize;
     },
+    progressComplexityLevel: function (state, action: PayloadAction<{ language: string }>) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      if (!user) return;
+      
+      const currentLevel = user.settings.complexityLevels[action.payload.language] || 1;
+      // Progress to next level (with a reasonable max level of 10)
+      user.settings.complexityLevels[action.payload.language] = Math.min(currentLevel + 1, 10);
+    },
+    setComplexityLevel: function (state, action: PayloadAction<{ language: string; level: number }>) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      if (!user) return;
+      
+      // Ensure level is within bounds (1-10)
+      const level = Math.max(1, Math.min(10, action.payload.level));
+      user.settings.complexityLevels[action.payload.language] = level;
+    },
   },
 });
 
-export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences, setSessionSize } = gameSlice.actions;
+export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences, setSessionSize, progressComplexityLevel, setComplexityLevel } = gameSlice.actions;
 export default gameSlice.reducer;

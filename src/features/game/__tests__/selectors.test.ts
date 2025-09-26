@@ -13,6 +13,7 @@ describe("selectMasteryPercent", () => {
       id: "w1",
       text: "test",
       language: "en",
+      complexityLevel: 1,
       attempts: [
         { timestamp: 1, result: "correct" }, // +20
         { timestamp: 2, result: "wrong" },   // −20 → 0
@@ -27,7 +28,7 @@ describe("selectMasteryPercent", () => {
           words: { w1: word },
           sessions: {},
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ["english"] },
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ["english"], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
         },
       },
       currentUserId: 'user1',
@@ -40,6 +41,7 @@ describe("selectMasteryPercent", () => {
       id: "w2",
       text: "test2",
       language: "en",
+      complexityLevel: 1,
       attempts: Array(10).fill({ timestamp: 1, result: "correct" }), // would exceed 100
     };
 
@@ -49,7 +51,7 @@ describe("selectMasteryPercent", () => {
           words: { w2: word },
           sessions: {},
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ["english"] },
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 6, languages: ["english"], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
         },
       },
       currentUserId: 'user1',
@@ -61,8 +63,8 @@ describe("selectMasteryPercent", () => {
 describe("selectCurrentWord", () => {
   it("returns the current word from session", () => {
     const words: Record<string, Word> = {
-      w1: { id: "w1", text: "one", language: "en", attempts: [] },
-      w2: { id: "w2", text: "two", language: "en", attempts: [] },
+      w1: { id: "w1", text: "one", language: "en", complexityLevel: 1, attempts: [] },
+      w2: { id: "w2", text: "two", language: "en", complexityLevel: 1, attempts: [] },
     };
     const session: Session = {
       wordIds: ["w1", "w2"],
@@ -70,7 +72,7 @@ describe("selectCurrentWord", () => {
       revealed: false,
       mode: "practice",
       createdAt: 0,
-      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ["english"] },
+      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ["english"], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
     };
     const state: RootState = {
       users: {
@@ -96,7 +98,7 @@ describe("selectSessionProgress", () => {
       revealed: false,
       mode: "practice",
       createdAt: 0,
-      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ["english"] },
+      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ["english"], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
     };
     const state: RootState = {
       users: {
@@ -120,14 +122,14 @@ describe('selectAreAllSessionWordsMastered', () => {
       users: {
         user1: {
           words: {
-            w1: { id: 'w1', text: 'one', language: 'en', attempts: [
+            w1: { id: 'w1', text: 'one', language: 'en', complexityLevel: 1, attempts: [
               { timestamp: 1, result: 'correct' },
               { timestamp: 2, result: 'correct' },
               { timestamp: 3, result: 'correct' },
               { timestamp: 4, result: 'correct' },
               { timestamp: 5, result: 'correct' }  // 5 correct = 100%
             ]},
-            w2: { id: 'w2', text: 'two', language: 'en', attempts: [
+            w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [
               { timestamp: 1, result: 'correct' },
               { timestamp: 2, result: 'correct' },
               { timestamp: 3, result: 'correct' },
@@ -136,10 +138,10 @@ describe('selectAreAllSessionWordsMastered', () => {
             ]}
           },
           sessions: {
-            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] } }
+            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } } }
           },
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] }
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } }
         }
       },
       currentUserId: 'user1'
@@ -153,24 +155,24 @@ describe('selectAreAllSessionWordsMastered', () => {
       users: {
         user1: {
           words: {
-            w1: { id: 'w1', text: 'one', language: 'en', attempts: [
+            w1: { id: 'w1', text: 'one', language: 'en', complexityLevel: 1, attempts: [
               { timestamp: 1, result: 'correct' },
               { timestamp: 2, result: 'correct' },
               { timestamp: 3, result: 'correct' },
               { timestamp: 4, result: 'correct' },
               { timestamp: 5, result: 'correct' }  // 5 correct = 100%
             ]},
-            w2: { id: 'w2', text: 'two', language: 'en', attempts: [
+            w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [
               { timestamp: 1, result: 'correct' },
               { timestamp: 2, result: 'correct' },
               { timestamp: 3, result: 'correct' }  // 3 correct = 60%
             ]}
           },
           sessions: {
-            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] } }
+            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } } }
           },
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'] }
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSize: 2, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } }
         }
       },
       currentUserId: 'user1'

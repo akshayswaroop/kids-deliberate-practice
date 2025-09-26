@@ -9,13 +9,13 @@ function makeInitialStateWithWords(): RootState {
       testUser: {
         words: {
           // First batch of words (will be mastered in first session)
-          w1: { id: 'w1', text: 'apple', language: 'english', attempts: [] },
-          w2: { id: 'w2', text: 'banana', language: 'english', attempts: [] },
-          w3: { id: 'w3', text: 'cherry', language: 'english', attempts: [] },
+          w1: { id: 'w1', text: 'apple', language: 'english', complexityLevel: 1, attempts: [] },
+          w2: { id: 'w2', text: 'banana', language: 'english', complexityLevel: 1, attempts: [] },
+          w3: { id: 'w3', text: 'cherry', language: 'english', complexityLevel: 1, attempts: [] },
           // Second batch of words (available for next session)
-          w4: { id: 'w4', text: 'date', language: 'english', attempts: [] },
-          w5: { id: 'w5', text: 'elderberry', language: 'english', attempts: [] },
-          w6: { id: 'w6', text: 'fig', language: 'english', attempts: [] },
+          w4: { id: 'w4', text: 'date', language: 'english', complexityLevel: 1, attempts: [] },
+          w5: { id: 'w5', text: 'elderberry', language: 'english', complexityLevel: 1, attempts: [] },
+          w6: { id: 'w6', text: 'fig', language: 'english', complexityLevel: 1, attempts: [] },
         },
         sessions: {},
         activeSessions: {},
@@ -23,6 +23,7 @@ function makeInitialStateWithWords(): RootState {
           selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
           sessionSize: 3,
           languages: ['english'],
+          complexityLevels: { english: 1, kannada: 1, hindi: 1 }
         },
       },
     },

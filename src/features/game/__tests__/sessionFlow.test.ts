@@ -25,6 +25,7 @@ describe('Session flow: master 12 words, then next 12', () => {
             selectionWeights: { struggle: 1, new: 1, mastered: 1 },
             sessionSize: 6,
             languages: ['english'],
+            complexityLevels: { english: 1, kannada: 1, hindi: 1 }
           },
         },
       },

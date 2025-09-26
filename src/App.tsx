@@ -6,7 +6,7 @@ import HomePage from './app/ui/HomePage';
 import Onboarding from './app/ui/Onboarding';
 import ReactJson from '@microlink/react-json-view';
 import { 
-  selectWordsByLanguage, 
+  selectWordsByComplexityLevel,
   selectCurrentLanguagePreferences,
   selectShouldShowOnboarding,
   selectActiveSessionForMode,
@@ -179,7 +179,7 @@ function App() {
   if (!sessionId && currentUserId) {
     // Create a session using sessionGen (fallback simple pick if empty)
     const currentLanguages = selectCurrentLanguagePreferences(rootState as any);
-    const availableWords = selectWordsByLanguage(rootState as any, currentLanguages as any);
+    const availableWords = selectWordsByComplexityLevel(rootState as any, currentLanguages as any);
     const allWordsArr = Object.values(availableWords || {});
     if (allWordsArr.length > 0) {
       const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, userState.settings.sessionSize || 6, Math.random as any);
@@ -231,7 +231,7 @@ function App() {
     if (allWordsMastered) {
       // Generate a new session using the existing session generation logic
       const currentLanguages = selectCurrentLanguagePreferences(rootState as any);
-      const availableWords = selectWordsByLanguage(rootState as any, currentLanguages as any);
+      const availableWords = selectWordsByComplexityLevel(rootState as any, currentLanguages as any);
       const allWordsArr = Object.values(availableWords || {});
       if (allWordsArr.length > 0) {
         const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, userState.settings.sessionSize || 6, Math.random as any);
