@@ -1,0 +1,146 @@
+[
+  {
+    "id": "bones_total",
+    "category": "skeleton_bones",
+    "complexity": 1,
+    "question": "How many bones are in an adult human body?",
+    "answer": "206 bones",
+    "notes": "Babies are born with about 270 bones, but many fuse together as they grow. By adulthood, we have 206 bones."
+  },
+  {
+    "id": "largest_bone",
+    "category": "skeleton_bones", 
+    "complexity": 1,
+    "question": "What is the largest bone in the human body?",
+    "answer": "Femur (thighbone)",
+    "notes": "The femur is not only the largest bone but also the strongest. It connects your hip to your knee and helps you walk, run, and jump."
+  },
+  {
+    "id": "smallest_bone",
+    "category": "skeleton_bones",
+    "complexity": 2,
+    "question": "What is the smallest bone in the human body?",
+    "answer": "Stapes (in the ear)",
+    "notes": "The stapes bone is tiny - only about 3mm tall! It's one of three tiny bones in your ear that help you hear sounds."
+  },
+  {
+    "id": "heart_function",
+    "category": "general_body",
+    "complexity": 1,
+    "question": "What does your heart do?",
+    "answer": "Pumps blood through your body",
+    "notes": "Your heart beats about 100,000 times per day! It pumps oxygen-rich blood to all parts of your body through blood vessels called arteries."
+  },
+  {
+    "id": "breathing_muscle",
+    "category": "general_body",
+    "complexity": 2,
+    "question": "What is the main muscle used for breathing?",
+    "answer": "Diaphragm",
+    "notes": "The diaphragm is a dome-shaped muscle below your lungs. When it moves down, air flows into your lungs. When it moves up, air flows out."
+  },
+  {
+    "id": "teeth_types",
+    "category": "general_body",
+    "complexity": 2,
+    "question": "Name the four types of teeth humans have.",
+    "answer": "Incisors, Canines, Premolars, Molars",
+    "notes": "Incisors cut food, canines tear food, and premolars and molars grind food. Adults have 32 teeth total when all wisdom teeth come in."
+  },
+  {
+    "id": "skull_protection",
+    "category": "skeleton_bones",
+    "complexity": 1,
+    "question": "What does your skull protect?",
+    "answer": "Your brain",
+    "notes": "Your skull is made of 22 bones that are fused together to form a strong helmet protecting your brain from injury."
+  },
+  {
+    "id": "spine_vertebrae",
+    "category": "skeleton_bones",
+    "complexity": 2,
+    "question": "How many vertebrae (spine bones) do humans have?",
+    "answer": "33 vertebrae",
+    "notes": "Your spine has 33 vertebrae that protect your spinal cord. Some of these bones fuse together as you grow, so adults effectively have 26 moveable sections."
+  },
+  {
+    "id": "ribs_count",
+    "category": "skeleton_bones",
+    "complexity": 2,
+    "question": "How many ribs do humans have?",
+    "answer": "24 ribs (12 pairs)",
+    "notes": "Your ribs form a protective cage around your heart and lungs. Most ribs connect to your breastbone in front and your spine in back."
+  },
+  {
+    "id": "muscles_count",
+    "category": "general_body",
+    "complexity": 3,
+    "question": "About how many muscles are in the human body?",
+    "answer": "Over 600 muscles",
+    "notes": "There are more than 600 muscles in your body! They help you move, breathe, pump blood, digest food, and even smile."
+  },
+  {
+    "id": "strongest_muscle",
+    "category": "general_body",
+    "complexity": 3,
+    "question": "What is the strongest muscle in the human body?",
+    "answer": "Jaw muscle (masseter)",
+    "notes": "The masseter muscle in your jaw can exert a force of up to 200 pounds per square inch when you bite down!"
+  },
+  {
+    "id": "skin_function",
+    "category": "general_body",
+    "complexity": 1,
+    "question": "What are three main jobs of your skin?",
+    "answer": "Protect, regulate temperature, sense touch",
+    "notes": "Your skin is your body's largest organ! It keeps germs out, helps control your body temperature through sweating, and contains nerves that let you feel hot, cold, and touch."
+  },
+  {
+    "id": "blood_vessels",
+    "category": "general_body",
+    "complexity": 3,
+    "question": "What are the three main types of blood vessels?",
+    "answer": "Arteries, Veins, Capillaries",
+    "notes": "Arteries carry oxygen-rich blood away from your heart. Veins bring blood back to your heart. Capillaries are tiny vessels that connect arteries and veins."
+  },
+  {
+    "id": "joint_types",
+    "category": "skeleton_bones",
+    "complexity": 3,
+    "question": "Name three types of joints in your body.",
+    "answer": "Hinge, Ball-and-socket, Pivot",
+    "notes": "Hinge joints (like your knee) move back and forth. Ball-and-socket joints (like your shoulder) can move in many directions. Pivot joints (like your neck) let you turn your head."
+  },
+  {
+    "id": "digestive_path",
+    "category": "general_body",
+    "complexity": 3,
+    "question": "What path does food take through your digestive system?",
+    "answer": "Mouth, esophagus, stomach, small intestine, large intestine",
+    "notes": "Food travels about 30 feet through your digestive system! It takes about 24-72 hours for food to completely pass through your body."
+  },
+  {
+    "id": "brain_parts",
+    "category": "general_body",
+    "complexity": 3,
+    "question": "What are the three main parts of the brain?",
+    "answer": "Cerebrum, Cerebellum, Brain stem",
+    "notes": "The cerebrum controls thinking and voluntary movements. The cerebellum helps with balance and coordination. The brain stem controls automatic functions like breathing and heart rate."
+  },
+  {
+    "id": "lungs_air",
+    "category": "general_body",
+    "complexity": 2,
+    "question": "What gas do your lungs take in and what do they give off?",
+    "answer": "Take in oxygen, give off carbon dioxide",
+    "notes": "Your lungs work like a gas exchange system. They take oxygen from the air you breathe and put it into your blood, while removing waste carbon dioxide from your blood."
+  },
+  {
+    "id": "bone_growth",
+    "category": "skeleton_bones",
+    "complexity": 3,
+    "question": "How do bones grow stronger?",
+    "answer": "Exercise, calcium, and vitamin D",
+    "notes": "Weight-bearing exercise signals bones to grow stronger. Calcium from dairy foods and leafy greens provides building materials. Vitamin D helps your body absorb calcium."
+  }
+]

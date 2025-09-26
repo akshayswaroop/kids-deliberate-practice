@@ -14,6 +14,10 @@ export type Word = {
   wordKannada?: string; // ರಾಮ
   transliteration?: string; // Rāma  
   transliterationHi?: string; // राम
+  // Human Body mode fields
+  answer?: string; // The correct answer to the question
+  notes?: string; // Additional information revealed after attempting
+  category?: string; // Topic category (e.g., "skeleton_bones", "general_body")
   attempts: Attempt[];
   nextReviewAt?: number;
   reviewInterval?: number;
