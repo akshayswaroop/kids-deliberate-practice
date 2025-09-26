@@ -17,7 +17,7 @@ export const makeUser = (displayName?: string) => ({
       new: 0.4,
       mastered: 0.1,
     },
-    sessionSize: 12,
+    sessionSize: 6,
     languages: ['english'], // Default to English only
   },
 });
@@ -123,8 +123,15 @@ const gameSlice = createSlice({
       if (!user) return;
       user.settings.languages = action.payload.languages;
     },
+    setSessionSize: function (state, action: PayloadAction<{ sessionSize: number }>) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      if (!user) return;
+      user.settings.sessionSize = action.payload.sessionSize;
+    },
   },
 });
 
-export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences } = gameSlice.actions;
+export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences, setSessionSize } = gameSlice.actions;
 export default gameSlice.reducer;

@@ -7,6 +7,7 @@ import Onboarding from './app/ui/Onboarding';
 import ReactJson from '@microlink/react-json-view';
 import { selectCurrentWord, selectWordsByLanguage, selectMasteryPercent, selectCurrentLanguagePreferences } from './features/game/selectors';
 import { selectSessionWords } from './features/game/sessionGen';
+import { setSessionSize } from './features/game/slice';
 
 import type { RootState } from './features/game/state';
 
@@ -19,7 +20,7 @@ function DiagnosticsPanel() {
   const currentUserId = rootState.currentUserId as string | null;
   const userState = currentUserId && users[currentUserId]
     ? users[currentUserId]
-    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSize: 12 } };
+    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSize: 6 } };
   const [newUserId, setNewUserId] = useState('');
   const [selectedMode, setSelectedMode] = useState(userState.settings.languages[0] || 'english');
 
@@ -31,7 +32,8 @@ function DiagnosticsPanel() {
   const startSession = () => {
     // Simple session: pick first N words from user's words
     const words = userState.words || {};
-    const ids = Object.keys(words).slice(0, 12);
+    const size = (userState.settings && userState.settings.sessionSize) || 6;
+    const ids = Object.keys(words).slice(0, size);
     const sessionId = 'session_' + Date.now();
     const session = {
       wordIds: ids,
@@ -127,7 +129,7 @@ function App() {
   const currentUserId = rootState.currentUserId as string | null;
   const userState = currentUserId && users[currentUserId]
     ? users[currentUserId]
-    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSize: 12 } };
+    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 }, sessionSize: 6 } };
   const [mode, setMode] = useState(userState.settings.languages[0] || 'english');
   // Removed unused setShowDiagnostics
 
@@ -144,6 +146,14 @@ function App() {
     setMode(newMode);
   };
 
+  const handleSetSessionSize = (n: number) => {
+    // Update the user's setting
+    dispatch(setSessionSize({ sessionSize: n } as any));
+    // Clear the active session for the current mode so a new session gets generated
+    // (we use an empty string which is falsy so the session-creation branch runs)
+    dispatch(setModeAction({ mode, sessionId: '' } as any));
+  };
+
   // PracticePanel props (stubbed for now)
   // Determine language preferences and available words
   const currentLanguages = selectCurrentLanguagePreferences(rootState as any);
@@ -157,7 +167,7 @@ function App() {
     // Create a session using sessionGen (fallback simple pick if empty)
     const allWordsArr = Object.values(availableWords || {});
       if (allWordsArr.length > 0 && currentUserId) {
-        const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, userState.settings.sessionSize || 12, Math.random as any);
+  const ids = selectSessionWords(allWordsArr, userState.settings.selectionWeights || { struggle: 0.5, new: 0.4, mastered: 0.1 }, userState.settings.sessionSize || 6, Math.random as any);
         sessionId = 'session_' + Date.now();
         const session = {
           wordIds: ids,
@@ -248,6 +258,8 @@ function App() {
       onCreateUser={handleCreateUser}
       onSwitchUser={handleSwitchUser}
       onSetMode={handleSetMode}
+      sessionSize={userState.settings.sessionSize}
+      onSetSessionSize={handleSetSessionSize}
       mode={mode}
       mainWord={mainWord}
       sessionId={sessionId}
