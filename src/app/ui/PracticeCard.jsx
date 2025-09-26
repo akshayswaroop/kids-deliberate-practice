@@ -81,7 +81,7 @@ function MasteryTile({ label, progress, isActive }) {
   );
 }
 
-export default function PracticeCard({ mainWord, transliteration, choices, onCorrect, onWrong, onNext, columns = 6 }) {
+export default function PracticeCard({ mainWord, transliteration, transliterationHi, choices, onCorrect, onWrong, onNext, columns = 6 }) {
   const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
 
   // Animation helper functions
@@ -248,15 +248,30 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
           }}>
           {mainWord}
         </div>
-        {transliteration && (
+        {(transliteration || transliterationHi) && (
           <div style={{
             fontSize: 'clamp(16px, 3vw, 22px)', // Slightly larger
             color: '#6366f1',
             fontStyle: 'italic',
             fontWeight: 600,
-            marginTop: '8px'
+            marginTop: '8px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '4px',
+            alignItems: 'center'
           }}>
-            {transliteration}
+            {transliteration && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '14px', fontWeight: 500, color: '#4b5563' }}>English:</span>
+                <span>{transliteration}</span>
+              </div>
+            )}
+            {transliterationHi && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '14px', fontWeight: 500, color: '#4b5563' }}>Hindi:</span>
+                <span>{transliterationHi}</span>
+              </div>
+            )}
           </div>
         )}
       </div>

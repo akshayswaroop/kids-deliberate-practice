@@ -290,6 +290,7 @@ function App() {
       mode={mode}
       mainWord={practiceData.mainWord}
       transliteration={practiceData.transliteration}
+      transliterationHi={practiceData.transliterationHi}
       choices={practiceData.choices}
       onCorrect={onCorrect}
       onWrong={onWrong}

@@ -4,6 +4,7 @@ import {
   selectCurrentWord,
   selectSessionProgress,
   selectAreAllSessionWordsMastered,
+  selectCurrentPracticeData,
 } from "../selectors";
 import type { RootState, Word, Session } from "../state";
 
@@ -179,5 +180,128 @@ describe('selectAreAllSessionWordsMastered', () => {
     };
     
     expect(selectAreAllSessionWordsMastered(state, 's1')).toBe(false);
+  });
+});
+
+describe('selectCurrentPracticeData transliteration behavior', () => {
+  it('hides transliteration in Kannada mode before session revealed', () => {
+    const kannadaWord: Word = {
+      id: 'rama',
+      text: 'ರಾಮ',
+      language: 'kannada',
+      complexityLevel: 1,
+      wordKannada: 'ರಾಮ',
+      transliteration: 'Rāma',
+      transliterationHi: 'राम',
+      attempts: []
+    };
+
+    const session: Session = {
+      wordIds: ['rama'],
+      currentIndex: 0,
+      revealed: false, // Key: session not revealed yet
+      mode: 'kannada',
+      createdAt: Date.now(),
+      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { kannada: 1 }, languages: ['kannada'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } }
+    };
+
+    const state: RootState = {
+      users: {
+        user1: {
+          words: { rama: kannadaWord },
+          sessions: { s1: session },
+          activeSessions: { kannada: 's1' },
+          settings: session.settings
+        }
+      },
+      currentUserId: 'user1'
+    };
+
+    const practiceData = selectCurrentPracticeData(state, 'kannada');
+    
+    // Should not show transliteration before attempt
+    expect(practiceData.transliteration).toBeUndefined();
+    expect(practiceData.transliterationHi).toBeUndefined();
+    expect(practiceData.mainWord).toBe('ರಾಮ');
+  });
+
+  it('shows both transliterations in Kannada mode after session revealed', () => {
+    const kannadaWord: Word = {
+      id: 'rama',
+      text: 'ರಾಮ',
+      language: 'kannada',
+      complexityLevel: 1,
+      wordKannada: 'ರಾಮ',
+      transliteration: 'Rāma',
+      transliterationHi: 'राम',
+      attempts: []
+    };
+
+    const session: Session = {
+      wordIds: ['rama'],
+      currentIndex: 0,
+      revealed: true, // Key: session revealed after attempt
+      mode: 'kannada',
+      createdAt: Date.now(),
+      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { kannada: 1 }, languages: ['kannada'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } }
+    };
+
+    const state: RootState = {
+      users: {
+        user1: {
+          words: { rama: kannadaWord },
+          sessions: { s1: session },
+          activeSessions: { kannada: 's1' },
+          settings: session.settings
+        }
+      },
+      currentUserId: 'user1'
+    };
+
+    const practiceData = selectCurrentPracticeData(state, 'kannada');
+    
+    // Should show both transliterations after attempt
+    expect(practiceData.transliteration).toBe('Rāma');
+    expect(practiceData.transliterationHi).toBe('राम');
+    expect(practiceData.mainWord).toBe('ರಾಮ');
+  });
+
+  it('always shows transliteration in English mode regardless of revealed state', () => {
+    const englishWord: Word = {
+      id: 'cat',
+      text: 'cat',
+      language: 'english',
+      complexityLevel: 1,
+      attempts: []
+    };
+
+    const session: Session = {
+      wordIds: ['cat'],
+      currentIndex: 0,
+      revealed: false, // Even not revealed
+      mode: 'english',
+      createdAt: Date.now(),
+      settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 1 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } }
+    };
+
+    const state: RootState = {
+      users: {
+        user1: {
+          words: { cat: englishWord },
+          sessions: { s1: session },
+          activeSessions: { english: 's1' },
+          settings: session.settings
+        }
+      },
+      currentUserId: 'user1'
+    };
+
+    const practiceData = selectCurrentPracticeData(state, 'english');
+    
+    // English mode not affected - no special transliteration behavior
+    expect(practiceData.mainWord).toBe('cat');
+    // English words don't have transliteration fields
+    expect(practiceData.transliteration).toBeUndefined();
+    expect(practiceData.transliterationHi).toBeUndefined();
   });
 });
