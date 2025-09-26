@@ -21,7 +21,7 @@ export const makeUser = (displayName?: string) => ({
       english: 12,   // Default for English
       kannada: 12,   // Default for Kannada  
       mathtables: 12, // Default for Math Tables
-      humanbody: 12, // Default for Human Body
+      humanbody: 5,  // Small sessions for Human Body (only 18 total questions, allows 3+ cycles)
       indiageography: 12, // Default for India Geography
       mixed: 12      // Default for mixed mode
     },
