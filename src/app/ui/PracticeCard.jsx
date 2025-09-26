@@ -81,7 +81,7 @@ function MasteryTile({ label, progress, isActive }) {
   );
 }
 
-export default function PracticeCard({ mainWord, transliteration, transliterationHi, choices, onCorrect, onWrong, onNext, columns = 6 }) {
+export default function PracticeCard({ mainWord, transliteration, transliterationHi, choices, onCorrect, onWrong, onNext, columns = 6, mode }) {
   const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
 
   // Animation helper functions
@@ -261,10 +261,18 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             alignItems: 'center'
           }}>
             {transliteration && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '14px', fontWeight: 500, color: '#4b5563' }}>English:</span>
-                <span>{transliteration}</span>
-              </div>
+              // For Math Tables mode show a distinct phrasing like "Answer : 4?"
+              mode === 'mathtables' ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '16px', fontWeight: 800, color: '#4b5563' }}>Answer :</span>
+                  <span style={{ fontSize: '18px', fontWeight: 900, color: '#0b1220' }}>{transliteration}?</span>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '14px', fontWeight: 500, color: '#4b5563' }}>English:</span>
+                  <span>{transliteration}</span>
+                </div>
+              )
             )}
             {transliterationHi && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

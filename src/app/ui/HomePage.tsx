@@ -59,9 +59,11 @@ export default function HomePage({
     return (
       <div style={{ height: '100vh', background: '#f8fafc', fontFamily: 'system-ui, sans-serif', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <div style={{ width: '100%', background: rainbowBg, padding: '12px 48px 12px 20px', position: 'relative' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12, maxWidth: '100%', overflow: 'hidden', paddingRight: '48px' }}>
-            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff', margin: 0, flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>Kids Deliberate Practice</h1>
-            <a href="#diagnostics" style={{ color: '#fff', fontWeight: 700, fontSize: 13, textDecoration: 'none', background: 'rgba(0,0,0,0.4)', borderRadius: 6, padding: '6px 10px', border: '1px solid rgba(255,255,255,0.5)', whiteSpace: 'nowrap', flexShrink: 0 }}>Diagnostics</a>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 12, maxWidth: '100%', overflow: 'hidden', paddingRight: '48px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center' }}>
+              <span role="img" aria-label="sparkle" style={{ fontSize: 22 }}>✨</span>
+              <h1 style={{ fontSize: '1.9rem', fontWeight: 900, color: '#fff', margin: 0, textAlign: 'center', whiteSpace: 'nowrap' }}>Kids Deliberate Practice</h1>
+            </div>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.95)', borderRadius: 12, padding: '10px 48px 10px 16px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', maxWidth: '100%', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
@@ -97,7 +99,7 @@ export default function HomePage({
           </div>
         </div>
         <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: '#fff', margin: '4px', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
-          <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} />
+          <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} mode={mode} />
         </div>
       </div>
     );
@@ -121,10 +123,10 @@ export default function HomePage({
             onToggleCreateForm={setShowCreateForm}
           />
           <ModeSelector compact mode={mode} onSetMode={onSetMode} />
-          <a href="#diagnostics" style={{ position: 'absolute', right: 12, top: 12, color: '#fff', fontWeight: 600, fontSize: 14, textDecoration: 'underline', background: 'rgba(0,0,0,0.15)', borderRadius: 8, padding: '6px 10px' }}>Diagnostics</a>
+          {/* Diagnostics link removed */}
         </div>
         <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'stretch', background: '#fff', margin: '4px', borderRadius: 12, boxShadow: '0 2px 12px #0001' }}>
-          <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} />
+          <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} mode={mode} />
         </div>
       </div>
     );
@@ -149,7 +151,7 @@ export default function HomePage({
           />
           <ModeSelector compact mode={mode} onSetMode={onSetMode} />
         </div>
-  <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} />
+  <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} mode={mode} />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ export interface PracticeCardProps {
   onWrong: () => void;
   onNext: () => void;
   columns?: number;
+  mode?: string;
 }
 
 export default function PracticeCard(props: PracticeCardProps): JSX.Element;

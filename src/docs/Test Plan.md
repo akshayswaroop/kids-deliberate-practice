@@ -57,12 +57,5 @@ npx vitest run --config vitest.config.unit.ts src/features/game/__tests__/select
 - **Actions**: State mutations in reducers (minimal logic)  
 - **Presentation**: UI components via Storybook (visual testing)
 
-### Diagnostics / Manual Testing
-- The app exposes an interactive Diagnostics panel (reachable via the `#diagnostics` hash) which includes:
-	- Live state viewer (JSON)
-	- User selection and creation controls
-	- Language mode selector
-	- Session creation (start session)
-	- Quick attempt buttons and next-card control
-
-Use this panel to run manual flows and verify selectors/reducers in an isolated environment.
+### Manual Testing
+Use the Storybook stories and the built-in onboarding flow to verify manual scenarios. The previous Diagnostics panel was removed; use the Storybook stories and `#diagnostics` no longer applies.

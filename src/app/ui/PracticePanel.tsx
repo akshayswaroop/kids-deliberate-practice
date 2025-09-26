@@ -10,6 +10,7 @@ interface PracticePanelProps {
   onWrong: () => void;
   onNext: () => void;
   columns?: number;
+  mode?: string;
 }
 
 export default function PracticePanel({ 
@@ -21,7 +22,8 @@ export default function PracticePanel({
   onWrong, 
   onNext,
   columns = 6
-}: PracticePanelProps) {
+  , mode
+}: PracticePanelProps & { mode?: string }) {
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
       <PracticeCard
@@ -33,6 +35,7 @@ export default function PracticePanel({
         onWrong={onWrong}
         onNext={onNext}
         columns={columns}
+        mode={mode}
       />
     </div>
   );
