@@ -25,11 +25,40 @@ npm run dev
 npm run build
 
 # Run tests
-npm run test
+npm run test:all          # Run all tests (unit + Storybook)
+npm run test:unit         # Run unit tests only (fast: ~1.7s)
+npm run test:stories      # Run Storybook component tests
+npm run test:unit:watch   # Watch mode for development
+npm run test:watch        # Watch mode for all tests (continuous)
 
 # Launch Storybook for component development
 npm run storybook
 ```
+
+## 🧪 Testing Strategy
+
+### Quick Test Commands
+```bash
+npm run test:all          # All tests (unit + Storybook) - ~4s
+npm run test:unit         # Unit tests only (fast) - ~1.7s  
+npm run test:stories      # Storybook component tests - ~2s
+npm run test:unit:watch   # Watch mode for development
+npm run test:watch        # Continuous testing (all tests)
+```
+
+### High-Leverage Tests (Essential)
+- **`selectors.test.ts`** - Mastery calculation algorithm (+20/-20% logic)
+- **`reducers.test.ts`** - Redux state mutations and integrity  
+- **`sessionGen.test.ts`** - Weighted word selection algorithm
+- **`HomePage.stories.jsx`** - Visual/interaction component testing
+
+**Total: 10 critical tests in ~2 seconds**
+
+### Test Architecture
+- **Unit Tests**: `vitest.config.unit.ts` - Fast jsdom-based testing
+- **Component Tests**: `vite.config.ts` - Browser-based Storybook integration
+- **Auto-run**: All tests run on every commit via pre-commit hooks
+- **Git Integration**: Tests must pass before commits are allowed
 
 ## 🎨 Development Tools
 

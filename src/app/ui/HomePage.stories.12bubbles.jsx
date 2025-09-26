@@ -2,7 +2,7 @@ import HomePage from './HomePage';
 import React from 'react';
 
 const dummyUsers = {
-  user1: { words: {}, sessions: {}, settings: { languages: ['english'] } },
+  testUser: { words: {}, sessions: {}, settings: { languages: ['english'] } },
 };
 
 const twelve = Array.from({ length: 12 }).map((_, i) => ({ id: String(i+1), label: `w${i+1}`, progress: (i*8)%101 }));
@@ -14,7 +14,7 @@ export default {
 
 const baseProps = {
   users: dummyUsers,
-  currentUserId: 'user1',
+  currentUserId: 'testUser',
   onCreateUser: () => {},
   onSwitchUser: () => {},
   onSetMode: () => {},
