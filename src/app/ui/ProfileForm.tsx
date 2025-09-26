@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 
 interface ProfileFormProps {
   users: Record<string, any>;
@@ -6,11 +6,24 @@ interface ProfileFormProps {
   onCreateUser: (username: string, displayName?: string) => void;
   onSwitchUser: (userId: string) => void;
   compact?: boolean;
+  // Controlled form state
+  username: string;
+  onUsernameChange: (username: string) => void;
+  showCreateForm: boolean;
+  onToggleCreateForm: (show: boolean) => void;
 }
 
-export default function ProfileForm({ users, currentUserId, onCreateUser, onSwitchUser, compact = false }: ProfileFormProps) {
-  const [username, setUsername] = useState('');
-  const [showCreateForm, setShowCreateForm] = useState(false);
+export default function ProfileForm({ 
+  users, 
+  currentUserId, 
+  onCreateUser, 
+  onSwitchUser, 
+  compact = false,
+  username,
+  onUsernameChange,
+  showCreateForm,
+  onToggleCreateForm
+}: ProfileFormProps) {
   const userIds = Object.keys(users);
 
   return (
@@ -41,7 +54,7 @@ export default function ProfileForm({ users, currentUserId, onCreateUser, onSwit
       {/* Add User Button */}
       {!showCreateForm ? (
         <button
-          onClick={() => setShowCreateForm(true)}
+          onClick={() => onToggleCreateForm(true)}
           style={{ 
             background: '#4f46e5', 
             color: '#ffffff', 
@@ -63,7 +76,7 @@ export default function ProfileForm({ users, currentUserId, onCreateUser, onSwit
             type="text"
             placeholder="Enter name"
             value={username}
-            onChange={e => setUsername(e.target.value)}
+            onChange={e => onUsernameChange(e.target.value)}
             style={{ 
               padding: compact ? '6px 12px' : '8px 16px', 
               borderRadius: 8, 
@@ -75,8 +88,8 @@ export default function ProfileForm({ users, currentUserId, onCreateUser, onSwit
               if (e.key === 'Enter' && username.trim() && !users[username.trim()]) {
                 const id = `user_${Date.now()}`;
                 onCreateUser(id, username.trim());
-                setUsername('');
-                setShowCreateForm(false);
+                onUsernameChange('');
+                onToggleCreateForm(false);
               }
             }}
           />
@@ -85,8 +98,8 @@ export default function ProfileForm({ users, currentUserId, onCreateUser, onSwit
               if (username.trim() && !users[username.trim()]) {
                 const id = `user_${Date.now()}`;
                 onCreateUser(id, username.trim());
-                setUsername('');
-                setShowCreateForm(false);
+                onUsernameChange('');
+                onToggleCreateForm(false);
               }
             }}
             style={{ 
@@ -105,8 +118,8 @@ export default function ProfileForm({ users, currentUserId, onCreateUser, onSwit
           </button>
           <button
             onClick={() => {
-              setShowCreateForm(false);
-              setUsername('');
+              onToggleCreateForm(false);
+              onUsernameChange('');
             }}
             style={{ 
               background: '#ef4444', 

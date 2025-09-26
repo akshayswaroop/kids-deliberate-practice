@@ -81,8 +81,7 @@ function MasteryTile({ label, progress, isActive }) {
   );
 }
 
-export default function PracticeCard({ mainWord, transliteration, choices, onCorrect, onWrong, onNext }) {
-  const [columns, setColumns] = React.useState(6);
+export default function PracticeCard({ mainWord, transliteration, choices, onCorrect, onWrong, onNext, columns = 6 }) {
   const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
 
   // Animation helper functions
@@ -147,17 +146,7 @@ export default function PracticeCard({ mainWord, transliteration, choices, onCor
     }
   }, [mainWord]);
 
-  React.useEffect(() => {
-    function updateCols() {
-      const w = typeof window !== 'undefined' ? window.innerWidth : 1200;
-      if (w < 520) setColumns(2);
-      else if (w < 900) setColumns(3);
-      else setColumns(6);
-    }
-    updateCols();
-    window.addEventListener('resize', updateCols);
-    return () => window.removeEventListener('resize', updateCols);
-  }, []);
+
 
   return (
     <div style={{
