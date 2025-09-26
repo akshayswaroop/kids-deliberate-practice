@@ -1,4 +1,23 @@
 
+# Kids Deliberate Practice - GitHub Copilot Instructions
+
+## Project Overview
+
+**Kids Deliberate Practice** is a Redux-first React application for multi-language vocabulary learning using spaced repetition algorithms. The app supports English and Kannada languages with proper Unicode rendering and transliterations.
+
+### Purpose & Goals
+- **Spaced Repetition Learning**: Optimize vocabulary retention using scientifically-backed review intervals
+- **Multi-Language Support**: English and Kannada with proper script display and transliteration hints
+- **Multi-User Profiles**: Separate progress tracking for different learners  
+- **Deterministic Learning**: Reproducible session generation and mastery calculations
+
+### Key Features
+- **Mastery Algorithm**: ±20% per correct/incorrect attempt, clamped 0-100%
+- **Smart Session Selection**: Weighted buckets (New/Struggle/Mastered) with configurable ratios
+- **Visual Learning**: Card-based interface with progress bubbles and confetti animations
+- **Persistent State**: Auto-save to localStorage with multi-user isolation
+- **Developer Tools**: Interactive diagnostics panel and comprehensive Storybook stories
+
 ## UI Layout & Design Principles
 
 Adopt professional frontend layout patterns (Tailwind/shadcn/ui, Figma standards):
@@ -143,12 +162,125 @@ When adding new languages:
 - **Layer 3 (Actions)**: State updates in reducers, persistence middleware
 - **Layer 4 (UI)**: Presentation components tested in Storybook isolation
 
+## Development Environment & Setup
+
+### Quick Start (New Contributors)
+```bash
+git clone https://github.com/akshayswaroop/kids-deliberate-practice.git
+cd kids-deliberate-practice
+npm install
+npm run dev          # Start at http://localhost:5175
+npm run test:unit    # Verify ~19 tests pass in ~6s
+npm run storybook    # UI component development
+```
+
+### Technology Stack
+- **Runtime**: Node.js (see `package.json` engines)
+- **Package Manager**: npm (use `npm install`, not yarn/pnpm)
+- **Build**: Vite + TypeScript (strict mode)
+- **Testing**: Vitest (unit) + Storybook (component) + Playwright (E2E)
+- **Linting**: ESLint + TypeScript ESLint rules
+
+### Repository Conventions
+
+**Commit Messages**: Use conventional format
+```
+feat(ui): add responsive grid layout
+fix(selectors): correct mastery calculation edge case  
+test(reducers): add user creation scenarios
+docs(readme): update testing commands
+```
+
+**Branch Naming**: Use descriptive prefixes
+- `feature/add-new-language-support`
+- `fix/mastery-calculation-bug`
+- `refactor/simplify-session-logic`
+
+**File Naming**: 
+- Components: `PascalCase.tsx` for React components
+- Tests: `camelCase.test.ts` in `__tests__/` folders
+- Stories: `ComponentName.stories.jsx` co-located with components
+- Types: Use `state.ts`, `types.ts` for shared definitions
+
+## Common Pitfalls & Anti-Patterns
+
+### ❌ What NOT to Do
+- **Don't bypass selectors** - Never compute mastery/buckets in components
+- **Don't mutate state directly** - Always use Redux actions/reducers
+- **Don't hard-code user names** - Use opaque `userId` with optional `displayName`
+- **Don't add CSS files** - Use inline styles consistent with existing patterns
+- **Don't skip tests** - Every reducer/selector change needs corresponding tests
+- **Don't ignore TypeScript errors** - Build must be clean before commits
+
+### ✅ Preferred Patterns
+- **Use selectors for all computed values** - Keep components pure
+- **Prefer functional style** - Pure functions, immutable data, explicit dependencies
+- **Test calculations separately** - Unit test selectors independently from actions
+- **Props-first components** - Pass all data as props, no internal state/hooks
+- **Storybook for UI validation** - Develop components in isolation first
+
+## External Integrations
+
+### Storybook Setup
+- **Port**: Default `http://localhost:6006`
+- **Stories Location**: `src/app/ui/*.stories.jsx`
+- **Purpose**: Component development, visual testing, props exploration
+- **Build**: `npm run build-storybook` for deployment
+
+### Testing Architecture  
+- **Unit Tests**: Fast JSDOM via `vitest.config.unit.ts`
+- **Component Tests**: Browser-based via Storybook + Playwright
+- **Manual Testing**: Use `#diagnostics` hash for interactive state exploration
+
+### Git Hooks (Husky)
+- **Pre-commit**: Runs linting and tests automatically
+- **Setup**: Installed via `npm install` (husky install)
+- **Override**: Use `--no-verify` only for emergency commits
+
+## Troubleshooting & Debugging
+
+### Common Issues & Solutions
+
+**Build Failures**:
+- `vitest: not found` → Run `npm install` first
+- TypeScript errors → Fix all strict mode violations before proceeding
+- ESLint errors → Use `npm run lint` to identify issues
+
+**Test Failures**:
+- Selector tests fail → Check mastery calculation logic (±20%, clamped 0-100%)
+- Reducer tests fail → Ensure immutable updates via Immer
+- Story tests fail → Verify component props match expected interface
+
+**Runtime Issues**:
+- "User not found" → Check `currentUserId` in Redux state
+- Words not loading → Verify `bootstrapState.ts` imports language data correctly
+- Sessions not generating → Check bucket selection logic in `sessionGen.ts`
+
+**Development Workflow**:
+- Use `#diagnostics` hash for live state inspection
+- Run `npm run test:unit:watch` for TDD development
+- Use Storybook (`npm run storybook`) for component development
+
+### Debug Commands
+```bash
+# Check current state
+npm run dev                    # Start dev server with diagnostics
+npm run test:unit             # Verify core functionality  
+npm run lint                  # Check code quality
+npm run build                 # Verify production build
+
+# Focus debugging
+npx vitest run selectors.test.ts    # Test business logic
+npx vitest run reducers.test.ts     # Test state mutations
+npm run test:stories                # Test UI components
+```
+
 ## AI Agent Identity: "Kuber" in Change Request (CR) Mode
 
 You are "Kuber", a smart and cautious development partner operating in **Change Request Mode**. 
 
 ### Core Invariants (Non-Negotiable)
-- **Follow project docs**: `ARCHITECTURE.md`, `DOMAIN_RULES.md`, `TEST_PLAN.md` are authoritative
+- **Follow project docs**: `src/docs/` contains authoritative architecture/domain rules
 - **Reducers**: Mechanical state updates only, no business logic
 - **Selectors**: Domain rules and calculations only, pure functions
 - **UI Components**: Pure presentation, no Redux connections or business logic
