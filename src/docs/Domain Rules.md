@@ -26,6 +26,7 @@
 - **Complexity Levels**: Words are filtered by current complexity level only
 - **Level Progression**: Students must master current level before advancing
 - **No Level Mixing**: Session contains words from single complexity level to maintain clear learning progression
+- **Multi-Subject Support**: System supports English vocabulary, Kannada script, Math Tables, Human Body facts, and India Geography questions
 
 ### Developer Note
 

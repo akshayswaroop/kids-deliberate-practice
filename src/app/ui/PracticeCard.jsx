@@ -312,22 +312,28 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             )}
           </div>
         )}
-        {/* Human Body mode: Show answer and notes when revealed */}
-        {mode === 'humanbody' && (answer || notes) && (
+        {/* Human Body and India Geography modes: Show answer and notes when revealed */}
+        {(mode === 'humanbody' || mode === 'indiageography') && (answer || notes) && (
           <div style={{
             marginTop: '12px',
             padding: '12px 16px',
-            background: 'linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.05))',
+            background: mode === 'indiageography' 
+              ? 'linear-gradient(135deg, rgba(59,130,246,0.1), rgba(37,99,235,0.05))'
+              : 'linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.05))',
             borderRadius: '12px',
-            border: '2px solid rgba(34,197,94,0.2)',
-            boxShadow: '0 4px 12px rgba(34,197,94,0.1)',
+            border: mode === 'indiageography' 
+              ? '2px solid rgba(59,130,246,0.2)'
+              : '2px solid rgba(34,197,94,0.2)',
+            boxShadow: mode === 'indiageography' 
+              ? '0 4px 12px rgba(59,130,246,0.1)'
+              : '0 4px 12px rgba(34,197,94,0.1)',
             maxWidth: '100%'
           }}>
             {answer && (
               <div style={{
                 fontSize: 'clamp(18px, 4vw, 24px)',
                 fontWeight: 700,
-                color: '#065f46',
+                color: mode === 'indiageography' ? '#1e40af' : '#065f46',
                 marginBottom: notes ? '8px' : '0',
                 textAlign: 'center'
               }}>

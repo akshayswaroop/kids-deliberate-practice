@@ -1,0 +1,1202 @@
+[
+  {
+    "question": "What is the capital of India?",
+    "answer": "New Delhi",
+    "note": "New Delhi is the seat of the government of India.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the largest state in India by area?",
+    "answer": "Rajasthan",
+    "note": "It covers much of the Thar Desert.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the smallest state in India by area?",
+    "answer": "Goa",
+    "note": "Famous for its beaches and tourism.",
+    "complexity": 1
+  },
+  {
+    "question": "Which ocean lies to the south of India?",
+    "answer": "Indian Ocean",
+    "note": "India is the only country after which an ocean is named.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the national river of India?",
+    "answer": "Ganga",
+    "note": "The Ganga is considered sacred and flows through northern India.",
+    "complexity": 1
+  },
+  {
+    "question": "How many states does India have?",
+    "answer": "28",
+    "note": "Along with 8 Union Territories.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the southernmost point of India?",
+    "answer": "Indira Point",
+    "note": "Located in the Andaman and Nicobar Islands.",
+    "complexity": 1
+  },
+  {
+    "question": "Which sea is on the west of India?",
+    "answer": "Arabian Sea",
+    "note": "It borders states like Gujarat, Maharashtra, Kerala.",
+    "complexity": 1
+  },
+  {
+    "question": "Which sea is on the east of India?",
+    "answer": "Bay of Bengal",
+    "note": "It borders states like West Bengal, Odisha, Andhra Pradesh, Tamil Nadu.",
+    "complexity": 1
+  },
+  {
+    "question": "Which mountain range separates India from Tibet?",
+    "answer": "Himalayas",
+    "note": "They contain some of the world’s highest peaks including Mount Everest.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the highest mountain peak in India?",
+    "answer": "K2 (Godwin Austen)",
+    "note": "Located in Jammu & Kashmir, part of the Karakoram Range.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the longest river in India?",
+    "answer": "Ganga",
+    "note": "Flows about 2,510 km within India.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the largest delta in India?",
+    "answer": "Sundarbans",
+    "note": "Famous for mangroves and Royal Bengal Tigers.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the westernmost state of India?",
+    "answer": "Gujarat",
+    "note": "Home to Gir National Park.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the easternmost state of India?",
+    "answer": "Arunachal Pradesh",
+    "note": "It sees the sunrise first in India.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the northernmost state of India?",
+    "answer": "Jammu and Kashmir",
+    "note": "Known for mountains and valleys.",
+    "complexity": 1
+  },
+  {
+    "question": "Which is the southernmost mainland state of India?",
+    "answer": "Tamil Nadu",
+    "note": "Borders the Indian Ocean, Bay of Bengal and Arabian Sea.",
+    "complexity": 1
+  },
+  {
+    "question": "Which Indian state is famous for tea gardens?",
+    "answer": "Assam",
+    "note": "It produces some of the best tea in the world.",
+    "complexity": 1
+  },
+  {
+    "question": "Which state is called the 'Spice Garden of India'?",
+    "answer": "Kerala",
+    "note": "Famous for spices like pepper, cardamom, and cinnamon.",
+    "complexity": 1
+  },
+  {
+    "question": "Which plateau is called the 'Heart of India'?",
+    "answer": "Madhya Pradesh",
+    "note": "It lies in the center of India.",
+    "complexity": 1
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 2
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 3
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 4
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 5
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 6
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 7
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 8
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 9
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 10
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 2
+  },
+  {
+    "question": "Which is the largest saltwater lake in India?",
+    "answer": "Chilika Lake",
+    "note": "Located in Odisha.",
+    "complexity": 3
+  },
+  {
+    "question": "Why is the Thar Desert dry even though monsoon winds pass nearby?",
+    "answer": "Aravalli Hills block the winds",
+    "note": "Thus rainfall is low.",
+    "complexity": 4
+  },
+  {
+    "question": "Why do people live near rivers?",
+    "answer": "Water for farming, drinking, transport",
+    "note": "Rivers support civilizations.",
+    "complexity": 5
+  },
+  {
+    "question": "Which Indian island is of volcanic origin?",
+    "answer": "Barren Island",
+    "note": "Located in Andaman & Nicobar.",
+    "complexity": 6
+  },
+  {
+    "question": "Why is Kerala called 'God’s Own Country'?",
+    "answer": "Natural beauty with backwaters, beaches, greenery",
+    "note": "Promoted also for tourism.",
+    "complexity": 7
+  },
+  {
+    "question": "Which part of India receives the highest rainfall?",
+    "answer": "Mawsynram, Meghalaya",
+    "note": "One of the wettest places on Earth.",
+    "complexity": 8
+  },
+  {
+    "question": "Why do Himalayas have snow throughout the year?",
+    "answer": "High altitude keeps temperature very low",
+    "note": "Even summers remain cold.",
+    "complexity": 9
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 10
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 2
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 3
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 4
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 5
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 6
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 7
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 8
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 9
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 10
+  },
+  {
+    "question": "Which is the largest saltwater lake in India?",
+    "answer": "Chilika Lake",
+    "note": "Located in Odisha.",
+    "complexity": 2
+  },
+  {
+    "question": "Why is the Thar Desert dry even though monsoon winds pass nearby?",
+    "answer": "Aravalli Hills block the winds",
+    "note": "Thus rainfall is low.",
+    "complexity": 3
+  },
+  {
+    "question": "Why do people live near rivers?",
+    "answer": "Water for farming, drinking, transport",
+    "note": "Rivers support civilizations.",
+    "complexity": 4
+  },
+  {
+    "question": "Which Indian island is of volcanic origin?",
+    "answer": "Barren Island",
+    "note": "Located in Andaman & Nicobar.",
+    "complexity": 5
+  },
+  {
+    "question": "Why is Kerala called 'God’s Own Country'?",
+    "answer": "Natural beauty with backwaters, beaches, greenery",
+    "note": "Promoted also for tourism.",
+    "complexity": 6
+  },
+  {
+    "question": "Which part of India receives the highest rainfall?",
+    "answer": "Mawsynram, Meghalaya",
+    "note": "One of the wettest places on Earth.",
+    "complexity": 7
+  },
+  {
+    "question": "Why do Himalayas have snow throughout the year?",
+    "answer": "High altitude keeps temperature very low",
+    "note": "Even summers remain cold.",
+    "complexity": 8
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 9
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 10
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 2
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 3
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 4
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 5
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 6
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 7
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 8
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 9
+  },
+  {
+    "question": "Which is the largest saltwater lake in India?",
+    "answer": "Chilika Lake",
+    "note": "Located in Odisha.",
+    "complexity": 10
+  },
+  {
+    "question": "Why is the Thar Desert dry even though monsoon winds pass nearby?",
+    "answer": "Aravalli Hills block the winds",
+    "note": "Thus rainfall is low.",
+    "complexity": 2
+  },
+  {
+    "question": "Why do people live near rivers?",
+    "answer": "Water for farming, drinking, transport",
+    "note": "Rivers support civilizations.",
+    "complexity": 3
+  },
+  {
+    "question": "Which Indian island is of volcanic origin?",
+    "answer": "Barren Island",
+    "note": "Located in Andaman & Nicobar.",
+    "complexity": 4
+  },
+  {
+    "question": "Why is Kerala called 'God’s Own Country'?",
+    "answer": "Natural beauty with backwaters, beaches, greenery",
+    "note": "Promoted also for tourism.",
+    "complexity": 5
+  },
+  {
+    "question": "Which part of India receives the highest rainfall?",
+    "answer": "Mawsynram, Meghalaya",
+    "note": "One of the wettest places on Earth.",
+    "complexity": 6
+  },
+  {
+    "question": "Why do Himalayas have snow throughout the year?",
+    "answer": "High altitude keeps temperature very low",
+    "note": "Even summers remain cold.",
+    "complexity": 7
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 8
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 9
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 10
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 2
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 3
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 4
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 5
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 6
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 7
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 8
+  },
+  {
+    "question": "Which is the largest saltwater lake in India?",
+    "answer": "Chilika Lake",
+    "note": "Located in Odisha.",
+    "complexity": 9
+  },
+  {
+    "question": "Why is the Thar Desert dry even though monsoon winds pass nearby?",
+    "answer": "Aravalli Hills block the winds",
+    "note": "Thus rainfall is low.",
+    "complexity": 10
+  },
+  {
+    "question": "Why do people live near rivers?",
+    "answer": "Water for farming, drinking, transport",
+    "note": "Rivers support civilizations.",
+    "complexity": 2
+  },
+  {
+    "question": "Which Indian island is of volcanic origin?",
+    "answer": "Barren Island",
+    "note": "Located in Andaman & Nicobar.",
+    "complexity": 3
+  },
+  {
+    "question": "Why is Kerala called 'God’s Own Country'?",
+    "answer": "Natural beauty with backwaters, beaches, greenery",
+    "note": "Promoted also for tourism.",
+    "complexity": 4
+  },
+  {
+    "question": "Which part of India receives the highest rainfall?",
+    "answer": "Mawsynram, Meghalaya",
+    "note": "One of the wettest places on Earth.",
+    "complexity": 5
+  },
+  {
+    "question": "Why do Himalayas have snow throughout the year?",
+    "answer": "High altitude keeps temperature very low",
+    "note": "Even summers remain cold.",
+    "complexity": 6
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 7
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 8
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 9
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 10
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 2
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 3
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 4
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 5
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 6
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 7
+  },
+  {
+    "question": "Which is the largest saltwater lake in India?",
+    "answer": "Chilika Lake",
+    "note": "Located in Odisha.",
+    "complexity": 8
+  },
+  {
+    "question": "Why is the Thar Desert dry even though monsoon winds pass nearby?",
+    "answer": "Aravalli Hills block the winds",
+    "note": "Thus rainfall is low.",
+    "complexity": 9
+  },
+  {
+    "question": "Why do people live near rivers?",
+    "answer": "Water for farming, drinking, transport",
+    "note": "Rivers support civilizations.",
+    "complexity": 10
+  },
+  {
+    "question": "Which Indian island is of volcanic origin?",
+    "answer": "Barren Island",
+    "note": "Located in Andaman & Nicobar.",
+    "complexity": 2
+  },
+  {
+    "question": "Why is Kerala called 'God’s Own Country'?",
+    "answer": "Natural beauty with backwaters, beaches, greenery",
+    "note": "Promoted also for tourism.",
+    "complexity": 3
+  },
+  {
+    "question": "Which part of India receives the highest rainfall?",
+    "answer": "Mawsynram, Meghalaya",
+    "note": "One of the wettest places on Earth.",
+    "complexity": 4
+  },
+  {
+    "question": "Why do Himalayas have snow throughout the year?",
+    "answer": "High altitude keeps temperature very low",
+    "note": "Even summers remain cold.",
+    "complexity": 5
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 6
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 7
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 8
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 9
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 10
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 2
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 3
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 4
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 5
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 6
+  },
+  {
+    "question": "Which is the largest saltwater lake in India?",
+    "answer": "Chilika Lake",
+    "note": "Located in Odisha.",
+    "complexity": 7
+  },
+  {
+    "question": "Why is the Thar Desert dry even though monsoon winds pass nearby?",
+    "answer": "Aravalli Hills block the winds",
+    "note": "Thus rainfall is low.",
+    "complexity": 8
+  },
+  {
+    "question": "Why do people live near rivers?",
+    "answer": "Water for farming, drinking, transport",
+    "note": "Rivers support civilizations.",
+    "complexity": 9
+  },
+  {
+    "question": "Which Indian island is of volcanic origin?",
+    "answer": "Barren Island",
+    "note": "Located in Andaman & Nicobar.",
+    "complexity": 10
+  },
+  {
+    "question": "Why is Kerala called 'God’s Own Country'?",
+    "answer": "Natural beauty with backwaters, beaches, greenery",
+    "note": "Promoted also for tourism.",
+    "complexity": 2
+  },
+  {
+    "question": "Which part of India receives the highest rainfall?",
+    "answer": "Mawsynram, Meghalaya",
+    "note": "One of the wettest places on Earth.",
+    "complexity": 3
+  },
+  {
+    "question": "Why do Himalayas have snow throughout the year?",
+    "answer": "High altitude keeps temperature very low",
+    "note": "Even summers remain cold.",
+    "complexity": 4
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 5
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 6
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 7
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 8
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 9
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 10
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 2
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 3
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 4
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 5
+  },
+  {
+    "question": "Which is the largest saltwater lake in India?",
+    "answer": "Chilika Lake",
+    "note": "Located in Odisha.",
+    "complexity": 6
+  },
+  {
+    "question": "Why is the Thar Desert dry even though monsoon winds pass nearby?",
+    "answer": "Aravalli Hills block the winds",
+    "note": "Thus rainfall is low.",
+    "complexity": 7
+  },
+  {
+    "question": "Why do people live near rivers?",
+    "answer": "Water for farming, drinking, transport",
+    "note": "Rivers support civilizations.",
+    "complexity": 8
+  },
+  {
+    "question": "Which Indian island is of volcanic origin?",
+    "answer": "Barren Island",
+    "note": "Located in Andaman & Nicobar.",
+    "complexity": 9
+  },
+  {
+    "question": "Why is Kerala called 'God’s Own Country'?",
+    "answer": "Natural beauty with backwaters, beaches, greenery",
+    "note": "Promoted also for tourism.",
+    "complexity": 10
+  },
+  {
+    "question": "Which part of India receives the highest rainfall?",
+    "answer": "Mawsynram, Meghalaya",
+    "note": "One of the wettest places on Earth.",
+    "complexity": 2
+  },
+  {
+    "question": "Why do Himalayas have snow throughout the year?",
+    "answer": "High altitude keeps temperature very low",
+    "note": "Even summers remain cold.",
+    "complexity": 3
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 4
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 5
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 6
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 7
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 8
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 9
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 10
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 2
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 3
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 4
+  },
+  {
+    "question": "Which is the largest saltwater lake in India?",
+    "answer": "Chilika Lake",
+    "note": "Located in Odisha.",
+    "complexity": 5
+  },
+  {
+    "question": "Why is the Thar Desert dry even though monsoon winds pass nearby?",
+    "answer": "Aravalli Hills block the winds",
+    "note": "Thus rainfall is low.",
+    "complexity": 6
+  },
+  {
+    "question": "Why do people live near rivers?",
+    "answer": "Water for farming, drinking, transport",
+    "note": "Rivers support civilizations.",
+    "complexity": 7
+  },
+  {
+    "question": "Which Indian island is of volcanic origin?",
+    "answer": "Barren Island",
+    "note": "Located in Andaman & Nicobar.",
+    "complexity": 8
+  },
+  {
+    "question": "Why is Kerala called 'God’s Own Country'?",
+    "answer": "Natural beauty with backwaters, beaches, greenery",
+    "note": "Promoted also for tourism.",
+    "complexity": 9
+  },
+  {
+    "question": "Which part of India receives the highest rainfall?",
+    "answer": "Mawsynram, Meghalaya",
+    "note": "One of the wettest places on Earth.",
+    "complexity": 10
+  },
+  {
+    "question": "Why do Himalayas have snow throughout the year?",
+    "answer": "High altitude keeps temperature very low",
+    "note": "Even summers remain cold.",
+    "complexity": 2
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 3
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 4
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 5
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 6
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 7
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 8
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 9
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 10
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 2
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 3
+  },
+  {
+    "question": "Which is the largest saltwater lake in India?",
+    "answer": "Chilika Lake",
+    "note": "Located in Odisha.",
+    "complexity": 4
+  },
+  {
+    "question": "Why is the Thar Desert dry even though monsoon winds pass nearby?",
+    "answer": "Aravalli Hills block the winds",
+    "note": "Thus rainfall is low.",
+    "complexity": 5
+  },
+  {
+    "question": "Why do people live near rivers?",
+    "answer": "Water for farming, drinking, transport",
+    "note": "Rivers support civilizations.",
+    "complexity": 6
+  },
+  {
+    "question": "Which Indian island is of volcanic origin?",
+    "answer": "Barren Island",
+    "note": "Located in Andaman & Nicobar.",
+    "complexity": 7
+  },
+  {
+    "question": "Why is Kerala called 'God’s Own Country'?",
+    "answer": "Natural beauty with backwaters, beaches, greenery",
+    "note": "Promoted also for tourism.",
+    "complexity": 8
+  },
+  {
+    "question": "Which part of India receives the highest rainfall?",
+    "answer": "Mawsynram, Meghalaya",
+    "note": "One of the wettest places on Earth.",
+    "complexity": 9
+  },
+  {
+    "question": "Why do Himalayas have snow throughout the year?",
+    "answer": "High altitude keeps temperature very low",
+    "note": "Even summers remain cold.",
+    "complexity": 10
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 2
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 3
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 4
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 5
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 6
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 7
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 8
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 9
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 10
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 2
+  },
+  {
+    "question": "Which is the largest saltwater lake in India?",
+    "answer": "Chilika Lake",
+    "note": "Located in Odisha.",
+    "complexity": 3
+  },
+  {
+    "question": "Why is the Thar Desert dry even though monsoon winds pass nearby?",
+    "answer": "Aravalli Hills block the winds",
+    "note": "Thus rainfall is low.",
+    "complexity": 4
+  },
+  {
+    "question": "Why do people live near rivers?",
+    "answer": "Water for farming, drinking, transport",
+    "note": "Rivers support civilizations.",
+    "complexity": 5
+  },
+  {
+    "question": "Which Indian island is of volcanic origin?",
+    "answer": "Barren Island",
+    "note": "Located in Andaman & Nicobar.",
+    "complexity": 6
+  },
+  {
+    "question": "Why is Kerala called 'God’s Own Country'?",
+    "answer": "Natural beauty with backwaters, beaches, greenery",
+    "note": "Promoted also for tourism.",
+    "complexity": 7
+  },
+  {
+    "question": "Which part of India receives the highest rainfall?",
+    "answer": "Mawsynram, Meghalaya",
+    "note": "One of the wettest places on Earth.",
+    "complexity": 8
+  },
+  {
+    "question": "Why do Himalayas have snow throughout the year?",
+    "answer": "High altitude keeps temperature very low",
+    "note": "Even summers remain cold.",
+    "complexity": 9
+  },
+  {
+    "question": "Which river flows through Assam?",
+    "answer": "Brahmaputra",
+    "note": "It joins the Ganga in Bangladesh to form the largest delta.",
+    "complexity": 10
+  },
+  {
+    "question": "Which is the cold desert in India?",
+    "answer": "Ladakh",
+    "note": "Known for high mountains and very low rainfall.",
+    "complexity": 2
+  },
+  {
+    "question": "Which plateau is rich in minerals like coal and iron?",
+    "answer": "Chota Nagpur Plateau",
+    "note": "Located in Jharkhand.",
+    "complexity": 3
+  },
+  {
+    "question": "Which state is known as the 'Land of Five Rivers'?",
+    "answer": "Punjab",
+    "note": "The word Punjab means 'five rivers'.",
+    "complexity": 4
+  },
+  {
+    "question": "Which city is called the 'Pink City'?",
+    "answer": "Jaipur",
+    "note": "Buildings in the old city are painted pink.",
+    "complexity": 5
+  },
+  {
+    "question": "Which is the driest place in India?",
+    "answer": "Jaisalmer",
+    "note": "Located in the Thar Desert.",
+    "complexity": 6
+  },
+  {
+    "question": "Which pass connects India to China in Sikkim?",
+    "answer": "Nathu La",
+    "note": "Important trade route in the Himalayas.",
+    "complexity": 7
+  },
+  {
+    "question": "Which river is called the 'Sorrow of Bihar'?",
+    "answer": "Kosi",
+    "note": "Because of frequent floods.",
+    "complexity": 8
+  },
+  {
+    "question": "Which lake is the largest in India?",
+    "answer": "Vembanad Lake",
+    "note": "Located in Kerala.",
+    "complexity": 9
+  },
+  {
+    "question": "Which desert is in India?",
+    "answer": "Thar Desert",
+    "note": "Also known as the Great Indian Desert.",
+    "complexity": 10
+  }
+]

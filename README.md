@@ -11,7 +11,7 @@ A Redux-first React application for deliberate practice with spaced repetition, 
 - **Progressive Learning**: Complexity level system ensures proper learning progression
 - **Responsive UI**: Optimized layout with CSS Grid and responsive bubble sizing
 - **Progress Tracking**: Visual mastery indicators with rainbow gradient progress bubbles
-- **Language Modes**: Switch between English, Kannada, Math Tables, or Human Body practice modes
+- **Language Modes**: Switch between English, Kannada, Math Tables, Human Body, or India Geography practice modes
 
 ## 🚀 Quick Start
 
@@ -92,11 +92,12 @@ During development you can open an interactive Diagnostics panel in the running 
 - **Progressive Learning**: Words filtered by current complexity level only - no mixing of difficulty levels
 - **Proper Learning Path**: Students must master current level before advancing to harder content
 - **Simplified UX**: No configuration dropdowns - focus on learning, not settings
+- **Multiple Subjects**: Support for English vocabulary, Kannada script, Math Tables, Human Body facts, and India Geography
 
 ### Multi-Language Support
 - **Kannada Script**: Proper Unicode rendering with 100+ curated words
 - **Transliterations**: Hindi and English transliterations as learning hints  
-- **Language Filtering**: User preferences for English, Kannada, Math Tables, or Human Body modes
+- **Language Filtering**: User preferences for English, Kannada, Math Tables, Human Body, or India Geography modes
 - **Unicode Quality**: Fixed character encoding issues (Sinhala → Kannada corrections)
 
 ### Optimized UI Layout

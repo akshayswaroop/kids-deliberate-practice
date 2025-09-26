@@ -19,9 +19,10 @@
 
 ### Session Management
 - **Fixed Session Size**: All sessions contain exactly 12 questions
-- **Language Support**: English, Kannada, Math Tables, and Human Body modes
+- **Language Support**: English, Kannada, Math Tables, Human Body, and India Geography modes
 - **Progressive Learning**: Complexity level filtering ensures proper learning progression
 - **No Configuration UI**: Session size is hardcoded to simplify UX
+- **Subject-Specific Display**: Different subjects show appropriate learning aids (transliterations for Kannada/Math, answers/notes for Human Body/Geography)
 
 ### Developer Note
 

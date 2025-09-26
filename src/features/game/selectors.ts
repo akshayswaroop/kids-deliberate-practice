@@ -249,8 +249,9 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   const isKannadaMode = mode === 'kannada';
   const isMathTablesMode = mode === 'mathtables';
   const isHumanBodyMode = mode === 'humanbody';
+  const isIndiaGeographyMode = mode === 'indiageography';
   const shouldShowTransliteration = (isKannadaMode || isMathTablesMode) && session?.revealed === true;
-  const shouldShowAnswer = isHumanBodyMode && session?.revealed === true;
+  const shouldShowAnswer = (isHumanBodyMode || isIndiaGeographyMode) && session?.revealed === true;
   
   return {
     sessionId,

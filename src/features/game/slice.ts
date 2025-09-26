@@ -22,6 +22,7 @@ export const makeUser = (displayName?: string) => ({
       kannada: 12,   // Default for Kannada  
       mathtables: 12, // Default for Math Tables
       humanbody: 12, // Default for Human Body
+      indiageography: 12, // Default for India Geography
       mixed: 12      // Default for mixed mode
     },
     languages: ['english'], // Default to English only
@@ -29,6 +30,7 @@ export const makeUser = (displayName?: string) => ({
       'english': 1,  // Start with Level 1 English (simple CVC words)
       'kannada': 1,  // Start with Level 1 Kannada (simple words without complex matras)
       'mathtables': 1, // Start with Level 1 Math Tables (1x and 2x tables)
+      'indiageography': 1, // Start with Level 1 India Geography (basic facts)
       'hindi': 1     // Future support for Hindi
     }
   },

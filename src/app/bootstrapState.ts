@@ -3,6 +3,7 @@ import type { Word } from '../features/game/state';
 import { createKannadaWords } from '../features/game/kannadaWords';
 import { createMathTablesWords } from '../features/game/mathTables';
 import { createHumanBodyWords } from '../features/game/humanBody';
+import { createIndiaGeographyWords } from '../features/game/indiaGeography';
 
 // English complexity level mapping based on progressive learning principles
 const ENGLISH_COMPLEXITY_MAPPING: Record<string, number> = {
@@ -46,6 +47,9 @@ export function getInitialWords(): Record<string, Word> {
   // Human Body questions from the grade 3 dataset
   const humanBodyWords = createHumanBodyWords();
   
+  // India Geography questions with progressive complexity levels
+  const indiaGeographyWords = createIndiaGeographyWords();
+  
   // Combine all language word sets
-  return { ...englishWords, ...kannadaWords, ...mathTablesWords, ...humanBodyWords };
+  return { ...englishWords, ...kannadaWords, ...mathTablesWords, ...humanBodyWords, ...indiaGeographyWords };
 }
