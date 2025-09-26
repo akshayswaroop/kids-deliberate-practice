@@ -45,16 +45,3 @@ export const TopBar = {
   },
 };
 
-export const Sidebar = {
-  args: {
-    ...baseProps,
-    layout: 'sidebar',
-  },
-};
-
-export const CenterCompact = {
-  args: {
-    ...baseProps,
-    layout: 'center',
-  },
-};

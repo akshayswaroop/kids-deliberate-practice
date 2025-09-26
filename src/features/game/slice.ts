@@ -32,40 +32,40 @@ const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    selectUser(state, action: PayloadAction<{ userId: string }>) {
+    selectUser: function (state, action: PayloadAction<{ userId: string }>) {
       if (state.users[action.payload.userId]) {
         state.currentUserId = action.payload.userId;
       }
     },
-    addUser(state, action: PayloadAction<{ userId: string }>) {
-        const newUserId = action.payload.userId.trim();
-        // Prevent adding empty userId or duplicate userId
-        if (!newUserId || state.users[newUserId]) {
-          return;
-        }
-        state.users[newUserId] = {
-          words: getInitialWords(),
-          sessions: {},
-          activeSessions: {},
-          settings: {
-            selectionWeights: {
-              struggle: 0.5,
-              new: 0.4,
-              mastered: 0.1,
-            },
-            sessionSize: 12,
-            languages: ['english'], // Default to English only
+    addUser: function (state, action: PayloadAction<{ userId: string }>) {
+      const newUserId = action.payload.userId.trim();
+      // Prevent adding empty userId or duplicate userId
+      if (!newUserId || state.users[newUserId]) {
+        return;
+      }
+      state.users[newUserId] = {
+        words: getInitialWords(),
+        sessions: {},
+        activeSessions: {},
+        settings: {
+          selectionWeights: {
+            struggle: 0.5,
+            new: 0.4,
+            mastered: 0.1,
           },
-        };
-        state.currentUserId = newUserId;
+          sessionSize: 12,
+          languages: ['english'], // Default to English only
+        },
+      };
+      state.currentUserId = newUserId;
     },
-    setMode(state, action: PayloadAction<{ mode: string; sessionId: string }>) {
+    setMode: function (state, action: PayloadAction<{ mode: string; sessionId: string }>) {
       const user = state.users[state.currentUserId];
       if (user) {
         user.activeSessions[action.payload.mode] = action.payload.sessionId;
       }
     },
-    attempt(state, action: PayloadAction<{ sessionId: string; wordId: string; result: 'correct' | 'wrong' }>) {
+    attempt: function (state, action: PayloadAction<{ sessionId: string; wordId: string; result: 'correct' | 'wrong' }>) {
       const user = state.users[state.currentUserId];
       if (!user) return;
       const { sessionId, wordId, result } = action.payload;
@@ -79,7 +79,7 @@ const gameSlice = createSlice({
         session.lastAttempt = result;
       }
     },
-    nextCard(state, action: PayloadAction<{ sessionId: string }>) {
+    nextCard: function (state, action: PayloadAction<{ sessionId: string }>) {
       const user = state.users[state.currentUserId];
       if (!user) return;
       const { sessionId } = action.payload;
@@ -104,7 +104,7 @@ const gameSlice = createSlice({
             }
           }
         }
-        
+
         // If there are unmastered words, randomly pick one
         if (unmasteredIndices.length > 0) {
           const randomIndex = Math.floor(Math.random() * unmasteredIndices.length);
@@ -113,17 +113,17 @@ const gameSlice = createSlice({
           // If all words are mastered, cycle through all words
           session.currentIndex = (session.currentIndex + 1) % session.wordIds.length;
         }
-        
+
         session.revealed = false;
         session.lastAttempt = undefined;
       }
     },
-    addSession(state, action: PayloadAction<{ sessionId: string; session: import('./state').Session }>) {
+    addSession: function (state, action: PayloadAction<{ sessionId: string; session: import('./state').Session }>) {
       const user = state.users[state.currentUserId];
       if (!user) return;
       user.sessions[action.payload.sessionId] = action.payload.session;
     },
-    setLanguagePreferences(state, action: PayloadAction<{ languages: string[] }>) {
+    setLanguagePreferences: function (state, action: PayloadAction<{ languages: string[] }>) {
       const user = state.users[state.currentUserId];
       if (!user) return;
       user.settings.languages = action.payload.languages;
