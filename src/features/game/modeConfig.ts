@@ -6,12 +6,17 @@ export const MODE_CONFIG = {
   transliterationModes: {
     kannada: { 
       label: 'English', 
-      color: '#6366f1' 
+      color: '#6366f1',
+      // For Kannada mode, when the answer should be shown use the Hindi transliteration field
+      showAsAnswer: true,
+      answerField: 'transliterationHi'
     },
     mathtables: { 
       label: 'Answer', 
       color: '#4b5563', 
-      showAsAnswer: true 
+      showAsAnswer: true,
+      // Math tables store the numeric answer in `transliteration` so surface that as the canonical answer
+      answerField: 'transliteration'
     }
   },
   

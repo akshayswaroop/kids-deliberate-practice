@@ -1,95 +1,6 @@
 import React from 'react';
-import ProgressBubble from './ProgressBubble';
 import './PracticeCard.css';
-import { MODE_CONFIG, isTransliterationMode, isAnswerMode, getAnswerModeStyle } from '../../features/game/modeConfig';
-
-function MasteryTile({ label, progress, isActive }) {
-  // Slightly darker, more saturated rainbow for better contrast
-  // Bolder, saturated rainbow ramp for strong visual impact
-  const rainbowGradient = 'linear-gradient(90deg, #d7263d 0%, #ff6f1a 20%, #ffd400 40%, #00b159 60%, #0077c8 80%, #6a00ff 100%)';
-  // Vivid ROYGBIV gradient for the active tile (clear saturated stops)
-  const activeGradient = 'linear-gradient(90deg, #ff0000 0%, #ff7f00 16.66%, #ffd700 33.33%, #00c853 50%, #0091ea 66.66%, #3f51b5 83.33%, #8e24aa 100%)';
-  const fillWidth = Math.min(100, Math.max(0, progress));
-
-  // Dynamic sizing for tile label to allow longer text to fit inside the tiles
-  const labelText = String(label || '');
-  const labelLen = labelText.length;
-  let tileFontSize = 'clamp(22px, 3vw, 32px)';
-  let tileLineClamp = 2;
-  if (labelLen > 28) { tileFontSize = 'clamp(12px, 2.2vw, 14px)'; tileLineClamp = 4; }
-  else if (labelLen > 20) { tileFontSize = 'clamp(14px, 2.4vw, 18px)'; tileLineClamp = 3; }
-
-  return (
-    <div style={{
-      width: '100%',
-      height: '100%',
-      minHeight: 96,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: 12, // Increased from 6 to 12 for generous padding
-      boxSizing: 'border-box',
-      borderRadius: 12,
-      background: '#fff',
-      border: isActive ? '3px solid #4f46e5' : '1px solid rgba(2,6,23,0.06)', // Stronger border for active tile
-      boxShadow: isActive ? '0 18px 40px rgba(79,70,229,0.25), 0 0 0 4px rgba(79,70,229,0.15)' : '0 8px 24px rgba(2,6,23,0.06)', // Glow effect for active
-      position: 'relative',
-      overflow: 'hidden',
-      transform: isActive ? 'scale(1.06)' : 'scale(1)', // Slightly bigger scale
-      transition: 'transform 260ms ease, box-shadow 260ms ease, border 260ms ease'
-    }}>
-      {/* gradient fill */}
-      <div aria-hidden className={isActive ? 'rainbow-anim' : 'rainbow-anim-slow'} style={{
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        bottom: 0,
-        width: `${fillWidth}%`,
-        background: isActive ? activeGradient : rainbowGradient,
-        transformOrigin: 'left center',
-        /* Reduce saturation by ~15% to make rainbow friendlier and less harsh */
-        filter: 'saturate(0.85)',
-        /* Slightly reduce opacity so the effect is playful but not overpowering */
-        opacity: isActive ? 0.86 : 0.8,
-        transition: 'width 420ms cubic-bezier(.2,.9,.2,1), background 260ms ease',
-        
-      }} />
-
-      {/* subtle inner shading (reduced white overlay so gradient stays vivid) */}
-      <div aria-hidden style={{
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        right: 0,
-        bottom: 0,
-        // very light darkening to help text without washing out the rainbow
-        background: 'linear-gradient(rgba(0,0,0,0.04), rgba(0,0,0,0.02))',
-        mixBlendMode: 'normal',
-        pointerEvents: 'none'
-      }} />
-
-      <div style={{
-        position: 'relative',
-        zIndex: 2,
-        fontSize: tileFontSize,
-        fontWeight: 900, // Even bolder for early readers
-        textAlign: 'center',
-        color: isActive ? '#4f46e5' : '#0b1220', // Distinct color for active word
-        padding: '8px 12px', // Increased padding
-        textShadow: isActive ? '0 2px 4px rgba(79,70,229,0.3)' : '0 1px 0 rgba(255,255,255,0.6)',
-        // Allow wrapping and multiple lines for long labels
-        whiteSpace: 'normal',
-        wordBreak: 'break-word',
-        overflowWrap: 'break-word',
-        display: '-webkit-box',
-        WebkitLineClamp: tileLineClamp,
-        WebkitBoxOrient: 'vertical',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis'
-      }}>{label}</div>
-    </div>
-  );
-}
+import { isTransliterationMode } from '../../features/game/modeConfig';
 
 export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode }) {
   const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
@@ -156,6 +67,11 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     }
   }, [mainWord]);
 
+  // Determine current active choice progress to render rainbow fill for the main question
+  const activeChoice = (choices || []).find(c => String(c.label) === String(mainWord));
+  const activeProgress = Math.min(100, Math.max(0, (activeChoice && (typeof activeChoice.progress === 'number' ? activeChoice.progress : Number(activeChoice && activeChoice.progress))) || 0));
+  const isMastered = activeProgress >= 100;
+
 
 
   return (
@@ -192,141 +108,151 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             const text = String(mainWord || '');
             const len = text.length;
             // Default clamp for short questions; reduce for longer ones so they fit
-            let fontSize = 'clamp(40px, 7vw, 96px)';
+            // Slightly reduce maximum font-size for Kannada to avoid glyph clipping on large characters
+            let fontSize = mode === 'kannada' ? 'clamp(36px, 6.2vw, 84px)' : 'clamp(40px, 6vw, 6px)';
             let lineHeight = 0.98;
             let padding = '12px 20px';
             if (len > 60) {
-              fontSize = 'clamp(16px, 3.6vw, 28px)';
+              fontSize = mode === 'kannada' ? 'clamp(14px, 3.2vw, 24px)' : 'clamp(16px, 3.6vw, 28px)';
               lineHeight = 1.08;
               padding = '8px 12px';
             } else if (len > 40) {
-              fontSize = 'clamp(20px, 4.5vw, 36px)';
+              fontSize = mode === 'kannada' ? 'clamp(18px, 4.1vw, 32px)' : 'clamp(20px, 4.5vw, 36px)';
               lineHeight = 1.04;
               padding = '10px 14px';
             } else if (len > 28) {
-              fontSize = 'clamp(28px, 5.5vw, 48px)';
+              fontSize = mode === 'kannada' ? 'clamp(26px, 5.1vw, 44px)' : 'clamp(28px, 5.5vw, 48px)';
               lineHeight = 1.02;
               padding = '10px 16px';
             }
 
-            return (
+              return (
               <div className="target-word-glow" style={{ 
-                fontSize,
-                fontWeight: 900,
-                marginTop: 0,
-                marginBottom: transliteration ? '6px' : '0px',
-                lineHeight,
-                letterSpacing: '-0.02em',
-                maxWidth: '100%',
-                // Make target word visually distinct
-                background: 'linear-gradient(135deg, rgba(79,70,229,0.08), rgba(139,92,246,0.03))',
-                borderRadius: '16px',
-                padding,
-                border: '2px solid rgba(79,70,229,0.12)',
-                boxShadow: '0 4px 18px rgba(79,70,229,0.12)',
-                // Allow wrapping and multiple lines for long questions
-                whiteSpace: 'normal',
-                wordBreak: 'break-word',
-                position: 'relative',
-                overflow: 'hidden'
-              }}>{mainWord}</div>
+                  fontSize,
+                  fontWeight: 900,
+                  marginTop: 0,
+                  marginBottom: transliteration ? '6px' : '0px',
+                  lineHeight,
+                  letterSpacing: '-0.02em',
+                  maxWidth: '100%',
+                  // Make target word visually distinct
+                  background: 'linear-gradient(135deg, rgba(79,70,229,0.04), rgba(139,92,246,0.02))',
+                  borderRadius: '16px',
+                  // Give the question panel an explicit minHeight so tall glyphs have room
+                  // Reduced by ~5% from 120px to 114px per request
+                  minHeight: '90px',
+                  // Slightly larger padding for additional vertical room
+                  padding: typeof padding === 'string' ? padding.replace(/(\d+)px/, (m, p) => `${Math.max(14, Number(p))}px`) : padding,
+                  border: '2px solid rgba(79,70,229,0.08)',
+                  boxShadow: '0 6px 30px rgba(79,70,229,0.08)',
+                  // Allow wrapping and multiple lines for long questions
+                  whiteSpace: 'normal',
+                  wordBreak: 'break-word',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  {/* Rainbow fill behind the question - horizontal left->right fill */}
+                  <div aria-hidden style={{
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: `${activeProgress}%`,
+                    borderTopLeftRadius: 14,
+                    borderBottomLeftRadius: 14,
+                    borderTopRightRadius: activeProgress === 100 ? 14 : 0,
+                    borderBottomRightRadius: activeProgress === 100 ? 14 : 0,
+                    background: 'linear-gradient(90deg, #ff0000 0%, #ff7f00 16.66%, #ffd700 33.33%, #00c853 50%, #0091ea 66.66%, #3f51b5 83.33%, #8e24aa 100%)',
+                    opacity: 0.9,
+                    transition: 'width 420ms cubic-bezier(.2,.9,.2,1), border-radius 180ms ease'
+                  }} />
+
+                  {/* subtle overlay to keep text legible */}
+                  <div aria-hidden style={{
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(rgba(255,255,255,0.06), rgba(255,255,255,0.02))',
+                    pointerEvents: 'none'
+                  }} />
+
+                  {/* main word text */}
+                  <div style={{ position: 'relative', zIndex: 2 }}>{mainWord}</div>
+
+                  {/* percent indicator and mastered badge */}
+                  <div style={{ position: 'absolute', right: 8, top: 8, zIndex: 3, display: 'flex', gap: 8, alignItems: 'center' }}>
+                    <div aria-hidden style={{
+                      background: 'rgba(255,255,255,0.9)',
+                      color: '#0b1220',
+                      fontWeight: 800,
+                      padding: '4px 8px',
+                      borderRadius: 8,
+                      fontSize: 12,
+                      boxShadow: '0 6px 18px rgba(2,6,23,0.06)'
+                    }}>{`${Math.round(activeProgress)}%`}</div>
+                    {isMastered && (
+                      <div aria-hidden style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 6,
+                        background: 'linear-gradient(90deg,#10b981,#34d399)',
+                        color: 'white',
+                        padding: '6px 10px',
+                        borderRadius: 999,
+                        fontWeight: 900,
+                        fontSize: 12,
+                        boxShadow: '0 8px 20px rgba(16,185,129,0.12)'
+                      }}>
+                        ✅ Mastered
+                      </div>
+                    )}
+                  </div>
+
+                  {/* aria-live region for assistive tech */}
+                  <div aria-live="polite" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>{isMastered ? 'Mastered' : `${Math.round(activeProgress)}% mastery`}</div>
+
+              </div>
             );
           })()}
-        {isTransliterationMode(mode) && (transliteration || transliterationHi) && (
-          <div style={{
-            fontSize: 'clamp(16px, 3vw, 22px)', // Slightly larger
-            color: MODE_CONFIG.transliterationModes[mode]?.color || '#6366f1',
-            fontStyle: 'italic',
-            fontWeight: 600,
-            marginTop: '8px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-            alignItems: 'center'
-          }}>
-            {transliteration && (
-              MODE_CONFIG.transliterationModes[mode]?.showAsAnswer ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '16px', fontWeight: 800, color: '#4b5563' }}>Answer :</span>
-                  <span style={{ fontSize: '18px', fontWeight: 900, color: '#0b1220' }}>{transliteration}?</span>
-                </div>
-              ) : (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '14px', fontWeight: 500, color: '#4b5563' }}>{MODE_CONFIG.transliterationModes[mode]?.label || 'Translation'}:</span>
-                  <span>{transliteration}</span>
-                </div>
-              )
-            )}
-            {transliterationHi && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '14px', fontWeight: 500, color: '#4b5563' }}>Hindi:</span>
-                <span>{transliterationHi}</span>
-              </div>
-            )}
-          </div>
-        )}
-        {/* Answer modes: Show answer and notes when revealed */}
-        {isAnswerMode(mode) && (answer || notes) && (() => {
-          const modeStyle = getAnswerModeStyle(mode);
-          return (
-            <div style={{
-              marginTop: '12px',
-              padding: '12px 16px',
-              background: modeStyle.background,
-              borderRadius: '12px',
-              border: modeStyle.border,
-              boxShadow: modeStyle.shadow,
-              maxWidth: '100%'
-            }}>
-              {answer && (
-                <div style={{
-                  fontSize: 'clamp(18px, 4vw, 24px)',
-                  fontWeight: 700,
-                  color: modeStyle.textColor,
-                  marginBottom: notes ? '8px' : '0',
-                  textAlign: 'center'
-                }}>
-                  <span style={{ fontSize: '16px', fontWeight: 500, color: '#4b5563' }}>Answer: </span>
-                  {answer}
-                </div>
-              )}
-              {notes && (
-                <div style={{
-                  fontSize: 'clamp(14px, 3vw, 16px)',
-                  color: '#374151',
-                  lineHeight: 1.5,
-                  fontStyle: 'italic',
-                  textAlign: 'center'
-                }}>
-                  {notes}
-                </div>
-              )}
-            </div>
-          );
-        })()}
+        {/* Inline transliteration/answer banner removed — answers are shown only in the details panel now */}
+        {/* Answer modes: removed here to avoid duplication — answers are shown in the details panel below */}
       </div>
 
-      {/* 4x3 rectangular grid of mastery tiles */}
-      <div key={mainWord} className="grid-fade" style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gridAutoRows: 'minmax(96px, 1fr)',
-        gap: 14, // Increased from 10 to 14 for better separation for kids' eyes
+      {/* Details panel: use the space previously reserved for tiles to show answer, notes, and meta */}
+      <div key={mainWord} className="details-panel" style={{
         width: '100%',
-        padding: '0 12px', // Increased padding
-        maxWidth: '100%',
+        padding: '12px',
         boxSizing: 'border-box',
-        flex: 1,
-        alignContent: 'center',
-        marginBottom: '24px' // Add breathing room below tiles
+        marginBottom: '24px',
+        display: 'block'
       }}>
-        {choices.slice(0, 12).map((choice) => (
-          <div key={choice.id} style={{ width: '100%', height: '100%' }}>
-            <div className={`mastery-tile ${choice.label === mainWord ? 'active' : ''}`}>
-              <MasteryTile label={choice.label} progress={choice.progress} isActive={choice.label === mainWord} />
+        {/* Main answer/notes area - now full width (progress panel removed) */}
+        <div className="answer-panel" style={{ width: '100%', minHeight: 140, borderRadius: 12, padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div className="answer-panel__title">Answer & Notes</div>
+          {isAnswerRevealed ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {answer && (
+                <div className="answer-panel__headline">{answer}</div>
+              )}
+              {notes && (
+                <div className="answer-panel__notes">{notes}</div>
+              )}
+              {!answer && !notes && (
+                <div className="answer-panel__empty">No answer or notes available for this item.</div>
+              )}
             </div>
-          </div>
-        ))}
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{ color: '#6b7280' }}>Answer hidden. Use the Reveal Answer button to show the translation or answer for this word.</div>
+              {answer && (
+                <div style={{ fontSize: 14, color: '#9ca3af' }}>Hint: {String(answer).slice(0, Math.max(3, Math.floor(String(answer).length * 0.25))) }…</div>
+              )}
+            </div>
+          )}
+        </div>
+
       </div>
       {/* Increased spacer - 1.5x the gap for better button separation */}
       <div style={{ height: 36 }} />

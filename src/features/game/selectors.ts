@@ -1,5 +1,5 @@
 import type { RootState, Word } from "./state";
-import { TRANSLITERATION_MODES, ANSWER_MODES, isMastered, MASTER_STEP } from './modeConfig';
+import { TRANSLITERATION_MODES, ANSWER_MODES, isMastered, MASTER_STEP, MODE_CONFIG } from './modeConfig';
 
 // Step-based mastery calculation per new spec (0-5 where 5 = mastered)
 export function selectMasteryStep(state: RootState, wordId: string): number {
@@ -243,15 +243,29 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   // Import from shared config to keep modes in sync across components
   const shouldShowTransliteration = TRANSLITERATION_MODES.includes(mode) && session?.revealed === true;
   const shouldShowAnswer = ANSWER_MODES.includes(mode) && session?.revealed === true;
+
+  // If transliteration mode declares that its transliteration should act as the canonical answer,
+  // surface the specified field on the current word as `answer` so the UI (details panel) shows it.
+  let computedAnswer: string | undefined = undefined;
+  let computedNotes: string | undefined = undefined;
+  if (shouldShowTransliteration && MODE_CONFIG.transliterationModes[mode as keyof typeof MODE_CONFIG.transliterationModes]) {
+    const cfg = MODE_CONFIG.transliterationModes[mode as keyof typeof MODE_CONFIG.transliterationModes] as any;
+    if (cfg.showAsAnswer && currentWord) {
+      const field = cfg.answerField || 'transliteration';
+      // Use value from currentWord[field] if present
+      computedAnswer = (currentWord as any)[field] as string | undefined;
+      // No default notes mapping for transliteration modes at present
+    }
+  }
   
   return {
     sessionId,
     mainWord: currentWord ? (currentWord.wordKannada || currentWord.text || '...') : '...',
     needsNewSession: session?.needsNewSession || false,
-    transliteration: shouldShowTransliteration ? currentWord?.transliteration : undefined,
-    transliterationHi: shouldShowTransliteration ? currentWord?.transliterationHi : undefined,
-    answer: shouldShowAnswer ? currentWord?.answer : undefined,
-    notes: shouldShowAnswer ? currentWord?.notes : undefined,
+  transliteration: shouldShowTransliteration ? currentWord?.transliteration : undefined,
+  transliterationHi: shouldShowTransliteration ? currentWord?.transliterationHi : undefined,
+  answer: computedAnswer || (shouldShowAnswer ? currentWord?.answer : undefined),
+  notes: computedNotes || (shouldShowAnswer ? currentWord?.notes : undefined),
     choices,
     isAnswerRevealed: session?.revealed || false,
     isEnglishMode: mode === 'english'
