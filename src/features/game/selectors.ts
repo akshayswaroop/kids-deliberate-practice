@@ -193,7 +193,10 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   notes?: string;
   choices: Array<{ id: string; label: string; progress: number }>;
 } {
+  console.log(`🎯 [PRACTICE_DATA] selectCurrentPracticeData called for mode: ${mode}`);
+  
   if (!state.currentUserId) {
+    console.log(`❌ [PRACTICE_DATA] No currentUserId`);
     return {
       sessionId: null,
       mainWord: '...',
@@ -203,6 +206,7 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   
   const user = state.users[state.currentUserId];
   if (!user) {
+    console.log(`❌ [PRACTICE_DATA] No user found for: ${state.currentUserId}`);
     return {
       sessionId: null,
       mainWord: '...',
@@ -211,29 +215,18 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   }
 
   const sessionId = selectActiveSessionForMode(state, mode);
+  console.log(`📋 [PRACTICE_DATA] Active session for mode ${mode}: ${sessionId}`);
+  
   if (!sessionId || !user.sessions[sessionId]) {
-    // Fallback to first available words for display
-    const languages = selectCurrentLanguagePreferences(state);
-    const availableWords = selectWordsByLanguage(state, languages);
-    const wordsArray = Object.values(availableWords);
+    console.log(`❌ [PRACTICE_DATA] CRITICAL: No session found for mode ${mode}!`);
+    console.log(`❌ [PRACTICE_DATA] This should never happen - ensureActiveSession should have created one`);
+    console.log(`❌ [PRACTICE_DATA] Available sessions: [${Object.keys(user.sessions).join(', ')}]`);
+    console.log(`❌ [PRACTICE_DATA] Active sessions: ${JSON.stringify(user.activeSessions)}`);
     
-    if (wordsArray.length > 0) {
-      const firstWord = wordsArray[0];
-      return {
-        sessionId: null,
-        mainWord: firstWord.wordKannada || firstWord.text || '...',
-        // Don't show transliteration in fallback case (no session yet)
-        choices: wordsArray.slice(0, 4).map(w => ({ 
-          id: w.id, 
-          label: w.wordKannada || w.text, 
-          progress: selectMasteryPercent(state, w.id) 
-        }))
-      };
-    }
-    
+    // Return empty state - this indicates a bug that needs fixing
     return {
       sessionId: null,
-      mainWord: '...',
+      mainWord: 'ERROR: No Session',
       choices: []
     };
   }
@@ -241,6 +234,10 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   const currentWord = selectCurrentWord(state, sessionId);
   const choices = selectPracticeChoices(state, sessionId);
   const session = user.sessions[sessionId];
+  
+  console.log(`✅ [PRACTICE_DATA] Using session ${sessionId} with ${session.wordIds.length} words`);
+  console.log(`📝 [PRACTICE_DATA] Current word: "${currentWord?.text}", Choices: ${choices.length}`);
+  console.log(`🎯 [PRACTICE_DATA] Session word IDs: [${session.wordIds.join(', ')}]`);
   
   // Show transliteration/answer for different modes when session is revealed
   const isKannadaMode = mode === 'kannada';
@@ -267,18 +264,42 @@ export function selectResponsiveColumns(windowWidth: number): number {
   return 6;
 }
 
-// Check if all words in a session are fully mastered (step = 5)
+// Check if enough words in a session are fully mastered (80% threshold)
 export function selectAreAllSessionWordsMastered(state: RootState, sessionId: string): boolean {
-  if (!state.currentUserId) return false;
-  const user = state.users[state.currentUserId];
-  if (!user) return false;
-  const session = user.sessions[sessionId];
-  if (!session) return false;
+  console.log(`🔍 [SELECTOR] selectAreAllSessionWordsMastered called for session: ${sessionId}`);
   
-  return session.wordIds.every(wordId => {
+  if (!state.currentUserId) {
+    console.log(`❌ [SELECTOR] No currentUserId`);
+    return false;
+  }
+  const user = state.users[state.currentUserId];
+  if (!user) {
+    console.log(`❌ [SELECTOR] No user found for: ${state.currentUserId}`);
+    return false;
+  }
+  const session = user.sessions[sessionId];
+  if (!session || session.wordIds.length === 0) {
+    console.log(`❌ [SELECTOR] No session found or empty wordIds for: ${sessionId}`);
+    return false;
+  }
+  
+  const masteredCount = session.wordIds.filter(wordId => {
     const word = user.words[wordId];
-    return word && word.step === 5;
-  });
+    const isMastered = word && word.step === 5;
+    if (!isMastered && word) {
+      console.log(`📝 [SELECTOR] Word "${wordId}" step: ${word.step} (not mastered)`);
+    }
+    return isMastered;
+  }).length;
+  
+  const completionThreshold = Math.ceil(session.wordIds.length * 0.8);
+  const result = masteredCount >= completionThreshold;
+  
+  console.log(`📊 [SELECTOR] Session ${sessionId}: ${masteredCount}/${session.wordIds.length} mastered (${Math.round(masteredCount/session.wordIds.length*100)}%)`);
+  console.log(`📊 [SELECTOR] Threshold: ${completionThreshold} (80%)`); 
+  console.log(`📊 [SELECTOR] Result: ${result} (${result ? 'CREATE NEW SESSION' : 'CONTINUE CURRENT'})`);
+  
+  return result;
 }
 
 // Get session size for a specific mode with fallback to default

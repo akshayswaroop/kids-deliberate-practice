@@ -22,6 +22,8 @@ export function selectSessionWords(
     }
   }
 
+  console.log(`📊 [SESSION_GEN] Word buckets - New: ${newWords.length}, Struggle: ${struggle.length}, Mastered: ${mastered.length}`);
+
   // Sort buckets by priority (oldest first for better spaced repetition)
   struggle.sort((a, b) => (a.lastPracticedAt || 0) - (b.lastPracticedAt || 0));
   mastered.sort((a, b) => (a.lastRevisedAt || 0) - (b.lastRevisedAt || 0));
@@ -44,9 +46,15 @@ export function selectSessionWords(
 
   // Sample from each bucket
   const selected: string[] = [];
-  selected.push(...sample([...struggle], struggleCount));
-  selected.push(...sample([...newWords], newCount));
-  selected.push(...sample([...mastered], masteredCount));
+  const struggledSelected = sample([...struggle], struggleCount);
+  const newSelected = sample([...newWords], newCount);
+  const masteredSelected = sample([...mastered], masteredCount);
+  
+  selected.push(...struggledSelected);
+  selected.push(...newSelected);
+  selected.push(...masteredSelected);
+  
+  console.log(`🎯 [SESSION_GEN] Sampled - Struggle: ${struggledSelected.length}, New: ${newSelected.length}, Mastered: ${masteredSelected.length}`);
 
   // Fill shortages: Active → New → Revision (never duplicate words)
   const allIds = new Set(selected);

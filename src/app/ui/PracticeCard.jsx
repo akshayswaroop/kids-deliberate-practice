@@ -1,5 +1,6 @@
 import React from 'react';
 import ProgressBubble from './ProgressBubble';
+import './PracticeCard.css';
 
 function MasteryTile({ label, progress, isActive }) {
   // Slightly darker, more saturated rainbow for better contrast
@@ -175,55 +176,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
       overflow: 'hidden'
     }}>
       {/* Compact main word section */}
-      {/* Global component styles and animations injected locally */}
-      <style>{`
-        .mastery-tile{cursor:pointer;}
-        .mastery-tile{transition:transform 220ms ease, box-shadow 220ms ease, opacity 320ms ease}
-        .mastery-tile:hover{transform:translateY(-4px) scale(1.02); box-shadow:0 14px 36px rgba(2,6,23,0.12)}
-        .mastery-tile.active{animation:pulseGlow 2000ms infinite ease-in-out;}
-        
-        /* Enhanced animations for child-friendly experience */
-        .target-word-glow{animation:subtleGlow 3000ms infinite ease-in-out;}
-        @keyframes subtleGlow{0%{box-shadow:0 4px 20px rgba(79,70,229,0.15)}50%{box-shadow:0 6px 30px rgba(79,70,229,0.25), 0 0 20px rgba(139,92,246,0.1)}100%{box-shadow:0 4px 20px rgba(79,70,229,0.15)}}
-        
-        .mastery-flag{animation:rainbowShimmer 3000ms linear infinite;}
-        @keyframes rainbowShimmer{0%{opacity:0.9}50%{opacity:1}100%{opacity:0.9}}
-        
-        /* Bounce animation for wrong choices */
-        .mastery-tile.bounce{animation:playfulBounce 600ms ease-out;}
-        @keyframes playfulBounce{0%{transform:scale(1)}25%{transform:scale(0.95) rotate(-2deg)}50%{transform:scale(1.05) rotate(1deg)}75%{transform:scale(0.98)}100%{transform:scale(1)}}
-        
-        /* Enhanced confetti burst animation */
-        .confetti-burst{position:fixed;pointer-events:none;z-index:9999;}
-        .confetti-particle{position:absolute;width:10px;height:10px;background:#ff6b6b;border-radius:50%;animation:confettiFall 2000ms ease-out forwards;}
-        @keyframes confettiFall{
-          0%{transform:translateY(0) translateX(0) rotateZ(0deg) scale(1);opacity:1}
-          25%{transform:translateY(-30px) translateX(var(--random-x, 0px)) rotateZ(90deg) scale(1.2);opacity:1}
-          50%{transform:translateY(50px) translateX(var(--random-x, 0px)) rotateZ(180deg) scale(1);opacity:0.8}
-          100%{transform:translateY(250px) translateX(var(--random-x, 0px)) rotateZ(360deg) scale(0.5);opacity:0}
-        }
-        
-        .rainbow-anim{background-size:300% 100%; animation:rainShift 2200ms linear infinite}
-        .rainbow-anim-slow{background-size:200% 100%; animation:rainShift 5200ms linear infinite}
-        @keyframes pulseGlow{0%{filter:brightness(1)}50%{filter:brightness(1.06)}100%{filter:brightness(1)}}
-        @keyframes rainShift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
-        @keyframes sheen{0%{background-position:-200% 0}100%{background-position:200% 0}}
-        .mastery-sheen{background:linear-gradient(90deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.18) 100%); background-size:200% 100%; mix-blend-mode:overlay; animation:sheen 2400ms linear infinite}
-        .mastery-tile .label{transition:opacity 200ms ease}
-        .grid-fade{animation:fadeIn 320ms ease}
-        @keyframes fadeIn{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:translateY(0)}}
-        .tile-inner{box-shadow:inset 0 -6px 18px rgba(0,0,0,0.04)}
-
-        /* Enhanced footer button feedback */
-        .mastery-footer-button{border:0; outline:0; cursor:pointer; border-radius:10px; transition:transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease}
-        .mastery-footer-button:hover{transform:translateY(-3px) scale(1.02)}
-        .mastery-footer-button:active{transform:translateY(0) scale(.995)}
-        .mastery-footer-button:focus-visible{box-shadow:0 0 0 4px rgba(2,6,23,0.06);}
-        .mastery-footer-button.primary{animation:gentlePulse 2000ms infinite ease-in-out;}
-        @keyframes gentlePulse{0%{box-shadow:0 8px 20px rgba(16,185,129,0.14)}50%{box-shadow:0 12px 30px rgba(16,185,129,0.25), 0 0 15px rgba(16,185,129,0.1)}100%{box-shadow:0 8px 20px rgba(16,185,129,0.14)}}
-        .mastery-footer-button.primary:focus-visible{box-shadow:0 0 0 6px rgba(16,185,129,0.14)}
-        .mastery-footer-button.secondary:focus-visible{box-shadow:0 0 0 6px rgba(239,68,68,0.12)}
-      `}</style>
+      {/* Global component styles moved to PracticeCard.css */}
 
       <div style={{
         textAlign: 'center',

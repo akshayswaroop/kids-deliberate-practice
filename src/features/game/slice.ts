@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './state';
 import { getInitialWords } from '../../app/bootstrapState';
+// Thunks moved to actions.ts
 
 // Use semantic/opaque user ids in core state instead of real names.
 export const DEFAULT_USER_ID = 'user_default';
@@ -75,6 +76,8 @@ const gameSlice = createSlice({
       const { sessionId, wordId, result, now = Date.now() } = action.payload;
       const word = user.words[wordId];
       if (word) {
+        const prevStep = word.step;
+        
         // Add attempt to history
         word.attempts.push({ timestamp: now, result });
         
@@ -89,11 +92,15 @@ const gameSlice = createSlice({
             if (word.step === 5) {
               word.lastRevisedAt = now;
               word.cooldownSessionsLeft = 1;
+              console.log(`🎉 [ATTEMPT] Word "${wordId}" MASTERED! (step ${prevStep} → ${word.step})`);
+            } else {
+              console.log(`📈 [ATTEMPT] Word "${wordId}" correct: step ${prevStep} → ${word.step}`);
             }
           } else {
             // Wrong answer
             word.step = Math.max(0, word.step - 1);
             word.lastPracticedAt = now;
+            console.log(`📉 [ATTEMPT] Word "${wordId}" wrong: step ${prevStep} → ${word.step}`);
           }
         } else if (word.step === 5 && word.cooldownSessionsLeft === 0) {
           // Revision mode (step = 5, cooldownSessionsLeft = 0)
