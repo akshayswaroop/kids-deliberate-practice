@@ -8,11 +8,14 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest --config vitest.config.unit.ts",
+    "test:all": "vitest",
     "test:unit": "vitest run --config vitest.config.unit.ts",
     "test:unit:watch": "vitest --config vitest.config.unit.ts",
-    "test:all": "npm run test:unit",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "validate": "./scripts/validate-dev.sh",
+    "check-runtime": "node scripts/check-runtime-errors.js",
+    "dev:safe": "npm run build && npm run test && npm run dev"
   },
   "dependencies": {
     "@microlink/react-json-view": "^1.27.0",

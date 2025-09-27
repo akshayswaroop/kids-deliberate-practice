@@ -4,7 +4,9 @@ import ProfileForm from './ProfileForm';
 import ModeSelector from './ModeSelector';
 // @ts-ignore
 import PracticePanel from './PracticePanel';
+import TraceExport from './TraceExport';
 import { useState } from 'react';
+import './TraceExport.css';
 
 import type { UserState } from '../../features/game/state';
 
@@ -51,6 +53,9 @@ export default function HomePage({
   const [username, setUsername] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
   
+  // Trace export state
+  const [showTraceExport, setShowTraceExport] = useState(false);
+  
   // Rainbow gradient for header/sidebar only
   const rainbowBg = 'linear-gradient(135deg, #ff4d4d 0%, #ff8a3d 20%, #ffd24d 40%, #4dd08a 60%, #5db3ff 80%, #b98bff 100%)';
 
@@ -81,12 +86,33 @@ export default function HomePage({
             </div>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
               <ModeSelector compact mode={mode} onSetMode={onSetMode} />
+              <button 
+                onClick={() => setShowTraceExport(true)}
+                style={{
+                  background: 'rgba(59, 130, 246, 0.9)',
+                  border: 'none',
+                  color: 'white',
+                  padding: '6px 12px',
+                  borderRadius: 6,
+                  fontSize: '0.75rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(37, 99, 235, 0.9)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(59, 130, 246, 0.9)'}
+                title="Export trace data for debugging"
+              >
+                🔍
+              </button>
             </div>
           </div>
         </div>
         <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: '#fff', margin: '4px', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
           <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} answer={answer} notes={notes} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} mode={mode} />
         </div>
+        
+        <TraceExport isVisible={showTraceExport} onClose={() => setShowTraceExport(false)} />
       </div>
     );
   }
@@ -109,11 +135,41 @@ export default function HomePage({
             onToggleCreateForm={setShowCreateForm}
           />
           <ModeSelector compact mode={mode} onSetMode={onSetMode} />
-          {/* Diagnostics link removed */}
+          
+          {/* Development Tools */}
+          <div style={{ marginTop: 'auto', paddingTop: 20, display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+            <button 
+              onClick={() => setShowTraceExport(true)}
+              style={{
+                background: 'rgba(255,255,255,0.2)',
+                border: '1px solid rgba(255,255,255,0.3)',
+                color: 'white',
+                padding: '8px 12px',
+                borderRadius: 6,
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+                textAlign: 'center'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.3)';
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
+              }}
+            >
+              🔍 Export Traces
+            </button>
+          </div>
         </div>
         <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'stretch', background: '#fff', margin: '4px', borderRadius: 12, boxShadow: '0 2px 12px #0001' }}>
           <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} answer={answer} notes={notes} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} mode={mode} />
         </div>
+        
+        <TraceExport isVisible={showTraceExport} onClose={() => setShowTraceExport(false)} />
       </div>
     );
   }
@@ -136,9 +192,30 @@ export default function HomePage({
             onToggleCreateForm={setShowCreateForm}
           />
           <ModeSelector compact mode={mode} onSetMode={onSetMode} />
+          <button 
+            onClick={() => setShowTraceExport(true)}
+            style={{
+              background: 'rgba(59, 130, 246, 0.9)',
+              border: 'none',
+              color: 'white',
+              padding: '6px 12px',
+              borderRadius: 6,
+              fontSize: '0.75rem',
+              fontWeight: 500,
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(37, 99, 235, 0.9)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(59, 130, 246, 0.9)'}
+            title="Export trace data for debugging"
+          >
+            🔍
+          </button>
         </div>
   <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} answer={answer} notes={notes} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} mode={mode} />
       </div>
+      
+      <TraceExport isVisible={showTraceExport} onClose={() => setShowTraceExport(false)} />
     </div>
   );
 }

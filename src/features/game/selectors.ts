@@ -191,10 +191,7 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   notes?: string;
   choices: Array<{ id: string; label: string; progress: number }>;
 } {
-  console.log(`🎯 [PRACTICE_DATA] selectCurrentPracticeData called for mode: ${mode}`);
-  
   if (!state.currentUserId) {
-    console.log(`❌ [PRACTICE_DATA] No currentUserId`);
     return {
       sessionId: null,
       mainWord: '...',
@@ -204,7 +201,6 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   
   const user = state.users[state.currentUserId];
   if (!user) {
-    console.log(`❌ [PRACTICE_DATA] No user found for: ${state.currentUserId}`);
     return {
       sessionId: null,
       mainWord: '...',
@@ -213,14 +209,8 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   }
 
   const sessionId = selectActiveSessionForMode(state, mode);
-  console.log(`📋 [PRACTICE_DATA] Active session for mode ${mode}: ${sessionId}`);
   
   if (!sessionId || !user.sessions[sessionId]) {
-    console.log(`❌ [PRACTICE_DATA] CRITICAL: No session found for mode ${mode}!`);
-    console.log(`❌ [PRACTICE_DATA] This should never happen - ensureActiveSession should have created one`);
-    console.log(`❌ [PRACTICE_DATA] Available sessions: [${Object.keys(user.sessions).join(', ')}]`);
-    console.log(`❌ [PRACTICE_DATA] Active sessions: ${JSON.stringify(user.activeSessions)}`);
-    
     // Return empty state - this indicates a bug that needs fixing
     return {
       sessionId: null,
@@ -232,10 +222,6 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   const currentWord = selectCurrentWord(state, sessionId);
   const choices = selectPracticeChoices(state, sessionId);
   const session = user.sessions[sessionId];
-  
-  console.log(`✅ [PRACTICE_DATA] Using session ${sessionId} with ${session.wordIds.length} words`);
-  console.log(`📝 [PRACTICE_DATA] Current word: "${currentWord?.text}", Choices: ${choices.length}`);
-  console.log(`🎯 [PRACTICE_DATA] Session word IDs: [${session.wordIds.join(', ')}]`);
   
   // Show transliteration/answer for different modes when session is revealed
   const isKannadaMode = mode === 'kannada';
@@ -264,34 +250,25 @@ export function selectResponsiveColumns(windowWidth: number): number {
 
 // Check if ALL words in a session are fully mastered (strict full-mastery requirement)
 export function selectIsSessionFullyMastered(state: RootState, sessionId: string): boolean {
-  console.log(`🔍 [SELECTOR] selectIsSessionFullyMastered called for session: ${sessionId}`);
-  
   if (!state.currentUserId) {
-    console.log(`❌ [SELECTOR] No currentUserId`);
     return false;
   }
   const user = state.users[state.currentUserId];
   if (!user) {
-    console.log(`❌ [SELECTOR] No user found for: ${state.currentUserId}`);
     return false;
   }
   const session = user.sessions[sessionId];
   if (!session || session.wordIds.length === 0) {
-    console.log(`❌ [SELECTOR] No session found or empty wordIds for: ${sessionId}`);
     return false;
   }
   
   const allMastered = session.wordIds.every(wordId => {
     const word = user.words[wordId];
     if (!word || word.step !== 5) {
-      if (word) {
-        console.log(`📝 [SELECTOR] Word "${wordId}" step: ${word.step} (not mastered)`);
-      }
       return false;
     }
     return true;
   });
-  console.log(`📊 [SELECTOR] Session ${sessionId}: ${allMastered ? 'FULLY MASTERED' : 'INCOMPLETE'}`);
   return allMastered;
 }
 

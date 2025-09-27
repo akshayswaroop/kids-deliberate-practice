@@ -58,6 +58,7 @@ export type UserState = {
   words: Record<string, Word>;
   sessions: Record<string, Session>;
   activeSessions: Record<string, string>;
+  currentMode?: string; // Track the currently active mode for proper UI state
   settings: SessionSettings;
 };
 

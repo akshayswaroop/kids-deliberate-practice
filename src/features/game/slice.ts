@@ -63,6 +63,7 @@ const gameSlice = createSlice({
       const user = state.users[uid];
       if (user) {
         user.activeSessions[action.payload.mode] = action.payload.sessionId;
+        user.currentMode = action.payload.mode; // Track the current active mode
       }
     },
     attempt: function (state, action: PayloadAction<{ sessionId: string; wordId: string; result: 'correct' | 'wrong'; now?: number }>) {
@@ -72,8 +73,6 @@ const gameSlice = createSlice({
       const { sessionId, wordId, result, now = Date.now() } = action.payload;
       const word = user.words[wordId];
       if (word) {
-        const prevStep = word.step;
-        
         // Add attempt to history
         word.attempts.push({ timestamp: now, result });
         
@@ -88,15 +87,11 @@ const gameSlice = createSlice({
             if (word.step === 5) {
               word.lastRevisedAt = now;
               word.cooldownSessionsLeft = 1;
-              console.log(`🎉 [ATTEMPT] Word "${wordId}" MASTERED! (step ${prevStep} → ${word.step})`);
-            } else {
-              console.log(`📈 [ATTEMPT] Word "${wordId}" correct: step ${prevStep} → ${word.step}`);
             }
           } else {
             // Wrong answer
             word.step = Math.max(0, word.step - 1);
             word.lastPracticedAt = now;
-            console.log(`📉 [ATTEMPT] Word "${wordId}" wrong: step ${prevStep} → ${word.step}`);
           }
         } else if (word.step === 5 && word.cooldownSessionsLeft === 0) {
           // Revision mode (step = 5, cooldownSessionsLeft = 0)

@@ -1,16 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import gameReducer from '../features/game/slice';
-// import type { RootState } from '../features/game/state';
+import type { RootState as GameState } from '../features/game/state';
+import { traceMiddleware } from './tracing/traceMiddleware';
 
-function loadGameState(): RootState | undefined {
+function loadGameState(): GameState | undefined {
   try {
     const raw = localStorage.getItem('gameState');
     if (raw) return JSON.parse(raw);
   } catch {}
   return undefined;
 }
-import type { RootState } from '../features/game/state';
-
 
 // Middleware to persist state on any game action
 const persistMiddleware = (storeAPI: any) => (next: any) => (action: any) => {
@@ -31,18 +30,20 @@ const persistMiddleware = (storeAPI: any) => (next: any) => (action: any) => {
 
 
 const loaded = loadGameState();
-const preloadedState = loaded ? { game: loaded as RootState } : undefined;
+const preloadedState = loaded ? { game: loaded } : undefined;
 
 export const store = configureStore({
   reducer: {
     game: gameReducer,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(persistMiddleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware()
+    .prepend(traceMiddleware.middleware)  // Add trace middleware first
+    .concat(persistMiddleware),
   preloadedState,
 });
 
 export type AppDispatch = typeof store.dispatch;
-export type { RootState };
+export type RootState = ReturnType<typeof store.getState>;
 
 // Usage:
 // import { Provider } from 'react-redux';
