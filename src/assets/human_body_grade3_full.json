@@ -1,146 +1,1602 @@
 [
   {
-    "id": "bones_total",
+    "id": "skeleton_bones_1",
     "category": "skeleton_bones",
-    "complexity": 1,
+    "complexity": 2,
     "question": "How many bones are in an adult human body?",
     "answer": "206 bones",
     "notes": "Babies are born with about 270 bones, but many fuse together as they grow. By adulthood, we have 206 bones."
   },
   {
-    "id": "largest_bone",
-    "category": "skeleton_bones", 
-    "complexity": 1,
+    "id": "skeleton_bones_2",
+    "category": "skeleton_bones",
+    "complexity": 3,
     "question": "What is the largest bone in the human body?",
     "answer": "Femur (thighbone)",
-    "notes": "The femur is not only the largest bone but also the strongest. It connects your hip to your knee and helps you walk, run, and jump."
+    "notes": "The femur is the longest and strongest bone. It connects the hip to the knee."
   },
   {
-    "id": "smallest_bone",
+    "id": "skeleton_bones_3",
     "category": "skeleton_bones",
-    "complexity": 2,
-    "question": "What is the smallest bone in the human body?",
+    "complexity": 1,
+    "question": "What is the smallest bone in the body?",
     "answer": "Stapes (in the ear)",
-    "notes": "The stapes bone is tiny - only about 3mm tall! It's one of three tiny bones in your ear that help you hear sounds."
+    "notes": "Only about 3mm long! It helps transmit sound vibrations."
   },
   {
-    "id": "heart_function",
-    "category": "general_body",
-    "complexity": 1,
-    "question": "What does your heart do?",
-    "answer": "Pumps blood through your body",
-    "notes": "Your heart beats about 100,000 times per day! It pumps oxygen-rich blood to all parts of your body through blood vessels called arteries."
-  },
-  {
-    "id": "breathing_muscle",
-    "category": "general_body",
-    "complexity": 2,
-    "question": "What is the main muscle used for breathing?",
-    "answer": "Diaphragm",
-    "notes": "The diaphragm is a dome-shaped muscle below your lungs. When it moves down, air flows into your lungs. When it moves up, air flows out."
-  },
-  {
-    "id": "teeth_types",
-    "category": "general_body",
-    "complexity": 2,
-    "question": "Name the four types of teeth humans have.",
-    "answer": "Incisors, Canines, Premolars, Molars",
-    "notes": "Incisors cut food, canines tear food, and premolars and molars grind food. Adults have 32 teeth total when all wisdom teeth come in."
-  },
-  {
-    "id": "skull_protection",
+    "id": "skeleton_bones_4",
     "category": "skeleton_bones",
-    "complexity": 1,
+    "complexity": 2,
     "question": "What does your skull protect?",
     "answer": "Your brain",
-    "notes": "Your skull is made of 22 bones that are fused together to form a strong helmet protecting your brain from injury."
+    "notes": "Your skull is made of 22 bones fused together to protect your brain."
   },
   {
-    "id": "spine_vertebrae",
+    "id": "skeleton_bones_5",
     "category": "skeleton_bones",
-    "complexity": 2,
-    "question": "How many vertebrae (spine bones) do humans have?",
-    "answer": "33 vertebrae",
-    "notes": "Your spine has 33 vertebrae that protect your spinal cord. Some of these bones fuse together as you grow, so adults effectively have 26 moveable sections."
-  },
-  {
-    "id": "ribs_count",
-    "category": "skeleton_bones",
-    "complexity": 2,
+    "complexity": 3,
     "question": "How many ribs do humans have?",
     "answer": "24 ribs (12 pairs)",
-    "notes": "Your ribs form a protective cage around your heart and lungs. Most ribs connect to your breastbone in front and your spine in back."
+    "notes": "They form a protective cage around the heart and lungs."
   },
   {
-    "id": "muscles_count",
-    "category": "general_body",
-    "complexity": 3,
-    "question": "About how many muscles are in the human body?",
-    "answer": "Over 600 muscles",
-    "notes": "There are more than 600 muscles in your body! They help you move, breathe, pump blood, digest food, and even smile."
-  },
-  {
-    "id": "strongest_muscle",
-    "category": "general_body",
-    "complexity": 3,
-    "question": "What is the strongest muscle in the human body?",
-    "answer": "Jaw muscle (masseter)",
-    "notes": "The masseter muscle in your jaw can exert a force of up to 200 pounds per square inch when you bite down!"
-  },
-  {
-    "id": "skin_function",
-    "category": "general_body",
+    "id": "skeleton_bones_6",
+    "category": "skeleton_bones",
     "complexity": 1,
-    "question": "What are three main jobs of your skin?",
-    "answer": "Protect, regulate temperature, sense touch",
-    "notes": "Your skin is your body's largest organ! It keeps germs out, helps control your body temperature through sweating, and contains nerves that let you feel hot, cold, and touch."
+    "question": "What does the spine protect?",
+    "answer": "The spinal cord",
+    "notes": "The spine has 33 vertebrae and acts like a strong, flexible tower."
   },
   {
-    "id": "blood_vessels",
-    "category": "general_body",
-    "complexity": 3,
-    "question": "What are the three main types of blood vessels?",
-    "answer": "Arteries, Veins, Capillaries",
-    "notes": "Arteries carry oxygen-rich blood away from your heart. Veins bring blood back to your heart. Capillaries are tiny vessels that connect arteries and veins."
-  },
-  {
-    "id": "joint_types",
+    "id": "skeleton_bones_7",
     "category": "skeleton_bones",
-    "complexity": 3,
-    "question": "Name three types of joints in your body.",
-    "answer": "Hinge, Ball-and-socket, Pivot",
-    "notes": "Hinge joints (like your knee) move back and forth. Ball-and-socket joints (like your shoulder) can move in many directions. Pivot joints (like your neck) let you turn your head."
-  },
-  {
-    "id": "digestive_path",
-    "category": "general_body",
-    "complexity": 3,
-    "question": "What path does food take through your digestive system?",
-    "answer": "Mouth, esophagus, stomach, small intestine, large intestine",
-    "notes": "Food travels about 30 feet through your digestive system! It takes about 24-72 hours for food to completely pass through your body."
-  },
-  {
-    "id": "brain_parts",
-    "category": "general_body",
-    "complexity": 3,
-    "question": "What are the three main parts of the brain?",
-    "answer": "Cerebrum, Cerebellum, Brain stem",
-    "notes": "The cerebrum controls thinking and voluntary movements. The cerebellum helps with balance and coordination. The brain stem controls automatic functions like breathing and heart rate."
-  },
-  {
-    "id": "lungs_air",
-    "category": "general_body",
     "complexity": 2,
-    "question": "What gas do your lungs take in and what do they give off?",
-    "answer": "Take in oxygen, give off carbon dioxide",
-    "notes": "Your lungs work like a gas exchange system. They take oxygen from the air you breathe and put it into your blood, while removing waste carbon dioxide from your blood."
+    "question": "Which bone protects your heart and lungs at the front?",
+    "answer": "Sternum (breastbone)",
+    "notes": "It connects to the ribs and shields the chest organs."
   },
   {
-    "id": "bone_growth",
+    "id": "skeleton_bones_8",
     "category": "skeleton_bones",
     "complexity": 3,
-    "question": "How do bones grow stronger?",
-    "answer": "Exercise, calcium, and vitamin D",
-    "notes": "Weight-bearing exercise signals bones to grow stronger. Calcium from dairy foods and leafy greens provides building materials. Vitamin D helps your body absorb calcium."
+    "question": "What is bone marrow?",
+    "answer": "A soft tissue inside bones",
+    "notes": "It makes red and white blood cells."
+  },
+  {
+    "id": "skeleton_bones_9",
+    "category": "skeleton_bones",
+    "complexity": 1,
+    "question": "What minerals make bones strong?",
+    "answer": "Calcium and phosphorus",
+    "notes": "Milk and leafy greens provide calcium."
+  },
+  {
+    "id": "skeleton_bones_10",
+    "category": "skeleton_bones",
+    "complexity": 2,
+    "question": "How do broken bones heal?",
+    "answer": "By forming new bone tissue",
+    "notes": "Doctors may use a cast to hold the bone in place while healing."
+  },
+  {
+    "id": "muscles_movement_11",
+    "category": "muscles_movement",
+    "complexity": 3,
+    "question": "About how many muscles are in the body?",
+    "answer": "Over 600",
+    "notes": "They help us move, breathe, pump blood, and even smile."
+  },
+  {
+    "id": "muscles_movement_12",
+    "category": "muscles_movement",
+    "complexity": 1,
+    "question": "What is the strongest muscle by force?",
+    "answer": "Jaw muscle (masseter)",
+    "notes": "It can bite with a force over 200 pounds per square inch."
+  },
+  {
+    "id": "muscles_movement_13",
+    "category": "muscles_movement",
+    "complexity": 2,
+    "question": "What are voluntary muscles?",
+    "answer": "Muscles we control",
+    "notes": "Example: moving arms or legs."
+  },
+  {
+    "id": "muscles_movement_14",
+    "category": "muscles_movement",
+    "complexity": 3,
+    "question": "What are involuntary muscles?",
+    "answer": "Muscles that work automatically",
+    "notes": "Example: the heart or stomach muscles."
+  },
+  {
+    "id": "muscles_movement_15",
+    "category": "muscles_movement",
+    "complexity": 1,
+    "question": "What connects muscles to bones?",
+    "answer": "Tendons",
+    "notes": "They are tough cords that transfer muscle pull to bones."
+  },
+  {
+    "id": "muscles_movement_16",
+    "category": "muscles_movement",
+    "complexity": 2,
+    "question": "What connects bones to bones?",
+    "answer": "Ligaments",
+    "notes": "They are strong bands that hold joints together."
+  },
+  {
+    "id": "muscles_movement_17",
+    "category": "muscles_movement",
+    "complexity": 3,
+    "question": "Why do muscles get tired?",
+    "answer": "Because they use up energy",
+    "notes": "Rest and oxygen help them recover."
+  },
+  {
+    "id": "muscles_movement_18",
+    "category": "muscles_movement",
+    "complexity": 1,
+    "question": "Which muscle never rests?",
+    "answer": "The heart",
+    "notes": "It beats about 100,000 times a day."
+  },
+  {
+    "id": "muscles_movement_19",
+    "category": "muscles_movement",
+    "complexity": 2,
+    "question": "What is a reflex action?",
+    "answer": "A quick, automatic response",
+    "notes": "Example: pulling your hand from something hot."
+  },
+  {
+    "id": "muscles_movement_20",
+    "category": "muscles_movement",
+    "complexity": 3,
+    "question": "Why do we shiver?",
+    "answer": "Muscles contract to make heat",
+    "notes": "It keeps us warm when cold."
+  },
+  {
+    "id": "circulatory_system_21",
+    "category": "circulatory_system",
+    "complexity": 1,
+    "question": "What does the heart do?",
+    "answer": "Pumps blood",
+    "notes": "It beats non-stop to deliver oxygen and nutrients."
+  },
+  {
+    "id": "circulatory_system_22",
+    "category": "circulatory_system",
+    "complexity": 2,
+    "question": "What is pulse?",
+    "answer": "The beat of blood in arteries",
+    "notes": "You can feel it at your wrist or neck."
+  },
+  {
+    "id": "circulatory_system_23",
+    "category": "circulatory_system",
+    "complexity": 3,
+    "question": "What are red blood cells?",
+    "answer": "Cells that carry oxygen",
+    "notes": "They contain hemoglobin which binds oxygen."
+  },
+  {
+    "id": "circulatory_system_24",
+    "category": "circulatory_system",
+    "complexity": 1,
+    "question": "What are white blood cells?",
+    "answer": "Cells that fight germs",
+    "notes": "They protect the body from infections."
+  },
+  {
+    "id": "circulatory_system_25",
+    "category": "circulatory_system",
+    "complexity": 2,
+    "question": "What are platelets?",
+    "answer": "Cells that help blood clot",
+    "notes": "They stop bleeding when you get a cut."
+  },
+  {
+    "id": "circulatory_system_26",
+    "category": "circulatory_system",
+    "complexity": 3,
+    "question": "What do veins do?",
+    "answer": "Carry blood back to the heart",
+    "notes": "They look blue under the skin."
+  },
+  {
+    "id": "circulatory_system_27",
+    "category": "circulatory_system",
+    "complexity": 1,
+    "question": "What do arteries do?",
+    "answer": "Carry blood away from the heart",
+    "notes": "They are thick and strong."
+  },
+  {
+    "id": "circulatory_system_28",
+    "category": "circulatory_system",
+    "complexity": 2,
+    "question": "What are capillaries?",
+    "answer": "Tiny blood vessels",
+    "notes": "They connect arteries and veins."
+  },
+  {
+    "id": "circulatory_system_29",
+    "category": "circulatory_system",
+    "complexity": 3,
+    "question": "Why is blood red?",
+    "answer": "Because of hemoglobin",
+    "notes": "It contains iron, which gives blood its red color."
+  },
+  {
+    "id": "circulatory_system_30",
+    "category": "circulatory_system",
+    "complexity": 1,
+    "question": "Why does your heart beat faster when you run?",
+    "answer": "Muscles need more oxygen",
+    "notes": "The heart pumps quicker to meet demand."
+  },
+  {
+    "id": "respiratory_system_31",
+    "category": "respiratory_system",
+    "complexity": 2,
+    "question": "What gas do we breathe in?",
+    "answer": "Oxygen",
+    "notes": "Our body needs oxygen for energy."
+  },
+  {
+    "id": "respiratory_system_32",
+    "category": "respiratory_system",
+    "complexity": 3,
+    "question": "What gas do we breathe out?",
+    "answer": "Carbon dioxide",
+    "notes": "It is a waste gas removed by the lungs."
+  },
+  {
+    "id": "respiratory_system_33",
+    "category": "respiratory_system",
+    "complexity": 1,
+    "question": "What muscle helps us breathe?",
+    "answer": "Diaphragm",
+    "notes": "It moves down to pull in air, up to push it out."
+  },
+  {
+    "id": "respiratory_system_34",
+    "category": "respiratory_system",
+    "complexity": 2,
+    "question": "What are alveoli?",
+    "answer": "Tiny air sacs in lungs",
+    "notes": "There are about 300 million alveoli for gas exchange."
+  },
+  {
+    "id": "respiratory_system_35",
+    "category": "respiratory_system",
+    "complexity": 3,
+    "question": "Why do we sneeze?",
+    "answer": "To clear dust or germs",
+    "notes": "It is a cleaning reflex of the nose."
+  },
+  {
+    "id": "respiratory_system_36",
+    "category": "respiratory_system",
+    "complexity": 1,
+    "question": "Why do we hiccup?",
+    "answer": "Sudden diaphragm contractions",
+    "notes": "Sometimes caused by eating too fast."
+  },
+  {
+    "id": "respiratory_system_37",
+    "category": "respiratory_system",
+    "complexity": 2,
+    "question": "What does the nose do?",
+    "answer": "Filters and warms air",
+    "notes": "Hairs and mucus trap dust and germs."
+  },
+  {
+    "id": "respiratory_system_38",
+    "category": "respiratory_system",
+    "complexity": 3,
+    "question": "Why do we yawn?",
+    "answer": "To take in more oxygen",
+    "notes": "Often happens when tired."
+  },
+  {
+    "id": "respiratory_system_39",
+    "category": "respiratory_system",
+    "complexity": 1,
+    "question": "Why is breathing through the nose better?",
+    "answer": "It cleans and moistens air",
+    "notes": "Mouth breathing skips this step."
+  },
+  {
+    "id": "respiratory_system_40",
+    "category": "respiratory_system",
+    "complexity": 2,
+    "question": "What protects the lungs?",
+    "answer": "The rib cage",
+    "notes": "Bones form a shield around them."
+  },
+  {
+    "id": "digestive_system_41",
+    "category": "digestive_system",
+    "complexity": 3,
+    "question": "What is digestion?",
+    "answer": "Breaking food into small parts",
+    "notes": "It starts in the mouth with chewing and saliva."
+  },
+  {
+    "id": "digestive_system_42",
+    "category": "digestive_system",
+    "complexity": 1,
+    "question": "What does the stomach do?",
+    "answer": "Breaks food with juices",
+    "notes": "It churns food into a paste."
+  },
+  {
+    "id": "digestive_system_43",
+    "category": "digestive_system",
+    "complexity": 2,
+    "question": "What does the small intestine do?",
+    "answer": "Absorbs nutrients",
+    "notes": "It is about 20 feet long in adults."
+  },
+  {
+    "id": "digestive_system_44",
+    "category": "digestive_system",
+    "complexity": 3,
+    "question": "What does the large intestine do?",
+    "answer": "Absorbs water",
+    "notes": "It also stores waste before it leaves the body."
+  },
+  {
+    "id": "digestive_system_45",
+    "category": "digestive_system",
+    "complexity": 1,
+    "question": "What does the liver do?",
+    "answer": "Makes bile and cleans blood",
+    "notes": "It helps digest fats and removes toxins."
+  },
+  {
+    "id": "digestive_system_46",
+    "category": "digestive_system",
+    "complexity": 2,
+    "question": "What does the pancreas do?",
+    "answer": "Makes juices for digestion",
+    "notes": "It also helps control sugar in the blood."
+  },
+  {
+    "id": "digestive_system_47",
+    "category": "digestive_system",
+    "complexity": 3,
+    "question": "What do teeth do?",
+    "answer": "Chew food",
+    "notes": "Incisors cut, canines tear, molars grind."
+  },
+  {
+    "id": "digestive_system_48",
+    "category": "digestive_system",
+    "complexity": 1,
+    "question": "Why is saliva important?",
+    "answer": "It softens food",
+    "notes": "It also has chemicals to start digestion."
+  },
+  {
+    "id": "digestive_system_49",
+    "category": "digestive_system",
+    "complexity": 2,
+    "question": "Why should we eat fiber?",
+    "answer": "It helps digestion",
+    "notes": "Fiber keeps the intestines healthy."
+  },
+  {
+    "id": "digestive_system_50",
+    "category": "digestive_system",
+    "complexity": 3,
+    "question": "How long is the digestive tract?",
+    "answer": "About 30 feet",
+    "notes": "Food takes 1–3 days to pass through."
+  },
+  {
+    "id": "nervous_system_51",
+    "category": "nervous_system",
+    "complexity": 1,
+    "question": "What does the brain do?",
+    "answer": "Controls body and mind",
+    "notes": "It helps us think, feel, and act."
+  },
+  {
+    "id": "nervous_system_52",
+    "category": "nervous_system",
+    "complexity": 2,
+    "question": "What does the spinal cord do?",
+    "answer": "Carries messages",
+    "notes": "It connects brain and body."
+  },
+  {
+    "id": "nervous_system_53",
+    "category": "nervous_system",
+    "complexity": 3,
+    "question": "What are nerves?",
+    "answer": "Wires of the body",
+    "notes": "They send signals everywhere."
+  },
+  {
+    "id": "nervous_system_54",
+    "category": "nervous_system",
+    "complexity": 1,
+    "question": "What are reflexes?",
+    "answer": "Quick actions without thinking",
+    "notes": "Example: knee-jerk when tapped."
+  },
+  {
+    "id": "nervous_system_55",
+    "category": "nervous_system",
+    "complexity": 2,
+    "question": "What does the cerebrum do?",
+    "answer": "Controls thinking and memory",
+    "notes": "It is the largest part of the brain."
+  },
+  {
+    "id": "nervous_system_56",
+    "category": "nervous_system",
+    "complexity": 3,
+    "question": "What does the cerebellum do?",
+    "answer": "Controls balance",
+    "notes": "It helps us stand and move smoothly."
+  },
+  {
+    "id": "nervous_system_57",
+    "category": "nervous_system",
+    "complexity": 1,
+    "question": "What does the brain stem do?",
+    "answer": "Controls breathing and heartbeat",
+    "notes": "It keeps us alive without thinking."
+  },
+  {
+    "id": "nervous_system_58",
+    "category": "nervous_system",
+    "complexity": 2,
+    "question": "Why do cuts hurt?",
+    "answer": "Nerves send pain signals",
+    "notes": "Pain warns us of danger."
+  },
+  {
+    "id": "nervous_system_59",
+    "category": "nervous_system",
+    "complexity": 3,
+    "question": "Why do we dream?",
+    "answer": "Brain activity during sleep",
+    "notes": "Dreams may help process thoughts."
+  },
+  {
+    "id": "nervous_system_60",
+    "category": "nervous_system",
+    "complexity": 1,
+    "question": "Why do we forget things?",
+    "answer": "Memories fade",
+    "notes": "Practice and repetition help us remember."
+  },
+  {
+    "id": "senses_61",
+    "category": "senses",
+    "complexity": 2,
+    "question": "What helps us see?",
+    "answer": "Eyes",
+    "notes": "They detect light and color."
+  },
+  {
+    "id": "senses_62",
+    "category": "senses",
+    "complexity": 3,
+    "question": "What helps us hear?",
+    "answer": "Ears",
+    "notes": "They detect sound waves."
+  },
+  {
+    "id": "senses_63",
+    "category": "senses",
+    "complexity": 1,
+    "question": "What helps us taste?",
+    "answer": "Tongue",
+    "notes": "Taste buds sense sweet, sour, salty, bitter."
+  },
+  {
+    "id": "senses_64",
+    "category": "senses",
+    "complexity": 2,
+    "question": "What helps us smell?",
+    "answer": "Nose",
+    "notes": "It detects odors."
+  },
+  {
+    "id": "senses_65",
+    "category": "senses",
+    "complexity": 3,
+    "question": "What helps us touch?",
+    "answer": "Skin",
+    "notes": "It has nerves for heat, cold, pain, pressure."
+  },
+  {
+    "id": "senses_66",
+    "category": "senses",
+    "complexity": 1,
+    "question": "What is the pupil?",
+    "answer": "A hole in the eye",
+    "notes": "It gets bigger or smaller to control light."
+  },
+  {
+    "id": "senses_67",
+    "category": "senses",
+    "complexity": 2,
+    "question": "What is the eardrum?",
+    "answer": "A thin sheet in the ear",
+    "notes": "It vibrates with sound."
+  },
+  {
+    "id": "senses_68",
+    "category": "senses",
+    "complexity": 3,
+    "question": "What are fingerprints for?",
+    "answer": "Grip and touch",
+    "notes": "They are unique for every person."
+  },
+  {
+    "id": "senses_69",
+    "category": "senses",
+    "complexity": 1,
+    "question": "Why do onions make us cry?",
+    "answer": "They release chemicals",
+    "notes": "The eyes produce tears to wash it out."
+  },
+  {
+    "id": "senses_70",
+    "category": "senses",
+    "complexity": 2,
+    "question": "Why do ears pop on airplanes?",
+    "answer": "Air pressure changes",
+    "notes": "The ear adjusts to balance pressure."
+  },
+  {
+    "id": "skin_excretion_71",
+    "category": "skin_excretion",
+    "complexity": 3,
+    "question": "What is the largest organ?",
+    "answer": "Skin",
+    "notes": "It covers and protects the body."
+  },
+  {
+    "id": "skin_excretion_72",
+    "category": "skin_excretion",
+    "complexity": 1,
+    "question": "What are sweat glands?",
+    "answer": "Glands that make sweat",
+    "notes": "Sweat cools the body."
+  },
+  {
+    "id": "skin_excretion_73",
+    "category": "skin_excretion",
+    "complexity": 2,
+    "question": "Why do we sweat?",
+    "answer": "To stay cool",
+    "notes": "It prevents overheating."
+  },
+  {
+    "id": "skin_excretion_74",
+    "category": "skin_excretion",
+    "complexity": 3,
+    "question": "What are pores?",
+    "answer": "Tiny holes in the skin",
+    "notes": "They let sweat out."
+  },
+  {
+    "id": "skin_excretion_75",
+    "category": "skin_excretion",
+    "complexity": 1,
+    "question": "Why do we get goosebumps?",
+    "answer": "Tiny muscles pull hairs",
+    "notes": "This happens when cold or scared."
+  },
+  {
+    "id": "skin_excretion_76",
+    "category": "skin_excretion",
+    "complexity": 2,
+    "question": "What do nails do?",
+    "answer": "Protect fingers and toes",
+    "notes": "They also help grip small things."
+  },
+  {
+    "id": "skin_excretion_77",
+    "category": "skin_excretion",
+    "complexity": 3,
+    "question": "What makes hair grow?",
+    "answer": "Hair follicles in skin",
+    "notes": "They are nourished by blood vessels."
+  },
+  {
+    "id": "skin_excretion_78",
+    "category": "skin_excretion",
+    "complexity": 1,
+    "question": "Why do we get scars?",
+    "answer": "Skin heals with strong tissue",
+    "notes": "Scars replace broken skin."
+  },
+  {
+    "id": "skin_excretion_79",
+    "category": "skin_excretion",
+    "complexity": 2,
+    "question": "Why do cuts bleed?",
+    "answer": "Blood vessels under skin",
+    "notes": "Platelets clot to stop bleeding."
+  },
+  {
+    "id": "skin_excretion_80",
+    "category": "skin_excretion",
+    "complexity": 3,
+    "question": "Why is skin important?",
+    "answer": "Protects and senses",
+    "notes": "It also keeps water inside the body."
+  },
+  {
+    "id": "growth_health_81",
+    "category": "growth_health",
+    "complexity": 1,
+    "question": "Why do we need sleep?",
+    "answer": "To rest and grow",
+    "notes": "Children need 9–12 hours of sleep."
+  },
+  {
+    "id": "growth_health_82",
+    "category": "growth_health",
+    "complexity": 2,
+    "question": "Why do we need exercise?",
+    "answer": "To stay strong and healthy",
+    "notes": "It helps bones, muscles, and heart."
+  },
+  {
+    "id": "growth_health_83",
+    "category": "growth_health",
+    "complexity": 3,
+    "question": "Why should we wash hands?",
+    "answer": "To remove germs",
+    "notes": "It prevents sickness."
+  },
+  {
+    "id": "growth_health_84",
+    "category": "growth_health",
+    "complexity": 1,
+    "question": "Why should we brush teeth?",
+    "answer": "To stop cavities",
+    "notes": "Brush twice a day with fluoride toothpaste."
+  },
+  {
+    "id": "growth_health_85",
+    "category": "growth_health",
+    "complexity": 2,
+    "question": "Why do we need vaccines?",
+    "answer": "To protect from diseases",
+    "notes": "They train the body to fight germs."
+  },
+  {
+    "id": "growth_health_86",
+    "category": "growth_health",
+    "complexity": 3,
+    "question": "Why should we drink water?",
+    "answer": "To stay hydrated",
+    "notes": "Water makes up 60% of the body."
+  },
+  {
+    "id": "growth_health_87",
+    "category": "growth_health",
+    "complexity": 1,
+    "question": "Why do we eat healthy food?",
+    "answer": "For energy and growth",
+    "notes": "Fruits and veggies give vitamins and minerals."
+  },
+  {
+    "id": "growth_health_88",
+    "category": "growth_health",
+    "complexity": 2,
+    "question": "Why do we rest when sick?",
+    "answer": "To help the body heal",
+    "notes": "The immune system works better with rest."
+  },
+  {
+    "id": "growth_health_89",
+    "category": "growth_health",
+    "complexity": 3,
+    "question": "Why should we cover coughs?",
+    "answer": "To stop germs spreading",
+    "notes": "It keeps others safe."
+  },
+  {
+    "id": "growth_health_90",
+    "category": "growth_health",
+    "complexity": 1,
+    "question": "Why is sunlight important?",
+    "answer": "For vitamin D",
+    "notes": "It helps bones absorb calcium."
+  },
+  {
+    "id": "fun_curiosity_91",
+    "category": "fun_curiosity",
+    "complexity": 2,
+    "question": "Why do we yawn?",
+    "answer": "To take in more oxygen",
+    "notes": "Often when tired or bored."
+  },
+  {
+    "id": "fun_curiosity_92",
+    "category": "fun_curiosity",
+    "complexity": 3,
+    "question": "Why do we sneeze?",
+    "answer": "To clear nose irritants",
+    "notes": "It is a cleaning reflex."
+  },
+  {
+    "id": "fun_curiosity_93",
+    "category": "fun_curiosity",
+    "complexity": 1,
+    "question": "Why do we hiccup?",
+    "answer": "Sudden diaphragm movement",
+    "notes": "Often from eating too fast."
+  },
+  {
+    "id": "fun_curiosity_94",
+    "category": "fun_curiosity",
+    "complexity": 2,
+    "question": "Why does blood look red?",
+    "answer": "Because of hemoglobin",
+    "notes": "It has iron that makes it red."
+  },
+  {
+    "id": "fun_curiosity_95",
+    "category": "fun_curiosity",
+    "complexity": 3,
+    "question": "Why do we dream?",
+    "answer": "Brain activity at night",
+    "notes": "Dreams may organize thoughts."
+  },
+  {
+    "id": "fun_curiosity_96",
+    "category": "fun_curiosity",
+    "complexity": 1,
+    "question": "Why do our stomachs growl?",
+    "answer": "Air and food moving",
+    "notes": "It happens when we are hungry."
+  },
+  {
+    "id": "fun_curiosity_97",
+    "category": "fun_curiosity",
+    "complexity": 2,
+    "question": "Why do we get dizzy?",
+    "answer": "Balance system upset",
+    "notes": "Inner ear fluid moves around."
+  },
+  {
+    "id": "fun_curiosity_98",
+    "category": "fun_curiosity",
+    "complexity": 3,
+    "question": "Why do we get tired?",
+    "answer": "Body needs rest",
+    "notes": "Muscles and brain slow down."
+  },
+  {
+    "id": "fun_curiosity_99",
+    "category": "fun_curiosity",
+    "complexity": 1,
+    "question": "Why do we laugh?",
+    "answer": "Response to joy or surprise",
+    "notes": "It releases feel-good hormones."
+  },
+  {
+    "id": "fun_curiosity_100",
+    "category": "fun_curiosity",
+    "complexity": 2,
+    "question": "Why do we cry?",
+    "answer": "To express emotion",
+    "notes": "Tears also clean the eyes."
+  },
+  {
+    "id": "skeleton_bones_101",
+    "category": "skeleton_bones",
+    "complexity": 2,
+    "question": "How many bones are in an adult human body?",
+    "answer": "206 bones",
+    "notes": "Babies are born with about 270 bones, but many fuse together as they grow. By adulthood, we have 206 bones."
+  },
+  {
+    "id": "skeleton_bones_102",
+    "category": "skeleton_bones",
+    "complexity": 3,
+    "question": "What is the largest bone in the human body?",
+    "answer": "Femur (thighbone)",
+    "notes": "The femur is the longest and strongest bone. It connects the hip to the knee."
+  },
+  {
+    "id": "skeleton_bones_103",
+    "category": "skeleton_bones",
+    "complexity": 4,
+    "question": "What is the smallest bone in the body?",
+    "answer": "Stapes (in the ear)",
+    "notes": "Only about 3mm long! It helps transmit sound vibrations."
+  },
+  {
+    "id": "skeleton_bones_104",
+    "category": "skeleton_bones",
+    "complexity": 5,
+    "question": "What does your skull protect?",
+    "answer": "Your brain",
+    "notes": "Your skull is made of 22 bones fused together to protect your brain."
+  },
+  {
+    "id": "skeleton_bones_105",
+    "category": "skeleton_bones",
+    "complexity": 1,
+    "question": "How many ribs do humans have?",
+    "answer": "24 ribs (12 pairs)",
+    "notes": "They form a protective cage around the heart and lungs."
+  },
+  {
+    "id": "skeleton_bones_106",
+    "category": "skeleton_bones",
+    "complexity": 2,
+    "question": "What does the spine protect?",
+    "answer": "The spinal cord",
+    "notes": "The spine has 33 vertebrae and acts like a strong, flexible tower."
+  },
+  {
+    "id": "skeleton_bones_107",
+    "category": "skeleton_bones",
+    "complexity": 3,
+    "question": "Which bone protects your heart and lungs at the front?",
+    "answer": "Sternum (breastbone)",
+    "notes": "It connects to the ribs and shields the chest organs."
+  },
+  {
+    "id": "skeleton_bones_108",
+    "category": "skeleton_bones",
+    "complexity": 4,
+    "question": "What is bone marrow?",
+    "answer": "A soft tissue inside bones",
+    "notes": "It makes red and white blood cells."
+  },
+  {
+    "id": "skeleton_bones_109",
+    "category": "skeleton_bones",
+    "complexity": 5,
+    "question": "What minerals make bones strong?",
+    "answer": "Calcium and phosphorus",
+    "notes": "Milk and leafy greens provide calcium."
+  },
+  {
+    "id": "skeleton_bones_110",
+    "category": "skeleton_bones",
+    "complexity": 1,
+    "question": "How do broken bones heal?",
+    "answer": "By forming new bone tissue",
+    "notes": "Doctors may use a cast to hold the bone in place while healing."
+  },
+  {
+    "id": "muscles_movement_111",
+    "category": "muscles_movement",
+    "complexity": 2,
+    "question": "About how many muscles are in the body?",
+    "answer": "Over 600",
+    "notes": "They help us move, breathe, pump blood, and even smile."
+  },
+  {
+    "id": "muscles_movement_112",
+    "category": "muscles_movement",
+    "complexity": 3,
+    "question": "What is the strongest muscle by force?",
+    "answer": "Jaw muscle (masseter)",
+    "notes": "It can bite with a force over 200 pounds per square inch."
+  },
+  {
+    "id": "muscles_movement_113",
+    "category": "muscles_movement",
+    "complexity": 4,
+    "question": "What are voluntary muscles?",
+    "answer": "Muscles we control",
+    "notes": "Example: moving arms or legs."
+  },
+  {
+    "id": "muscles_movement_114",
+    "category": "muscles_movement",
+    "complexity": 5,
+    "question": "What are involuntary muscles?",
+    "answer": "Muscles that work automatically",
+    "notes": "Example: the heart or stomach muscles."
+  },
+  {
+    "id": "muscles_movement_115",
+    "category": "muscles_movement",
+    "complexity": 1,
+    "question": "What connects muscles to bones?",
+    "answer": "Tendons",
+    "notes": "They are tough cords that transfer muscle pull to bones."
+  },
+  {
+    "id": "muscles_movement_116",
+    "category": "muscles_movement",
+    "complexity": 2,
+    "question": "What connects bones to bones?",
+    "answer": "Ligaments",
+    "notes": "They are strong bands that hold joints together."
+  },
+  {
+    "id": "muscles_movement_117",
+    "category": "muscles_movement",
+    "complexity": 3,
+    "question": "Why do muscles get tired?",
+    "answer": "Because they use up energy",
+    "notes": "Rest and oxygen help them recover."
+  },
+  {
+    "id": "muscles_movement_118",
+    "category": "muscles_movement",
+    "complexity": 4,
+    "question": "Which muscle never rests?",
+    "answer": "The heart",
+    "notes": "It beats about 100,000 times a day."
+  },
+  {
+    "id": "muscles_movement_119",
+    "category": "muscles_movement",
+    "complexity": 5,
+    "question": "What is a reflex action?",
+    "answer": "A quick, automatic response",
+    "notes": "Example: pulling your hand from something hot."
+  },
+  {
+    "id": "muscles_movement_120",
+    "category": "muscles_movement",
+    "complexity": 1,
+    "question": "Why do we shiver?",
+    "answer": "Muscles contract to make heat",
+    "notes": "It keeps us warm when cold."
+  },
+  {
+    "id": "circulatory_system_121",
+    "category": "circulatory_system",
+    "complexity": 2,
+    "question": "What does the heart do?",
+    "answer": "Pumps blood",
+    "notes": "It beats non-stop to deliver oxygen and nutrients."
+  },
+  {
+    "id": "circulatory_system_122",
+    "category": "circulatory_system",
+    "complexity": 3,
+    "question": "What is pulse?",
+    "answer": "The beat of blood in arteries",
+    "notes": "You can feel it at your wrist or neck."
+  },
+  {
+    "id": "circulatory_system_123",
+    "category": "circulatory_system",
+    "complexity": 4,
+    "question": "What are red blood cells?",
+    "answer": "Cells that carry oxygen",
+    "notes": "They contain hemoglobin which binds oxygen."
+  },
+  {
+    "id": "circulatory_system_124",
+    "category": "circulatory_system",
+    "complexity": 5,
+    "question": "What are white blood cells?",
+    "answer": "Cells that fight germs",
+    "notes": "They protect the body from infections."
+  },
+  {
+    "id": "circulatory_system_125",
+    "category": "circulatory_system",
+    "complexity": 1,
+    "question": "What are platelets?",
+    "answer": "Cells that help blood clot",
+    "notes": "They stop bleeding when you get a cut."
+  },
+  {
+    "id": "circulatory_system_126",
+    "category": "circulatory_system",
+    "complexity": 2,
+    "question": "What do veins do?",
+    "answer": "Carry blood back to the heart",
+    "notes": "They look blue under the skin."
+  },
+  {
+    "id": "circulatory_system_127",
+    "category": "circulatory_system",
+    "complexity": 3,
+    "question": "What do arteries do?",
+    "answer": "Carry blood away from the heart",
+    "notes": "They are thick and strong."
+  },
+  {
+    "id": "circulatory_system_128",
+    "category": "circulatory_system",
+    "complexity": 4,
+    "question": "What are capillaries?",
+    "answer": "Tiny blood vessels",
+    "notes": "They connect arteries and veins."
+  },
+  {
+    "id": "circulatory_system_129",
+    "category": "circulatory_system",
+    "complexity": 5,
+    "question": "Why is blood red?",
+    "answer": "Because of hemoglobin",
+    "notes": "It contains iron, which gives blood its red color."
+  },
+  {
+    "id": "circulatory_system_130",
+    "category": "circulatory_system",
+    "complexity": 1,
+    "question": "Why does your heart beat faster when you run?",
+    "answer": "Muscles need more oxygen",
+    "notes": "The heart pumps quicker to meet demand."
+  },
+  {
+    "id": "respiratory_system_131",
+    "category": "respiratory_system",
+    "complexity": 2,
+    "question": "What gas do we breathe in?",
+    "answer": "Oxygen",
+    "notes": "Our body needs oxygen for energy."
+  },
+  {
+    "id": "respiratory_system_132",
+    "category": "respiratory_system",
+    "complexity": 3,
+    "question": "What gas do we breathe out?",
+    "answer": "Carbon dioxide",
+    "notes": "It is a waste gas removed by the lungs."
+  },
+  {
+    "id": "respiratory_system_133",
+    "category": "respiratory_system",
+    "complexity": 4,
+    "question": "What muscle helps us breathe?",
+    "answer": "Diaphragm",
+    "notes": "It moves down to pull in air, up to push it out."
+  },
+  {
+    "id": "respiratory_system_134",
+    "category": "respiratory_system",
+    "complexity": 5,
+    "question": "What are alveoli?",
+    "answer": "Tiny air sacs in lungs",
+    "notes": "There are about 300 million alveoli for gas exchange."
+  },
+  {
+    "id": "respiratory_system_135",
+    "category": "respiratory_system",
+    "complexity": 1,
+    "question": "Why do we sneeze?",
+    "answer": "To clear dust or germs",
+    "notes": "It is a cleaning reflex of the nose."
+  },
+  {
+    "id": "respiratory_system_136",
+    "category": "respiratory_system",
+    "complexity": 2,
+    "question": "Why do we hiccup?",
+    "answer": "Sudden diaphragm contractions",
+    "notes": "Sometimes caused by eating too fast."
+  },
+  {
+    "id": "respiratory_system_137",
+    "category": "respiratory_system",
+    "complexity": 3,
+    "question": "What does the nose do?",
+    "answer": "Filters and warms air",
+    "notes": "Hairs and mucus trap dust and germs."
+  },
+  {
+    "id": "respiratory_system_138",
+    "category": "respiratory_system",
+    "complexity": 4,
+    "question": "Why do we yawn?",
+    "answer": "To take in more oxygen",
+    "notes": "Often happens when tired."
+  },
+  {
+    "id": "respiratory_system_139",
+    "category": "respiratory_system",
+    "complexity": 5,
+    "question": "Why is breathing through the nose better?",
+    "answer": "It cleans and moistens air",
+    "notes": "Mouth breathing skips this step."
+  },
+  {
+    "id": "respiratory_system_140",
+    "category": "respiratory_system",
+    "complexity": 1,
+    "question": "What protects the lungs?",
+    "answer": "The rib cage",
+    "notes": "Bones form a shield around them."
+  },
+  {
+    "id": "digestive_system_141",
+    "category": "digestive_system",
+    "complexity": 2,
+    "question": "What is digestion?",
+    "answer": "Breaking food into small parts",
+    "notes": "It starts in the mouth with chewing and saliva."
+  },
+  {
+    "id": "digestive_system_142",
+    "category": "digestive_system",
+    "complexity": 3,
+    "question": "What does the stomach do?",
+    "answer": "Breaks food with juices",
+    "notes": "It churns food into a paste."
+  },
+  {
+    "id": "digestive_system_143",
+    "category": "digestive_system",
+    "complexity": 4,
+    "question": "What does the small intestine do?",
+    "answer": "Absorbs nutrients",
+    "notes": "It is about 20 feet long in adults."
+  },
+  {
+    "id": "digestive_system_144",
+    "category": "digestive_system",
+    "complexity": 5,
+    "question": "What does the large intestine do?",
+    "answer": "Absorbs water",
+    "notes": "It also stores waste before it leaves the body."
+  },
+  {
+    "id": "digestive_system_145",
+    "category": "digestive_system",
+    "complexity": 1,
+    "question": "What does the liver do?",
+    "answer": "Makes bile and cleans blood",
+    "notes": "It helps digest fats and removes toxins."
+  },
+  {
+    "id": "digestive_system_146",
+    "category": "digestive_system",
+    "complexity": 2,
+    "question": "What does the pancreas do?",
+    "answer": "Makes juices for digestion",
+    "notes": "It also helps control sugar in the blood."
+  },
+  {
+    "id": "digestive_system_147",
+    "category": "digestive_system",
+    "complexity": 3,
+    "question": "What do teeth do?",
+    "answer": "Chew food",
+    "notes": "Incisors cut, canines tear, molars grind."
+  },
+  {
+    "id": "digestive_system_148",
+    "category": "digestive_system",
+    "complexity": 4,
+    "question": "Why is saliva important?",
+    "answer": "It softens food",
+    "notes": "It also has chemicals to start digestion."
+  },
+  {
+    "id": "digestive_system_149",
+    "category": "digestive_system",
+    "complexity": 5,
+    "question": "Why should we eat fiber?",
+    "answer": "It helps digestion",
+    "notes": "Fiber keeps the intestines healthy."
+  },
+  {
+    "id": "digestive_system_150",
+    "category": "digestive_system",
+    "complexity": 1,
+    "question": "How long is the digestive tract?",
+    "answer": "About 30 feet",
+    "notes": "Food takes 1–3 days to pass through."
+  },
+  {
+    "id": "nervous_system_151",
+    "category": "nervous_system",
+    "complexity": 2,
+    "question": "What does the brain do?",
+    "answer": "Controls body and mind",
+    "notes": "It helps us think, feel, and act."
+  },
+  {
+    "id": "nervous_system_152",
+    "category": "nervous_system",
+    "complexity": 3,
+    "question": "What does the spinal cord do?",
+    "answer": "Carries messages",
+    "notes": "It connects brain and body."
+  },
+  {
+    "id": "nervous_system_153",
+    "category": "nervous_system",
+    "complexity": 4,
+    "question": "What are nerves?",
+    "answer": "Wires of the body",
+    "notes": "They send signals everywhere."
+  },
+  {
+    "id": "nervous_system_154",
+    "category": "nervous_system",
+    "complexity": 5,
+    "question": "What are reflexes?",
+    "answer": "Quick actions without thinking",
+    "notes": "Example: knee-jerk when tapped."
+  },
+  {
+    "id": "nervous_system_155",
+    "category": "nervous_system",
+    "complexity": 1,
+    "question": "What does the cerebrum do?",
+    "answer": "Controls thinking and memory",
+    "notes": "It is the largest part of the brain."
+  },
+  {
+    "id": "nervous_system_156",
+    "category": "nervous_system",
+    "complexity": 2,
+    "question": "What does the cerebellum do?",
+    "answer": "Controls balance",
+    "notes": "It helps us stand and move smoothly."
+  },
+  {
+    "id": "nervous_system_157",
+    "category": "nervous_system",
+    "complexity": 3,
+    "question": "What does the brain stem do?",
+    "answer": "Controls breathing and heartbeat",
+    "notes": "It keeps us alive without thinking."
+  },
+  {
+    "id": "nervous_system_158",
+    "category": "nervous_system",
+    "complexity": 4,
+    "question": "Why do cuts hurt?",
+    "answer": "Nerves send pain signals",
+    "notes": "Pain warns us of danger."
+  },
+  {
+    "id": "nervous_system_159",
+    "category": "nervous_system",
+    "complexity": 5,
+    "question": "Why do we dream?",
+    "answer": "Brain activity during sleep",
+    "notes": "Dreams may help process thoughts."
+  },
+  {
+    "id": "nervous_system_160",
+    "category": "nervous_system",
+    "complexity": 1,
+    "question": "Why do we forget things?",
+    "answer": "Memories fade",
+    "notes": "Practice and repetition help us remember."
+  },
+  {
+    "id": "senses_161",
+    "category": "senses",
+    "complexity": 2,
+    "question": "What helps us see?",
+    "answer": "Eyes",
+    "notes": "They detect light and color."
+  },
+  {
+    "id": "senses_162",
+    "category": "senses",
+    "complexity": 3,
+    "question": "What helps us hear?",
+    "answer": "Ears",
+    "notes": "They detect sound waves."
+  },
+  {
+    "id": "senses_163",
+    "category": "senses",
+    "complexity": 4,
+    "question": "What helps us taste?",
+    "answer": "Tongue",
+    "notes": "Taste buds sense sweet, sour, salty, bitter."
+  },
+  {
+    "id": "senses_164",
+    "category": "senses",
+    "complexity": 5,
+    "question": "What helps us smell?",
+    "answer": "Nose",
+    "notes": "It detects odors."
+  },
+  {
+    "id": "senses_165",
+    "category": "senses",
+    "complexity": 1,
+    "question": "What helps us touch?",
+    "answer": "Skin",
+    "notes": "It has nerves for heat, cold, pain, pressure."
+  },
+  {
+    "id": "senses_166",
+    "category": "senses",
+    "complexity": 2,
+    "question": "What is the pupil?",
+    "answer": "A hole in the eye",
+    "notes": "It gets bigger or smaller to control light."
+  },
+  {
+    "id": "senses_167",
+    "category": "senses",
+    "complexity": 3,
+    "question": "What is the eardrum?",
+    "answer": "A thin sheet in the ear",
+    "notes": "It vibrates with sound."
+  },
+  {
+    "id": "senses_168",
+    "category": "senses",
+    "complexity": 4,
+    "question": "What are fingerprints for?",
+    "answer": "Grip and touch",
+    "notes": "They are unique for every person."
+  },
+  {
+    "id": "senses_169",
+    "category": "senses",
+    "complexity": 5,
+    "question": "Why do onions make us cry?",
+    "answer": "They release chemicals",
+    "notes": "The eyes produce tears to wash it out."
+  },
+  {
+    "id": "senses_170",
+    "category": "senses",
+    "complexity": 1,
+    "question": "Why do ears pop on airplanes?",
+    "answer": "Air pressure changes",
+    "notes": "The ear adjusts to balance pressure."
+  },
+  {
+    "id": "skin_excretion_171",
+    "category": "skin_excretion",
+    "complexity": 2,
+    "question": "What is the largest organ?",
+    "answer": "Skin",
+    "notes": "It covers and protects the body."
+  },
+  {
+    "id": "skin_excretion_172",
+    "category": "skin_excretion",
+    "complexity": 3,
+    "question": "What are sweat glands?",
+    "answer": "Glands that make sweat",
+    "notes": "Sweat cools the body."
+  },
+  {
+    "id": "skin_excretion_173",
+    "category": "skin_excretion",
+    "complexity": 4,
+    "question": "Why do we sweat?",
+    "answer": "To stay cool",
+    "notes": "It prevents overheating."
+  },
+  {
+    "id": "skin_excretion_174",
+    "category": "skin_excretion",
+    "complexity": 5,
+    "question": "What are pores?",
+    "answer": "Tiny holes in the skin",
+    "notes": "They let sweat out."
+  },
+  {
+    "id": "skin_excretion_175",
+    "category": "skin_excretion",
+    "complexity": 1,
+    "question": "Why do we get goosebumps?",
+    "answer": "Tiny muscles pull hairs",
+    "notes": "This happens when cold or scared."
+  },
+  {
+    "id": "skin_excretion_176",
+    "category": "skin_excretion",
+    "complexity": 2,
+    "question": "What do nails do?",
+    "answer": "Protect fingers and toes",
+    "notes": "They also help grip small things."
+  },
+  {
+    "id": "skin_excretion_177",
+    "category": "skin_excretion",
+    "complexity": 3,
+    "question": "What makes hair grow?",
+    "answer": "Hair follicles in skin",
+    "notes": "They are nourished by blood vessels."
+  },
+  {
+    "id": "skin_excretion_178",
+    "category": "skin_excretion",
+    "complexity": 4,
+    "question": "Why do we get scars?",
+    "answer": "Skin heals with strong tissue",
+    "notes": "Scars replace broken skin."
+  },
+  {
+    "id": "skin_excretion_179",
+    "category": "skin_excretion",
+    "complexity": 5,
+    "question": "Why do cuts bleed?",
+    "answer": "Blood vessels under skin",
+    "notes": "Platelets clot to stop bleeding."
+  },
+  {
+    "id": "skin_excretion_180",
+    "category": "skin_excretion",
+    "complexity": 1,
+    "question": "Why is skin important?",
+    "answer": "Protects and senses",
+    "notes": "It also keeps water inside the body."
+  },
+  {
+    "id": "growth_health_181",
+    "category": "growth_health",
+    "complexity": 2,
+    "question": "Why do we need sleep?",
+    "answer": "To rest and grow",
+    "notes": "Children need 9–12 hours of sleep."
+  },
+  {
+    "id": "growth_health_182",
+    "category": "growth_health",
+    "complexity": 3,
+    "question": "Why do we need exercise?",
+    "answer": "To stay strong and healthy",
+    "notes": "It helps bones, muscles, and heart."
+  },
+  {
+    "id": "growth_health_183",
+    "category": "growth_health",
+    "complexity": 4,
+    "question": "Why should we wash hands?",
+    "answer": "To remove germs",
+    "notes": "It prevents sickness."
+  },
+  {
+    "id": "growth_health_184",
+    "category": "growth_health",
+    "complexity": 5,
+    "question": "Why should we brush teeth?",
+    "answer": "To stop cavities",
+    "notes": "Brush twice a day with fluoride toothpaste."
+  },
+  {
+    "id": "growth_health_185",
+    "category": "growth_health",
+    "complexity": 1,
+    "question": "Why do we need vaccines?",
+    "answer": "To protect from diseases",
+    "notes": "They train the body to fight germs."
+  },
+  {
+    "id": "growth_health_186",
+    "category": "growth_health",
+    "complexity": 2,
+    "question": "Why should we drink water?",
+    "answer": "To stay hydrated",
+    "notes": "Water makes up 60% of the body."
+  },
+  {
+    "id": "growth_health_187",
+    "category": "growth_health",
+    "complexity": 3,
+    "question": "Why do we eat healthy food?",
+    "answer": "For energy and growth",
+    "notes": "Fruits and veggies give vitamins and minerals."
+  },
+  {
+    "id": "growth_health_188",
+    "category": "growth_health",
+    "complexity": 4,
+    "question": "Why do we rest when sick?",
+    "answer": "To help the body heal",
+    "notes": "The immune system works better with rest."
+  },
+  {
+    "id": "growth_health_189",
+    "category": "growth_health",
+    "complexity": 5,
+    "question": "Why should we cover coughs?",
+    "answer": "To stop germs spreading",
+    "notes": "It keeps others safe."
+  },
+  {
+    "id": "growth_health_190",
+    "category": "growth_health",
+    "complexity": 1,
+    "question": "Why is sunlight important?",
+    "answer": "For vitamin D",
+    "notes": "It helps bones absorb calcium."
+  },
+  {
+    "id": "fun_curiosity_191",
+    "category": "fun_curiosity",
+    "complexity": 2,
+    "question": "Why do we yawn?",
+    "answer": "To take in more oxygen",
+    "notes": "Often when tired or bored."
+  },
+  {
+    "id": "fun_curiosity_192",
+    "category": "fun_curiosity",
+    "complexity": 3,
+    "question": "Why do we sneeze?",
+    "answer": "To clear nose irritants",
+    "notes": "It is a cleaning reflex."
+  },
+  {
+    "id": "fun_curiosity_193",
+    "category": "fun_curiosity",
+    "complexity": 4,
+    "question": "Why do we hiccup?",
+    "answer": "Sudden diaphragm movement",
+    "notes": "Often from eating too fast."
+  },
+  {
+    "id": "fun_curiosity_194",
+    "category": "fun_curiosity",
+    "complexity": 5,
+    "question": "Why does blood look red?",
+    "answer": "Because of hemoglobin",
+    "notes": "It has iron that makes it red."
+  },
+  {
+    "id": "fun_curiosity_195",
+    "category": "fun_curiosity",
+    "complexity": 1,
+    "question": "Why do we dream?",
+    "answer": "Brain activity at night",
+    "notes": "Dreams may organize thoughts."
+  },
+  {
+    "id": "fun_curiosity_196",
+    "category": "fun_curiosity",
+    "complexity": 2,
+    "question": "Why do our stomachs growl?",
+    "answer": "Air and food moving",
+    "notes": "It happens when we are hungry."
+  },
+  {
+    "id": "fun_curiosity_197",
+    "category": "fun_curiosity",
+    "complexity": 3,
+    "question": "Why do we get dizzy?",
+    "answer": "Balance system upset",
+    "notes": "Inner ear fluid moves around."
+  },
+  {
+    "id": "fun_curiosity_198",
+    "category": "fun_curiosity",
+    "complexity": 4,
+    "question": "Why do we get tired?",
+    "answer": "Body needs rest",
+    "notes": "Muscles and brain slow down."
+  },
+  {
+    "id": "fun_curiosity_199",
+    "category": "fun_curiosity",
+    "complexity": 5,
+    "question": "Why do we laugh?",
+    "answer": "Response to joy or surprise",
+    "notes": "It releases feel-good hormones."
+  },
+  {
+    "id": "fun_curiosity_200",
+    "category": "fun_curiosity",
+    "complexity": 1,
+    "question": "Why do we cry?",
+    "answer": "To express emotion",
+    "notes": "Tears also clean the eyes."
   }
 ]
