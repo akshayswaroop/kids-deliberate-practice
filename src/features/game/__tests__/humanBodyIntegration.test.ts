@@ -13,13 +13,13 @@ describe('Human Body Integration', () => {
     const humanBodyWords = Object.values(allWords).filter(word => word.language === 'humanbody');
     expect(humanBodyWords.length).toBeGreaterThan(0);
     
-    // Check specific question exists
+    // Check specific question exists - curated file uses "What is the largest organ?"
     const skinQuestion = Object.values(allWords).find(word => 
-      word.text.includes('What are three main jobs of your skin?')
+      word.text.includes('What is the largest organ?')
     );
     expect(skinQuestion).toBeDefined();
-    expect(skinQuestion?.answer).toBe('Protect, regulate temperature, sense touch');
-    expect(skinQuestion?.notes).toContain('largest organ');
+    expect(skinQuestion?.answer).toBe('Skin');
+    expect(skinQuestion?.notes).toContain('covers and protects the body');
   });
 
   it('should filter human body words by language', () => {
@@ -131,9 +131,10 @@ describe('Human Body Integration', () => {
     const wordsArray = Object.values(humanBodyWords);
     
     // Should have different categories
-    const categories = [...new Set(wordsArray.map(word => word.category))];
-    expect(categories).toContain('skeleton_bones');
-    expect(categories).toContain('general_body');
+  const categories = [...new Set(wordsArray.map(word => word.category))];
+  expect(categories).toContain('skeleton_bones');
+  // curated JSON uses 'skin_excretion' instead of 'general_body'
+  expect(categories).toContain('skin_excretion');
     
     // Each question should have a category
     wordsArray.forEach(word => {

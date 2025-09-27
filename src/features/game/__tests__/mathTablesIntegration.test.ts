@@ -11,7 +11,8 @@ describe('Math Tables Integration', () => {
     // Filter for math tables words
     const mathWords = Object.values(allWords).filter(word => word.language === 'mathtables');
     
-    expect(mathWords).toHaveLength(200);
+  // After removing 1× entries, expect 171 problems (factors 2-20 × 2-10)
+  expect(mathWords).toHaveLength(171);
     expect(mathWords[0].text).toMatch(/^\d+ × \d+$/);
     expect(mathWords[0].transliteration).toBeDefined();
   });
@@ -38,7 +39,7 @@ describe('Math Tables Integration', () => {
     const mathTablesWords = selectWordsByLanguage(mockState, ['mathtables']);
     const mathWordsArray = Object.values(mathTablesWords);
     
-    expect(mathWordsArray).toHaveLength(200);
+  expect(mathWordsArray).toHaveLength(171);
     expect(mathWordsArray.every(word => word.language === 'mathtables')).toBe(true);
   });
   
@@ -63,9 +64,9 @@ describe('Math Tables Integration', () => {
     const level1MathWords = selectWordsByComplexityLevel(mockState, ['mathtables']);
     const level1Array = Object.values(level1MathWords);
     
-    // Should get only level 1 math words (current level only)
-    // Level 1: 1x and 2x tables = 20 words
-    expect(level1Array).toHaveLength(20);
+  // Should get only level 1 math words (current level only)
+  // Level 1: 2x table only = 9 words
+  expect(level1Array).toHaveLength(9);
     expect(level1Array.every(word => word.complexityLevel === 1)).toBe(true); // Only level 1
     expect(level1Array.every(word => word.language === 'mathtables')).toBe(true);
   });
