@@ -82,7 +82,6 @@ function App() {
       onWrong={onWrong}
       onNext={onNext}
       columns={columns}
-      layout="topbar"
     />
   );
 }
