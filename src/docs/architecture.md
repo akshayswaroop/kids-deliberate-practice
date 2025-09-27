@@ -1,30 +1,33 @@
-## Architecture (Redux-first)
+Trace-Driven Contracts with Redux
 
-### State Tree
+Goal: Every UI action → traceable domain response. Tests check traces, not pixels.
 
-- **words**:  
-  `Record<wordId, { id, text, language, attempts: [{ timestamp: number, result: "correct" | "wrong" }], nextReviewAt?: number, reviewInterval?: number }>`
-- **sessions**:  
-  `Record<sessionId, { wordIds: string[], currentIndex: number, revealed: boolean, lastAttempt?: "correct" | "wrong", mode: string, createdAt: number, settings: { sessionSizes: Record<string, number>, languages: string[], complexityLevels: Record<string, number> } }>`
-- **activeSessions**:  
-  `Record<mode, sessionId>`
-- **settings**:  
-  `{ sessionSizes: Record<string, number>, languages: string[], complexityLevels: Record<string, number> }`
+⸻
 
-### Rules
+Core Loop
+	1.	UI dispatches intents (button, tap, etc.).
+	2.	Reducers update state (pure).
+	3.	Selectors project state → plain JSON view models.
+	4.	UI renders view model.
 
-- **Reducers**: Mechanical updates (no domain math).
-- **Selectors**: Domain rules (pure calculations).
-- **UI**: Dumb view that calls selectors and dispatches actions.
+⸻
 
-### Session Management
-- **Fixed Session Size**: All sessions contain exactly 12 questions
-- **Language Support**: English, Kannada, Math Tables, Human Body, and India Geography modes
-- **Progressive Learning**: Complexity level filtering ensures proper learning progression
-- **No Configuration UI**: Session size is hardcoded to simplify UX
-- **Subject-Specific Display**: Different subjects show appropriate learning aids (transliterations for Kannada/Math, answers/notes for Human Body/Geography)
+Trace Layer
+	•	Middleware records {intent, viewModel} for each dispatch.
+	•	Traces are immutable arrays, stored per session.
+	•	Invariants (e.g., “progress never negative”) run here.
 
-### Developer Note
+⸻
 
-- Users are stored in state keyed by an opaque `userId` (string). Do not rely on human names as state keys. A `displayName` field exists on the `UserState` and is optional; UI components should prefer `displayName || userId` when rendering user labels.
-- Hard-coded user names were intentionally removed from `src/` code. Tests and fixtures may still use these literals inside `__tests__`.
+Testing
+	•	Tests replay UI intents (dispatches).
+	•	Assert on final state + trace history.
+	•	No console logs, no Playwright; tests use traces as contracts.
+
+⸻
+
+Principles
+	•	Reducers = pure functions, no time/random inside.
+	•	Selectors = DTOs only (never styled text).
+	•	Middleware = side effects only (storage, API, logging).
+	•	Trace = dev-only, can be persisted if debugging.

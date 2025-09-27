@@ -25,15 +25,11 @@ npm run dev
 # Build for production
 npm run build
 
-# Run tests
-npm run test:all          # Run all tests (unit + Storybook)
-npm run test:unit         # Run unit tests only (fast: ~1.7s)
-npm run test:stories      # Run Storybook component tests
-npm run test:unit:watch   # Watch mode for development
-npm run test:watch        # Watch mode for all tests (continuous)
+## Run tests
+Use the unit test scripts below. Storybook-based component tests and the Storybook dev server have been removed.
 
-# Launch Storybook for component development
-npm run storybook
+npm run test:unit         # Run unit tests only (fast: ~1.7s)
+npm run test:unit:watch   # Watch mode for development
 ```
 
 ## 🧪 Testing Strategy
@@ -63,8 +59,8 @@ npm run test:watch        # Continuous testing (all tests)
 
 ## 🎨 Development Tools
 
-### Storybook & Component Development
-This project uses Storybook to develop and test presentation components in isolation (stories live under `src/app/ui/*.stories.*`).
+### Component Development
+Presentation components are tested via unit tests and story-driven development has been removed from this repository.
 
 ### Interactive Diagnostics
 During development you can open an interactive Diagnostics panel in the running app by appending `#diagnostics` to the URL (e.g. `http://localhost:5173/#diagnostics`). The Diagnostics view provides:

@@ -1,32 +1,21 @@
-## Domain Rules
+Domain Rules (Simple)
+	•	Every subject (Math, English, Kannada, Human Body, etc.) has a bank of questions/words, grouped by complexity level (Level 1 = easiest, then Level 2, etc.).
+	•	Kids practice in sets of 12 tiles at a time.
+	•	Correct answer → progress forward (+20%).
+	•	Wrong answer → progress backward (−20%, not below 0).
+	•	A question is mastered at 100% and removed from active practice.
+	•	A session always shows 12 tiles:
+	•	If fewer than 12 unmastered questions remain in the current level, the rest are filled with mastered ones (clearly marked).
+	•	Progression: Once all questions in the current level are mastered, the app automatically moves to the next level.
+	•	When all levels are mastered, the child sees a clear “You’ve finished all questions!” message.
 
-### Mastery
-- Each correct attempt: **+20% mastery**
-- Each wrong attempt: **−20% mastery**
-- Mastery is clamped between **0% and 100%**
-- Mastery is **derived from attempts** and **never stored directly**
+⸻
 
-### Spaced Review
-- When mastery first reaches **100%**:
-  - `reviewInterval = 1 day`
-  - `nextReviewAt = now + reviewInterval`
-- On review:
-  - If **correct**: `reviewInterval *= 2`, `nextReviewAt = now + reviewInterval`
-  - If **wrong**: `reviewInterval = 1`, mastery drops as per above rules
-
-### Session Selection
-- Select **12 words** (fixed session size) using a deterministic, unmastered-first selection:
-  - Prefer words that are not yet mastered (step < 5)
-  - Sort deterministically by `(complexityLevel, step, lastPracticedAt, id)` and pick the first 12
-  - This simplifies session generation and removes weighted bucket sampling
-  - Selection is deterministic for tests (no injected randomness)
-
-### Progressive Learning
-- **Complexity Levels**: Words are filtered by current complexity level only
-- **Level Progression**: Students must master current level before advancing
-- **No Level Mixing**: Session contains words from single complexity level to maintain clear learning progression
-- **Multi-Subject Support**: System supports English vocabulary, Kannada script, Math Tables, Human Body facts, and India Geography questions
-
-### Developer Note
-
-- User identity in state is represented by an opaque `userId`. Do not hard-code user names in `src/` files; use `displayName` for human-facing labels when needed. A detection test `noHardcodedUserNames.test.ts` scans the `src/` directory to prevent forbidden literal names from being added to source files.
+Example: Math Mode with 15 in Level 1, 20 in Level 2
+	1.	Start → 12 unmastered words from Level 1 are shown.
+	2.	Child masters them all.
+	3.	Next set → 3 remaining unmastered words + 9 mastered fillers.
+	4.	Once those 3 are mastered → Level 1 is complete.
+	5.	The app automatically moves to Level 2.
+	6.	Child now sees a set of 12 unmastered words from Level 2.
+	7.	This continues until all 20 are mastered, then the app either moves to Level 3 (if available) or shows completion message.
