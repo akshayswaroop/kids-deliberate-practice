@@ -149,7 +149,11 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                   whiteSpace: 'normal',
                   wordBreak: 'break-word',
                   position: 'relative',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  // Center content both horizontally and vertically
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}>
                   {/* Rainbow fill behind the question - horizontal left->right fill */}
                   <div aria-hidden style={{
@@ -179,7 +183,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                   }} />
 
                   {/* main word text */}
-                  <div style={{ position: 'relative', zIndex: 2 }}>{mainWord}</div>
+                  <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', width: '100%' }}>{mainWord}</div>
 
                   {/* percent indicator and mastered badge */}
                   <div style={{ position: 'absolute', right: 8, top: 8, zIndex: 3, display: 'flex', gap: 8, alignItems: 'center' }}>

@@ -31,6 +31,7 @@ export default function ModeSelector({ mode, onSetMode, compact = false }: ModeS
         <option value="humanbody">🧠 Human Body</option>
         <option value="indiageography">🗺️ India Geography</option>
         <option value="grampanchayat">🏛️ Gram Panchayat</option>
+        <option value="hanuman">🕉️ Hanuman Chalisa</option>
       </select>
     </div>
   );

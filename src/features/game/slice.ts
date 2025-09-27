@@ -22,6 +22,7 @@ export const makeUser = (displayName?: string) => ({
       humanbody: 12,  // Small sessions for Human Body (only 18 total questions, allows 3+ cycles)
       indiageography: 12, // Default for India Geography
       grampanchayat: 12, // Small sessions for Gram Panchayat (only 2 questions initially)
+      hanuman: 12,   // Default for Hanuman Chalisa (41 verses total)
       mixed: 12      // Default for mixed mode
     },
     languages: ['english'], // Default to English only
@@ -31,6 +32,7 @@ export const makeUser = (displayName?: string) => ({
       'mathtables': 1, // Start with Level 1 Math Tables (1x and 2x tables)
       'indiageography': 1, // Start with Level 1 India Geography (basic facts)
       'grampanchayat': 1, // Start with Level 1 Gram Panchayat (basic civics)
+      'hanuman': 1,  // Start with Level 1 Hanuman Chalisa (all verses at same level)
       'hindi': 1     // Future support for Hindi
     }
   },
@@ -173,6 +175,11 @@ const gameSlice = createSlice({
         user.settings.sessionSizes = {
           english: legacySessionSize,
           kannada: legacySessionSize,
+          mathtables: 12,
+          humanbody: 12,
+          indiageography: 12,
+          grampanchayat: 12,
+          hanuman: 12,
           mixed: legacySessionSize
         };
         // Remove old sessionSize property

@@ -5,6 +5,7 @@ import { createMathTablesWords } from '../features/game/mathTables';
 import { createHumanBodyWords } from '../features/game/humanBody';
 import { createIndiaGeographyWords } from '../features/game/indiaGeography';
 import { createGramPanchayatWords } from '../features/game/gramPanchayat';
+import { createHanumanChalisaWords } from '../features/game/hanumanChalisa';
 
 // English complexity level mapping based on progressive learning principles
 const ENGLISH_COMPLEXITY_MAPPING: Record<string, number> = {
@@ -57,6 +58,9 @@ export function getInitialWords(): Record<string, Word> {
   // Gram Panchayat questions for civics education
   const gramPanchayatWords = createGramPanchayatWords();
   
+  // Hanuman Chalisa verses for spiritual learning
+  const hanumanChalisaWords = createHanumanChalisaWords();
+  
   // Combine all language word sets
-  return { ...englishWords, ...kannadaWords, ...mathTablesWords, ...humanBodyWords, ...indiaGeographyWords, ...gramPanchayatWords };
+  return { ...englishWords, ...kannadaWords, ...mathTablesWords, ...humanBodyWords, ...indiaGeographyWords, ...gramPanchayatWords, ...hanumanChalisaWords };
 }
