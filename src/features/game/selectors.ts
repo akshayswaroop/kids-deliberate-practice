@@ -1,5 +1,5 @@
 import type { RootState, Word } from "./state";
-import { TRANSLITERATION_MODES, ANSWER_MODES } from './modeConfig';
+import { TRANSLITERATION_MODES, ANSWER_MODES, isMastered, MASTER_STEP } from './modeConfig';
 
 // Step-based mastery calculation per new spec (0-5 where 5 = mastered)
 export function selectMasteryStep(state: RootState, wordId: string): number {
@@ -14,8 +14,11 @@ export function selectMasteryStep(state: RootState, wordId: string): number {
 // Legacy mastery percentage function (convert step to percentage for UI compatibility)
 export function selectMasteryPercent(state: RootState, wordId: string): number {
   const step = selectMasteryStep(state, wordId);
-  // Convert step (0-5) to percentage (0-100) for UI compatibility
-  return (step / 5) * 100;
+  // Convert step (0..MASTER_STEP) to percentage (0-100) for UI compatibility.
+  // Respect configured MASTER_STEP so progress UI reaches 100% when a word is considered mastered.
+  const max = Math.max(1, MASTER_STEP);
+  const clamped = Math.max(0, Math.min(step, max));
+  return Math.round((clamped / max) * 100);
 }
 
 export function selectCurrentWord(state: RootState, sessionId: string): Word | undefined {
@@ -115,8 +118,8 @@ export function selectShouldProgressLevel(state: RootState, language: string): b
   // If no words at current level, don't progress
   if (currentLevelWords.length === 0) return false;
   
-  // Progress only when ALL words at this level are mastered (step = 5)
-  const allMastered = currentLevelWords.every(word => word.step === 5);
+  // Progress only when ALL words at this level are mastered (config-driven)
+  const allMastered = currentLevelWords.every(word => isMastered(word));
   return allMastered;
 }
 
@@ -133,11 +136,11 @@ export function selectWordsByMasteryBucket(state: RootState, languages: string[]
     if (word.step === 0 && word.attempts.length === 0) {
       // New: step = 0, attempts.length = 0
       buckets.new.push(word);
-    } else if (word.step >= 1 && word.step <= 4) {
+    } else if (!isMastered(word)) {
       // Active: 1 ≤ step ≤ 4 (renamed from "struggle" to "active" but keeping same bucket name for compatibility)
       buckets.struggle.push(word);
-    } else if (word.step === 5 && word.cooldownSessionsLeft === 0) {
-      // Revision: step = 5, cooldownSessionsLeft = 0
+    } else if (isMastered(word) && word.cooldownSessionsLeft === 0) {
+      // Revision: considered mastered per config, but only include in mastered bucket when not in cooldown
       buckets.mastered.push(word);
     }
     // Note: Words with step = 5 and cooldownSessionsLeft > 0 are intentionally excluded
@@ -277,7 +280,7 @@ export function selectIsSessionFullyMastered(state: RootState, sessionId: string
   
   const allMastered = session.wordIds.every(wordId => {
     const word = user.words[wordId];
-    if (!word || word.step !== 5) {
+    if (!word || !isMastered(word)) {
       return false;
     }
     return true;

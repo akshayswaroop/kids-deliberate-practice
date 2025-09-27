@@ -1,8 +1,9 @@
 import type { Word } from './state';
+import { isMastered } from './modeConfig';
 
 /**
  * Simplified session word selection:
- * - Only picks unmastered words (step < 5)
+ * - Only picks unmastered words (per mastery helper)
  * - Prioritises current complexity level words (caller supplies appropriate pool)
  * - If caller passes a mixed pool (multiple levels) we sort by:
  *     1. complexityLevel ascending
@@ -12,7 +13,7 @@ import type { Word } from './state';
  * - Returns up to `size` ids (may be fewer if insufficient unmastered words)
  */
 export function selectSessionWords(allWords: Word[], size: number): string[] {
-  const unmastered = allWords.filter(w => w.step === undefined || w.step < 5);
+  const unmastered = allWords.filter(w => (w.step === undefined) || !isMastered(w));
   // Sort deterministically according to priority rules
   unmastered.sort((a, b) => {
     if (a.complexityLevel !== b.complexityLevel) return a.complexityLevel - b.complexityLevel;

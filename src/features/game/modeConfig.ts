@@ -54,3 +54,12 @@ export const getAnswerModeStyle = (mode: string) => {
 // Arrays for backward compatibility and selector usage
 export const TRANSLITERATION_MODES = Object.keys(MODE_CONFIG.transliterationModes);
 export const ANSWER_MODES = Object.keys(MODE_CONFIG.answerModes);
+
+// Mastery configuration: centralized threshold for considering a word "mastered".
+export const MASTER_STEP = 2; // Words with step >= MASTER_STEP are considered mastered
+
+// Helper to check mastery on a word object (keeps selector logic consistent)
+export const isMastered = (word: { step: number } | undefined | null): boolean => {
+  if (!word) return false;
+  return (word.step || 0) >= MASTER_STEP;
+};

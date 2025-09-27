@@ -16,6 +16,7 @@ import gameSlice from '../slice';
 import { traceMiddleware, traceAPI } from '../../../app/tracing/traceMiddleware';
 import { handleNextPressed } from '../actions';
 import type { RootState } from '../state';
+import { MASTER_STEP } from '../../game/modeConfig';
 
 // Test helper to create store with tracing
 function createTestStore() {
@@ -165,9 +166,9 @@ describe("Complete Math Learning Journey", () => {
     step3.info(`Found ${allLevel1MathWords.length} total level 1 math words to master`);
     
     // Master ALL level 1 math words (not just session words) for proper progression
-    // We need to make 5 correct attempts for each word to master it
+    // Make MASTER_STEP correct attempts for each word to master it
     for (const word of allLevel1MathWords) {
-      for (let attempt = 1; attempt <= 5; attempt++) {
+      for (let attempt = 1; attempt <= MASTER_STEP; attempt++) {
         store.dispatch({
           type: 'game/attempt',
           payload: {
@@ -186,7 +187,7 @@ describe("Complete Math Learning Journey", () => {
     const user3 = state3.users[userId];
     
     const masteredLevel1Words = Object.values(user3.words).filter(word => 
-      word.language === 'mathtables' && word.complexityLevel === 1 && word.step >= 5
+      word.language === 'mathtables' && word.complexityLevel === 1 && word.step >= MASTER_STEP
     );
     
     if (masteredLevel1Words.length === allLevel1MathWords.length) {

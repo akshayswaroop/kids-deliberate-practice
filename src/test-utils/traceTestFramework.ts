@@ -124,7 +124,7 @@ export const traceAssertions = {
     );
     
     if (!masteryAchieved) {
-      throw new Error(`Word ${wordId} was never mastered (step 5)`);
+      throw new Error(`Word ${wordId} was never mastered (>= MASTER_STEP)`);
     }
   },
 

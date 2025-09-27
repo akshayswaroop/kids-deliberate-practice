@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './state';
+import { isMastered } from './modeConfig';
 import { getInitialWords } from '../../app/bootstrapState';
 // Thunks moved to actions.ts
 
@@ -78,27 +79,26 @@ const gameSlice = createSlice({
         // Add attempt to history
         word.attempts.push({ timestamp: now, result });
         
-        // Step-based transitions per new spec
-        if (word.step < 5) {
-          // Practice mode (step < 5)
+        // Step-based transitions per new spec, using isMastered() helper
+        if (!isMastered(word)) {
+          // Practice mode (not mastered)
           if (result === 'correct') {
             word.step = Math.min(5, word.step + 1);
             word.lastPracticedAt = now;
-            
-            // If step reaches 5, mark mastered and set cooldown
-            if (word.step === 5) {
+            // If this update caused mastery (per step threshold), set revision metadata
+            if (isMastered(word)) {
               word.lastRevisedAt = now;
               word.cooldownSessionsLeft = 1;
             }
           } else {
-            // Wrong answer
+            // Wrong answer resets progress step downwards
             word.step = Math.max(0, word.step - 1);
             word.lastPracticedAt = now;
           }
-        } else if (word.step === 5 && word.cooldownSessionsLeft === 0) {
-          // Revision mode (step = 5, cooldownSessionsLeft = 0)
+        } else if (isMastered(word) && word.cooldownSessionsLeft === 0) {
+          // Revision mode (considered mastered per config, cooldownSessionsLeft = 0)
           if (result === 'correct') {
-            // Stay at step 5, set cooldown
+            // Stay at mastered state, set cooldown
             word.lastRevisedAt = now;
             word.cooldownSessionsLeft = 1;
           } else {
@@ -123,12 +123,12 @@ const gameSlice = createSlice({
       const { sessionId } = action.payload;
       const session = user.sessions[sessionId];
       if (session) {
-        // Find unmastered words in the session (step < 5)
+        // Find unmastered words in the session (not mastered per config)
         const unmasteredIndices: number[] = [];
         for (let i = 0; i < session.wordIds.length; i++) {
           const wordId = session.wordIds[i];
           const word = user.words[wordId];
-          if (word && word.step < 5) {
+          if (word && !isMastered(word)) {
             unmasteredIndices.push(i);
           }
         }
@@ -230,7 +230,7 @@ const gameSlice = createSlice({
       // Decrement cooldownSessionsLeft for revision words after session
       action.payload.wordIds.forEach(wordId => {
         const word = user.words[wordId];
-        if (word && word.step === 5 && word.cooldownSessionsLeft > 0) {
+        if (word && isMastered(word) && word.cooldownSessionsLeft > 0) {
           word.cooldownSessionsLeft = Math.max(0, word.cooldownSessionsLeft - 1);
         }
       });
