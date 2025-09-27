@@ -9,18 +9,20 @@ import {
 import type { RootState, Word, Session } from "../state";
 
 describe("selectMasteryPercent", () => {
-  it("calculates mastery using +20/−20 clamp rule", () => {
+  it("converts step to percentage correctly", () => {
     const word: Word = {
       id: "w1",
       text: "test",
       language: "en",
       complexityLevel: 1,
       attempts: [
-        { timestamp: 1, result: "correct" }, // +20
-        { timestamp: 2, result: "wrong" },   // −20 → 0
-        { timestamp: 3, result: "correct" }, // +20
-        { timestamp: 4, result: "correct" }, // +20 → 40
+        { timestamp: 1, result: "correct" }, 
+        { timestamp: 2, result: "wrong" },   
+        { timestamp: 3, result: "correct" }, 
+        { timestamp: 4, result: "correct" }, 
       ],
+      step: 2, // At step 2 after some practice
+      cooldownSessionsLeft: 0,
     };
 
     const state: RootState = {
@@ -34,16 +36,19 @@ describe("selectMasteryPercent", () => {
       },
       currentUserId: 'user1',
     };
+    // Step 2 = 2/5 * 100 = 40%
     expect(selectMasteryPercent(state, "w1")).toBe(40);
   });
 
-  it("clamps mastery between 0 and 100", () => {
+  it("clamps percentage between 0 and 100", () => {
     const word: Word = {
       id: "w2",
       text: "test2",
       language: "en",
       complexityLevel: 1,
-      attempts: Array(10).fill({ timestamp: 1, result: "correct" }), // would exceed 100
+      attempts: Array(10).fill({ timestamp: 1, result: "correct" }), // Many correct attempts
+      step: 5, // Mastered
+      cooldownSessionsLeft: 0,
     };
 
     const state: RootState = {
@@ -57,6 +62,7 @@ describe("selectMasteryPercent", () => {
       },
       currentUserId: 'user1',
     };
+    // Step 5 = 5/5 * 100 = 100%
     expect(selectMasteryPercent(state, "w2")).toBe(100);
   });
 });
@@ -64,8 +70,8 @@ describe("selectMasteryPercent", () => {
 describe("selectCurrentWord", () => {
   it("returns the current word from session", () => {
     const words: Record<string, Word> = {
-      w1: { id: "w1", text: "one", language: "en", complexityLevel: 1, attempts: [] },
-      w2: { id: "w2", text: "two", language: "en", complexityLevel: 1, attempts: [] },
+      w1: { id: "w1", text: "one", language: "en", complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
+      w2: { id: "w2", text: "two", language: "en", complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
     };
     const session: Session = {
       wordIds: ["w1", "w2"],
@@ -128,15 +134,15 @@ describe('selectAreAllSessionWordsMastered', () => {
               { timestamp: 2, result: 'correct' },
               { timestamp: 3, result: 'correct' },
               { timestamp: 4, result: 'correct' },
-              { timestamp: 5, result: 'correct' }  // 5 correct = 100%
-            ]},
+              { timestamp: 5, result: 'correct' }  // 5 correct = mastered
+            ], step: 5, cooldownSessionsLeft: 0 },
             w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [
               { timestamp: 1, result: 'correct' },
               { timestamp: 2, result: 'correct' },
               { timestamp: 3, result: 'correct' },
               { timestamp: 4, result: 'correct' },
-              { timestamp: 5, result: 'correct' }  // 5 correct = 100%
-            ]}
+              { timestamp: 5, result: 'correct' }  // 5 correct = mastered
+            ], step: 5, cooldownSessionsLeft: 0 }
           },
           sessions: {
             s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } } }
@@ -151,34 +157,103 @@ describe('selectAreAllSessionWordsMastered', () => {
     expect(selectAreAllSessionWordsMastered(state, 's1')).toBe(true);
   });
 
-  it('returns false when some words in session are not mastered', () => {
+  it('returns true when 80% of words are mastered (new behavior)', () => {
     const state: RootState = {
       users: {
         user1: {
           words: {
-            w1: { id: 'w1', text: 'one', language: 'en', complexityLevel: 1, attempts: [
-              { timestamp: 1, result: 'correct' },
-              { timestamp: 2, result: 'correct' },
-              { timestamp: 3, result: 'correct' },
-              { timestamp: 4, result: 'correct' },
-              { timestamp: 5, result: 'correct' }  // 5 correct = 100%
-            ]},
-            w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [
-              { timestamp: 1, result: 'correct' },
-              { timestamp: 2, result: 'correct' },
-              { timestamp: 3, result: 'correct' }  // 3 correct = 60%
-            ]}
+            w1: { id: 'w1', text: 'one', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w3: { id: 'w3', text: 'three', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w4: { id: 'w4', text: 'four', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w5: { id: 'w5', text: 'five', language: 'en', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 } // Not mastered
           },
           sessions: {
-            s1: { wordIds: ['w1', 'w2'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } } }
+            s1: { wordIds: ['w1', 'w2', 'w3', 'w4', 'w5'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 5 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } } }
           },
           activeSessions: {},
-          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 2 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } }
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 5 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } }
         }
       },
       currentUserId: 'user1'
     };
     
+    // 4/5 = 80% mastered, should return true
+    expect(selectAreAllSessionWordsMastered(state, 's1')).toBe(true);
+  });
+
+  it('returns false when less than 80% of words are mastered', () => {
+    const state: RootState = {
+      users: {
+        user1: {
+          words: {
+            w1: { id: 'w1', text: 'one', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w3: { id: 'w3', text: 'three', language: 'en', complexityLevel: 1, attempts: [], step: 3, cooldownSessionsLeft: 0 }, // Not mastered
+            w4: { id: 'w4', text: 'four', language: 'en', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 }, // Not mastered
+            w5: { id: 'w5', text: 'five', language: 'en', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 } // Not mastered
+          },
+          sessions: {
+            s1: { wordIds: ['w1', 'w2', 'w3', 'w4', 'w5'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 5 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } } }
+          },
+          activeSessions: {},
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 5 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } }
+        }
+      },
+      currentUserId: 'user1'
+    };
+    
+    // 2/5 = 40% mastered, should return false
+    expect(selectAreAllSessionWordsMastered(state, 's1')).toBe(false);
+  });
+
+  it('handles empty sessions correctly', () => {
+    const state: RootState = {
+      users: {
+        user1: {
+          words: {},
+          sessions: {
+            s1: { wordIds: [], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 0 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } } }
+          },
+          activeSessions: {},
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 0 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } }
+        }
+      },
+      currentUserId: 'user1'
+    };
+    
+    expect(selectAreAllSessionWordsMastered(state, 's1')).toBe(false);
+  });
+
+  it('handles boundary case with exactly 80% mastery', () => {
+    const state: RootState = {
+      users: {
+        user1: {
+          words: {
+            w1: { id: 'w1', text: 'one', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w3: { id: 'w3', text: 'three', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w4: { id: 'w4', text: 'four', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w5: { id: 'w5', text: 'five', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w6: { id: 'w6', text: 'six', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w7: { id: 'w7', text: 'seven', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w8: { id: 'w8', text: 'eight', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w9: { id: 'w9', text: 'nine', language: 'en', complexityLevel: 1, attempts: [], step: 5, cooldownSessionsLeft: 0 },
+            w10: { id: 'w10', text: 'ten', language: 'en', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 }, // Not mastered
+            w11: { id: 'w11', text: 'eleven', language: 'en', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 }, // Not mastered
+            w12: { id: 'w12', text: 'twelve', language: 'en', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 } // Not mastered
+          },
+          sessions: {
+            s1: { wordIds: ['w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8', 'w9', 'w10', 'w11', 'w12'], currentIndex: 0, revealed: false, mode: 'practice', createdAt: 0, settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 12 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } } }
+          },
+          activeSessions: {},
+          settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 12 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } }
+        }
+      },
+      currentUserId: 'user1'
+    };
+    
+    // 9/12 = 75% mastered, but ceil(12 * 0.8) = 10 required, should return false
     expect(selectAreAllSessionWordsMastered(state, 's1')).toBe(false);
   });
 });
@@ -272,7 +347,9 @@ describe('selectCurrentPracticeData transliteration behavior', () => {
       text: 'cat',
       language: 'english',
       complexityLevel: 1,
-      attempts: []
+      attempts: [],
+      step: 0,
+      cooldownSessionsLeft: 0
     };
 
     const session: Session = {

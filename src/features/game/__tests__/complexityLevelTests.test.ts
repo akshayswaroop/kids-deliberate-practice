@@ -13,18 +13,18 @@ function makeInitialWithComplexityLevels(): RootState {
       user1: {
         words: {
           // Level 1 English words
-          w1: { id: 'w1', text: 'an', language: 'english', complexityLevel: 1, attempts: [] },
-          w2: { id: 'w2', text: 'at', language: 'english', complexityLevel: 1, attempts: [] },
+          w1: { id: 'w1', text: 'an', language: 'english', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
+          w2: { id: 'w2', text: 'at', language: 'english', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
           // Level 2 English words  
-          w3: { id: 'w3', text: 'bat', language: 'english', complexityLevel: 2, attempts: [] },
-          w4: { id: 'w4', text: 'cat', language: 'english', complexityLevel: 2, attempts: [] },
+          w3: { id: 'w3', text: 'bat', language: 'english', complexityLevel: 2, attempts: [], step: 0, cooldownSessionsLeft: 0 },
+          w4: { id: 'w4', text: 'cat', language: 'english', complexityLevel: 2, attempts: [], step: 0, cooldownSessionsLeft: 0 },
           // Level 3 English words
-          w5: { id: 'w5', text: 'big', language: 'english', complexityLevel: 3, attempts: [] },
+          w5: { id: 'w5', text: 'big', language: 'english', complexityLevel: 3, attempts: [], step: 0, cooldownSessionsLeft: 0 },
           // Level 1 Kannada words
-          k1: { id: 'k1', text: 'ರಾಮ', language: 'kannada', complexityLevel: 1, attempts: [] },
-          k2: { id: 'k2', text: 'ಲವ', language: 'kannada', complexityLevel: 1, attempts: [] },
+          k1: { id: 'k1', text: 'ರಾಮ', language: 'kannada', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
+          k2: { id: 'k2', text: 'ಲವ', language: 'kannada', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
           // Level 2 Kannada words
-          k3: { id: 'k3', text: 'ಸೀತಾ', language: 'kannada', complexityLevel: 2, attempts: [] },
+          k3: { id: 'k3', text: 'ಸೀತಾ', language: 'kannada', complexityLevel: 2, attempts: [], step: 0, cooldownSessionsLeft: 0 },
         },
         sessions: {},
         activeSessions: {},
@@ -86,17 +86,15 @@ describe('Complexity Level System', () => {
   });
 
   it('should detect when user should progress to next level', () => {
-    let state = makeInitialWithComplexityLevels();
+    const state = makeInitialWithComplexityLevels();
     
     // Initially, user should not progress (no mastery)
     expect(selectShouldProgressLevel(state, 'english')).toBe(false);
     
     // Master 80% of level 1 English words (need 2 out of 2 words mastered)
-    // Add mastery attempts to both level 1 words
-    for (let i = 0; i < 5; i++) {
-      state.users.user1.words.w1.attempts.push({ timestamp: Date.now(), result: 'correct' });
-      state.users.user1.words.w2.attempts.push({ timestamp: Date.now(), result: 'correct' });
-    }
+    // Set both level 1 words to step 5 (mastered)
+    state.users.user1.words.w1.step = 5;
+    state.users.user1.words.w2.step = 5;
     
     // Now should be eligible for progression
     expect(selectShouldProgressLevel(state, 'english')).toBe(true);

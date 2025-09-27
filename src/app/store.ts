@@ -17,10 +17,12 @@ const persistMiddleware = (storeAPI: any) => (next: any) => (action: any) => {
   const result = next(action);
   if (action.type.startsWith('game/')) {
     const state = storeAPI.getState();
+    console.log(`💾 [PERSIST] Saving state after action: ${action.type}`);
     try {
       localStorage.setItem('gameState', JSON.stringify(state.game));
+      console.log(`✅ [PERSIST] State saved successfully`);
     } catch (e) {
-      // Ignore storage errors
+      console.error(`❌ [PERSIST] Failed to save state:`, e);
     }
   }
   return result;

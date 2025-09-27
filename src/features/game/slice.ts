@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './state';
 import { getInitialWords } from '../../app/bootstrapState';
+// Thunks moved to actions.ts
 
 // Use semantic/opaque user ids in core state instead of real names.
 export const DEFAULT_USER_ID = 'user_default';
@@ -13,15 +14,15 @@ export const makeUser = (displayName?: string) => ({
   activeSessions: {},
   settings: {
     selectionWeights: {
-      struggle: 0.5,
-      new: 0.4,
-      mastered: 0.1,
+      struggle: 0.2,  // 20% Active (spec)
+      new: 0.7,       // 70% New (spec)
+      mastered: 0.1,  // 10% Revision (spec)
     },
     sessionSizes: { 
       english: 12,   // Default for English
       kannada: 12,   // Default for Kannada  
       mathtables: 12, // Default for Math Tables
-      humanbody: 12, // Default for Human Body
+      humanbody: 5,  // Small sessions for Human Body (only 18 total questions, allows 3+ cycles)
       indiageography: 12, // Default for India Geography
       mixed: 12      // Default for mixed mode
     },
@@ -68,15 +69,54 @@ const gameSlice = createSlice({
         user.activeSessions[action.payload.mode] = action.payload.sessionId;
       }
     },
-    attempt: function (state, action: PayloadAction<{ sessionId: string; wordId: string; result: 'correct' | 'wrong' }>) {
+    attempt: function (state, action: PayloadAction<{ sessionId: string; wordId: string; result: 'correct' | 'wrong'; now?: number }>) {
   const uid = state.currentUserId;
   if (!uid) return;
   const user = state.users[uid];
-      const { sessionId, wordId, result } = action.payload;
+      const { sessionId, wordId, result, now = Date.now() } = action.payload;
       const word = user.words[wordId];
       if (word) {
-        word.attempts.push({ timestamp: Date.now(), result });
+        const prevStep = word.step;
+        
+        // Add attempt to history
+        word.attempts.push({ timestamp: now, result });
+        
+        // Step-based transitions per new spec
+        if (word.step < 5) {
+          // Practice mode (step < 5)
+          if (result === 'correct') {
+            word.step = Math.min(5, word.step + 1);
+            word.lastPracticedAt = now;
+            
+            // If step reaches 5, mark mastered and set cooldown
+            if (word.step === 5) {
+              word.lastRevisedAt = now;
+              word.cooldownSessionsLeft = 1;
+              console.log(`🎉 [ATTEMPT] Word "${wordId}" MASTERED! (step ${prevStep} → ${word.step})`);
+            } else {
+              console.log(`📈 [ATTEMPT] Word "${wordId}" correct: step ${prevStep} → ${word.step}`);
+            }
+          } else {
+            // Wrong answer
+            word.step = Math.max(0, word.step - 1);
+            word.lastPracticedAt = now;
+            console.log(`📉 [ATTEMPT] Word "${wordId}" wrong: step ${prevStep} → ${word.step}`);
+          }
+        } else if (word.step === 5 && word.cooldownSessionsLeft === 0) {
+          // Revision mode (step = 5, cooldownSessionsLeft = 0)
+          if (result === 'correct') {
+            // Stay at step 5, set cooldown
+            word.lastRevisedAt = now;
+            word.cooldownSessionsLeft = 1;
+          } else {
+            // Drop to step 3, back to practice
+            word.step = 3;
+            word.lastPracticedAt = now;
+            word.cooldownSessionsLeft = 0;
+          }
+        }
       }
+      
       const session = user.sessions[sessionId];
       if (session) {
         session.revealed = true;
@@ -90,23 +130,13 @@ const gameSlice = createSlice({
       const { sessionId } = action.payload;
       const session = user.sessions[sessionId];
       if (session) {
-        // Find unmastered words in the session (mastery < 100%)
+        // Find unmastered words in the session (step < 5)
         const unmasteredIndices: number[] = [];
         for (let i = 0; i < session.wordIds.length; i++) {
           const wordId = session.wordIds[i];
           const word = user.words[wordId];
-          if (word) {
-            // Calculate mastery for this word
-            let mastery = 0;
-            for (const attempt of word.attempts) {
-              if (attempt.result === "correct") mastery += 20;
-              else if (attempt.result === "wrong") mastery -= 20;
-              mastery = Math.max(0, Math.min(100, mastery));
-            }
-            // Include this word if not yet mastered
-            if (mastery < 100) {
-              unmasteredIndices.push(i);
-            }
+          if (word && word.step < 5) {
+            unmasteredIndices.push(i);
           }
         }
 
@@ -178,8 +208,22 @@ const gameSlice = createSlice({
       const level = Math.max(1, Math.min(10, action.payload.level));
       user.settings.complexityLevels[action.payload.language] = level;
     },
+    decrementCooldowns: function (state, action: PayloadAction<{ wordIds: string[] }>) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      if (!user) return;
+      
+      // Decrement cooldownSessionsLeft for revision words after session
+      action.payload.wordIds.forEach(wordId => {
+        const word = user.words[wordId];
+        if (word && word.step === 5 && word.cooldownSessionsLeft > 0) {
+          word.cooldownSessionsLeft = Math.max(0, word.cooldownSessionsLeft - 1);
+        }
+      });
+    },
   },
 });
 
-export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences, setSessionSize, progressComplexityLevel, setComplexityLevel } = gameSlice.actions;
+export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences, setSessionSize, progressComplexityLevel, setComplexityLevel, decrementCooldowns } = gameSlice.actions;
 export default gameSlice.reducer;

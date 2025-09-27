@@ -1,19 +1,20 @@
 import type { RootState, Word } from "./state";
 
-// Mastery calculation per DOMAIN_RULES.md
-export function selectMasteryPercent(state: RootState, wordId: string): number {
+// Step-based mastery calculation per new spec (0-5 where 5 = mastered)
+export function selectMasteryStep(state: RootState, wordId: string): number {
   if (!state.currentUserId) return 0;
   const user = state.users[state.currentUserId];
   if (!user) return 0;
   const word = user.words[wordId];
   if (!word) return 0;
-  let mastery = 0;
-  for (const attempt of word.attempts) {
-    if (attempt.result === "correct") mastery += 20;
-    else if (attempt.result === "wrong") mastery -= 20;
-    mastery = Math.max(0, Math.min(100, mastery));
-  }
-  return mastery;
+  return word.step;
+}
+
+// Legacy mastery percentage function (convert step to percentage for UI compatibility)
+export function selectMasteryPercent(state: RootState, wordId: string): number {
+  const step = selectMasteryStep(state, wordId);
+  // Convert step (0-5) to percentage (0-100) for UI compatibility
+  return (step / 5) * 100;
 }
 
 export function selectCurrentWord(state: RootState, sessionId: string): Word | undefined {
@@ -113,11 +114,8 @@ export function selectShouldProgressLevel(state: RootState, language: string): b
   // If no words at current level, don't progress
   if (currentLevelWords.length === 0) return false;
   
-  // Check if at least 80% of current level words are mastered (100% mastery)
-  const masteredWords = currentLevelWords.filter(word => {
-    const mastery = selectMasteryPercent(state, word.id);
-    return mastery === 100;
-  });
+  // Check if at least 80% of current level words are mastered (step = 5)
+  const masteredWords = currentLevelWords.filter(word => word.step === 5);
   
   const masteryRate = masteredWords.length / currentLevelWords.length;
   return masteryRate >= 0.8; // 80% threshold for progression
@@ -133,19 +131,18 @@ export function selectWordsByMasteryBucket(state: RootState, languages: string[]
   const buckets = { struggle: [] as Word[], new:[] as Word[], mastered: [] as Word[] };
   
   for (const word of Object.values(words)) {
-    const mastery = selectMasteryPercent(state, word.id);
-    
-    if (word.attempts.length === 0) {
+    if (word.step === 0 && word.attempts.length === 0) {
+      // New: step = 0, attempts.length = 0
       buckets.new.push(word);
-    } else if (mastery < 60) {
+    } else if (word.step >= 1 && word.step <= 4) {
+      // Active: 1 ≤ step ≤ 4 (renamed from "struggle" to "active" but keeping same bucket name for compatibility)
       buckets.struggle.push(word);
-    } else if (mastery === 100) {
-      // Check if it's time for spaced review
-      const now = Date.now();
-      if (!word.nextReviewAt || now >= word.nextReviewAt) {
-        buckets.mastered.push(word);
-      }
+    } else if (word.step === 5 && word.cooldownSessionsLeft === 0) {
+      // Revision: step = 5, cooldownSessionsLeft = 0
+      buckets.mastered.push(word);
     }
+    // Note: Words with step = 5 and cooldownSessionsLeft > 0 are intentionally excluded
+    // from regular buckets but can be used as emergency fallback in sessionGen.ts
   }
   
   return buckets;
@@ -196,7 +193,10 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   notes?: string;
   choices: Array<{ id: string; label: string; progress: number }>;
 } {
+  console.log(`🎯 [PRACTICE_DATA] selectCurrentPracticeData called for mode: ${mode}`);
+  
   if (!state.currentUserId) {
+    console.log(`❌ [PRACTICE_DATA] No currentUserId`);
     return {
       sessionId: null,
       mainWord: '...',
@@ -206,6 +206,7 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   
   const user = state.users[state.currentUserId];
   if (!user) {
+    console.log(`❌ [PRACTICE_DATA] No user found for: ${state.currentUserId}`);
     return {
       sessionId: null,
       mainWord: '...',
@@ -214,29 +215,18 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   }
 
   const sessionId = selectActiveSessionForMode(state, mode);
+  console.log(`📋 [PRACTICE_DATA] Active session for mode ${mode}: ${sessionId}`);
+  
   if (!sessionId || !user.sessions[sessionId]) {
-    // Fallback to first available words for display
-    const languages = selectCurrentLanguagePreferences(state);
-    const availableWords = selectWordsByLanguage(state, languages);
-    const wordsArray = Object.values(availableWords);
+    console.log(`❌ [PRACTICE_DATA] CRITICAL: No session found for mode ${mode}!`);
+    console.log(`❌ [PRACTICE_DATA] This should never happen - ensureActiveSession should have created one`);
+    console.log(`❌ [PRACTICE_DATA] Available sessions: [${Object.keys(user.sessions).join(', ')}]`);
+    console.log(`❌ [PRACTICE_DATA] Active sessions: ${JSON.stringify(user.activeSessions)}`);
     
-    if (wordsArray.length > 0) {
-      const firstWord = wordsArray[0];
-      return {
-        sessionId: null,
-        mainWord: firstWord.wordKannada || firstWord.text || '...',
-        // Don't show transliteration in fallback case (no session yet)
-        choices: wordsArray.slice(0, 4).map(w => ({ 
-          id: w.id, 
-          label: w.wordKannada || w.text, 
-          progress: selectMasteryPercent(state, w.id) 
-        }))
-      };
-    }
-    
+    // Return empty state - this indicates a bug that needs fixing
     return {
       sessionId: null,
-      mainWord: '...',
+      mainWord: 'ERROR: No Session',
       choices: []
     };
   }
@@ -244,6 +234,10 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   const currentWord = selectCurrentWord(state, sessionId);
   const choices = selectPracticeChoices(state, sessionId);
   const session = user.sessions[sessionId];
+  
+  console.log(`✅ [PRACTICE_DATA] Using session ${sessionId} with ${session.wordIds.length} words`);
+  console.log(`📝 [PRACTICE_DATA] Current word: "${currentWord?.text}", Choices: ${choices.length}`);
+  console.log(`🎯 [PRACTICE_DATA] Session word IDs: [${session.wordIds.join(', ')}]`);
   
   // Show transliteration/answer for different modes when session is revealed
   const isKannadaMode = mode === 'kannada';
@@ -270,18 +264,42 @@ export function selectResponsiveColumns(windowWidth: number): number {
   return 6;
 }
 
-// Check if all words in a session are fully mastered (100%)
+// Check if enough words in a session are fully mastered (80% threshold)
 export function selectAreAllSessionWordsMastered(state: RootState, sessionId: string): boolean {
-  if (!state.currentUserId) return false;
-  const user = state.users[state.currentUserId];
-  if (!user) return false;
-  const session = user.sessions[sessionId];
-  if (!session) return false;
+  console.log(`🔍 [SELECTOR] selectAreAllSessionWordsMastered called for session: ${sessionId}`);
   
-  return session.wordIds.every(wordId => {
-    const mastery = selectMasteryPercent(state, wordId);
-    return mastery === 100;
-  });
+  if (!state.currentUserId) {
+    console.log(`❌ [SELECTOR] No currentUserId`);
+    return false;
+  }
+  const user = state.users[state.currentUserId];
+  if (!user) {
+    console.log(`❌ [SELECTOR] No user found for: ${state.currentUserId}`);
+    return false;
+  }
+  const session = user.sessions[sessionId];
+  if (!session || session.wordIds.length === 0) {
+    console.log(`❌ [SELECTOR] No session found or empty wordIds for: ${sessionId}`);
+    return false;
+  }
+  
+  const masteredCount = session.wordIds.filter(wordId => {
+    const word = user.words[wordId];
+    const isMastered = word && word.step === 5;
+    if (!isMastered && word) {
+      console.log(`📝 [SELECTOR] Word "${wordId}" step: ${word.step} (not mastered)`);
+    }
+    return isMastered;
+  }).length;
+  
+  const completionThreshold = Math.ceil(session.wordIds.length * 0.8);
+  const result = masteredCount >= completionThreshold;
+  
+  console.log(`📊 [SELECTOR] Session ${sessionId}: ${masteredCount}/${session.wordIds.length} mastered (${Math.round(masteredCount/session.wordIds.length*100)}%)`);
+  console.log(`📊 [SELECTOR] Threshold: ${completionThreshold} (80%)`); 
+  console.log(`📊 [SELECTOR] Result: ${result} (${result ? 'CREATE NEW SESSION' : 'CONTINUE CURRENT'})`);
+  
+  return result;
 }
 
 // Get session size for a specific mode with fallback to default

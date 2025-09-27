@@ -7,8 +7,8 @@ function makeInitial(): RootState {
     users: {
       user1: {
         words: {
-          w1: { id: 'w1', text: 'one', language: 'en', complexityLevel: 1, attempts: [] },
-          w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [] },
+          w1: { id: 'w1', text: 'one', language: 'en', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
+          w2: { id: 'w2', text: 'two', language: 'en', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
         },
         sessions: {
           s1: {
@@ -75,7 +75,8 @@ describe('nextCard', () => {
 
   it('should indicate when new session is needed (all words mastered)', () => {
     const state = makeInitial();
-    // Make all words in session fully mastered (100%)
+    // Make all words in session fully mastered (step 5)
+    state.users.user1.words.w1.step = 5;
     state.users.user1.words.w1.attempts = [
       { timestamp: 1, result: 'correct' },
       { timestamp: 2, result: 'correct' },
@@ -83,6 +84,7 @@ describe('nextCard', () => {
       { timestamp: 4, result: 'correct' },
       { timestamp: 5, result: 'correct' },
     ];
+    state.users.user1.words.w2.step = 5;
     state.users.user1.words.w2.attempts = [
       { timestamp: 1, result: 'correct' },
       { timestamp: 2, result: 'correct' },
@@ -95,7 +97,6 @@ describe('nextCard', () => {
     
     // When all words are mastered, the action should set a flag indicating 
     // that a new session is needed rather than cycling through existing words
-    // This test will initially FAIL because current implementation cycles through words
     expect(next.users.user1.sessions.s1.needsNewSession).toBe(true);
   });
 });

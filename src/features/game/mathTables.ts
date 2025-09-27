@@ -250,6 +250,8 @@ export function createMathTablesWords(): Record<string, Word> {
       // Store the answer as the "transliteration" so the UI can show it when revealed
       transliteration: table.answer.toString(),
       attempts: [],
+      step: 0, // Start at step 0
+      cooldownSessionsLeft: 0, // Start with no cooldown
     };
     return acc;
   }, {} as Record<string, Word>);

@@ -34,6 +34,8 @@ export function getInitialWords(): Record<string, Word> {
       language: 'english', // Use full language name for consistency
       complexityLevel: ENGLISH_COMPLEXITY_MAPPING[text] || 1, // Default to level 1 if not mapped
       attempts: [],
+      step: 0, // Start at step 0
+      cooldownSessionsLeft: 0, // Start with no cooldown
     };
     return acc;
   }, {} as Record<string, Word>);

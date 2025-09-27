@@ -27,6 +27,8 @@ export function createIndiaGeographyWords(): Record<string, Word> {
       answer: questionData.answer,
       notes: questionData.note,
       attempts: [],
+      step: 0, // Start at step 0
+      cooldownSessionsLeft: 0, // Start with no cooldown
     };
     acc[id] = word;
     return acc;
