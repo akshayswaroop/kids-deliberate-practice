@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import useAppDispatch from './app/hooks';
 // Removed attempt import - now handled by domain actions
 import { handleNextPressed, ensureActiveSession, markCurrentWordCorrect, markCurrentWordWrong } from './features/game/actions';
+import { revealAnswer } from './features/game/slice';
 import HomePage from './app/ui/HomePage';
 import Onboarding from './app/ui/Onboarding';
 import {
@@ -60,6 +61,21 @@ function App() {
     dispatch(handleNextPressed({ mode } as any) as any);
   };
 
+  const onRevealAnswer = (revealed: boolean) => {
+    if (practiceData.sessionId) {
+      const currentWord = Object.values(userState.words).find((word: any) => 
+        word.wordKannada === practiceData.mainWord || word.text === practiceData.mainWord
+      ) as any;
+      if (currentWord) {
+        dispatch(revealAnswer({ 
+          sessionId: practiceData.sessionId, 
+          wordId: currentWord.id, 
+          revealed 
+        }));
+      }
+    }
+  };
+
   if (shouldShowOnboarding) {
     return <Onboarding onCreate={(userId, displayName) => { handleCreateUser(userId, displayName); handleSwitchUser(userId); }} />;
   }
@@ -82,7 +98,10 @@ function App() {
       onCorrect={onCorrect}
       onWrong={onWrong}
       onNext={onNext}
+      onRevealAnswer={onRevealAnswer}
       columns={columns}
+      isAnswerRevealed={practiceData.isAnswerRevealed}
+      isEnglishMode={practiceData.isEnglishMode}
     />
   );
 }

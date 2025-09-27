@@ -1,6 +1,7 @@
 import React from 'react';
 import ProgressBubble from './ProgressBubble';
 import './PracticeCard.css';
+import { MODE_CONFIG, isTransliterationMode, isAnswerMode, getAnswerModeStyle } from '../../features/game/modeConfig';
 
 function MasteryTile({ label, progress, isActive }) {
   // Slightly darker, more saturated rainbow for better contrast
@@ -90,7 +91,7 @@ function MasteryTile({ label, progress, isActive }) {
   );
 }
 
-export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, columns = 6, mode }) {
+export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode }) {
   const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
 
   // Animation helper functions
@@ -231,10 +232,10 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               }}>{mainWord}</div>
             );
           })()}
-        {(transliteration || transliterationHi) && (
+        {isTransliterationMode(mode) && (transliteration || transliterationHi) && (
           <div style={{
             fontSize: 'clamp(16px, 3vw, 22px)', // Slightly larger
-            color: '#6366f1',
+            color: MODE_CONFIG.transliterationModes[mode]?.color || '#6366f1',
             fontStyle: 'italic',
             fontWeight: 600,
             marginTop: '8px',
@@ -244,15 +245,14 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             alignItems: 'center'
           }}>
             {transliteration && (
-              // For Math Tables mode show a distinct phrasing like "Answer : 4?"
-              mode === 'mathtables' ? (
+              MODE_CONFIG.transliterationModes[mode]?.showAsAnswer ? (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <span style={{ fontSize: '16px', fontWeight: 800, color: '#4b5563' }}>Answer :</span>
                   <span style={{ fontSize: '18px', fontWeight: 900, color: '#0b1220' }}>{transliteration}?</span>
                 </div>
               ) : (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '14px', fontWeight: 500, color: '#4b5563' }}>English:</span>
+                  <span style={{ fontSize: '14px', fontWeight: 500, color: '#4b5563' }}>{MODE_CONFIG.transliterationModes[mode]?.label || 'Translation'}:</span>
                   <span>{transliteration}</span>
                 </div>
               )
@@ -265,48 +265,45 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             )}
           </div>
         )}
-        {/* Human Body and India Geography modes: Show answer and notes when revealed */}
-        {(mode === 'humanbody' || mode === 'indiageography') && (answer || notes) && (
-          <div style={{
-            marginTop: '12px',
-            padding: '12px 16px',
-            background: mode === 'indiageography' 
-              ? 'linear-gradient(135deg, rgba(59,130,246,0.1), rgba(37,99,235,0.05))'
-              : 'linear-gradient(135deg, rgba(34,197,94,0.1), rgba(16,185,129,0.05))',
-            borderRadius: '12px',
-            border: mode === 'indiageography' 
-              ? '2px solid rgba(59,130,246,0.2)'
-              : '2px solid rgba(34,197,94,0.2)',
-            boxShadow: mode === 'indiageography' 
-              ? '0 4px 12px rgba(59,130,246,0.1)'
-              : '0 4px 12px rgba(34,197,94,0.1)',
-            maxWidth: '100%'
-          }}>
-            {answer && (
-              <div style={{
-                fontSize: 'clamp(18px, 4vw, 24px)',
-                fontWeight: 700,
-                color: mode === 'indiageography' ? '#1e40af' : '#065f46',
-                marginBottom: notes ? '8px' : '0',
-                textAlign: 'center'
-              }}>
-                <span style={{ fontSize: '16px', fontWeight: 500, color: '#4b5563' }}>Answer: </span>
-                {answer}
-              </div>
-            )}
-            {notes && (
-              <div style={{
-                fontSize: 'clamp(14px, 3vw, 16px)',
-                color: '#374151',
-                lineHeight: 1.5,
-                fontStyle: 'italic',
-                textAlign: 'center'
-              }}>
-                {notes}
-              </div>
-            )}
-          </div>
-        )}
+        {/* Answer modes: Show answer and notes when revealed */}
+        {isAnswerMode(mode) && (answer || notes) && (() => {
+          const modeStyle = getAnswerModeStyle(mode);
+          return (
+            <div style={{
+              marginTop: '12px',
+              padding: '12px 16px',
+              background: modeStyle.background,
+              borderRadius: '12px',
+              border: modeStyle.border,
+              boxShadow: modeStyle.shadow,
+              maxWidth: '100%'
+            }}>
+              {answer && (
+                <div style={{
+                  fontSize: 'clamp(18px, 4vw, 24px)',
+                  fontWeight: 700,
+                  color: modeStyle.textColor,
+                  marginBottom: notes ? '8px' : '0',
+                  textAlign: 'center'
+                }}>
+                  <span style={{ fontSize: '16px', fontWeight: 500, color: '#4b5563' }}>Answer: </span>
+                  {answer}
+                </div>
+              )}
+              {notes && (
+                <div style={{
+                  fontSize: 'clamp(14px, 3vw, 16px)',
+                  color: '#374151',
+                  lineHeight: 1.5,
+                  fontStyle: 'italic',
+                  textAlign: 'center'
+                }}>
+                  {notes}
+                </div>
+              )}
+            </div>
+          );
+        })()}
       </div>
 
       {/* 4x3 rectangular grid of mastery tiles */}
@@ -348,8 +345,37 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         boxShadow: '0 18px 48px rgba(2,6,23,0.12)',
         zIndex: 1200,
         alignItems: 'center',
-        minWidth: 280
+        minWidth: isEnglishMode ? 280 : 360 // Wider for non-English modes to fit reveal button
       }}>
+        {/* Reveal Answer button - only for non-English modes */}
+        {!isEnglishMode && (
+          <button
+            onClick={() => { 
+              if (isDebug) { console.debug('[PracticeCard] onRevealAnswer clicked', mainWord, 'current revealed:', isAnswerRevealed); } 
+              onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
+            }}
+            aria-label={isAnswerRevealed ? "Hide Answer" : "Reveal Answer"}
+            className="mastery-footer-button reveal"
+            style={{
+              backgroundColor: '#f59e0b',
+              color: 'white',
+              border: 'none',
+              borderRadius: 10,
+              padding: '10px 14px',
+              fontSize: 14,
+              fontWeight: 800,
+              cursor: 'pointer',
+              display: 'flex',
+              gap: 6,
+              alignItems: 'center',
+              transition: 'transform 180ms ease, box-shadow 180ms ease',
+              boxShadow: '0 8px 20px rgba(245,158,11,0.12)'
+            }}
+          >
+            <span style={{fontSize:16}}>{isAnswerRevealed ? '🙈' : '👁️'}</span>
+            <span>{isAnswerRevealed ? 'Hide Answer' : 'Reveal Answer'}</span>
+          </button>
+        )}
         <button
           onClick={() => { 
             if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); } 

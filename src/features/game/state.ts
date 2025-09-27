@@ -26,6 +26,9 @@ export type Word = {
   lastRevisedAt?: number; // timestamp of last revision attempt
   cooldownSessionsLeft: number; // sessions remaining before eligible for revision
   
+  // Answer reveal tracking for analytics
+  revealCount: number; // How many times the answer has been revealed for this word
+  
   // Legacy fields (will be computed from step if needed)
   nextReviewAt?: number;
   reviewInterval?: number;

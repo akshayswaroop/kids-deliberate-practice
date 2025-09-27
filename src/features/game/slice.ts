@@ -112,7 +112,7 @@ const gameSlice = createSlice({
       
       const session = user.sessions[sessionId];
       if (session) {
-        session.revealed = true;
+        // Don't auto-reveal answers on attempt - only track the attempt result
         session.lastAttempt = result;
       }
     },
@@ -201,6 +201,26 @@ const gameSlice = createSlice({
       const level = Math.max(1, Math.min(10, action.payload.level));
       user.settings.complexityLevels[action.payload.language] = level;
     },
+    revealAnswer: function (state, action: PayloadAction<{ sessionId: string; wordId: string; revealed: boolean }>) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      if (!user) return;
+      
+      const { sessionId, wordId, revealed } = action.payload;
+      const session = user.sessions[sessionId];
+      const word = user.words[wordId];
+      
+      if (session && word) {
+        // Toggle the revealed state in session
+        session.revealed = revealed;
+        
+        // Increment reveal count only when revealing (not hiding)
+        if (revealed) {
+          word.revealCount = (word.revealCount || 0) + 1;
+        }
+      }
+    },
     decrementCooldowns: function (state, action: PayloadAction<{ wordIds: string[] }>) {
       const uid = state.currentUserId;
       if (!uid) return;
@@ -218,5 +238,5 @@ const gameSlice = createSlice({
   },
 });
 
-export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences, setSessionSize, progressComplexityLevel, setComplexityLevel, decrementCooldowns } = gameSlice.actions;
+export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences, setSessionSize, progressComplexityLevel, setComplexityLevel, decrementCooldowns, revealAnswer } = gameSlice.actions;
 export default gameSlice.reducer;

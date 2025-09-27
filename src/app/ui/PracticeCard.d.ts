@@ -8,8 +8,11 @@ export interface PracticeCardProps {
   onCorrect: () => void;
   onWrong: () => void;
   onNext: () => void;
+  onRevealAnswer?: (revealed: boolean) => void;
   columns?: number;
   mode?: string;
+  isAnswerRevealed?: boolean;
+  isEnglishMode?: boolean;
 }
 
 export default function PracticeCard(props: PracticeCardProps): JSX.Element;

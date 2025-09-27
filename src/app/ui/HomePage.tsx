@@ -27,7 +27,10 @@ interface HomePageProps {
   onCorrect: () => void;
   onWrong: () => void;
   onNext: () => void;
+  onRevealAnswer?: (revealed: boolean) => void;
   columns?: number;
+  isAnswerRevealed?: boolean;
+  isEnglishMode?: boolean;
   // layout prop removed — single canonical topbar layout is used
 }
 
@@ -48,7 +51,10 @@ export default function HomePage({
   onCorrect,
   onWrong,
   onNext,
+  onRevealAnswer,
   columns = 6,
+  isAnswerRevealed,
+  isEnglishMode,
 }: HomePageProps) {
   // Form state for ProfileForm (moved from component to container)
   const [username, setUsername] = useState('');
@@ -160,7 +166,7 @@ export default function HomePage({
             </button>
           </div>
         ) : (
-          <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} answer={answer} notes={notes} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} mode={mode} />
+          <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} answer={answer} notes={notes} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} onRevealAnswer={onRevealAnswer} columns={columns} mode={mode} isAnswerRevealed={isAnswerRevealed} isEnglishMode={isEnglishMode} />
         )}
       </div>
       <TraceExport isVisible={showTraceExport} onClose={() => setShowTraceExport(false)} />

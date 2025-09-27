@@ -11,8 +11,11 @@ interface PracticePanelProps {
   onCorrect: () => void;
   onWrong: () => void;
   onNext: () => void;
+  onRevealAnswer?: (revealed: boolean) => void;
   columns?: number;
   mode?: string;
+  isAnswerRevealed?: boolean;
+  isEnglishMode?: boolean;
 }
 
 export default function PracticePanel({ 
@@ -25,9 +28,12 @@ export default function PracticePanel({
   onCorrect, 
   onWrong, 
   onNext,
-  columns = 6
-  , mode
-}: PracticePanelProps & { mode?: string }) {
+  onRevealAnswer,
+  columns = 6,
+  mode,
+  isAnswerRevealed,
+  isEnglishMode
+}: PracticePanelProps) {
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
       <PracticeCard
@@ -40,8 +46,11 @@ export default function PracticePanel({
         onCorrect={onCorrect}
         onWrong={onWrong}
         onNext={onNext}
+        onRevealAnswer={onRevealAnswer}
         columns={columns}
         mode={mode}
+        isAnswerRevealed={isAnswerRevealed}
+        isEnglishMode={isEnglishMode}
       />
     </div>
   );

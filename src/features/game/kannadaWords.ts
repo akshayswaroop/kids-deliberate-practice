@@ -105,6 +105,7 @@ export function createKannadaWords(): Record<string, Word> {
       attempts: [],
       step: 0, // Start at step 0
       cooldownSessionsLeft: 0, // Start with no cooldown
+      revealCount: 0, // Initialize reveal tracking
     };
   });
   

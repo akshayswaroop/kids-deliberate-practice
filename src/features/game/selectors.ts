@@ -1,4 +1,5 @@
 import type { RootState, Word } from "./state";
+import { TRANSLITERATION_MODES, ANSWER_MODES } from './modeConfig';
 
 // Step-based mastery calculation per new spec (0-5 where 5 = mastered)
 export function selectMasteryStep(state: RootState, wordId: string): number {
@@ -191,13 +192,17 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   notes?: string;
   choices: Array<{ id: string; label: string; progress: number }>;
   needsNewSession?: boolean;
+  isAnswerRevealed?: boolean;
+  isEnglishMode?: boolean;
 } {
   if (!state.currentUserId) {
     return {
       sessionId: null,
       mainWord: '...',
       choices: [],
-      needsNewSession: false
+      needsNewSession: false,
+      isAnswerRevealed: false,
+      isEnglishMode: mode === 'english'
     };
   }
   
@@ -207,7 +212,9 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
       sessionId: null,
       mainWord: '...',
       choices: [],
-      needsNewSession: false
+      needsNewSession: false,
+      isAnswerRevealed: false,
+      isEnglishMode: mode === 'english'
     };
   }
 
@@ -219,7 +226,9 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
       sessionId: null,
       mainWord: 'ERROR: No Session',
       choices: [],
-      needsNewSession: false
+      needsNewSession: false,
+      isAnswerRevealed: false,
+      isEnglishMode: mode === 'english'
     };
   }
 
@@ -227,14 +236,10 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   const choices = selectPracticeChoices(state, sessionId);
   const session = user.sessions[sessionId];
   
-  // Show transliteration/answer for different modes when session is revealed
-  const isKannadaMode = mode === 'kannada';
-  const isMathTablesMode = mode === 'mathtables';
-  const isHumanBodyMode = mode === 'humanbody';
-  const isIndiaGeographyMode = mode === 'indiageography';
-  const isGramPanchayatMode = mode === 'grampanchayat';
-  const shouldShowTransliteration = (isKannadaMode || isMathTablesMode) && session?.revealed === true;
-  const shouldShowAnswer = (isHumanBodyMode || isIndiaGeographyMode || isGramPanchayatMode) && session?.revealed === true;
+  // Configuration-driven mode categorization (no more hardcoded mode lists!)
+  // Import from shared config to keep modes in sync across components
+  const shouldShowTransliteration = TRANSLITERATION_MODES.includes(mode) && session?.revealed === true;
+  const shouldShowAnswer = ANSWER_MODES.includes(mode) && session?.revealed === true;
   
   return {
     sessionId,
@@ -244,7 +249,9 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
     transliterationHi: shouldShowTransliteration ? currentWord?.transliterationHi : undefined,
     answer: shouldShowAnswer ? currentWord?.answer : undefined,
     notes: shouldShowAnswer ? currentWord?.notes : undefined,
-    choices
+    choices,
+    isAnswerRevealed: session?.revealed || false,
+    isEnglishMode: mode === 'english'
   };
 }
 
