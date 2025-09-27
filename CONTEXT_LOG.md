@@ -43,7 +43,7 @@ interface Word {
 **SessionSettings Enhancement**:
 ```typescript
 interface SessionSettings {
-  selectionWeights: SelectionWeights;
+  // selectionWeights removed; session generation simplified to unmastered-first selection
   sessionSize: number;
   languages: string[];            // NEW: ['english'] | ['kannada'] | ['english', 'kannada']
 }

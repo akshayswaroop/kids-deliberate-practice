@@ -15,12 +15,11 @@
   - If **wrong**: `reviewInterval = 1`, mastery drops as per above rules
 
 ### Session Selection
-- Select **12 words** (fixed session size) using **weighted buckets**:
-  - **Struggle**: `mastery < 60%`
-  - **New**: `attempts.length == 0`
-  - **Mastered**: `mastery == 100%` and `now >= nextReviewAt`
-- **Weights** for buckets are configurable: `{ struggle, new, mastered }`
-- **Randomness** is injected via RNG (seedable for tests)
+- Select **12 words** (fixed session size) using a deterministic, unmastered-first selection:
+  - Prefer words that are not yet mastered (step < 5)
+  - Sort deterministically by `(complexityLevel, step, lastPracticedAt, id)` and pick the first 12
+  - This simplifies session generation and removes weighted bucket sampling
+  - Selection is deterministic for tests (no injected randomness)
 
 ### Progressive Learning
 - **Complexity Levels**: Words are filtered by current complexity level only

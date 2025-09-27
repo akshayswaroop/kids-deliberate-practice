@@ -20,7 +20,6 @@ function makeInitialStateWithWords(): RootState {
         sessions: {},
         activeSessions: {},
         settings: {
-          selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
           sessionSizes: { english: 3 },
           languages: ['english'],
           complexityLevels: { english: 1, kannada: 1, hindi: 1 }
@@ -71,9 +70,7 @@ describe('New Session Generation', () => {
     const allWordsArr = Object.values(state.users.testUser.words);
     const newWordIds = selectSessionWords(
       allWordsArr, 
-      state.users.testUser.settings.selectionWeights, 
-      state.users.testUser.settings.sessionSizes.english, 
-      Math.random
+      state.users.testUser.settings.sessionSizes.english
     );
     
     const sessionId2 = 'session2';
@@ -92,11 +89,11 @@ describe('New Session Generation', () => {
     // Verify new session has different words (not all the same as first session)
     const firstSessionWords = new Set(session1.wordIds);
     
-    // Should contain some different words since the first 3 are fully mastered
-    // and should be in the "mastered" bucket with low weight
+    // Should contain different words since the first 3 are fully mastered
+    // and new logic prioritizes unmastered words
     expect(session2.wordIds.length).toBe(3);
     
-    // At least one word should be different (due to mastery-based selection weights)
+    // Should select unmastered words (w4, w5, w6) instead of mastered ones
     const hasNewWords = session2.wordIds.some(id => !firstSessionWords.has(id));
     expect(hasNewWords).toBe(true);
   });
@@ -124,7 +121,7 @@ describe('New Session Generation', () => {
       }
     }
     
-    // Leave w3 unmastered (only 3 correct attempts = 60% mastery)
+    // Leave w3 unmastered (only 3 correct attempts = step 3, not step 5)
     for (let i = 0; i < 3; i++) {
       state = reducer(state, attempt({ sessionId, wordId: 'w3', result: 'correct' }));
     }

@@ -13,11 +13,7 @@ export const makeUser = (displayName?: string) => ({
   sessions: {},
   activeSessions: {},
   settings: {
-    selectionWeights: {
-      struggle: 0.2,  // 20% Active (spec)
-      new: 0.7,       // 70% New (spec)
-      mastered: 0.1,  // 10% Revision (spec)
-    },
+      // selectionWeights removed (simplified session generation logic)
     sessionSizes: { 
       english: 12,   // Default for English
       kannada: 12,   // Default for Kannada  
@@ -58,7 +54,7 @@ const gameSlice = createSlice({
       if (!newUserId || state.users[newUserId]) {
         return;
       }
-      state.users[newUserId] = makeUser(action.payload.displayName);
+        state.users[newUserId] = makeUser(action.payload.displayName);
       state.currentUserId = newUserId;
     },
     setMode: function (state, action: PayloadAction<{ mode: string; sessionId: string }>) {

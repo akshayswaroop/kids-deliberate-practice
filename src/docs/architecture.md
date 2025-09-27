@@ -5,11 +5,11 @@
 - **words**:  
   `Record<wordId, { id, text, language, attempts: [{ timestamp: number, result: "correct" | "wrong" }], nextReviewAt?: number, reviewInterval?: number }>`
 - **sessions**:  
-  `Record<sessionId, { wordIds: string[], currentIndex: number, revealed: boolean, lastAttempt?: "correct" | "wrong", mode: string, createdAt: number, settings: { selectionWeights: { struggle: number, new: number, mastered: number }, sessionSizes: Record<string, number>, languages: string[], complexityLevels: Record<string, number> } }>`
+  `Record<sessionId, { wordIds: string[], currentIndex: number, revealed: boolean, lastAttempt?: "correct" | "wrong", mode: string, createdAt: number, settings: { sessionSizes: Record<string, number>, languages: string[], complexityLevels: Record<string, number> } }>`
 - **activeSessions**:  
   `Record<mode, sessionId>`
 - **settings**:  
-  `{ selectionWeights, sessionSizes: Record<string, number>, languages: string[], complexityLevels: Record<string, number> }`
+  `{ sessionSizes: Record<string, number>, languages: string[], complexityLevels: Record<string, number> }`
 
 ### Rules
 
