@@ -1,5 +1,5 @@
 import { decrementCooldowns, addSession, setMode, nextCard, attempt, progressComplexityLevel } from './slice';
-import { selectAreAllSessionWordsMastered, selectWordsByComplexityLevel, selectSessionSizeForMode, selectShouldProgressLevel } from './selectors';
+import { selectIsSessionFullyMastered, selectWordsByComplexityLevel, selectSessionSizeForMode, selectShouldProgressLevel } from './selectors';
 import { selectSessionWords } from './sessionGen';
 
 // Thunk to handle UI 'Next' press orchestration. Keeps domain logic out of UI components.
@@ -33,12 +33,12 @@ export const handleNextPressed = (payload: { mode: string }) => (dispatch: any, 
   }
   console.log(`📝 [ACTION] Current session has ${currentSession.wordIds.length} words`);
 
-  console.log(`🔍 [ACTION] Calling selectAreAllSessionWordsMastered...`);
-  const allWordsMastered = selectAreAllSessionWordsMastered(state as any, activeSessionId);
-  console.log(`📊 [ACTION] Selector returned: ${allWordsMastered}`);
+  console.log(`🔍 [ACTION] Checking if session fully mastered...`);
+  const allWordsMastered = selectIsSessionFullyMastered(state as any, activeSessionId);
+  console.log(`📊 [ACTION] Fully mastered result: ${allWordsMastered}`);
 
   if (allWordsMastered) {
-    console.log(`✅ [ACTION] 80% threshold met - CREATING NEW SESSION`);
+    console.log(`✅ [ACTION] Session fully mastered - creating new session`);
     
     // Decrement cooldowns for mastery words
     dispatch(decrementCooldowns({ wordIds: currentSession.wordIds }));
@@ -59,12 +59,7 @@ export const handleNextPressed = (payload: { mode: string }) => (dispatch: any, 
       const sessionSize = selectSessionSizeForMode(state as any, payload.mode);
       console.log(`📝 [ACTION] New session size: ${sessionSize}`);
       
-      const ids = selectSessionWords(
-        allWordsArr,
-        user.settings.selectionWeights || { struggle: 0.2, new: 0.7, mastered: 0.1 },
-        sessionSize,
-        Math.random as any
-      );
+      const ids = selectSessionWords(allWordsArr, sessionSize);
       console.log(`📝 [ACTION] Selected word IDs for new session: [${ids.join(', ')}]`);
 
       const newSessionId = 'session_' + Date.now();
@@ -85,7 +80,7 @@ export const handleNextPressed = (payload: { mode: string }) => (dispatch: any, 
       console.log(`❌ [ACTION] No available words for new session`);
     }
   } else {
-    console.log(`🔄 [ACTION] 80% threshold NOT met - CONTINUING CURRENT SESSION`);
+    console.log(`🔄 [ACTION] Session incomplete - continuing current session`);
     dispatch(nextCard({ sessionId: activeSessionId } as any));
   }
 };
@@ -170,9 +165,7 @@ export const ensureActiveSession = (payload: { mode: string }) => (dispatch: any
 
   const ids = selectSessionWords(
     allWordsArr,
-    user.settings.selectionWeights || { struggle: 0.2, new: 0.7, mastered: 0.1 },
-    selectSessionSizeForMode(state as any, payload.mode),
-    Math.random as any
+    selectSessionSizeForMode(state as any, payload.mode)
   );
 
   const newSessionId = 'session_' + Date.now();

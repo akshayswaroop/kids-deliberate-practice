@@ -4,15 +4,6 @@ import { selectSessionWords } from '../sessionGen';
 import { getInitialWords } from '../../../app/bootstrapState';
 import type { RootState, Session } from '../state';
 
-// Deterministic RNG for tests
-function rngFactory(seed = 42) {
-  let s = seed;
-  return () => {
-    s = (s * 1664525 + 1013904223) % 4294967296;
-    return s / 4294967296;
-  };
-}
-
 describe('Master all English words', () => {
   it('should iterate sessions of 12 until all english words are mastered', () => {
     const allWords = getInitialWords();
@@ -24,7 +15,6 @@ describe('Master all English words', () => {
           sessions: {},
           activeSessions: {},
           settings: {
-            selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
             sessionSizes: { english: 12 },
             languages: ['english'],
             complexityLevels: { english: 1, kannada: 1, hindi: 1 },
@@ -34,7 +24,7 @@ describe('Master all English words', () => {
       currentUserId: 'user_master',
     };
 
-    const rng = rngFactory(12345);
+  // RNG no longer needed with deterministic selection
 
     // Helper to check if any english words remain unmastered
     function anyUnmastered(s: RootState) {
@@ -55,50 +45,10 @@ describe('Master all English words', () => {
 
       // Snapshot available buckets BEFORE selection to assert composition
   // Operate on English-only words for selection (app would filter by language before selection)
-  const availNew = englishAllWordsArr.filter(w => w.step === 0 && w.attempts.length === 0);
-  const availStruggle = englishAllWordsArr.filter(w => w.step >= 1 && w.step <= 4);
-  const availMastered = englishAllWordsArr.filter(w => w.step === 5 && w.cooldownSessionsLeft === 0);
-
-      const weights = state.users.user_master.settings.selectionWeights;
       const size = state.users.user_master.settings.sessionSizes.english;
-      const totalWeight = weights.struggle + weights.new + weights.mastered;
-      const desiredStruggle = Math.round((weights.struggle / totalWeight) * size);
-      const desiredNew = Math.round((weights.new / totalWeight) * size);
-      const desiredMastered = size - desiredStruggle - desiredNew;
-
-      const wordIds = selectSessionWords(
-        englishAllWordsArr,
-        state.users.user_master.settings.selectionWeights,
-        size,
-        rng
-      );
-
-      // Count selected by bucket
-  const selNewCount = wordIds.filter(id => availNew.some(w => w.id === id)).length;
-      const selStruggleCount = wordIds.filter(id => availStruggle.some(w => w.id === id)).length;
-      const selMasteredCount = wordIds.filter(id => availMastered.some(w => w.id === id)).length;
-
-      // If all buckets have enough items, selection should match desired proportions exactly
-      const allBucketsHaveEnough =
-        availStruggle.length >= desiredStruggle &&
-        availNew.length >= desiredNew &&
-        availMastered.length >= desiredMastered;
-
-      if (allBucketsHaveEnough) {
-        expect(selStruggleCount).toBe(desiredStruggle);
-        expect(selNewCount).toBe(desiredNew);
-        expect(selMasteredCount).toBe(desiredMastered);
-      } else {
-        // Otherwise ensure counts are sensible: none exceed availability
-        expect(selStruggleCount).toBeLessThanOrEqual(availStruggle.length);
-        expect(selNewCount).toBeLessThanOrEqual(availNew.length);
-        expect(selMasteredCount).toBeLessThanOrEqual(availMastered.length);
-        // Allow for fallback selections (mastered words with cooldowns)
-        const selectedFromPrimary = selStruggleCount + selNewCount + selMasteredCount;
-        const fallbackPool = englishAllWordsArr.filter(w => w.step === 5 && w.cooldownSessionsLeft > 0);
-        const otherSelected = wordIds.length - selectedFromPrimary;
-        expect(otherSelected).toBeLessThanOrEqual(fallbackPool.length);
-      }
+      const wordIds = selectSessionWords(englishAllWordsArr, size);
+      // Ensure only unmastered (step < 5) words are selected
+      expect(wordIds.every(id => state.users.user_master.words[id].step < 5)).toBe(true);
 
       // Create a session and simulate mastering all words in it
       const sid = `s_${iteration}`;
@@ -154,7 +104,6 @@ describe('Small bank odd session handling', () => {
           sessions: {},
           activeSessions: {},
           settings: {
-            selectionWeights: { struggle: 1, new: 1, mastered: 0 },
             sessionSizes: { english: 2 },
             languages: ['english'],
             complexityLevels: { english: 1, kannada: 1, hindi: 1 },
@@ -164,7 +113,7 @@ describe('Small bank odd session handling', () => {
       currentUserId: 'small_user',
     };
 
-    const rng = rngFactory(7);
+  // RNG no longer needed with deterministic selection
 
     function anyUnmastered(s: RootState) {
       return Object.values(s.users.small_user.words).some(w => w.language === 'english' && w.step < 5);
@@ -174,7 +123,8 @@ describe('Small bank odd session handling', () => {
     while (anyUnmastered(state) && iter < 20) {
       iter += 1;
       const allWordsArr = Object.values(state.users.small_user.words).filter(w => w.language === 'english');
-      const wordIds = selectSessionWords(allWordsArr, state.users.small_user.settings.selectionWeights, state.users.small_user.settings.sessionSizes.english, rng);
+  const wordIds = selectSessionWords(allWordsArr, state.users.small_user.settings.sessionSizes.english);
+  expect(wordIds.every(id => state.users.small_user.words[id].step < 5)).toBe(true);
 
       // Print session words
       const printable = wordIds.map(id => state.users.small_user.words[id].text);

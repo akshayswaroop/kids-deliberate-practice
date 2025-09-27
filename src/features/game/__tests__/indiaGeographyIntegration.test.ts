@@ -46,7 +46,6 @@ describe('India Geography Integration', () => {
           sessions: {},
           activeSessions: {},
           settings: {
-            selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
             sessionSizes: { english: 12, kannada: 12, mathtables: 12, humanbody: 12, indiageography: 12, mixed: 12 },
             languages: ['indiageography'],
             complexityLevels: { english: 1, kannada: 1, mathtables: 1, humanbody: 1, indiageography: 1, hindi: 1 }
@@ -71,7 +70,6 @@ describe('India Geography Integration', () => {
           sessions: {},
           activeSessions: {},
           settings: {
-            selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
             sessionSizes: { english: 12, kannada: 12, mathtables: 12, humanbody: 12, indiageography: 12, mixed: 12 },
             languages: ['indiageography'],
             complexityLevels: { english: 1, kannada: 1, mathtables: 1, humanbody: 1, indiageography: 1, hindi: 1 }
@@ -99,7 +97,6 @@ describe('India Geography Integration', () => {
           sessions: {},
           activeSessions: {},
           settings: {
-            selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
             sessionSizes: { english: 12, kannada: 12, mathtables: 12, humanbody: 12, indiageography: 12, mixed: 12 },
             languages: ['indiageography'],
             complexityLevels: { english: 1, kannada: 1, mathtables: 1, humanbody: 1, indiageography: 3, hindi: 1 }
@@ -155,8 +152,7 @@ describe('India Geography Integration', () => {
           words: getInitialWords(),
           sessions: {},
           activeSessions: {},
-          settings: {
-            selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
+            settings: {
             sessionSizes: { english: 12, kannada: 12, mathtables: 12, humanbody: 12, indiageography: 12, mixed: 12 },
             languages: ['mixed'],
             complexityLevels: { english: 1, kannada: 1, mathtables: 1, humanbody: 1, indiageography: 1, hindi: 1 }
@@ -191,7 +187,6 @@ describe('India Geography Integration', () => {
               mode: 'practice',
               createdAt: Date.now(),
               settings: {
-                selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
                 sessionSizes: { indiageography: 12 },
                 languages: ['indiageography'],
                 complexityLevels: { indiageography: 1 }
@@ -200,7 +195,6 @@ describe('India Geography Integration', () => {
           },
           activeSessions: { indiageography: 'geo_session_1' },
           settings: {
-            selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
             sessionSizes: { english: 12, kannada: 12, mathtables: 12, humanbody: 12, indiageography: 12, mixed: 12 },
             languages: ['indiageography'],
             complexityLevels: { english: 1, kannada: 1, mathtables: 1, humanbody: 1, indiageography: 1, hindi: 1 }

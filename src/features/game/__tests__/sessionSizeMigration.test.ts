@@ -14,7 +14,6 @@ describe('SessionSize Migration', () => {
           sessions: {},
           activeSessions: {},
           settings: {
-            selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
             sessionSize: 9, // Old structure - single global sessionSize
             languages: ['english'],
           } as any, // Cast to any to allow old structure
@@ -56,7 +55,6 @@ describe('SessionSize Migration', () => {
           sessions: {},
           activeSessions: {},
           settings: {
-            selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
             languages: ['english'],
           } as any,
         },

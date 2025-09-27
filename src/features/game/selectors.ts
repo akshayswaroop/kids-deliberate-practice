@@ -114,11 +114,9 @@ export function selectShouldProgressLevel(state: RootState, language: string): b
   // If no words at current level, don't progress
   if (currentLevelWords.length === 0) return false;
   
-  // Check if at least 80% of current level words are mastered (step = 5)
-  const masteredWords = currentLevelWords.filter(word => word.step === 5);
-  
-  const masteryRate = masteredWords.length / currentLevelWords.length;
-  return masteryRate >= 0.8; // 80% threshold for progression
+  // Progress only when ALL words at this level are mastered (step = 5)
+  const allMastered = currentLevelWords.every(word => word.step === 5);
+  return allMastered;
 }
 
 export function selectWordsByMasteryBucket(state: RootState, languages: string[]): {
@@ -264,9 +262,9 @@ export function selectResponsiveColumns(windowWidth: number): number {
   return 6;
 }
 
-// Check if enough words in a session are fully mastered (80% threshold)
-export function selectAreAllSessionWordsMastered(state: RootState, sessionId: string): boolean {
-  console.log(`🔍 [SELECTOR] selectAreAllSessionWordsMastered called for session: ${sessionId}`);
+// Check if ALL words in a session are fully mastered (strict full-mastery requirement)
+export function selectIsSessionFullyMastered(state: RootState, sessionId: string): boolean {
+  console.log(`🔍 [SELECTOR] selectIsSessionFullyMastered called for session: ${sessionId}`);
   
   if (!state.currentUserId) {
     console.log(`❌ [SELECTOR] No currentUserId`);
@@ -283,23 +281,18 @@ export function selectAreAllSessionWordsMastered(state: RootState, sessionId: st
     return false;
   }
   
-  const masteredCount = session.wordIds.filter(wordId => {
+  const allMastered = session.wordIds.every(wordId => {
     const word = user.words[wordId];
-    const isMastered = word && word.step === 5;
-    if (!isMastered && word) {
-      console.log(`📝 [SELECTOR] Word "${wordId}" step: ${word.step} (not mastered)`);
+    if (!word || word.step !== 5) {
+      if (word) {
+        console.log(`📝 [SELECTOR] Word "${wordId}" step: ${word.step} (not mastered)`);
+      }
+      return false;
     }
-    return isMastered;
-  }).length;
-  
-  const completionThreshold = Math.ceil(session.wordIds.length * 0.8);
-  const result = masteredCount >= completionThreshold;
-  
-  console.log(`📊 [SELECTOR] Session ${sessionId}: ${masteredCount}/${session.wordIds.length} mastered (${Math.round(masteredCount/session.wordIds.length*100)}%)`);
-  console.log(`📊 [SELECTOR] Threshold: ${completionThreshold} (80%)`); 
-  console.log(`📊 [SELECTOR] Result: ${result} (${result ? 'CREATE NEW SESSION' : 'CONTINUE CURRENT'})`);
-  
-  return result;
+    return true;
+  });
+  console.log(`📊 [SELECTOR] Session ${sessionId}: ${allMastered ? 'FULLY MASTERED' : 'INCOMPLETE'}`);
+  return allMastered;
 }
 
 // Get session size for a specific mode with fallback to default

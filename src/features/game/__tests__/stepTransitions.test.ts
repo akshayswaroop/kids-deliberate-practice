@@ -10,17 +10,17 @@ function makeInitialForStepTests(): RootState {
           w1: { id: 'w1', text: 'test', language: 'en', complexityLevel: 1, attempts: [], step: 0, cooldownSessionsLeft: 0 },
         },
         sessions: {
-          s1: {
+            s1: {
             wordIds: ['w1'],
             currentIndex: 0,
             revealed: false,
             mode: 'practice',
             createdAt: 0,
-            settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 1 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
+            settings: { sessionSizes: { english: 1 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
           },
         },
         activeSessions: {},
-        settings: { selectionWeights: { struggle: 1, new: 1, mastered: 1 }, sessionSizes: { english: 1 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
+  settings: { sessionSizes: { english: 1 }, languages: ['english'], complexityLevels: { english: 1, kannada: 1, hindi: 1 } },
       },
     },
     currentUserId: 'user1',

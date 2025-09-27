@@ -26,7 +26,6 @@ describe('Math Tables Integration', () => {
           sessions: {},
           activeSessions: {},
           settings: {
-            selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
             sessionSizes: { english: 6, kannada: 6, mathtables: 6, mixed: 6 },
             languages: ['mathtables'],
             complexityLevels: { english: 1, kannada: 1, mathtables: 1, hindi: 1 }
@@ -51,7 +50,6 @@ describe('Math Tables Integration', () => {
           sessions: {},
           activeSessions: {},
           settings: {
-            selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
             sessionSizes: { english: 6, kannada: 6, mathtables: 6, mixed: 6 },
             languages: ['mathtables'],
             complexityLevels: { english: 1, kannada: 1, mathtables: 1, hindi: 1 }

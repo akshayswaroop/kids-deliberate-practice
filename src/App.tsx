@@ -19,7 +19,7 @@ function App() {
   const currentUserId = rootState.currentUserId as string | null;
   const userState = currentUserId && users[currentUserId]
     ? users[currentUserId]
-    : { words: {}, sessions: {}, settings: { languages: ['english'], selectionWeights: { struggle: 0.2, new: 0.7, mastered: 0.1 }, sessionSizes: { english: 6, kannada: 6, mixed: 6 } } };
+    : { words: {}, sessions: {}, settings: { languages: ['english'], sessionSizes: { english: 6, kannada: 6, mixed: 6 }, complexityLevels: { english: 1, kannada: 1, hindi: 1 } } };
   const [mode, setMode] = useState(userState.settings.languages[0] || 'english');
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 

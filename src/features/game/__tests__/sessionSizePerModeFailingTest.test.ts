@@ -12,7 +12,6 @@ function makeInitialState(): RootState {
         sessions: {},
         activeSessions: {},
         settings: {
-          selectionWeights: { struggle: 0.5, new: 0.4, mastered: 0.1 },
           sessionSizes: { 
             english: 6,   // Default for English
             kannada: 6,   // Default for Kannada  

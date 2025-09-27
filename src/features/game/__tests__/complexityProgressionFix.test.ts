@@ -4,7 +4,7 @@ import { selectShouldProgressLevel, selectWordsByComplexityLevel } from '../sele
 import type { RootState } from '../state';
 
 describe('Complexity Progression Fix', () => {
-  it('should automatically progress complexity level when 80% of words are mastered', () => {
+  it('should automatically progress complexity level when all words are mastered', () => {
     // Create initial state with user
     const userId = 'test_user';
     let state: RootState = {
@@ -14,7 +14,7 @@ describe('Complexity Progression Fix', () => {
       currentUserId: userId
     };
 
-    // Master all level 1 English words (first 25 words)
+    // Master all level 1 English words
     const englishWords = Object.entries(state.users[userId].words)
       .filter(([_, word]) => word.language === 'english' && word.complexityLevel === 1);
 
@@ -52,7 +52,7 @@ describe('Complexity Progression Fix', () => {
     console.log(`✅ Level 2 has ${level2Words.length} new words available`);
   });
 
-  it('should not progress if less than 80% of words are mastered', () => {
+  it('should not progress if not all words are mastered', () => {
     // Create initial state with user
     const userId = 'test_user';
     let state: RootState = {
@@ -62,7 +62,7 @@ describe('Complexity Progression Fix', () => {
       currentUserId: userId
     };
 
-    // Master only 50% of level 1 English words
+    // Master only some of level 1 English words
     const englishWords = Object.entries(state.users[userId].words)
       .filter(([_, word]) => word.language === 'english' && word.complexityLevel === 1);
     
