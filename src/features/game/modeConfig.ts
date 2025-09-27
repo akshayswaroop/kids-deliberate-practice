@@ -40,6 +40,14 @@ export const MODE_CONFIG = {
       shadow: '0 4px 12px rgba(168,85,247,0.1)', 
       textColor: '#7c2d12'
     }
+    ,
+    // Hanuman Chalisa mode: shows verse (main), answer (kid-friendly translation) and notes
+    hanuman: {
+      background: 'linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.03))',
+      border: '2px solid rgba(245,158,11,0.12)',
+      shadow: '0 4px 12px rgba(245,158,11,0.08)',
+      textColor: '#92400e'
+    }
   }
 } as const;
 
