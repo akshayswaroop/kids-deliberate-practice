@@ -4,6 +4,7 @@ import { createKannadaWords } from '../features/game/kannadaWords';
 import { createMathTablesWords } from '../features/game/mathTables';
 import { createHumanBodyWords } from '../features/game/humanBody';
 import { createIndiaGeographyWords } from '../features/game/indiaGeography';
+import { createGramPanchayatWords } from '../features/game/gramPanchayat';
 
 // English complexity level mapping based on progressive learning principles
 const ENGLISH_COMPLEXITY_MAPPING: Record<string, number> = {
@@ -52,6 +53,9 @@ export function getInitialWords(): Record<string, Word> {
   // India Geography questions with progressive complexity levels
   const indiaGeographyWords = createIndiaGeographyWords();
   
+  // Gram Panchayat questions for civics education
+  const gramPanchayatWords = createGramPanchayatWords();
+  
   // Combine all language word sets
-  return { ...englishWords, ...kannadaWords, ...mathTablesWords, ...humanBodyWords, ...indiaGeographyWords };
+  return { ...englishWords, ...kannadaWords, ...mathTablesWords, ...humanBodyWords, ...indiaGeographyWords, ...gramPanchayatWords };
 }

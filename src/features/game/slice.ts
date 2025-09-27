@@ -18,8 +18,9 @@ export const makeUser = (displayName?: string) => ({
       english: 12,   // Default for English
       kannada: 12,   // Default for Kannada  
       mathtables: 12, // Default for Math Tables
-      humanbody: 5,  // Small sessions for Human Body (only 18 total questions, allows 3+ cycles)
+      humanbody: 12,  // Small sessions for Human Body (only 18 total questions, allows 3+ cycles)
       indiageography: 12, // Default for India Geography
+      grampanchayat: 12, // Small sessions for Gram Panchayat (only 2 questions initially)
       mixed: 12      // Default for mixed mode
     },
     languages: ['english'], // Default to English only
@@ -28,6 +29,7 @@ export const makeUser = (displayName?: string) => ({
       'kannada': 1,  // Start with Level 1 Kannada (simple words without complex matras)
       'mathtables': 1, // Start with Level 1 Math Tables (1x and 2x tables)
       'indiageography': 1, // Start with Level 1 India Geography (basic facts)
+      'grampanchayat': 1, // Start with Level 1 Gram Panchayat (basic civics)
       'hindi': 1     // Future support for Hindi
     }
   },

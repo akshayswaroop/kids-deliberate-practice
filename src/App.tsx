@@ -78,6 +78,7 @@ function App() {
       answer={practiceData.answer}
       notes={practiceData.notes}
       choices={practiceData.choices}
+      needsNewSession={practiceData.needsNewSession}
       onCorrect={onCorrect}
       onWrong={onWrong}
       onNext={onNext}

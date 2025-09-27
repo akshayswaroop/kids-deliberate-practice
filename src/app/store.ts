@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import gameReducer from '../features/game/slice';
 import type { RootState as GameState } from '../features/game/state';
 import { traceMiddleware } from './tracing/traceMiddleware';
+import { getInitialWords } from './bootstrapState';
 
 function loadGameState(): GameState | undefined {
   try {
@@ -30,7 +31,29 @@ const persistMiddleware = (storeAPI: any) => (next: any) => (action: any) => {
 
 
 const loaded = loadGameState();
-const preloadedState = loaded ? { game: loaded } : undefined;
+
+// Merge new words/subjects into existing users so they automatically 
+// pick up newly added content without losing their progress
+let gameState = loaded;
+if (loaded) {
+  try {
+    const initialWords = getInitialWords();
+    Object.values(loaded.users || {}).forEach((user: any) => {
+      user.words = user.words || {};
+      // Add any missing words from initial set (new words/subjects)
+      Object.entries(initialWords).forEach(([wordId, wordObj]) => {
+        if (!user.words[wordId]) {
+          user.words[wordId] = { ...wordObj };
+        }
+      });
+    });
+    console.log('🔄 [MERGE] Added new words/subjects to existing users');
+  } catch (e) {
+    console.error('❌ [MERGE] Failed to merge new words:', e);
+  }
+}
+
+const preloadedState = gameState ? { game: gameState } : undefined;
 
 export const store = configureStore({
   reducer: {

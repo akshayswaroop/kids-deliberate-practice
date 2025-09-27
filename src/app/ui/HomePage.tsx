@@ -23,6 +23,7 @@ interface HomePageProps {
   transliterationHi?: string;
   answer?: string;
   notes?: string;
+  needsNewSession?: boolean;
   onCorrect: () => void;
   onWrong: () => void;
   onNext: () => void;
@@ -43,6 +44,7 @@ export default function HomePage({
   transliterationHi,
   answer,
   notes,
+  needsNewSession,
   onCorrect,
   onWrong,
   onNext,
@@ -107,7 +109,59 @@ export default function HomePage({
         </div>
       </div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: '#fff', margin: '4px', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
-        <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} answer={answer} notes={notes} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} mode={mode} />
+        {needsNewSession ? (
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '40px 20px',
+            textAlign: 'center',
+            width: '100%'
+          }}>
+            <div style={{
+              fontSize: 'clamp(32px, 5vw, 48px)',
+              marginBottom: '20px'
+            }}>🎉</div>
+            <h2 style={{
+              fontSize: 'clamp(24px, 4vw, 32px)',
+              color: '#1f2937',
+              marginBottom: '16px',
+              fontWeight: 700
+            }}>Amazing! You've mastered all questions!</h2>
+            <p style={{
+              fontSize: 'clamp(16px, 3vw, 20px)',
+              color: '#6b7280',
+              marginBottom: '24px',
+              maxWidth: '500px',
+              lineHeight: 1.5
+            }}>
+              🌟 You've completed all available questions in <strong>{mode}</strong> mode. 
+              Add more questions to continue your learning journey! 📚✨
+            </p>
+            <button
+              onClick={onNext}
+              style={{
+                padding: '12px 24px',
+                fontSize: '16px',
+                fontWeight: 600,
+                color: 'white',
+                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)',
+                transition: 'transform 0.2s ease'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0px)'}
+            >
+              Check for New Questions
+            </button>
+          </div>
+        ) : (
+          <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} answer={answer} notes={notes} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} columns={columns} mode={mode} />
+        )}
       </div>
       <TraceExport isVisible={showTraceExport} onClose={() => setShowTraceExport(false)} />
     </div>

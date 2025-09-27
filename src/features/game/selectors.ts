@@ -190,12 +190,14 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   answer?: string;
   notes?: string;
   choices: Array<{ id: string; label: string; progress: number }>;
+  needsNewSession?: boolean;
 } {
   if (!state.currentUserId) {
     return {
       sessionId: null,
       mainWord: '...',
-      choices: []
+      choices: [],
+      needsNewSession: false
     };
   }
   
@@ -204,7 +206,8 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
     return {
       sessionId: null,
       mainWord: '...',
-      choices: []
+      choices: [],
+      needsNewSession: false
     };
   }
 
@@ -215,7 +218,8 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
     return {
       sessionId: null,
       mainWord: 'ERROR: No Session',
-      choices: []
+      choices: [],
+      needsNewSession: false
     };
   }
 
@@ -228,12 +232,14 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   const isMathTablesMode = mode === 'mathtables';
   const isHumanBodyMode = mode === 'humanbody';
   const isIndiaGeographyMode = mode === 'indiageography';
+  const isGramPanchayatMode = mode === 'grampanchayat';
   const shouldShowTransliteration = (isKannadaMode || isMathTablesMode) && session?.revealed === true;
-  const shouldShowAnswer = (isHumanBodyMode || isIndiaGeographyMode) && session?.revealed === true;
+  const shouldShowAnswer = (isHumanBodyMode || isIndiaGeographyMode || isGramPanchayatMode) && session?.revealed === true;
   
   return {
     sessionId,
     mainWord: currentWord ? (currentWord.wordKannada || currentWord.text || '...') : '...',
+    needsNewSession: session?.needsNewSession || false,
     transliteration: shouldShowTransliteration ? currentWord?.transliteration : undefined,
     transliterationHi: shouldShowTransliteration ? currentWord?.transliterationHi : undefined,
     answer: shouldShowAnswer ? currentWord?.answer : undefined,

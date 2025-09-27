@@ -30,6 +30,7 @@ export default function ModeSelector({ mode, onSetMode, compact = false }: ModeS
         <option value="mathtables">🔢 Math Tables</option>
         <option value="humanbody">🧠 Human Body</option>
         <option value="indiageography">🗺️ India Geography</option>
+        <option value="grampanchayat">🏛️ Gram Panchayat</option>
       </select>
     </div>
   );
