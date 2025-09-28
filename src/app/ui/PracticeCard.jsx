@@ -236,12 +236,12 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         <div className="answer-panel" style={{ width: '100%', minHeight: 140, borderRadius: 12, padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
           {/* Title removed - showing answer/notes directly */}
           {isAnswerRevealed ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
               {answer && (
-                <div className="answer-panel__headline">{answer}</div>
+                <div className="answer-panel__headline" style={{ maxWidth: '820px' }}>{answer}</div>
               )}
               {notes && (
-                <div className="answer-panel__notes">{notes}</div>
+                <div className="answer-panel__notes" style={{ maxWidth: '820px' }}>{notes}</div>
               )}
               {!answer && !notes && (
                 <div className="answer-panel__empty">No answer or notes available for this item.</div>
