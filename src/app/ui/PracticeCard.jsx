@@ -3,6 +3,9 @@ import './PracticeCard.css';
 import { isTransliterationMode } from '../../features/game/modeConfig';
 import GradientText from './GradientText.jsx';
 
+import FlyingUnicorn from './FlyingUnicorn.jsx';
+import SadBalloonAnimation from './SadBalloonAnimation.jsx';
+
 export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode }) {
   const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
 
@@ -68,6 +71,16 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     }
   }, [mainWord]);
 
+  // Unicorn animation state
+  const [showUnicorn, setShowUnicorn] = React.useState(false);
+  // Sad balloon animation state
+  const [showSadBalloon, setShowSadBalloon] = React.useState(false);
+  // Hide unicorn and sad balloon when mainWord changes (new card)
+  React.useEffect(() => { setShowUnicorn(false); setShowSadBalloon(false); }, [mainWord]);
+  // Handler for unicorn animation end
+  const handleUnicornEnd = React.useCallback(() => setShowUnicorn(false), []);
+  // Handler for sad balloon animation end
+  const handleSadBalloonEnd = React.useCallback(() => setShowSadBalloon(false), []);
   // Determine current active choice progress to render rainbow fill for the main question
   const activeChoice = (choices || []).find(c => String(c.label) === String(mainWord));
   const activeProgress = Math.min(100, Math.max(0, (activeChoice && (typeof activeChoice.progress === 'number' ? activeChoice.progress : Number(activeChoice && activeChoice.progress))) || 0));
@@ -93,6 +106,25 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
       overflow: 'visible',
       position: 'relative'
     }}>
+      {/* Flying unicorn animation overlay */}
+      <FlyingUnicorn
+        visible={showUnicorn}
+        onAnimationEnd={handleUnicornEnd}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          zIndex: 2000
+        }}
+      />
+      {/* Sad balloon animation overlay for wrong answers */}
+      <SadBalloonAnimation
+        visible={showSadBalloon}
+        onAnimationEnd={handleSadBalloonEnd}
+      />
       {/* Compact main word section */}
       {/* Global component styles moved to PracticeCard.css */}
 
@@ -286,11 +318,21 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           </button>
         )}
         <button
-          onClick={() => { 
-            if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); } 
+          onClick={() => {
+            if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); }
             // Create confetti burst effect
             createConfettiBurst();
-            onCorrect && onCorrect(); 
+            // Trigger unicorn animation
+            setShowUnicorn(true);
+            // Play yippu sound effect
+            try {
+              const audio = new window.Audio('/happy-logo-167474.mp3');
+              audio.volume = 0.7;
+              audio.play();
+            } catch (e) {
+              if (isDebug) console.warn('Sound failed:', e);
+            }
+            onCorrect && onCorrect();
             // Auto-progress to next word after confetti animation duration (2500ms)
             if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after correct', mainWord); } onNext(); }, 2500);
           }}
@@ -316,13 +358,43 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           <span>Read it well!</span>
         </button>
         <button
-          onClick={() => { 
-            if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); } 
+          onClick={() => {
+            if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); }
             // Add bounce animation to wrong choices
             triggerBounceAnimation();
-            onWrong && onWrong(); 
-            // Auto-progress to next word after brief delay to allow bounce animation
-            if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after wrong', mainWord); } onNext(); }, 600);
+            // Show sad balloon animation
+            setShowSadBalloon(true);
+            // Play brass fail sound effect and delay next word until both sound and animation end
+            let soundPlayed = false;
+            let soundEnded = false;
+            let animationEnded = false;
+            const maybeNext = () => {
+              if (soundEnded && animationEnded && onNext) {
+                if (isDebug) { console.debug('[PracticeCard] auto onNext after brass fail sound AND sad balloon animation ended', mainWord); }
+                onNext();
+              }
+            };
+            try {
+              const audio = new window.Audio('/brass-fail-8-b-207131.mp3');
+              audio.volume = 0.7;
+              audio.play();
+              soundPlayed = true;
+              audio.onended = () => {
+                soundEnded = true;
+                maybeNext();
+              };
+            } catch (e) {
+              if (isDebug) console.warn('Brass fail sound failed:', e);
+              soundEnded = true;
+            }
+            onWrong && onWrong();
+            // Listen for sad balloon animation end
+            setTimeout(() => {
+              animationEnded = true;
+              maybeNext();
+            }, 2500); // matches SadBalloonAnimation duration and sound
+            // If sound fails, fallback to previous delay
+            if (!soundPlayed) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after wrong (fallback)', mainWord); } onNext && onNext(); }, 2500);
           }}
           aria-label="Try again later — would you like to repeat this?"
           className="mastery-footer-button secondary"
