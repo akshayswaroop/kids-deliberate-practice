@@ -1,6 +1,7 @@
 import React from 'react';
 import './PracticeCard.css';
 import { isTransliterationMode } from '../../features/game/modeConfig';
+import GradientText from './GradientText.jsx';
 
 export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode }) {
   const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
@@ -78,19 +79,19 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     <div style={{
       backgroundColor: 'transparent',
       borderRadius: '16px',
-      padding: '10px 12px 140px', // extra bottom padding so fixed footer doesn't overlap
-      background: 'linear-gradient(180deg, rgba(247,250,252,0.92), rgba(255,255,255,0.96))',
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      gap: 12,
+      alignItems: 'stretch',
+      justifyContent: 'flex-start',
+      gap: 0,
       width: '100%',
-      height: '100%',
-      maxWidth: '100%',
+      height: 'auto',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
       margin: '0 auto',
       boxSizing: 'border-box',
-      overflow: 'hidden'
+      overflow: 'visible',
+      position: 'relative'
     }}>
       {/* Compact main word section */}
       {/* Global component styles moved to PracticeCard.css */}
@@ -101,28 +102,33 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         width: '100%',
         maxWidth: '100%',
         boxSizing: 'border-box',
-        marginTop: '8px', // Reduced from default to bring word closer to top
-        marginBottom: '16px' // Add breathing room below
+        marginTop: '12px',
+        marginBottom: '20px',
+        flex: '1 1 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: 0
       }}>
           {(() => {
             const text = String(mainWord || '');
             const len = text.length;
-            // Default clamp for short questions; reduce for longer ones so they fit
-            // Slightly reduce maximum font-size for Kannada to avoid glyph clipping on large characters
-            let fontSize = mode === 'kannada' ? 'clamp(36px, 6.2vw, 84px)' : 'clamp(40px, 6vw, 6px)';
-            let lineHeight = 0.98;
+            // Make font size more responsive to card width for all lengths
+            let fontSize = 'clamp(32px, 7vw, 84px)';
+            let lineHeight = 1.08;
             let padding = '12px 20px';
             if (len > 60) {
-              fontSize = mode === 'kannada' ? 'clamp(14px, 3.2vw, 24px)' : 'clamp(16px, 3.6vw, 28px)';
-              lineHeight = 1.08;
+              fontSize = 'clamp(24px, 5vw, 64px)';
+              lineHeight = 1.10;
               padding = '8px 12px';
             } else if (len > 40) {
-              fontSize = mode === 'kannada' ? 'clamp(18px, 4.1vw, 32px)' : 'clamp(20px, 4.5vw, 36px)';
-              lineHeight = 1.04;
+              fontSize = 'clamp(28px, 6vw, 72px)';
+              lineHeight = 1.09;
               padding = '10px 14px';
             } else if (len > 28) {
-              fontSize = mode === 'kannada' ? 'clamp(26px, 5.1vw, 44px)' : 'clamp(28px, 5.5vw, 48px)';
-              lineHeight = 1.02;
+              fontSize = 'clamp(32px, 7vw, 84px)';
+              lineHeight = 1.08;
               padding = '10px 16px';
             }
 
@@ -135,67 +141,37 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                   lineHeight,
                   letterSpacing: '-0.02em',
                   maxWidth: '100%',
-                  // Make target word visually distinct
                   background: 'linear-gradient(135deg, rgba(79,70,229,0.04), rgba(139,92,246,0.02))',
-                  borderRadius: '16px',
-                  // Give the question panel an explicit minHeight so tall glyphs have room
-                  // Reduced by ~5% from 120px to 114px per request
-                  minHeight: '90px',
-                  // Slightly larger padding for additional vertical room
-                  padding: typeof padding === 'string' ? padding.replace(/(\d+)px/, (m, p) => `${Math.max(14, Number(p))}px`) : padding,
+                  borderRadius: '20px',
+                  padding,
                   border: '2px solid rgba(79,70,229,0.08)',
                   boxShadow: '0 6px 30px rgba(79,70,229,0.08)',
-                  // Allow wrapping and multiple lines for long questions
                   whiteSpace: 'normal',
                   wordBreak: 'break-word',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  // Center content both horizontally and vertically
+                  overflowWrap: 'break-word',
+                  overflow: 'visible',
                   display: 'flex',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  position: 'relative',
+                  zIndex: 2,
+                  minHeight: 0,
+                  flex: '1 1 auto'
                 }}>
-                  {/* Rainbow fill behind the question - horizontal left->right fill */}
-                  <div aria-hidden style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    bottom: 0,
-                    width: `${activeProgress}%`,
-                    borderTopLeftRadius: 14,
-                    borderBottomLeftRadius: 14,
-                    borderTopRightRadius: activeProgress === 100 ? 14 : 0,
-                    borderBottomRightRadius: activeProgress === 100 ? 14 : 0,
-                    background: 'linear-gradient(90deg, #ff0000 0%, #ff7f00 16.66%, #ffd700 33.33%, #00c853 50%, #0091ea 66.66%, #3f51b5 83.33%, #8e24aa 100%)',
-                    opacity: 0.9,
-                    transition: 'width 420ms cubic-bezier(.2,.9,.2,1), border-radius 180ms ease'
-                  }} />
-
-                  {/* subtle overlay to keep text legible */}
-                  <div aria-hidden style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: 'linear-gradient(rgba(255,255,255,0.06), rgba(255,255,255,0.02))',
-                    pointerEvents: 'none'
-                  }} />
-
-                  {/* main word text */}
-                  <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', width: '100%' }}>{mainWord}</div>
+                  {/* Use GradientText component for rainbow progress fill */}
+                  <GradientText 
+                    progress={Math.max(5, activeProgress)}
+                    gradientColors="red, orange, yellow, green, blue, indigo, violet"
+                    neutralColor="#9ca3af"
+                    style={{ textAlign: 'center', width: '100%' }}
+                  >
+                    {mainWord}
+                  </GradientText>
 
                   {/* percent indicator and mastered badge */}
                   <div style={{ position: 'absolute', right: 8, top: 8, zIndex: 3, display: 'flex', gap: 8, alignItems: 'center' }}>
-                    <div aria-hidden style={{
-                      background: 'rgba(255,255,255,0.9)',
-                      color: '#0b1220',
-                      fontWeight: 800,
-                      padding: '4px 8px',
-                      borderRadius: 8,
-                      fontSize: 12,
-                      boxShadow: '0 6px 18px rgba(2,6,23,0.06)'
-                    }}>{`${Math.round(activeProgress)}%`}</div>
+                    {/* Progress number badge removed as requested */}
                     {isMastered && (
                       <div aria-hidden style={{
                         display: 'inline-flex',
@@ -215,7 +191,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                   </div>
 
                   {/* aria-live region for assistive tech */}
-                  <div aria-live="polite" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>{isMastered ? 'Mastered' : `${Math.round(activeProgress)}% mastery`}</div>
+                  <div aria-live="polite" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>{isMastered ? 'Mastered' : ``}</div>
 
               </div>
             );
@@ -227,10 +203,13 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
       {/* Details panel: use the space previously reserved for tiles to show answer, notes, and meta */}
       <div key={mainWord} className="details-panel" style={{
         width: '100%',
-        padding: '12px',
+        padding: '24px 18px',
         boxSizing: 'border-box',
-        marginBottom: '24px',
-        display: 'block'
+        marginBottom: '32px',
+        display: 'block',
+        borderRadius: '16px',
+        background: 'linear-gradient(180deg, #f8fafc 0%, #fff 100%)',
+        boxShadow: '0 2px 18px rgba(79,70,229,0.04)'
       }}>
         {/* Main answer/notes area - now full width (progress panel removed) */}
         <div className="answer-panel" style={{ width: '100%', minHeight: 140, borderRadius: 12, padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -259,23 +238,23 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
 
       </div>
       {/* Increased spacer - 1.5x the gap for better button separation */}
-      <div style={{ height: 36 }} />
+  <div style={{ height: 48 }} />
 
       {/* Footer action bar: visually fixed but contained by extra bottom padding (prevents overlap) */}
       <div style={{
         position: 'fixed',
         left: '50%',
         transform: 'translateX(-50%)',
-        bottom: 18,
+        bottom: 24,
         display: 'flex',
-        gap: 18,
-        padding: '10px 14px',
+        gap: 24,
+        padding: '18px 24px',
         background: 'rgba(255,255,255,0.98)',
         borderRadius: 999,
         boxShadow: '0 18px 48px rgba(2,6,23,0.12)',
         zIndex: 1200,
         alignItems: 'center',
-        minWidth: isEnglishMode ? 280 : 360 // Wider for non-English modes to fit reveal button
+        minWidth: isEnglishMode ? 320 : 400 // Wider for non-English modes to fit reveal button
       }}>
         {/* Reveal Answer button - only for non-English modes */}
         {!isEnglishMode && (
@@ -312,8 +291,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             // Create confetti burst effect
             createConfettiBurst();
             onCorrect && onCorrect(); 
-            // Auto-progress to next word after brief delay to allow confetti animation
-            if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after correct', mainWord); } onNext(); }, 600);
+            // Auto-progress to next word after confetti animation duration (2500ms)
+            if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after correct', mainWord); } onNext(); }, 2500);
           }}
           aria-label="Mark as read — great job"
           className="mastery-footer-button primary"
