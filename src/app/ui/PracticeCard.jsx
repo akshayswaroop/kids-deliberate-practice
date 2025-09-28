@@ -249,7 +249,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-              <div style={{ color: '#6b7280', maxWidth: '820px' }}>Answer hidden. Use the Reveal Answer button to show the translation or answer for this word.</div>
+              <div style={{ color: '#6b7280', maxWidth: '820px' }}>Use the Reveal Answer button to show answer.</div>
               {answer && (
                 <div style={{ fontSize: 14, color: '#9ca3af' }}>Hint: {String(answer).slice(0, Math.max(3, Math.floor(String(answer).length * 0.25))) }…</div>
               )}
@@ -312,6 +312,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             // Create confetti burst effect
             createConfettiBurst();
             onCorrect && onCorrect(); 
+            // Auto-progress to next word after brief delay to allow confetti animation
+            if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after correct', mainWord); } onNext(); }, 600);
           }}
           aria-label="Mark as read — great job"
           className="mastery-footer-button primary"
@@ -340,6 +342,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             // Add bounce animation to wrong choices
             triggerBounceAnimation();
             onWrong && onWrong(); 
+            // Auto-progress to next word after brief delay to allow bounce animation
+            if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after wrong', mainWord); } onNext(); }, 600);
           }}
           aria-label="Try again later — would you like to repeat this?"
           className="mastery-footer-button secondary"
@@ -362,29 +366,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           <span style={{fontSize:20}}>🔁</span>
           <span>Try again later</span>
         </button>
-        <button
-          onClick={() => { if (isDebug) { console.debug('[PracticeCard] onNext clicked', mainWord); } onNext && onNext(); }}
-          aria-label="Next word"
-          className="mastery-footer-button"
-          style={{
-            backgroundColor: '#6366f1',
-            color: 'white',
-            border: 'none',
-            borderRadius: 10,
-            padding: '10px 14px',
-            fontSize: 15,
-            fontWeight: 800,
-            cursor: 'pointer',
-            display: 'flex',
-            gap: 8,
-            alignItems: 'center',
-            transition: 'transform 180ms ease, box-shadow 180ms ease',
-            boxShadow: '0 8px 20px rgba(99,102,241,0.12)'
-          }}
-        >
-          <span style={{fontSize:18}}>⏭️</span>
-          <span>Next</span>
-        </button>
+        {/* Next button removed: progression will auto-trigger after actions */}
       </div>
     </div>
   );
