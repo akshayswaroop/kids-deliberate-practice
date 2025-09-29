@@ -614,5 +614,180 @@
     "question": "wig",
     "answer": "",
     "notes": "Complex CVC word"
+  },
+  {
+    "id": "frog",
+    "complexity": 4,
+    "question": "frog",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "clap",
+    "complexity": 4,
+    "question": "clap",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "trap",
+    "complexity": 4,
+    "question": "trap",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "snap",
+    "complexity": 4,
+    "question": "snap",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "flag",
+    "complexity": 4,
+    "question": "flag",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "drum",
+    "complexity": 4,
+    "question": "drum",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "plug",
+    "complexity": 4,
+    "question": "plug",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "grip",
+    "complexity": 4,
+    "question": "grip",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "skip",
+    "complexity": 4,
+    "question": "skip",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "spin",
+    "complexity": 4,
+    "question": "spin",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "brim",
+    "complexity": 4,
+    "question": "brim",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "crab",
+    "complexity": 4,
+    "question": "crab",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "drop",
+    "complexity": 4,
+    "question": "drop",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "flap",
+    "complexity": 4,
+    "question": "flap",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "grin",
+    "complexity": 4,
+    "question": "grin",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "plan",
+    "complexity": 4,
+    "question": "plan",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "slip",
+    "complexity": 4,
+    "question": "slip",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "snug",
+    "complexity": 4,
+    "question": "snug",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "twig",
+    "complexity": 4,
+    "question": "twig",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "trap",
+    "complexity": 4,
+    "question": "trap",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "blot",
+    "complexity": 4,
+    "question": "blot",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "clan",
+    "complexity": 4,
+    "question": "clan",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "drip",
+    "complexity": 4,
+    "question": "drip",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "flag",
+    "complexity": 4,
+    "question": "flag",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
+  },
+  {
+    "id": "glad",
+    "complexity": 4,
+    "question": "glad",
+    "answer": "",
+    "notes": "Four-letter word with consonant blend"
   }
 ]
