@@ -321,7 +321,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                 maxWidth: '100%',
                 fontSize: 'clamp(14px, 2.5vw, 20px)',
                 lineHeight: 1.4
-              }}>Use the Reveal Answer button to show answer.</div>
+              }}>Use the Reveal button to show answer.</div>
               {answer && (
                 <div style={{ 
                   fontSize: 'clamp(12px, 2vw, 16px)', 
@@ -357,8 +357,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         boxSizing: 'border-box',
         flexShrink: 0 // Prevent shrinking
       }}>
-        {/* Reveal Answer button - only for non-English modes */}
-        {/* Button order: Read it well! (primary), Try again later (primary), Reveal Answer (secondary) */}
+        {/* Reveal button - only for non-English modes */}
+        {/* Button order: Correct! (primary), Try later (primary), Reveal (secondary) */}
         <button
           onClick={() => {
             if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); }
@@ -397,7 +397,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🎉</span>
-          <span>Read it well!</span>
+          <span>Correct</span>
         </button>
         <button
           onClick={() => {
@@ -433,7 +433,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             }, 2500);
             if (!soundPlayed) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after wrong (fallback)', mainWord); } onNext && onNext(); }, 2500);
           }}
-          aria-label="Try again later — would you like to repeat this?"
+          aria-label="Try later — would you like to repeat this?"
           className="mastery-footer-button secondary"
           style={{
             backgroundColor: 'var(--button-secondary-bg, #64748b)', // muted filled
@@ -456,7 +456,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🔁</span>
-          <span>Try again later</span>
+          <span>Try later</span>
         </button>
         {!isEnglishMode && (
           <button
@@ -487,7 +487,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             }}
           >
             <span style={{fontSize: 'clamp(14px, 3vw, 18px)'}}>{isAnswerRevealed ? '🙈' : '👁️'}</span>
-            <span>{isAnswerRevealed ? 'Hide Answer' : 'Reveal Answer'}</span>
+            <span>{isAnswerRevealed ? 'Hide ' : 'Reveal '}</span>
           </button>
         )}
         {/* Next button removed: progression will auto-trigger after actions */}
