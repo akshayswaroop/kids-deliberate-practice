@@ -95,15 +95,14 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'stretch',
-      justifyContent: 'flex-start',
+      justifyContent: 'stretch',
       gap: 0,
       width: '100%',
-      height: 'auto',
+      minHeight: '100vh', // Minimum full viewport height
       maxWidth: '100vw',
-      maxHeight: '100vh',
       margin: '0 auto',
       boxSizing: 'border-box',
-      overflow: 'visible',
+      overflow: 'hidden', // Prevent scroll, sections should fit within viewport
       position: 'relative'
     }}>
       {/* Flying unicorn animation overlay */}
@@ -125,43 +124,41 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         visible={showSadBalloon}
         onAnimationEnd={handleSadBalloonEnd}
       />
-      {/* Compact main word section */}
-      {/* Global component styles moved to PracticeCard.css */}
-
+      {/* Question Area - 25% of vertical space */}
       <div style={{
         textAlign: 'center',
         color: 'var(--text-primary)',
         width: '100%',
-        maxWidth: '100%',
         boxSizing: 'border-box',
-        marginTop: '12px',
-        marginBottom: '20px',
-        flex: '1 1 auto',
+        flex: '0 0 25%', // 25% of container height
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: 0
+        padding: '16px',
+        minHeight: 0,
+        overflow: 'hidden' // Prevent overflow from this section
       }}>
           {(() => {
             const text = String(mainWord || '');
             const len = text.length;
-            // Make font size more responsive to card width for all lengths
-            let fontSize = 'clamp(32px, 7vw, 84px)';
-            let lineHeight = 1.08;
-            let padding = '12px 20px';
+            // Responsive typography within the 30vh Question Area
+            // Use both viewport width and height for scaling
+            let fontSize = 'clamp(24px, min(6vw, 8vh), 72px)';
+            let lineHeight = 1.1;
+            let padding = '8px 16px';
             if (len > 60) {
-              fontSize = 'clamp(24px, 5vw, 64px)';
-              lineHeight = 1.10;
-              padding = '8px 12px';
+              fontSize = 'clamp(18px, min(4vw, 5vh), 48px)';
+              lineHeight = 1.2;
+              padding = '6px 12px';
             } else if (len > 40) {
-              fontSize = 'clamp(28px, 6vw, 72px)';
-              lineHeight = 1.09;
-              padding = '10px 14px';
+              fontSize = 'clamp(20px, min(5vw, 6vh), 56px)';
+              lineHeight = 1.15;
+              padding = '6px 14px';
             } else if (len > 28) {
-              fontSize = 'clamp(32px, 7vw, 84px)';
-              lineHeight = 1.08;
-              padding = '10px 16px';
+              fontSize = 'clamp(22px, min(5.5vw, 7vh), 64px)';
+              lineHeight = 1.1;
+              padding = '8px 16px';
             }
 
               return (
@@ -232,63 +229,122 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         {/* Answer modes: removed here to avoid duplication — answers are shown in the details panel below */}
       </div>
 
-      {/* Details panel: use the space previously reserved for tiles to show answer, notes, and meta */}
+      {/* Answer Area - 35% of vertical space */}
       <div key={mainWord} className="details-panel" style={{
         width: '100%',
-        padding: '24px 18px',
+        flex: '1 1 auto', // Take remaining space
+        minHeight: '160px',
+        maxHeight: '30vh',
+        padding: '12px',
         boxSizing: 'border-box',
-        marginBottom: '32px',
-        display: 'block',
+        display: 'flex',
+        flexDirection: 'column',
         borderRadius: '16px',
         background: 'var(--bg-secondary)',
-        boxShadow: '0 2px 18px rgba(79,70,229,0.04)'
+        boxShadow: '0 2px 18px rgba(79,70,229,0.04)',
+        overflow: 'auto' // Allow scrolling if content is too long
       }}>
-        {/* Main answer/notes area - now full width (progress panel removed) */}
-        <div className="answer-panel" style={{ width: '100%', minHeight: 140, borderRadius: 12, padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {/* Main answer/notes area - fills available Answer Area space */}
+        <div className="answer-panel" style={{ 
+          width: '100%', 
+          maxWidth: '100%',
+          flex: '1 1 auto', // Expand to fill available space
+          borderRadius: 12, 
+          padding: '8px', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '12px',
+          overflow: 'auto', // Handle long content
+          boxSizing: 'border-box'
+        }}>
           {/* Title removed - showing answer/notes directly */}
           {isAnswerRevealed ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '8px', 
+              flex: '1 1 auto', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              textAlign: 'center',
+              overflow: 'auto',
+              width: '100%',
+              maxWidth: '100%',
+              boxSizing: 'border-box'
+            }}>
               {answer && (
-                <div className="answer-panel__headline" style={{ maxWidth: '820px' }}>{answer}</div>
+                <div className="answer-panel__headline" style={{ 
+                  maxWidth: '100%',
+                  fontSize: 'clamp(16px, 3vw, 28px)', // Responsive typography
+                  lineHeight: 1.4,
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word'
+                }}>{answer}</div>
               )}
               {notes && (
-                <div className="answer-panel__notes" style={{ maxWidth: '820px' }}>{notes}</div>
+                <div className="answer-panel__notes" style={{ 
+                  maxWidth: '100%',
+                  fontSize: 'clamp(14px, 2.5vw, 22px)', // Responsive typography
+                  lineHeight: 1.5,
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word'
+                }}>{notes}</div>
               )}
               {!answer && !notes && (
-                <div className="answer-panel__empty">No answer or notes available for this item.</div>
+                <div className="answer-panel__empty" style={{
+                  fontSize: 'clamp(14px, 2.5vw, 20px)',
+                  color: 'var(--text-secondary)'
+                }}>No answer or notes available for this item.</div>
               )}
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-              <div style={{ color: 'var(--text-secondary)', maxWidth: '820px' }}>Use the Reveal Answer button to show answer.</div>
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '6px', 
+              flex: '1 1 auto', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              textAlign: 'center' 
+            }}>
+              <div style={{ 
+                color: 'var(--text-secondary)', 
+                maxWidth: '100%',
+                fontSize: 'clamp(14px, 2.5vw, 20px)',
+                lineHeight: 1.4
+              }}>Use the Reveal Answer button to show answer.</div>
               {answer && (
-                <div style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>Hint: {String(answer).slice(0, Math.max(3, Math.floor(String(answer).length * 0.25))) }…</div>
+                <div style={{ 
+                  fontSize: 'clamp(12px, 2vw, 16px)', 
+                  color: 'var(--text-tertiary)',
+                  lineHeight: 1.3
+                }}>Hint: {String(answer).slice(0, Math.max(3, Math.floor(String(answer).length * 0.25))) }…</div>
               )}
             </div>
           )}
         </div>
 
       </div>
-      {/* Increased spacer - 1.5x the gap for better button separation */}
-  <div style={{ height: 48 }} />
 
-      {/* Footer action bar: visually fixed but contained by extra bottom padding (prevents overlap) */}
+      {/* Action Buttons Area - 25% of vertical space, docked at bottom */}
       <div style={{
-        position: 'fixed',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        bottom: 24,
+        flex: '0 0 auto', // Size to content
+        minHeight: '140px',
+        width: '100%',
         display: 'flex',
-        gap: 24,
-        padding: '18px 24px',
+        justifyContent: 'center',
+        alignItems: 'stretch', // stretch buttons vertically for balance
+        gap: '20px',
+        padding: '10px 16px',
         background: 'var(--bg-accent)',
-        borderRadius: 999,
+        borderRadius: '16px 16px 0 0',
         boxShadow: 'var(--shadow-strong)',
-        zIndex: 1200,
-        alignItems: 'center',
-        minWidth: isEnglishMode ? 320 : 400, // Wider for non-English modes to fit reveal button
+        zIndex: 10,
         backdropFilter: 'blur(10px)',
-        border: '1px solid var(--border-secondary)'
+        border: '1px solid var(--border-secondary)',
+        borderBottom: 'none',
+        boxSizing: 'border-box',
+        flexShrink: 0 // Prevent shrinking
       }}>
         {/* Reveal Answer button - only for non-English modes */}
         {!isEnglishMode && (
@@ -303,19 +359,23 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               backgroundColor: 'var(--color-warning)',
               color: 'var(--text-inverse)',
               border: 'none',
-              borderRadius: 10,
-              padding: '10px 14px',
-              fontSize: 14,
+              borderRadius: 12,
+              padding: 'clamp(8px, 2vh, 14px) clamp(12px, 3vw, 18px)',
+              fontSize: 'clamp(12px, 2.5vw, 16px)',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'flex',
-              gap: 6,
+              gap: '6px',
               alignItems: 'center',
+              justifyContent: 'center',
               transition: 'transform 180ms ease, box-shadow 180ms ease',
-              boxShadow: '0 8px 20px rgba(245,158,11,0.12)'
+              boxShadow: '0 8px 20px rgba(245,158,11,0.12)',
+              minHeight: 'clamp(40px, 8vh, 60px)', // slightly reduced minHeight
+              flex: '1 1 auto',
+              maxWidth: '140px'
             }}
           >
-            <span style={{fontSize:16}}>{isAnswerRevealed ? '🙈' : '👁️'}</span>
+            <span style={{fontSize: 'clamp(14px, 3vw, 18px)'}}>{isAnswerRevealed ? '🙈' : '👁️'}</span>
             <span>{isAnswerRevealed ? 'Hide Answer' : 'Reveal Answer'}</span>
           </button>
         )}
@@ -344,19 +404,23 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             backgroundColor: 'var(--button-primary-bg)',
             color: 'var(--text-inverse)',
             border: 'none',
-            borderRadius: 10,
-            padding: '12px 16px', // Slightly larger padding
-            fontSize: 16, // Slightly larger font
+            borderRadius: 12,
+            padding: 'clamp(10px, 2.5vh, 16px) clamp(14px, 3.5vw, 20px)',
+            fontSize: 'clamp(14px, 3vw, 18px)',
             fontWeight: 800,
             cursor: 'pointer',
             display: 'flex',
-            gap: 8,
+            gap: '8px',
             alignItems: 'center',
+            justifyContent: 'center',
             transition: 'transform 180ms ease, box-shadow 180ms ease',
-            boxShadow: '0 8px 20px rgba(16,185,129,0.14)'
+            boxShadow: '0 8px 20px rgba(16,185,129,0.14)',
+            minHeight: 'clamp(40px, 8vh, 56px)', // slightly reduced minHeight
+            flex: '1 1 auto',
+            maxWidth: '160px'
           }}
         >
-          <span style={{fontSize:20}}>🎉</span>
+          <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🎉</span>
           <span>Read it well!</span>
         </button>
         <button
@@ -404,19 +468,23 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             backgroundColor: 'var(--button-secondary-bg)',
             color: 'var(--text-inverse)',
             border: 'none',
-            borderRadius: 10,
-            padding: '12px 16px', // Slightly larger padding
-            fontSize: 16, // Slightly larger font
+            borderRadius: 12,
+            padding: 'clamp(10px, 2.5vh, 16px) clamp(14px, 3.5vw, 20px)',
+            fontSize: 'clamp(14px, 3vw, 18px)',
             fontWeight: 800,
             cursor: 'pointer',
             display: 'flex',
-            gap: 8,
+            gap: '8px',
             alignItems: 'center',
+            justifyContent: 'center',
             transition: 'transform 180ms ease, box-shadow 180ms ease',
-            boxShadow: '0 8px 20px rgba(239,68,68,0.12)'
+            boxShadow: '0 8px 20px rgba(239,68,68,0.12)',
+            minHeight: 'clamp(40px, 8vh, 56px)', // slightly reduced minHeight
+            flex: '1 1 auto',
+            maxWidth: '160px'
           }}
         >
-          <span style={{fontSize:20}}>🔁</span>
+          <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🔁</span>
           <span>Try again later</span>
         </button>
         {/* Next button removed: progression will auto-trigger after actions */}
