@@ -1,15 +1,13 @@
 [
   {
     "id": "gram_panchayat_1",
-    "category": "basic_structure",
     "complexity": 1,
     "question": "What is a Gram Panchayat?",
     "answer": "A village-level governing body in India",
     "notes": "Gram Panchayat is the basic unit of local self-government in rural areas. It consists of elected representatives who make decisions for the village's development and welfare."
   },
   {
-    "id": "gram_panchayat_2", 
-    "category": "leadership",
+    "id": "gram_panchayat_2",
     "complexity": 1,
     "question": "Who is the head of a Gram Panchayat?",
     "answer": "Sarpanch",
@@ -17,7 +15,6 @@
   },
   {
     "id": "gram_panchayat_3",
-    "category": "functions",
     "complexity": 1,
     "question": "What are the main functions of a Gram Panchayat?",
     "answer": "Village development, sanitation, water supply, and local welfare",

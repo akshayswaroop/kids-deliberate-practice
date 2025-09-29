@@ -1,66 +1,45 @@
-import wordsList from '../assets/words.en.json';
 import type { Word } from '../features/game/state';
-import { createKannadaWords } from '../features/game/kannadaWords';
-import { createMathTablesWords } from '../features/game/mathTables';
-import { createHumanBodyWords } from '../features/game/humanBody';
-import { createIndiaGeographyWords } from '../features/game/indiaGeography';
-import { createGramPanchayatWords } from '../features/game/gramPanchayat';
-import { createHanumanChalisaWords } from '../features/game/hanumanChalisa';
+import { SUBJECT_CONFIGS, loadSubjectWords } from './subjectLoader';
 
-// English complexity level mapping based on progressive learning principles
-const ENGLISH_COMPLEXITY_MAPPING: Record<string, number> = {
-  // Level 1: Simple CVC words (2-3 letters, basic phonics)
-  "an": 1, "at": 1, "am": 1, "as": 1, "be": 1, "by": 1, "do": 1, "go": 1, "he": 1, "hi": 1, 
-  "if": 1, "in": 1, "is": 1, "it": 1, "me": 1, "my": 1, "no": 1, "of": 1, "on": 1, "or": 1, 
-  "so": 1, "to": 1, "up": 1, "us": 1, "we": 1,
-  
-  // Level 2: Basic CVC words (3 letters)
-  "bat": 2, "cat": 2, "dog": 2, "egg": 2, "fan": 2, "hat": 2, "jam": 2, "kid": 2, "log": 2, 
-  "man": 2, "nap": 2, "owl": 2, "pan": 2, "rat": 2, "sun": 2, "tap": 2, "van": 2, "win": 2, 
-  "zip": 2, "box": 2, "bus": 2, "cup": 2, "dot": 2, "fox": 2, "gum": 2, "hen": 2, "jar": 2, 
-  "kit": 2, "lap": 2, "map": 2, "net": 2, "pen": 2, "red": 2, "sad": 2, "ten": 2, "vet": 2, 
-  "wax": 2, "yak": 2,
-  
-  // Level 3: CCVC and more complex 3-letter combinations
-  "big": 3, "bug": 3, "cut": 3, "dig": 3, "fit": 3, "got": 3, "hot": 3, "jet": 3, "let": 3, 
-  "mix": 3, "not": 3, "pit": 3, "run": 3, "sit": 3, "top": 3, "wet": 3, "yes": 3, "zig": 3, 
-  "hop": 3, "mat": 3, "pat": 3, "rag": 3, "sip": 3, "tag": 3, "wig": 3
+// Import all JSON banks directly for synchronous loading
+import englishBank from '../assets/english_questions_bank.json';
+import kannadaWordsBank from '../assets/kannada_words_bank.json';
+import kannadaAlphabetsBank from '../assets/kannada_alphabets_bank.json';
+import mathTablesBank from '../assets/math_tables_bank.json';
+import humanBodyBank from '../assets/human_body_grade3_full.json';
+import indiaGeographyBank from '../assets/india_geography_questions.json';
+import gramPanchayatBank from '../assets/gram_panchayat_questions.json';
+import hanumanBank from '../assets/hanuman_chalisa_kids.json';
+
+// Map bank paths to imported data
+const BANK_DATA_MAP: Record<string, any> = {
+  'english_questions_bank.json': englishBank,
+  'kannada_words_bank.json': kannadaWordsBank,
+  'kannada_alphabets_bank.json': kannadaAlphabetsBank,
+  'math_tables_bank.json': mathTablesBank,
+  'human_body_grade3_full.json': humanBodyBank,
+  'india_geography_questions.json': indiaGeographyBank,
+  'gram_panchayat_questions.json': gramPanchayatBank,
+  'hanuman_chalisa_kids.json': hanumanBank,
 };
 
 export function getInitialWords(): Record<string, Word> {
-  // English words from JSON with complexity levels
-  const englishWords = (wordsList as string[]).reduce((acc, text) => {
-    acc[text] = {
-      id: text,
-      text,
-      language: 'english', // Use full language name for consistency
-      complexityLevel: ENGLISH_COMPLEXITY_MAPPING[text] || 1, // Default to level 1 if not mapped
-      attempts: [],
-      step: 0, // Start at step 0
-      cooldownSessionsLeft: 0, // Start with no cooldown
-      revealCount: 0, // Initialize reveal tracking
-    };
-    return acc;
-  }, {} as Record<string, Word>);
+  const allWords: Record<string, Word> = {};
   
-  // Kannada words from the rich dataset
-  const kannadaWords = createKannadaWords();
+  // Load all subjects from configuration
+  for (const subjectConfig of SUBJECT_CONFIGS) {
+    try {
+      const bankData = BANK_DATA_MAP[subjectConfig.bankPath];
+      if (bankData) {
+        const subjectWords = loadSubjectWords(bankData, subjectConfig.language);
+        Object.assign(allWords, subjectWords);
+      } else {
+        console.error(`Bank data not found for: ${subjectConfig.bankPath}`);
+      }
+    } catch (error) {
+      console.error(`Failed to load subject: ${subjectConfig.name}`, error);
+    }
+  }
   
-  // Math Tables words from the structured dataset
-  const mathTablesWords = createMathTablesWords();
-  
-  // Human Body questions from the grade 3 dataset
-  const humanBodyWords = createHumanBodyWords();
-  
-  // India Geography questions with progressive complexity levels
-  const indiaGeographyWords = createIndiaGeographyWords();
-  
-  // Gram Panchayat questions for civics education
-  const gramPanchayatWords = createGramPanchayatWords();
-  
-  // Hanuman Chalisa verses for spiritual learning
-  const hanumanChalisaWords = createHanumanChalisaWords();
-  
-  // Combine all language word sets
-  return { ...englishWords, ...kannadaWords, ...mathTablesWords, ...humanBodyWords, ...indiaGeographyWords, ...gramPanchayatWords, ...hanumanChalisaWords };
+  return allWords;
 }

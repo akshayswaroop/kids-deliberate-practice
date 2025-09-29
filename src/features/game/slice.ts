@@ -14,27 +14,10 @@ export const makeUser = (displayName?: string) => ({
   sessions: {},
   activeSessions: {},
   settings: {
-      // selectionWeights removed (simplified session generation logic)
-    sessionSizes: { 
-      english: 12,   // Default for English
-      kannada: 12,   // Default for Kannada  
-      mathtables: 12, // Default for Math Tables
-      humanbody: 12,  // Small sessions for Human Body (only 18 total questions, allows 3+ cycles)
-      indiageography: 12, // Default for India Geography
-      grampanchayat: 12, // Small sessions for Gram Panchayat (only 2 questions initially)
-      hanuman: 12,   // Default for Hanuman Chalisa (41 verses total)
-      mixed: 12      // Default for mixed mode
-    },
-    languages: ['english'], // Default to English only
-    complexityLevels: {
-      'english': 1,  // Start with Level 1 English (simple CVC words)
-      'kannada': 1,  // Start with Level 1 Kannada (simple words without complex matras)
-      'mathtables': 1, // Start with Level 1 Math Tables (1x and 2x tables)
-      'indiageography': 1, // Start with Level 1 India Geography (basic facts)
-      'grampanchayat': 1, // Start with Level 1 Gram Panchayat (basic civics)
-      'hanuman': 1,  // Start with Level 1 Hanuman Chalisa (all verses at same level)
-      'hindi': 1     // Future support for Hindi
-    }
+    // Generic defaults - subjects get added dynamically as they're encountered
+    sessionSizes: {}, // Will be populated as subjects are used
+    languages: [], // Will be populated from available subjects
+    complexityLevels: {} // Will be populated as subjects are used
   },
 });
 
@@ -171,18 +154,8 @@ const gameSlice = createSlice({
       
       // Handle migration: if user has old sessionSize structure, migrate to new structure
       if (!user.settings.sessionSizes) {
-        const legacySessionSize = (user.settings as any).sessionSize || 6;
-        user.settings.sessionSizes = {
-          english: legacySessionSize,
-          kannada: legacySessionSize,
-          mathtables: 12,
-          humanbody: 12,
-          indiageography: 12,
-          grampanchayat: 12,
-          hanuman: 12,
-          mixed: legacySessionSize
-        };
-        // Remove old sessionSize property
+        user.settings.sessionSizes = {};
+        // Remove old sessionSize property if it exists
         delete (user.settings as any).sessionSize;
       }
       

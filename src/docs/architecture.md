@@ -31,3 +31,5 @@ Principles
 	•	Selectors = DTOs only (never styled text).
 	•	Middleware = side effects only (storage, API, logging).
 	•	Trace = dev-only, can be persisted if debugging.
+	•	Adding a new subject should be a minimal change involving adding a question bank and a config change somewhere
+	• The core domain classes should have no knowledge about subject , also the UI should also not know anything about subjects	

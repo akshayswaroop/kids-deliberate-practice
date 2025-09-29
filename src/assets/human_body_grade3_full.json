@@ -1,7 +1,6 @@
 [
   {
     "id": "skeleton_bones_1",
-    "category": "skeleton_bones",
     "complexity": 2,
     "question": "How many bones are in an adult human body?",
     "answer": "206 bones",
@@ -9,7 +8,6 @@
   },
   {
     "id": "skeleton_bones_2",
-    "category": "skeleton_bones",
     "complexity": 3,
     "question": "What is the largest bone in the human body?",
     "answer": "Femur (thighbone)",
@@ -17,7 +15,6 @@
   },
   {
     "id": "skeleton_bones_3",
-    "category": "skeleton_bones",
     "complexity": 1,
     "question": "What is the smallest bone in the body?",
     "answer": "Stapes (in the ear)",
@@ -25,7 +22,6 @@
   },
   {
     "id": "skeleton_bones_4",
-    "category": "skeleton_bones",
     "complexity": 2,
     "question": "What does your skull protect?",
     "answer": "Your brain",
@@ -33,7 +29,6 @@
   },
   {
     "id": "skeleton_bones_5",
-    "category": "skeleton_bones",
     "complexity": 3,
     "question": "How many ribs do humans have?",
     "answer": "24 ribs (12 pairs)",
@@ -41,7 +36,6 @@
   },
   {
     "id": "skeleton_bones_6",
-    "category": "skeleton_bones",
     "complexity": 1,
     "question": "What does the spine protect?",
     "answer": "The spinal cord",
@@ -49,7 +43,6 @@
   },
   {
     "id": "skeleton_bones_7",
-    "category": "skeleton_bones",
     "complexity": 2,
     "question": "Which bone protects your heart and lungs at the front?",
     "answer": "Sternum (breastbone)",
@@ -57,7 +50,6 @@
   },
   {
     "id": "skeleton_bones_8",
-    "category": "skeleton_bones",
     "complexity": 3,
     "question": "What is bone marrow?",
     "answer": "A soft tissue inside bones",
@@ -65,7 +57,6 @@
   },
   {
     "id": "skeleton_bones_9",
-    "category": "skeleton_bones",
     "complexity": 1,
     "question": "What minerals make bones strong?",
     "answer": "Calcium and phosphorus",
@@ -73,7 +64,6 @@
   },
   {
     "id": "skeleton_bones_10",
-    "category": "skeleton_bones",
     "complexity": 2,
     "question": "How do broken bones heal?",
     "answer": "By forming new bone tissue",
@@ -81,7 +71,6 @@
   },
   {
     "id": "muscles_movement_11",
-    "category": "muscles_movement",
     "complexity": 3,
     "question": "About how many muscles are in the body?",
     "answer": "Over 600",
@@ -89,7 +78,6 @@
   },
   {
     "id": "muscles_movement_12",
-    "category": "muscles_movement",
     "complexity": 1,
     "question": "What is the strongest muscle by force?",
     "answer": "Jaw muscle (masseter)",
@@ -97,7 +85,6 @@
   },
   {
     "id": "muscles_movement_13",
-    "category": "muscles_movement",
     "complexity": 2,
     "question": "What are voluntary muscles?",
     "answer": "Muscles we control",
@@ -105,7 +92,6 @@
   },
   {
     "id": "muscles_movement_14",
-    "category": "muscles_movement",
     "complexity": 3,
     "question": "What are involuntary muscles?",
     "answer": "Muscles that work automatically",
@@ -113,7 +99,6 @@
   },
   {
     "id": "muscles_movement_15",
-    "category": "muscles_movement",
     "complexity": 1,
     "question": "What connects muscles to bones?",
     "answer": "Tendons",
@@ -121,7 +106,6 @@
   },
   {
     "id": "muscles_movement_16",
-    "category": "muscles_movement",
     "complexity": 2,
     "question": "What connects bones to bones?",
     "answer": "Ligaments",
@@ -129,7 +113,6 @@
   },
   {
     "id": "muscles_movement_17",
-    "category": "muscles_movement",
     "complexity": 3,
     "question": "Why do muscles get tired?",
     "answer": "Because they use up energy",
@@ -137,7 +120,6 @@
   },
   {
     "id": "muscles_movement_18",
-    "category": "muscles_movement",
     "complexity": 1,
     "question": "Which muscle never rests?",
     "answer": "The heart",
@@ -145,7 +127,6 @@
   },
   {
     "id": "muscles_movement_19",
-    "category": "muscles_movement",
     "complexity": 2,
     "question": "What is a reflex action?",
     "answer": "A quick, automatic response",
@@ -153,7 +134,6 @@
   },
   {
     "id": "muscles_movement_20",
-    "category": "muscles_movement",
     "complexity": 3,
     "question": "Why do we shiver?",
     "answer": "Muscles contract to make heat",
@@ -161,7 +141,6 @@
   },
   {
     "id": "circulatory_system_21",
-    "category": "circulatory_system",
     "complexity": 1,
     "question": "What does the heart do?",
     "answer": "Pumps blood",
@@ -169,7 +148,6 @@
   },
   {
     "id": "circulatory_system_22",
-    "category": "circulatory_system",
     "complexity": 2,
     "question": "What is pulse?",
     "answer": "The beat of blood in arteries",
@@ -177,7 +155,6 @@
   },
   {
     "id": "circulatory_system_23",
-    "category": "circulatory_system",
     "complexity": 3,
     "question": "What are red blood cells?",
     "answer": "Cells that carry oxygen",
@@ -185,7 +162,6 @@
   },
   {
     "id": "circulatory_system_24",
-    "category": "circulatory_system",
     "complexity": 1,
     "question": "What are white blood cells?",
     "answer": "Cells that fight germs",
@@ -193,7 +169,6 @@
   },
   {
     "id": "circulatory_system_25",
-    "category": "circulatory_system",
     "complexity": 2,
     "question": "What are platelets?",
     "answer": "Cells that help blood clot",
@@ -201,7 +176,6 @@
   },
   {
     "id": "circulatory_system_26",
-    "category": "circulatory_system",
     "complexity": 3,
     "question": "What do veins do?",
     "answer": "Carry blood back to the heart",
@@ -209,7 +183,6 @@
   },
   {
     "id": "circulatory_system_27",
-    "category": "circulatory_system",
     "complexity": 1,
     "question": "What do arteries do?",
     "answer": "Carry blood away from the heart",
@@ -217,7 +190,6 @@
   },
   {
     "id": "circulatory_system_28",
-    "category": "circulatory_system",
     "complexity": 2,
     "question": "What are capillaries?",
     "answer": "Tiny blood vessels",
@@ -225,7 +197,6 @@
   },
   {
     "id": "circulatory_system_29",
-    "category": "circulatory_system",
     "complexity": 3,
     "question": "Why is blood red?",
     "answer": "Because of hemoglobin",
@@ -233,7 +204,6 @@
   },
   {
     "id": "circulatory_system_30",
-    "category": "circulatory_system",
     "complexity": 1,
     "question": "Why does your heart beat faster when you run?",
     "answer": "Muscles need more oxygen",
@@ -241,7 +211,6 @@
   },
   {
     "id": "respiratory_system_31",
-    "category": "respiratory_system",
     "complexity": 2,
     "question": "What gas do we breathe in?",
     "answer": "Oxygen",
@@ -249,7 +218,6 @@
   },
   {
     "id": "respiratory_system_32",
-    "category": "respiratory_system",
     "complexity": 3,
     "question": "What gas do we breathe out?",
     "answer": "Carbon dioxide",
@@ -257,7 +225,6 @@
   },
   {
     "id": "respiratory_system_33",
-    "category": "respiratory_system",
     "complexity": 1,
     "question": "What muscle helps us breathe?",
     "answer": "Diaphragm",
@@ -265,7 +232,6 @@
   },
   {
     "id": "respiratory_system_34",
-    "category": "respiratory_system",
     "complexity": 2,
     "question": "What are alveoli?",
     "answer": "Tiny air sacs in lungs",
@@ -273,7 +239,6 @@
   },
   {
     "id": "respiratory_system_35",
-    "category": "respiratory_system",
     "complexity": 3,
     "question": "Why do we sneeze?",
     "answer": "To clear dust or germs",
@@ -281,7 +246,6 @@
   },
   {
     "id": "respiratory_system_36",
-    "category": "respiratory_system",
     "complexity": 1,
     "question": "Why do we hiccup?",
     "answer": "Sudden diaphragm contractions",
@@ -289,7 +253,6 @@
   },
   {
     "id": "respiratory_system_37",
-    "category": "respiratory_system",
     "complexity": 2,
     "question": "What does the nose do?",
     "answer": "Filters and warms air",
@@ -297,7 +260,6 @@
   },
   {
     "id": "respiratory_system_38",
-    "category": "respiratory_system",
     "complexity": 3,
     "question": "Why do we yawn?",
     "answer": "To take in more oxygen",
@@ -305,7 +267,6 @@
   },
   {
     "id": "respiratory_system_39",
-    "category": "respiratory_system",
     "complexity": 1,
     "question": "Why is breathing through the nose better?",
     "answer": "It cleans and moistens air",
@@ -313,7 +274,6 @@
   },
   {
     "id": "respiratory_system_40",
-    "category": "respiratory_system",
     "complexity": 2,
     "question": "What protects the lungs?",
     "answer": "The rib cage",
@@ -321,7 +281,6 @@
   },
   {
     "id": "digestive_system_41",
-    "category": "digestive_system",
     "complexity": 3,
     "question": "What is digestion?",
     "answer": "Breaking food into small parts",
@@ -329,7 +288,6 @@
   },
   {
     "id": "digestive_system_42",
-    "category": "digestive_system",
     "complexity": 1,
     "question": "What does the stomach do?",
     "answer": "Breaks food with juices",
@@ -337,7 +295,6 @@
   },
   {
     "id": "digestive_system_43",
-    "category": "digestive_system",
     "complexity": 2,
     "question": "What does the small intestine do?",
     "answer": "Absorbs nutrients",
@@ -345,7 +302,6 @@
   },
   {
     "id": "digestive_system_44",
-    "category": "digestive_system",
     "complexity": 3,
     "question": "What does the large intestine do?",
     "answer": "Absorbs water",
@@ -353,7 +309,6 @@
   },
   {
     "id": "digestive_system_45",
-    "category": "digestive_system",
     "complexity": 1,
     "question": "What does the liver do?",
     "answer": "Makes bile and cleans blood",
@@ -361,7 +316,6 @@
   },
   {
     "id": "digestive_system_46",
-    "category": "digestive_system",
     "complexity": 2,
     "question": "What does the pancreas do?",
     "answer": "Makes juices for digestion",
@@ -369,7 +323,6 @@
   },
   {
     "id": "digestive_system_47",
-    "category": "digestive_system",
     "complexity": 3,
     "question": "What do teeth do?",
     "answer": "Chew food",
@@ -377,7 +330,6 @@
   },
   {
     "id": "digestive_system_48",
-    "category": "digestive_system",
     "complexity": 1,
     "question": "Why is saliva important?",
     "answer": "It softens food",
@@ -385,7 +337,6 @@
   },
   {
     "id": "digestive_system_49",
-    "category": "digestive_system",
     "complexity": 2,
     "question": "Why should we eat fiber?",
     "answer": "It helps digestion",
@@ -393,7 +344,6 @@
   },
   {
     "id": "digestive_system_50",
-    "category": "digestive_system",
     "complexity": 3,
     "question": "How long is the digestive tract?",
     "answer": "About 30 feet",
@@ -401,7 +351,6 @@
   },
   {
     "id": "nervous_system_51",
-    "category": "nervous_system",
     "complexity": 1,
     "question": "What does the brain do?",
     "answer": "Controls body and mind",
@@ -409,7 +358,6 @@
   },
   {
     "id": "nervous_system_52",
-    "category": "nervous_system",
     "complexity": 2,
     "question": "What does the spinal cord do?",
     "answer": "Carries messages",
@@ -417,7 +365,6 @@
   },
   {
     "id": "nervous_system_53",
-    "category": "nervous_system",
     "complexity": 3,
     "question": "What are nerves?",
     "answer": "Wires of the body",
@@ -425,7 +372,6 @@
   },
   {
     "id": "nervous_system_54",
-    "category": "nervous_system",
     "complexity": 1,
     "question": "What are reflexes?",
     "answer": "Quick actions without thinking",
@@ -433,7 +379,6 @@
   },
   {
     "id": "nervous_system_55",
-    "category": "nervous_system",
     "complexity": 2,
     "question": "What does the cerebrum do?",
     "answer": "Controls thinking and memory",
@@ -441,7 +386,6 @@
   },
   {
     "id": "nervous_system_56",
-    "category": "nervous_system",
     "complexity": 3,
     "question": "What does the cerebellum do?",
     "answer": "Controls balance",
@@ -449,7 +393,6 @@
   },
   {
     "id": "nervous_system_57",
-    "category": "nervous_system",
     "complexity": 1,
     "question": "What does the brain stem do?",
     "answer": "Controls breathing and heartbeat",
@@ -457,7 +400,6 @@
   },
   {
     "id": "nervous_system_58",
-    "category": "nervous_system",
     "complexity": 2,
     "question": "Why do cuts hurt?",
     "answer": "Nerves send pain signals",
@@ -465,7 +407,6 @@
   },
   {
     "id": "nervous_system_59",
-    "category": "nervous_system",
     "complexity": 3,
     "question": "Why do we dream?",
     "answer": "Brain activity during sleep",
@@ -473,7 +414,6 @@
   },
   {
     "id": "nervous_system_60",
-    "category": "nervous_system",
     "complexity": 1,
     "question": "Why do we forget things?",
     "answer": "Memories fade",
@@ -481,7 +421,6 @@
   },
   {
     "id": "senses_61",
-    "category": "senses",
     "complexity": 2,
     "question": "What helps us see?",
     "answer": "Eyes",
@@ -489,7 +428,6 @@
   },
   {
     "id": "senses_62",
-    "category": "senses",
     "complexity": 3,
     "question": "What helps us hear?",
     "answer": "Ears",
@@ -497,7 +435,6 @@
   },
   {
     "id": "senses_63",
-    "category": "senses",
     "complexity": 1,
     "question": "What helps us taste?",
     "answer": "Tongue",
@@ -505,7 +442,6 @@
   },
   {
     "id": "senses_64",
-    "category": "senses",
     "complexity": 2,
     "question": "What helps us smell?",
     "answer": "Nose",
@@ -513,7 +449,6 @@
   },
   {
     "id": "senses_65",
-    "category": "senses",
     "complexity": 3,
     "question": "What helps us touch?",
     "answer": "Skin",
@@ -521,7 +456,6 @@
   },
   {
     "id": "senses_66",
-    "category": "senses",
     "complexity": 1,
     "question": "What is the pupil?",
     "answer": "A hole in the eye",
@@ -529,7 +463,6 @@
   },
   {
     "id": "senses_67",
-    "category": "senses",
     "complexity": 2,
     "question": "What is the eardrum?",
     "answer": "A thin sheet in the ear",
@@ -537,7 +470,6 @@
   },
   {
     "id": "senses_68",
-    "category": "senses",
     "complexity": 3,
     "question": "What are fingerprints for?",
     "answer": "Grip and touch",
@@ -545,7 +477,6 @@
   },
   {
     "id": "senses_69",
-    "category": "senses",
     "complexity": 1,
     "question": "Why do onions make us cry?",
     "answer": "They release chemicals",
@@ -553,7 +484,6 @@
   },
   {
     "id": "senses_70",
-    "category": "senses",
     "complexity": 2,
     "question": "Why do ears pop on airplanes?",
     "answer": "Air pressure changes",
@@ -561,7 +491,6 @@
   },
   {
     "id": "skin_excretion_71",
-    "category": "skin_excretion",
     "complexity": 3,
     "question": "What is the largest organ?",
     "answer": "Skin",
@@ -569,7 +498,6 @@
   },
   {
     "id": "skin_excretion_72",
-    "category": "skin_excretion",
     "complexity": 1,
     "question": "What are sweat glands?",
     "answer": "Glands that make sweat",
@@ -577,7 +505,6 @@
   },
   {
     "id": "skin_excretion_73",
-    "category": "skin_excretion",
     "complexity": 2,
     "question": "Why do we sweat?",
     "answer": "To stay cool",
@@ -585,7 +512,6 @@
   },
   {
     "id": "skin_excretion_74",
-    "category": "skin_excretion",
     "complexity": 3,
     "question": "What are pores?",
     "answer": "Tiny holes in the skin",
@@ -593,7 +519,6 @@
   },
   {
     "id": "skin_excretion_75",
-    "category": "skin_excretion",
     "complexity": 1,
     "question": "Why do we get goosebumps?",
     "answer": "Tiny muscles pull hairs",
@@ -601,7 +526,6 @@
   },
   {
     "id": "skin_excretion_76",
-    "category": "skin_excretion",
     "complexity": 2,
     "question": "What do nails do?",
     "answer": "Protect fingers and toes",
@@ -609,7 +533,6 @@
   },
   {
     "id": "skin_excretion_77",
-    "category": "skin_excretion",
     "complexity": 3,
     "question": "What makes hair grow?",
     "answer": "Hair follicles in skin",
@@ -617,7 +540,6 @@
   },
   {
     "id": "skin_excretion_78",
-    "category": "skin_excretion",
     "complexity": 1,
     "question": "Why do we get scars?",
     "answer": "Skin heals with strong tissue",
@@ -625,7 +547,6 @@
   },
   {
     "id": "skin_excretion_79",
-    "category": "skin_excretion",
     "complexity": 2,
     "question": "Why do cuts bleed?",
     "answer": "Blood vessels under skin",
@@ -633,7 +554,6 @@
   },
   {
     "id": "skin_excretion_80",
-    "category": "skin_excretion",
     "complexity": 3,
     "question": "Why is skin important?",
     "answer": "Protects and senses",
@@ -641,7 +561,6 @@
   },
   {
     "id": "growth_health_81",
-    "category": "growth_health",
     "complexity": 1,
     "question": "Why do we need sleep?",
     "answer": "To rest and grow",
@@ -649,7 +568,6 @@
   },
   {
     "id": "growth_health_82",
-    "category": "growth_health",
     "complexity": 2,
     "question": "Why do we need exercise?",
     "answer": "To stay strong and healthy",
@@ -657,7 +575,6 @@
   },
   {
     "id": "growth_health_83",
-    "category": "growth_health",
     "complexity": 3,
     "question": "Why should we wash hands?",
     "answer": "To remove germs",
@@ -665,7 +582,6 @@
   },
   {
     "id": "growth_health_84",
-    "category": "growth_health",
     "complexity": 1,
     "question": "Why should we brush teeth?",
     "answer": "To stop cavities",
@@ -673,7 +589,6 @@
   },
   {
     "id": "growth_health_85",
-    "category": "growth_health",
     "complexity": 2,
     "question": "Why do we need vaccines?",
     "answer": "To protect from diseases",
@@ -681,7 +596,6 @@
   },
   {
     "id": "growth_health_86",
-    "category": "growth_health",
     "complexity": 3,
     "question": "Why should we drink water?",
     "answer": "To stay hydrated",
@@ -689,7 +603,6 @@
   },
   {
     "id": "growth_health_87",
-    "category": "growth_health",
     "complexity": 1,
     "question": "Why do we eat healthy food?",
     "answer": "For energy and growth",
@@ -697,7 +610,6 @@
   },
   {
     "id": "growth_health_88",
-    "category": "growth_health",
     "complexity": 2,
     "question": "Why do we rest when sick?",
     "answer": "To help the body heal",
@@ -705,7 +617,6 @@
   },
   {
     "id": "growth_health_89",
-    "category": "growth_health",
     "complexity": 3,
     "question": "Why should we cover coughs?",
     "answer": "To stop germs spreading",
@@ -713,7 +624,6 @@
   },
   {
     "id": "growth_health_90",
-    "category": "growth_health",
     "complexity": 1,
     "question": "Why is sunlight important?",
     "answer": "For vitamin D",
@@ -721,7 +631,6 @@
   },
   {
     "id": "fun_curiosity_91",
-    "category": "fun_curiosity",
     "complexity": 2,
     "question": "Why do we yawn?",
     "answer": "To take in more oxygen",
@@ -729,7 +638,6 @@
   },
   {
     "id": "fun_curiosity_92",
-    "category": "fun_curiosity",
     "complexity": 3,
     "question": "Why do we sneeze?",
     "answer": "To clear nose irritants",
@@ -737,7 +645,6 @@
   },
   {
     "id": "fun_curiosity_93",
-    "category": "fun_curiosity",
     "complexity": 1,
     "question": "Why do we hiccup?",
     "answer": "Sudden diaphragm movement",
@@ -745,7 +652,6 @@
   },
   {
     "id": "fun_curiosity_94",
-    "category": "fun_curiosity",
     "complexity": 2,
     "question": "Why does blood look red?",
     "answer": "Because of hemoglobin",
@@ -753,7 +659,6 @@
   },
   {
     "id": "fun_curiosity_95",
-    "category": "fun_curiosity",
     "complexity": 3,
     "question": "Why do we dream?",
     "answer": "Brain activity at night",
@@ -761,7 +666,6 @@
   },
   {
     "id": "fun_curiosity_96",
-    "category": "fun_curiosity",
     "complexity": 1,
     "question": "Why do our stomachs growl?",
     "answer": "Air and food moving",
@@ -769,7 +673,6 @@
   },
   {
     "id": "fun_curiosity_97",
-    "category": "fun_curiosity",
     "complexity": 2,
     "question": "Why do we get dizzy?",
     "answer": "Balance system upset",
@@ -777,7 +680,6 @@
   },
   {
     "id": "fun_curiosity_98",
-    "category": "fun_curiosity",
     "complexity": 3,
     "question": "Why do we get tired?",
     "answer": "Body needs rest",
@@ -785,7 +687,6 @@
   },
   {
     "id": "fun_curiosity_99",
-    "category": "fun_curiosity",
     "complexity": 1,
     "question": "Why do we laugh?",
     "answer": "Response to joy or surprise",
@@ -793,7 +694,6 @@
   },
   {
     "id": "fun_curiosity_100",
-    "category": "fun_curiosity",
     "complexity": 2,
     "question": "Why do we cry?",
     "answer": "To express emotion",
@@ -801,7 +701,6 @@
   },
   {
     "id": "skeleton_bones_101",
-    "category": "skeleton_bones",
     "complexity": 2,
     "question": "How many bones are in an adult human body?",
     "answer": "206 bones",
@@ -809,7 +708,6 @@
   },
   {
     "id": "skeleton_bones_102",
-    "category": "skeleton_bones",
     "complexity": 3,
     "question": "What is the largest bone in the human body?",
     "answer": "Femur (thighbone)",
@@ -817,7 +715,6 @@
   },
   {
     "id": "skeleton_bones_103",
-    "category": "skeleton_bones",
     "complexity": 4,
     "question": "What is the smallest bone in the body?",
     "answer": "Stapes (in the ear)",
@@ -825,7 +722,6 @@
   },
   {
     "id": "skeleton_bones_104",
-    "category": "skeleton_bones",
     "complexity": 5,
     "question": "What does your skull protect?",
     "answer": "Your brain",
@@ -833,7 +729,6 @@
   },
   {
     "id": "skeleton_bones_105",
-    "category": "skeleton_bones",
     "complexity": 1,
     "question": "How many ribs do humans have?",
     "answer": "24 ribs (12 pairs)",
@@ -841,7 +736,6 @@
   },
   {
     "id": "skeleton_bones_106",
-    "category": "skeleton_bones",
     "complexity": 2,
     "question": "What does the spine protect?",
     "answer": "The spinal cord",
@@ -849,7 +743,6 @@
   },
   {
     "id": "skeleton_bones_107",
-    "category": "skeleton_bones",
     "complexity": 3,
     "question": "Which bone protects your heart and lungs at the front?",
     "answer": "Sternum (breastbone)",
@@ -857,7 +750,6 @@
   },
   {
     "id": "skeleton_bones_108",
-    "category": "skeleton_bones",
     "complexity": 4,
     "question": "What is bone marrow?",
     "answer": "A soft tissue inside bones",
@@ -865,7 +757,6 @@
   },
   {
     "id": "skeleton_bones_109",
-    "category": "skeleton_bones",
     "complexity": 5,
     "question": "What minerals make bones strong?",
     "answer": "Calcium and phosphorus",
@@ -873,7 +764,6 @@
   },
   {
     "id": "skeleton_bones_110",
-    "category": "skeleton_bones",
     "complexity": 1,
     "question": "How do broken bones heal?",
     "answer": "By forming new bone tissue",
@@ -881,7 +771,6 @@
   },
   {
     "id": "muscles_movement_111",
-    "category": "muscles_movement",
     "complexity": 2,
     "question": "About how many muscles are in the body?",
     "answer": "Over 600",
@@ -889,7 +778,6 @@
   },
   {
     "id": "muscles_movement_112",
-    "category": "muscles_movement",
     "complexity": 3,
     "question": "What is the strongest muscle by force?",
     "answer": "Jaw muscle (masseter)",
@@ -897,7 +785,6 @@
   },
   {
     "id": "muscles_movement_113",
-    "category": "muscles_movement",
     "complexity": 4,
     "question": "What are voluntary muscles?",
     "answer": "Muscles we control",
@@ -905,7 +792,6 @@
   },
   {
     "id": "muscles_movement_114",
-    "category": "muscles_movement",
     "complexity": 5,
     "question": "What are involuntary muscles?",
     "answer": "Muscles that work automatically",
@@ -913,7 +799,6 @@
   },
   {
     "id": "muscles_movement_115",
-    "category": "muscles_movement",
     "complexity": 1,
     "question": "What connects muscles to bones?",
     "answer": "Tendons",
@@ -921,7 +806,6 @@
   },
   {
     "id": "muscles_movement_116",
-    "category": "muscles_movement",
     "complexity": 2,
     "question": "What connects bones to bones?",
     "answer": "Ligaments",
@@ -929,7 +813,6 @@
   },
   {
     "id": "muscles_movement_117",
-    "category": "muscles_movement",
     "complexity": 3,
     "question": "Why do muscles get tired?",
     "answer": "Because they use up energy",
@@ -937,7 +820,6 @@
   },
   {
     "id": "muscles_movement_118",
-    "category": "muscles_movement",
     "complexity": 4,
     "question": "Which muscle never rests?",
     "answer": "The heart",
@@ -945,7 +827,6 @@
   },
   {
     "id": "muscles_movement_119",
-    "category": "muscles_movement",
     "complexity": 5,
     "question": "What is a reflex action?",
     "answer": "A quick, automatic response",
@@ -953,7 +834,6 @@
   },
   {
     "id": "muscles_movement_120",
-    "category": "muscles_movement",
     "complexity": 1,
     "question": "Why do we shiver?",
     "answer": "Muscles contract to make heat",
@@ -961,7 +841,6 @@
   },
   {
     "id": "circulatory_system_121",
-    "category": "circulatory_system",
     "complexity": 2,
     "question": "What does the heart do?",
     "answer": "Pumps blood",
@@ -969,7 +848,6 @@
   },
   {
     "id": "circulatory_system_122",
-    "category": "circulatory_system",
     "complexity": 3,
     "question": "What is pulse?",
     "answer": "The beat of blood in arteries",
@@ -977,7 +855,6 @@
   },
   {
     "id": "circulatory_system_123",
-    "category": "circulatory_system",
     "complexity": 4,
     "question": "What are red blood cells?",
     "answer": "Cells that carry oxygen",
@@ -985,7 +862,6 @@
   },
   {
     "id": "circulatory_system_124",
-    "category": "circulatory_system",
     "complexity": 5,
     "question": "What are white blood cells?",
     "answer": "Cells that fight germs",
@@ -993,7 +869,6 @@
   },
   {
     "id": "circulatory_system_125",
-    "category": "circulatory_system",
     "complexity": 1,
     "question": "What are platelets?",
     "answer": "Cells that help blood clot",
@@ -1001,7 +876,6 @@
   },
   {
     "id": "circulatory_system_126",
-    "category": "circulatory_system",
     "complexity": 2,
     "question": "What do veins do?",
     "answer": "Carry blood back to the heart",
@@ -1009,7 +883,6 @@
   },
   {
     "id": "circulatory_system_127",
-    "category": "circulatory_system",
     "complexity": 3,
     "question": "What do arteries do?",
     "answer": "Carry blood away from the heart",
@@ -1017,7 +890,6 @@
   },
   {
     "id": "circulatory_system_128",
-    "category": "circulatory_system",
     "complexity": 4,
     "question": "What are capillaries?",
     "answer": "Tiny blood vessels",
@@ -1025,7 +897,6 @@
   },
   {
     "id": "circulatory_system_129",
-    "category": "circulatory_system",
     "complexity": 5,
     "question": "Why is blood red?",
     "answer": "Because of hemoglobin",
@@ -1033,7 +904,6 @@
   },
   {
     "id": "circulatory_system_130",
-    "category": "circulatory_system",
     "complexity": 1,
     "question": "Why does your heart beat faster when you run?",
     "answer": "Muscles need more oxygen",
@@ -1041,7 +911,6 @@
   },
   {
     "id": "respiratory_system_131",
-    "category": "respiratory_system",
     "complexity": 2,
     "question": "What gas do we breathe in?",
     "answer": "Oxygen",
@@ -1049,7 +918,6 @@
   },
   {
     "id": "respiratory_system_132",
-    "category": "respiratory_system",
     "complexity": 3,
     "question": "What gas do we breathe out?",
     "answer": "Carbon dioxide",
@@ -1057,7 +925,6 @@
   },
   {
     "id": "respiratory_system_133",
-    "category": "respiratory_system",
     "complexity": 4,
     "question": "What muscle helps us breathe?",
     "answer": "Diaphragm",
@@ -1065,7 +932,6 @@
   },
   {
     "id": "respiratory_system_134",
-    "category": "respiratory_system",
     "complexity": 5,
     "question": "What are alveoli?",
     "answer": "Tiny air sacs in lungs",
@@ -1073,7 +939,6 @@
   },
   {
     "id": "respiratory_system_135",
-    "category": "respiratory_system",
     "complexity": 1,
     "question": "Why do we sneeze?",
     "answer": "To clear dust or germs",
@@ -1081,7 +946,6 @@
   },
   {
     "id": "respiratory_system_136",
-    "category": "respiratory_system",
     "complexity": 2,
     "question": "Why do we hiccup?",
     "answer": "Sudden diaphragm contractions",
@@ -1089,7 +953,6 @@
   },
   {
     "id": "respiratory_system_137",
-    "category": "respiratory_system",
     "complexity": 3,
     "question": "What does the nose do?",
     "answer": "Filters and warms air",
@@ -1097,7 +960,6 @@
   },
   {
     "id": "respiratory_system_138",
-    "category": "respiratory_system",
     "complexity": 4,
     "question": "Why do we yawn?",
     "answer": "To take in more oxygen",
@@ -1105,7 +967,6 @@
   },
   {
     "id": "respiratory_system_139",
-    "category": "respiratory_system",
     "complexity": 5,
     "question": "Why is breathing through the nose better?",
     "answer": "It cleans and moistens air",
@@ -1113,7 +974,6 @@
   },
   {
     "id": "respiratory_system_140",
-    "category": "respiratory_system",
     "complexity": 1,
     "question": "What protects the lungs?",
     "answer": "The rib cage",
@@ -1121,7 +981,6 @@
   },
   {
     "id": "digestive_system_141",
-    "category": "digestive_system",
     "complexity": 2,
     "question": "What is digestion?",
     "answer": "Breaking food into small parts",
@@ -1129,7 +988,6 @@
   },
   {
     "id": "digestive_system_142",
-    "category": "digestive_system",
     "complexity": 3,
     "question": "What does the stomach do?",
     "answer": "Breaks food with juices",
@@ -1137,7 +995,6 @@
   },
   {
     "id": "digestive_system_143",
-    "category": "digestive_system",
     "complexity": 4,
     "question": "What does the small intestine do?",
     "answer": "Absorbs nutrients",
@@ -1145,7 +1002,6 @@
   },
   {
     "id": "digestive_system_144",
-    "category": "digestive_system",
     "complexity": 5,
     "question": "What does the large intestine do?",
     "answer": "Absorbs water",
@@ -1153,7 +1009,6 @@
   },
   {
     "id": "digestive_system_145",
-    "category": "digestive_system",
     "complexity": 1,
     "question": "What does the liver do?",
     "answer": "Makes bile and cleans blood",
@@ -1161,7 +1016,6 @@
   },
   {
     "id": "digestive_system_146",
-    "category": "digestive_system",
     "complexity": 2,
     "question": "What does the pancreas do?",
     "answer": "Makes juices for digestion",
@@ -1169,7 +1023,6 @@
   },
   {
     "id": "digestive_system_147",
-    "category": "digestive_system",
     "complexity": 3,
     "question": "What do teeth do?",
     "answer": "Chew food",
@@ -1177,7 +1030,6 @@
   },
   {
     "id": "digestive_system_148",
-    "category": "digestive_system",
     "complexity": 4,
     "question": "Why is saliva important?",
     "answer": "It softens food",
@@ -1185,7 +1037,6 @@
   },
   {
     "id": "digestive_system_149",
-    "category": "digestive_system",
     "complexity": 5,
     "question": "Why should we eat fiber?",
     "answer": "It helps digestion",
@@ -1193,7 +1044,6 @@
   },
   {
     "id": "digestive_system_150",
-    "category": "digestive_system",
     "complexity": 1,
     "question": "How long is the digestive tract?",
     "answer": "About 30 feet",
@@ -1201,7 +1051,6 @@
   },
   {
     "id": "nervous_system_151",
-    "category": "nervous_system",
     "complexity": 2,
     "question": "What does the brain do?",
     "answer": "Controls body and mind",
@@ -1209,7 +1058,6 @@
   },
   {
     "id": "nervous_system_152",
-    "category": "nervous_system",
     "complexity": 3,
     "question": "What does the spinal cord do?",
     "answer": "Carries messages",
@@ -1217,7 +1065,6 @@
   },
   {
     "id": "nervous_system_153",
-    "category": "nervous_system",
     "complexity": 4,
     "question": "What are nerves?",
     "answer": "Wires of the body",
@@ -1225,7 +1072,6 @@
   },
   {
     "id": "nervous_system_154",
-    "category": "nervous_system",
     "complexity": 5,
     "question": "What are reflexes?",
     "answer": "Quick actions without thinking",
@@ -1233,7 +1079,6 @@
   },
   {
     "id": "nervous_system_155",
-    "category": "nervous_system",
     "complexity": 1,
     "question": "What does the cerebrum do?",
     "answer": "Controls thinking and memory",
@@ -1241,7 +1086,6 @@
   },
   {
     "id": "nervous_system_156",
-    "category": "nervous_system",
     "complexity": 2,
     "question": "What does the cerebellum do?",
     "answer": "Controls balance",
@@ -1249,7 +1093,6 @@
   },
   {
     "id": "nervous_system_157",
-    "category": "nervous_system",
     "complexity": 3,
     "question": "What does the brain stem do?",
     "answer": "Controls breathing and heartbeat",
@@ -1257,7 +1100,6 @@
   },
   {
     "id": "nervous_system_158",
-    "category": "nervous_system",
     "complexity": 4,
     "question": "Why do cuts hurt?",
     "answer": "Nerves send pain signals",
@@ -1265,7 +1107,6 @@
   },
   {
     "id": "nervous_system_159",
-    "category": "nervous_system",
     "complexity": 5,
     "question": "Why do we dream?",
     "answer": "Brain activity during sleep",
@@ -1273,7 +1114,6 @@
   },
   {
     "id": "nervous_system_160",
-    "category": "nervous_system",
     "complexity": 1,
     "question": "Why do we forget things?",
     "answer": "Memories fade",
@@ -1281,7 +1121,6 @@
   },
   {
     "id": "senses_161",
-    "category": "senses",
     "complexity": 2,
     "question": "What helps us see?",
     "answer": "Eyes",
@@ -1289,7 +1128,6 @@
   },
   {
     "id": "senses_162",
-    "category": "senses",
     "complexity": 3,
     "question": "What helps us hear?",
     "answer": "Ears",
@@ -1297,7 +1135,6 @@
   },
   {
     "id": "senses_163",
-    "category": "senses",
     "complexity": 4,
     "question": "What helps us taste?",
     "answer": "Tongue",
@@ -1305,7 +1142,6 @@
   },
   {
     "id": "senses_164",
-    "category": "senses",
     "complexity": 5,
     "question": "What helps us smell?",
     "answer": "Nose",
@@ -1313,7 +1149,6 @@
   },
   {
     "id": "senses_165",
-    "category": "senses",
     "complexity": 1,
     "question": "What helps us touch?",
     "answer": "Skin",
@@ -1321,7 +1156,6 @@
   },
   {
     "id": "senses_166",
-    "category": "senses",
     "complexity": 2,
     "question": "What is the pupil?",
     "answer": "A hole in the eye",
@@ -1329,7 +1163,6 @@
   },
   {
     "id": "senses_167",
-    "category": "senses",
     "complexity": 3,
     "question": "What is the eardrum?",
     "answer": "A thin sheet in the ear",
@@ -1337,7 +1170,6 @@
   },
   {
     "id": "senses_168",
-    "category": "senses",
     "complexity": 4,
     "question": "What are fingerprints for?",
     "answer": "Grip and touch",
@@ -1345,7 +1177,6 @@
   },
   {
     "id": "senses_169",
-    "category": "senses",
     "complexity": 5,
     "question": "Why do onions make us cry?",
     "answer": "They release chemicals",
@@ -1353,7 +1184,6 @@
   },
   {
     "id": "senses_170",
-    "category": "senses",
     "complexity": 1,
     "question": "Why do ears pop on airplanes?",
     "answer": "Air pressure changes",
@@ -1361,7 +1191,6 @@
   },
   {
     "id": "skin_excretion_171",
-    "category": "skin_excretion",
     "complexity": 2,
     "question": "What is the largest organ?",
     "answer": "Skin",
@@ -1369,7 +1198,6 @@
   },
   {
     "id": "skin_excretion_172",
-    "category": "skin_excretion",
     "complexity": 3,
     "question": "What are sweat glands?",
     "answer": "Glands that make sweat",
@@ -1377,7 +1205,6 @@
   },
   {
     "id": "skin_excretion_173",
-    "category": "skin_excretion",
     "complexity": 4,
     "question": "Why do we sweat?",
     "answer": "To stay cool",
@@ -1385,7 +1212,6 @@
   },
   {
     "id": "skin_excretion_174",
-    "category": "skin_excretion",
     "complexity": 5,
     "question": "What are pores?",
     "answer": "Tiny holes in the skin",
@@ -1393,7 +1219,6 @@
   },
   {
     "id": "skin_excretion_175",
-    "category": "skin_excretion",
     "complexity": 1,
     "question": "Why do we get goosebumps?",
     "answer": "Tiny muscles pull hairs",
@@ -1401,7 +1226,6 @@
   },
   {
     "id": "skin_excretion_176",
-    "category": "skin_excretion",
     "complexity": 2,
     "question": "What do nails do?",
     "answer": "Protect fingers and toes",
@@ -1409,7 +1233,6 @@
   },
   {
     "id": "skin_excretion_177",
-    "category": "skin_excretion",
     "complexity": 3,
     "question": "What makes hair grow?",
     "answer": "Hair follicles in skin",
@@ -1417,7 +1240,6 @@
   },
   {
     "id": "skin_excretion_178",
-    "category": "skin_excretion",
     "complexity": 4,
     "question": "Why do we get scars?",
     "answer": "Skin heals with strong tissue",
@@ -1425,7 +1247,6 @@
   },
   {
     "id": "skin_excretion_179",
-    "category": "skin_excretion",
     "complexity": 5,
     "question": "Why do cuts bleed?",
     "answer": "Blood vessels under skin",
@@ -1433,7 +1254,6 @@
   },
   {
     "id": "skin_excretion_180",
-    "category": "skin_excretion",
     "complexity": 1,
     "question": "Why is skin important?",
     "answer": "Protects and senses",
@@ -1441,7 +1261,6 @@
   },
   {
     "id": "growth_health_181",
-    "category": "growth_health",
     "complexity": 2,
     "question": "Why do we need sleep?",
     "answer": "To rest and grow",
@@ -1449,7 +1268,6 @@
   },
   {
     "id": "growth_health_182",
-    "category": "growth_health",
     "complexity": 3,
     "question": "Why do we need exercise?",
     "answer": "To stay strong and healthy",
@@ -1457,7 +1275,6 @@
   },
   {
     "id": "growth_health_183",
-    "category": "growth_health",
     "complexity": 4,
     "question": "Why should we wash hands?",
     "answer": "To remove germs",
@@ -1465,7 +1282,6 @@
   },
   {
     "id": "growth_health_184",
-    "category": "growth_health",
     "complexity": 5,
     "question": "Why should we brush teeth?",
     "answer": "To stop cavities",
@@ -1473,7 +1289,6 @@
   },
   {
     "id": "growth_health_185",
-    "category": "growth_health",
     "complexity": 1,
     "question": "Why do we need vaccines?",
     "answer": "To protect from diseases",
@@ -1481,7 +1296,6 @@
   },
   {
     "id": "growth_health_186",
-    "category": "growth_health",
     "complexity": 2,
     "question": "Why should we drink water?",
     "answer": "To stay hydrated",
@@ -1489,7 +1303,6 @@
   },
   {
     "id": "growth_health_187",
-    "category": "growth_health",
     "complexity": 3,
     "question": "Why do we eat healthy food?",
     "answer": "For energy and growth",
@@ -1497,7 +1310,6 @@
   },
   {
     "id": "growth_health_188",
-    "category": "growth_health",
     "complexity": 4,
     "question": "Why do we rest when sick?",
     "answer": "To help the body heal",
@@ -1505,7 +1317,6 @@
   },
   {
     "id": "growth_health_189",
-    "category": "growth_health",
     "complexity": 5,
     "question": "Why should we cover coughs?",
     "answer": "To stop germs spreading",
@@ -1513,7 +1324,6 @@
   },
   {
     "id": "growth_health_190",
-    "category": "growth_health",
     "complexity": 1,
     "question": "Why is sunlight important?",
     "answer": "For vitamin D",
@@ -1521,7 +1331,6 @@
   },
   {
     "id": "fun_curiosity_191",
-    "category": "fun_curiosity",
     "complexity": 2,
     "question": "Why do we yawn?",
     "answer": "To take in more oxygen",
@@ -1529,7 +1338,6 @@
   },
   {
     "id": "fun_curiosity_192",
-    "category": "fun_curiosity",
     "complexity": 3,
     "question": "Why do we sneeze?",
     "answer": "To clear nose irritants",
@@ -1537,7 +1345,6 @@
   },
   {
     "id": "fun_curiosity_193",
-    "category": "fun_curiosity",
     "complexity": 4,
     "question": "Why do we hiccup?",
     "answer": "Sudden diaphragm movement",
@@ -1545,7 +1352,6 @@
   },
   {
     "id": "fun_curiosity_194",
-    "category": "fun_curiosity",
     "complexity": 5,
     "question": "Why does blood look red?",
     "answer": "Because of hemoglobin",
@@ -1553,7 +1359,6 @@
   },
   {
     "id": "fun_curiosity_195",
-    "category": "fun_curiosity",
     "complexity": 1,
     "question": "Why do we dream?",
     "answer": "Brain activity at night",
@@ -1561,7 +1366,6 @@
   },
   {
     "id": "fun_curiosity_196",
-    "category": "fun_curiosity",
     "complexity": 2,
     "question": "Why do our stomachs growl?",
     "answer": "Air and food moving",
@@ -1569,7 +1373,6 @@
   },
   {
     "id": "fun_curiosity_197",
-    "category": "fun_curiosity",
     "complexity": 3,
     "question": "Why do we get dizzy?",
     "answer": "Balance system upset",
@@ -1577,7 +1380,6 @@
   },
   {
     "id": "fun_curiosity_198",
-    "category": "fun_curiosity",
     "complexity": 4,
     "question": "Why do we get tired?",
     "answer": "Body needs rest",
@@ -1585,7 +1387,6 @@
   },
   {
     "id": "fun_curiosity_199",
-    "category": "fun_curiosity",
     "complexity": 5,
     "question": "Why do we laugh?",
     "answer": "Response to joy or surprise",
@@ -1593,7 +1394,6 @@
   },
   {
     "id": "fun_curiosity_200",
-    "category": "fun_curiosity",
     "complexity": 1,
     "question": "Why do we cry?",
     "answer": "To express emotion",

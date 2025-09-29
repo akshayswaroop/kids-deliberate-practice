@@ -1,0 +1,79 @@
+[
+  {
+    "id": "swaragalu_01",
+    "complexity": 1,
+    "question": "ಅ",
+    "answer": "Hindi: अ | English: A",
+    "notes": "Examples:\n• ಅಮ್ಮ (Amma) = माँ (mother)\n• ಅಕ್ಕಿ (Akki) = चावल (rice)\n• ಅಡಿ (Adi) = पैर (foot)"
+  },
+  {
+    "id": "swaragalu_02",
+    "complexity": 1,
+    "question": "ಆ",
+    "answer": "Hindi: आ | English: Ā",
+    "notes": "Examples:\n• ಆಟ (Āṭa) = खेल (game/play)\n• ಆನೆ (Āne) = हाथी (elephant)\n• ಆಭರಣ (Ābharaṇa) = गहना (jewelry)"
+  },
+  {
+    "id": "swaragalu_03",
+    "complexity": 1,
+    "question": "ಇ",
+    "answer": "Hindi: इ | English: I",
+    "notes": "Examples:\n• ಇಲಿ (Ili) = चूहा (mouse)\n• ಇಟ್ಟು (Iṭṭu) = ईंट (brick)\n• ಇಂದ್ರ (Indra) = इन्द्र (Lord Indra)"
+  },
+  {
+    "id": "swaragalu_04",
+    "complexity": 1,
+    "question": "ಈ",
+    "answer": "Hindi: ई | English: Ī",
+    "notes": "Examples:\n• ಈಗ (Īga) = अभी (now)\n• ಈರುಳ್ಳಿ (Īruḷḷi) = प्याज (onion)\n• ಈಕ (Īka) = मादा (female)"
+  },
+  {
+    "id": "vyanjanagalu_01",
+    "complexity": 2,
+    "question": "ಕ",
+    "answer": "Hindi: क | English: Ka",
+    "notes": "Examples:\n• ಕಾಗೆ (Kāge) = कौआ (crow)\n• ಕಡಲೆ (Kaḍale) = चना (gram/chickpea)\n• ಕರಡಿ (Karaḍi) = भालू (bear)"
+  },
+  {
+    "id": "vyanjanagalu_02",
+    "complexity": 2,
+    "question": "ಖ",
+    "answer": "Hindi: ख | English: Kha",
+    "notes": "Examples:\n• ಖಡ್ಗ (Khaḍga) = तलवार (sword)\n• ಖಾನಾ (Khānā) = खाना (food)\n• ಖರ್ಚು (Kharchu) = खर्च (expense)"
+  },
+  {
+    "id": "vyanjanagalu_03",
+    "complexity": 2,
+    "question": "ಗ",
+    "answer": "Hindi: ग | English: Ga",
+    "notes": "Examples:\n• ಗಜ (Gaja) = हाथी (elephant)\n• ಗಡಿಯಾರ (Gaḍiyāra) = घड़ी (clock)\n• ಗಂಗಾ (Gaṅgā) = गंगा (River Ganga)"
+  },
+  {
+    "id": "matregalu_01",
+    "complexity": 3,
+    "question": "ಾ",
+    "answer": "Hindi: ा | English: Ā (long A vowel mark)",
+    "notes": "Examples:\n• ಮಾಲೆ (Māle) = माला (garland)\n• ಕಾಲು (Kālu) = पैर (leg/foot)\n• ದಾರಿ (Dāri) = रास्ता (path/road)"
+  },
+  {
+    "id": "matregalu_02",
+    "complexity": 3,
+    "question": "ಿ",
+    "answer": "Hindi: ि | English: I (short I vowel mark)",
+    "notes": "Examples:\n• ಮಿನುಗು (Minugu) = चमक (shine/sparkle)\n• ಕಿರಿ (Kiri) = छोटा (small)\n• ಚಿತ್ರ (Chitra) = चित्र (picture)"
+  },
+  {
+    "id": "ottakshara_01",
+    "complexity": 4,
+    "question": "ಕ್ಕ",
+    "answer": "Hindi: क्क | English: Kka (double K consonant)",
+    "notes": "Examples:\n• ಅಕ್ಕ (Akka) = बड़ी बहन (elder sister)\n• ಹಕ್ಕಿ (Hakki) = पक्षी (bird)\n• ಮಕ್ಕಳು (Makkalu) = बच्चे (children)"
+  },
+  {
+    "id": "ottakshara_02",
+    "complexity": 4,
+    "question": "ತ್ರ",
+    "answer": "Hindi: त्र | English: Tra (T+R consonant cluster)",
+    "notes": "Examples:\n• ಮಿತ್ರ (Mitra) = मित्र (friend)\n• ಚಿತ್ರ (Chitra) = चित्र (picture)\n• ಪಾತ್ರ (Pātra) = पात्र (vessel/character)"
+  }
+]

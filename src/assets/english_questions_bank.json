@@ -1,0 +1,618 @@
+[
+  {
+    "id": "an",
+    "complexity": 1,
+    "question": "an",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "at",
+    "complexity": 1,
+    "question": "at",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "am",
+    "complexity": 1,
+    "question": "am",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "as",
+    "complexity": 1,
+    "question": "as",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "be",
+    "complexity": 1,
+    "question": "be",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "by",
+    "complexity": 1,
+    "question": "by",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "do",
+    "complexity": 1,
+    "question": "do",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "go",
+    "complexity": 1,
+    "question": "go",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "he",
+    "complexity": 1,
+    "question": "he",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "hi",
+    "complexity": 1,
+    "question": "hi",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "if",
+    "complexity": 1,
+    "question": "if",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "in",
+    "complexity": 1,
+    "question": "in",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "is",
+    "complexity": 1,
+    "question": "is",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "it",
+    "complexity": 1,
+    "question": "it",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "me",
+    "complexity": 1,
+    "question": "me",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "my",
+    "complexity": 1,
+    "question": "my",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "no",
+    "complexity": 1,
+    "question": "no",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "of",
+    "complexity": 1,
+    "question": "of",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "on",
+    "complexity": 1,
+    "question": "on",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "or",
+    "complexity": 1,
+    "question": "or",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "so",
+    "complexity": 1,
+    "question": "so",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "to",
+    "complexity": 1,
+    "question": "to",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "up",
+    "complexity": 1,
+    "question": "up",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "us",
+    "complexity": 1,
+    "question": "us",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "we",
+    "complexity": 1,
+    "question": "we",
+    "answer": "",
+    "notes": "Basic phonics word"
+  },
+  {
+    "id": "bat",
+    "complexity": 2,
+    "question": "bat",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "cat",
+    "complexity": 2,
+    "question": "cat",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "dog",
+    "complexity": 2,
+    "question": "dog",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "egg",
+    "complexity": 2,
+    "question": "egg",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "fan",
+    "complexity": 2,
+    "question": "fan",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "hat",
+    "complexity": 2,
+    "question": "hat",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "jam",
+    "complexity": 2,
+    "question": "jam",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "kid",
+    "complexity": 2,
+    "question": "kid",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "log",
+    "complexity": 2,
+    "question": "log",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "man",
+    "complexity": 2,
+    "question": "man",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "nap",
+    "complexity": 2,
+    "question": "nap",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "owl",
+    "complexity": 2,
+    "question": "owl",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "pan",
+    "complexity": 2,
+    "question": "pan",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "rat",
+    "complexity": 2,
+    "question": "rat",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "sun",
+    "complexity": 2,
+    "question": "sun",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "tap",
+    "complexity": 2,
+    "question": "tap",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "van",
+    "complexity": 2,
+    "question": "van",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "win",
+    "complexity": 2,
+    "question": "win",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "zip",
+    "complexity": 2,
+    "question": "zip",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "box",
+    "complexity": 2,
+    "question": "box",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "bus",
+    "complexity": 2,
+    "question": "bus",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "cup",
+    "complexity": 2,
+    "question": "cup",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "dot",
+    "complexity": 2,
+    "question": "dot",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "fox",
+    "complexity": 2,
+    "question": "fox",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "gum",
+    "complexity": 2,
+    "question": "gum",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "hen",
+    "complexity": 2,
+    "question": "hen",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "jar",
+    "complexity": 2,
+    "question": "jar",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "kit",
+    "complexity": 2,
+    "question": "kit",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "lap",
+    "complexity": 2,
+    "question": "lap",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "map",
+    "complexity": 2,
+    "question": "map",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "net",
+    "complexity": 2,
+    "question": "net",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "pen",
+    "complexity": 2,
+    "question": "pen",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "red",
+    "complexity": 2,
+    "question": "red",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "sad",
+    "complexity": 2,
+    "question": "sad",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "ten",
+    "complexity": 2,
+    "question": "ten",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "vet",
+    "complexity": 2,
+    "question": "vet",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "wax",
+    "complexity": 2,
+    "question": "wax",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "yak",
+    "complexity": 2,
+    "question": "yak",
+    "answer": "",
+    "notes": "Three letter CVC word"
+  },
+  {
+    "id": "big",
+    "complexity": 3,
+    "question": "big",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "bug",
+    "complexity": 3,
+    "question": "bug",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "cut",
+    "complexity": 3,
+    "question": "cut",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "dig",
+    "complexity": 3,
+    "question": "dig",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "fit",
+    "complexity": 3,
+    "question": "fit",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "got",
+    "complexity": 3,
+    "question": "got",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "hot",
+    "complexity": 3,
+    "question": "hot",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "jet",
+    "complexity": 3,
+    "question": "jet",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "let",
+    "complexity": 3,
+    "question": "let",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "mix",
+    "complexity": 3,
+    "question": "mix",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "not",
+    "complexity": 3,
+    "question": "not",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "pit",
+    "complexity": 3,
+    "question": "pit",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "run",
+    "complexity": 3,
+    "question": "run",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "sit",
+    "complexity": 3,
+    "question": "sit",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "top",
+    "complexity": 3,
+    "question": "top",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "wet",
+    "complexity": 3,
+    "question": "wet",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "yes",
+    "complexity": 3,
+    "question": "yes",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "zig",
+    "complexity": 3,
+    "question": "zig",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "hop",
+    "complexity": 3,
+    "question": "hop",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "mat",
+    "complexity": 3,
+    "question": "mat",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "pat",
+    "complexity": 3,
+    "question": "pat",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "rag",
+    "complexity": 3,
+    "question": "rag",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "sip",
+    "complexity": 3,
+    "question": "sip",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "tag",
+    "complexity": 3,
+    "question": "tag",
+    "answer": "",
+    "notes": "Complex CVC word"
+  },
+  {
+    "id": "wig",
+    "complexity": 3,
+    "question": "wig",
+    "answer": "",
+    "notes": "Complex CVC word"
+  }
+]

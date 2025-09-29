@@ -1,4 +1,5 @@
 // No need to import React in TSX files with React 17+
+import { SUBJECT_CONFIGS } from '../subjectLoader';
 
 interface ModeSelectorProps {
   mode: string;
@@ -26,13 +27,11 @@ export default function ModeSelector({ mode, onSetMode, compact = false }: ModeS
           transition: 'all 0.3s ease'
         }}
       >
-        <option value="english">🇺🇸 English</option>
-        <option value="kannada">🇮🇳 Kannada</option>
-        <option value="mathtables">🔢 Math Tables</option>
-        <option value="humanbody">🧠 Human Body</option>
-        <option value="indiageography">🗺️ India Geography</option>
-        <option value="grampanchayat">🏛️ Gram Panchayat</option>
-        <option value="hanuman">🕉️ Hanuman Chalisa</option>
+        {SUBJECT_CONFIGS.map(subject => (
+          <option key={subject.name} value={subject.name}>
+            {subject.displayIcon} {subject.displayLabel}
+          </option>
+        ))}
       </select>
     </div>
   );

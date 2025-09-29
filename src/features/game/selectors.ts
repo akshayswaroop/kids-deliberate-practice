@@ -1,5 +1,5 @@
 import type { RootState, Word } from "./state";
-import { TRANSLITERATION_MODES, ANSWER_MODES, isMastered, MASTER_STEP, MODE_CONFIG } from './modeConfig';
+import { TRANSLITERATION_MODES, isMastered, MASTER_STEP, MODE_CONFIG } from './modeConfig';
 
 // Step-based mastery calculation per new spec (0-5 where 5 = mastered)
 export function selectMasteryStep(state: RootState, wordId: string): number {
@@ -242,7 +242,8 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   // Configuration-driven mode categorization (no more hardcoded mode lists!)
   // Import from shared config to keep modes in sync across components
   const shouldShowTransliteration = TRANSLITERATION_MODES.includes(mode) && session?.revealed === true;
-  const shouldShowAnswer = ANSWER_MODES.includes(mode) && session?.revealed === true;
+  // Universal answer/notes logic - show if the word has these fields and session is revealed
+  const shouldShowAnswer = session?.revealed === true;
 
   // If transliteration mode declares that its transliteration should act as the canonical answer,
   // surface the specified field on the current word as `answer` so the UI (details panel) shows it.
