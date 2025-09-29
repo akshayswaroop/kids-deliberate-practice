@@ -40,9 +40,10 @@ export default function ProfileForm({
           fontSize: compact ? '14px' : '16px',
           fontWeight: 600,
           minWidth: '120px',
-          background: '#ffffff',
-          color: '#1f2937',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          background: 'var(--bg-secondary)',
+          color: 'var(--text-primary)',
+          boxShadow: 'var(--shadow-soft)',
+          transition: 'all 0.3s ease'
         }}
       >
         <option value="">— Select or create user —</option>
@@ -56,8 +57,8 @@ export default function ProfileForm({
         <button
           onClick={() => onToggleCreateForm(true)}
           style={{ 
-            background: '#4f46e5', 
-            color: '#ffffff', 
+            background: 'var(--button-create-bg)', 
+            color: 'var(--text-inverse)', 
             border: 'none', 
             borderRadius: 8, 
             padding: compact ? '6px 12px' : '8px 16px', 
@@ -65,7 +66,7 @@ export default function ProfileForm({
             fontWeight: 600, 
             cursor: 'pointer',
             transition: 'all 0.2s',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            boxShadow: 'var(--shadow-soft)'
           }}
         >
           + Add User
@@ -82,7 +83,10 @@ export default function ProfileForm({
               borderRadius: 8, 
               border: 'none',
               fontSize: compact ? '14px' : '16px',
-              minWidth: '100px'
+              minWidth: '100px',
+              background: 'var(--bg-secondary)',
+              color: 'var(--text-primary)',
+              transition: 'all 0.3s ease'
             }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && username.trim() && !users[username.trim()]) {
@@ -103,14 +107,15 @@ export default function ProfileForm({
               }
             }}
             style={{ 
-              background: '#4ade80', 
-              color: '#fff', 
+              background: 'var(--button-primary-bg)', 
+              color: 'var(--text-inverse)', 
               border: 'none', 
               borderRadius: 8, 
               padding: compact ? '6px 12px' : '8px 16px', 
               fontSize: compact ? '14px' : '16px',
               fontWeight: 600, 
-              cursor: 'pointer' 
+              cursor: 'pointer',
+              transition: 'all 0.3s ease' 
             }}
             disabled={!username.trim() || !!users[username.trim()]}
           >
@@ -122,14 +127,15 @@ export default function ProfileForm({
               onUsernameChange('');
             }}
             style={{ 
-              background: '#ef4444', 
-              color: '#fff', 
+              background: 'var(--button-secondary-bg)', 
+              color: 'var(--text-inverse)', 
               border: 'none', 
               borderRadius: 8, 
               padding: compact ? '6px 12px' : '8px 16px', 
               fontSize: compact ? '14px' : '16px',
               fontWeight: 600, 
-              cursor: 'pointer' 
+              cursor: 'pointer',
+              transition: 'all 0.3s ease' 
             }}
           >
             ✗

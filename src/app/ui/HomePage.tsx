@@ -5,6 +5,7 @@ import ModeSelector from './ModeSelector';
 // @ts-ignore
 import PracticePanel from './PracticePanel';
 import TraceExport from './TraceExport';
+import ThemeToggle from './ThemeToggle';
 import { useState } from 'react';
 import './TraceExport.css';
 
@@ -63,20 +64,17 @@ export default function HomePage({
   // Trace export state
   const [showTraceExport, setShowTraceExport] = useState(false);
   
-  // Rainbow gradient for header/sidebar only
-  const rainbowBg = 'linear-gradient(135deg, #ff4d4d 0%, #ff8a3d 20%, #ffd24d 40%, #4dd08a 60%, #5db3ff 80%, #b98bff 100%)';
-
   // Top Bar Layout (single canonical layout kept)
   return (
-    <div style={{ height: '100vh', background: '#f8fafc', fontFamily: 'system-ui, sans-serif', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ width: '100%', background: rainbowBg, padding: '12px 48px 12px 20px', position: 'relative' }}>
+    <div style={{ height: '100vh', background: 'var(--bg-primary)', fontFamily: 'system-ui, sans-serif', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ width: '100%', background: 'var(--gradient-rainbow)', padding: '12px 48px 12px 20px', position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 12, maxWidth: '100%', overflow: 'hidden', paddingRight: '48px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center' }}>
             <span role="img" aria-label="sparkle" style={{ fontSize: 22 }}>✨</span>
-            <h1 style={{ fontSize: '1.9rem', fontWeight: 900, color: '#fff', margin: 0, textAlign: 'center', whiteSpace: 'nowrap' }}>Kids Deliberate Practice</h1>
+            <h1 style={{ fontSize: '1.9rem', fontWeight: 900, color: 'var(--text-inverse)', margin: 0, textAlign: 'center', whiteSpace: 'nowrap' }}>Kids Deliberate Practice</h1>
           </div>
         </div>
-        <div style={{ background: 'rgba(255,255,255,0.95)', borderRadius: 12, padding: '10px 48px 10px 16px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', maxWidth: '100%', justifyContent: 'space-between' }}>
+        <div style={{ background: 'var(--bg-accent)', borderRadius: 12, padding: '10px 48px 10px 16px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', maxWidth: '100%', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
             <ProfileForm 
               compact 
@@ -92,12 +90,13 @@ export default function HomePage({
           </div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
             <ModeSelector compact mode={mode} onSetMode={onSetMode} />
+            <ThemeToggle />
             <button 
               onClick={() => setShowTraceExport(true)}
               style={{
-                background: 'rgba(59, 130, 246, 0.9)',
+                background: 'var(--button-accent-bg)',
                 border: 'none',
-                color: 'white',
+                color: 'var(--text-inverse)',
                 padding: '6px 12px',
                 borderRadius: 6,
                 fontSize: '0.75rem',
@@ -105,8 +104,14 @@ export default function HomePage({
                 cursor: 'pointer',
                 transition: 'all 0.15s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(37, 99, 235, 0.9)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(59, 130, 246, 0.9)'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-medium)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0px)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
               title="Export trace data for debugging"
             >
               🔍
@@ -114,7 +119,7 @@ export default function HomePage({
           </div>
         </div>
       </div>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: '#fff', margin: '4px', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: 'var(--bg-secondary)', margin: '4px', borderRadius: 12, boxShadow: 'var(--shadow-soft)' }}>
         {needsNewSession ? (
           <div style={{
             display: 'flex',
@@ -131,13 +136,13 @@ export default function HomePage({
             }}>🎉</div>
             <h2 style={{
               fontSize: 'clamp(24px, 4vw, 32px)',
-              color: '#1f2937',
+              color: 'var(--text-primary)',
               marginBottom: '16px',
               fontWeight: 700
             }}>Amazing! You've mastered all questions!</h2>
             <p style={{
               fontSize: 'clamp(16px, 3vw, 20px)',
-              color: '#6b7280',
+              color: 'var(--text-secondary)',
               marginBottom: '24px',
               maxWidth: '500px',
               lineHeight: 1.5
@@ -151,12 +156,12 @@ export default function HomePage({
                 padding: '12px 24px',
                 fontSize: '16px',
                 fontWeight: 600,
-                color: 'white',
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                color: 'var(--text-inverse)',
+                background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: 'pointer',
-                boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)',
+                boxShadow: 'var(--shadow-medium)',
                 transition: 'transform 0.2s ease'
               }}
               onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import useAppDispatch from './app/hooks';
+import { ThemeProvider } from './app/ui/ThemeContext';
 // Removed attempt import - now handled by domain actions
 import { handleNextPressed, ensureActiveSession, markCurrentWordCorrect, markCurrentWordWrong } from './features/game/actions';
 import { revealAnswer } from './features/game/slice';
@@ -77,32 +78,38 @@ function App() {
   };
 
   if (shouldShowOnboarding) {
-    return <Onboarding onCreate={(userId, displayName) => { handleCreateUser(userId, displayName); handleSwitchUser(userId); }} />;
+    return (
+      <ThemeProvider>
+        <Onboarding onCreate={(userId, displayName) => { handleCreateUser(userId, displayName); handleSwitchUser(userId); }} />
+      </ThemeProvider>
+    );
   }
 
   return (
-    <HomePage
-      users={users}
-      currentUserId={currentUserId}
-      onCreateUser={handleCreateUser}
-      onSwitchUser={handleSwitchUser}
-      onSetMode={handleSetMode}
-      mode={mode}
-      mainWord={practiceData.mainWord}
-      transliteration={practiceData.transliteration}
-      transliterationHi={practiceData.transliterationHi}
-      answer={practiceData.answer}
-      notes={practiceData.notes}
-      choices={practiceData.choices}
-      needsNewSession={practiceData.needsNewSession}
-      onCorrect={onCorrect}
-      onWrong={onWrong}
-      onNext={onNext}
-      onRevealAnswer={onRevealAnswer}
-      columns={columns}
-      isAnswerRevealed={practiceData.isAnswerRevealed}
-      isEnglishMode={practiceData.isEnglishMode}
-    />
+    <ThemeProvider>
+      <HomePage
+        users={users}
+        currentUserId={currentUserId}
+        onCreateUser={handleCreateUser}
+        onSwitchUser={handleSwitchUser}
+        onSetMode={handleSetMode}
+        mode={mode}
+        mainWord={practiceData.mainWord}
+        transliteration={practiceData.transliteration}
+        transliterationHi={practiceData.transliterationHi}
+        answer={practiceData.answer}
+        notes={practiceData.notes}
+        choices={practiceData.choices}
+        needsNewSession={practiceData.needsNewSession}
+        onCorrect={onCorrect}
+        onWrong={onWrong}
+        onNext={onNext}
+        onRevealAnswer={onRevealAnswer}
+        columns={columns}
+        isAnswerRevealed={practiceData.isAnswerRevealed}
+        isEnglishMode={practiceData.isEnglishMode}
+      />
+    </ThemeProvider>
   );
 }
 

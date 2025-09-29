@@ -3,23 +3,103 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Light theme variables */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --bg-accent: rgba(255,255,255,0.95);
+  
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --text-inverse: #ffffff;
+  
+  --border-primary: rgba(59, 130, 246, 0.04);
+  --border-secondary: rgba(2,6,23,0.06);
+  
+  /* Interactive colors - softer for children */
+  --color-success: #10b981;
+  --color-success-light: #34d399;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-primary: #4f46e5;
+  --color-secondary: #8b5cf6;
+  
+  /* Rainbow gradient - vibrant but not harsh */
+  --gradient-rainbow: linear-gradient(135deg, #ff6b85 0%, #ff8a65 20%, #ffd54f 40%, #66bb6a 60%, #42a5f5 80%, #ab47bc 100%);
+  --gradient-rainbow-muted: linear-gradient(135deg, #ff6b85 0%, #ff8a65 20%, #ffd54f 40%, #66bb6a 60%, #42a5f5 80%, #ab47bc 100%);
+  
+  /* Answer panel gradients */
+  --gradient-answer-bg: linear-gradient(180deg, #f8fffb 0%, #ffffff 100%);
+  --gradient-answer-text: linear-gradient(90deg,#ff4d4f 0%,#ffb020 25%,#00c853 50%,#0091ea 75%,#7c4dff 100%);
+  
+  /* Button and UI element colors */
+  --button-primary-bg: #10b981;
+  --button-secondary-bg: #ef4444;
+  --button-accent-bg: rgba(59, 130, 246, 0.9);
+  --button-create-bg: #4f46e5;
+  
+  /* Shadows and effects */
+  --shadow-soft: 0 2px 12px rgba(0,0,0,0.05);
+  --shadow-medium: 0 4px 20px rgba(79,70,229,0.15);
+  --shadow-strong: 0 8px 18px rgba(2,6,23,0.06);
+}
+
+/* Dark theme variables */
+[data-theme='dark'] {
+  --bg-primary: #1e293b;
+  --bg-secondary: #334155;
+  --bg-tertiary: #475569;
+  --bg-accent: rgba(51,65,85,0.95);
+  
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-inverse: #1f2937;
+  
+  --border-primary: rgba(148, 163, 184, 0.1);
+  --border-secondary: rgba(241,245,249,0.08);
+  
+  /* Interactive colors - muted but still engaging for children */
+  --color-success: #6ee7b7;
+  --color-success-light: #86efac;
+  --color-warning: #fbbf24;
+  --color-error: #fca5a5;
+  --color-primary: #818cf8;
+  --color-secondary: #c084fc;
+  
+  /* Rainbow gradient - softer for dark mode */
+  --gradient-rainbow: linear-gradient(135deg, #f87171 0%, #fb923c 20%, #facc15 40%, #4ade80 60%, #60a5fa 80%, #c084fc 100%);
+  --gradient-rainbow-muted: linear-gradient(135deg, #f87171 0%, #fb923c 20%, #facc15 40%, #4ade80 60%, #60a5fa 80%, #c084fc 100%);
+  
+  /* Answer panel gradients - adapted for dark */
+  --gradient-answer-bg: linear-gradient(180deg, #334155 0%, #475569 100%);
+  --gradient-answer-text: linear-gradient(90deg,#f87171 0%,#fbbf24 25%,#6ee7b7 50%,#60a5fa 75%,#c084fc 100%);
+  
+  /* Button colors - softer but still clear */
+  --button-primary-bg: #22c55e;
+  --button-secondary-bg: #f87171;
+  --button-accent-bg: rgba(96, 165, 250, 0.9);
+  --button-create-bg: #6366f1;
+  
+  /* Shadows - adjusted for dark backgrounds */
+  --shadow-soft: 0 2px 12px rgba(0,0,0,0.3);
+  --shadow-medium: 0 4px 20px rgba(129,140,248,0.2);
+  --shadow-strong: 0 8px 18px rgba(0,0,0,0.4);
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--color-primary);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--color-secondary);
 }
 
 html, body {
@@ -27,6 +107,9 @@ html, body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -41,6 +124,7 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  color: var(--text-primary);
 }
 
 button {
@@ -50,27 +134,17 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s ease;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }

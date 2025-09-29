@@ -19,10 +19,11 @@ export default function ModeSelector({ mode, onSetMode, compact = false }: ModeS
           border: 'none',
           fontSize: compact ? '14px' : '16px',
           fontWeight: 600,
-          background: 'rgba(255,255,255,0.95)',
-          color: '#1f2937',
+          background: 'var(--bg-secondary)',
+          color: 'var(--text-primary)',
           minWidth: '120px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          boxShadow: 'var(--shadow-soft)',
+          transition: 'all 0.3s ease'
         }}
       >
         <option value="english">🇺🇸 English</option>

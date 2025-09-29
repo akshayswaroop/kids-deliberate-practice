@@ -130,7 +130,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
 
       <div style={{
         textAlign: 'center',
-        color: '#2c3e50',
+        color: 'var(--text-primary)',
         width: '100%',
         maxWidth: '100%',
         boxSizing: 'border-box',
@@ -195,7 +195,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                   <GradientText 
                     progress={Math.max(5, activeProgress)}
                     gradientColors="red, orange, yellow, green, blue, indigo, violet"
-                    neutralColor="#9ca3af"
+                    neutralColor="var(--text-tertiary)"
                     style={{ textAlign: 'center', width: '100%' }}
                   >
                     {mainWord}
@@ -240,7 +240,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         marginBottom: '32px',
         display: 'block',
         borderRadius: '16px',
-        background: 'linear-gradient(180deg, #f8fafc 0%, #fff 100%)',
+        background: 'var(--bg-secondary)',
         boxShadow: '0 2px 18px rgba(79,70,229,0.04)'
       }}>
         {/* Main answer/notes area - now full width (progress panel removed) */}
@@ -260,9 +260,9 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-              <div style={{ color: '#6b7280', maxWidth: '820px' }}>Use the Reveal Answer button to show answer.</div>
+              <div style={{ color: 'var(--text-secondary)', maxWidth: '820px' }}>Use the Reveal Answer button to show answer.</div>
               {answer && (
-                <div style={{ fontSize: 14, color: '#9ca3af' }}>Hint: {String(answer).slice(0, Math.max(3, Math.floor(String(answer).length * 0.25))) }…</div>
+                <div style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>Hint: {String(answer).slice(0, Math.max(3, Math.floor(String(answer).length * 0.25))) }…</div>
               )}
             </div>
           )}
@@ -281,12 +281,14 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         display: 'flex',
         gap: 24,
         padding: '18px 24px',
-        background: 'rgba(255,255,255,0.98)',
+        background: 'var(--bg-accent)',
         borderRadius: 999,
-        boxShadow: '0 18px 48px rgba(2,6,23,0.12)',
+        boxShadow: 'var(--shadow-strong)',
         zIndex: 1200,
         alignItems: 'center',
-        minWidth: isEnglishMode ? 320 : 400 // Wider for non-English modes to fit reveal button
+        minWidth: isEnglishMode ? 320 : 400, // Wider for non-English modes to fit reveal button
+        backdropFilter: 'blur(10px)',
+        border: '1px solid var(--border-secondary)'
       }}>
         {/* Reveal Answer button - only for non-English modes */}
         {!isEnglishMode && (
@@ -298,8 +300,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             aria-label={isAnswerRevealed ? "Hide Answer" : "Reveal Answer"}
             className="mastery-footer-button reveal"
             style={{
-              backgroundColor: '#f59e0b',
-              color: 'white',
+              backgroundColor: 'var(--color-warning)',
+              color: 'var(--text-inverse)',
               border: 'none',
               borderRadius: 10,
               padding: '10px 14px',
@@ -339,8 +341,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           aria-label="Mark as read — great job"
           className="mastery-footer-button primary"
           style={{
-            backgroundColor: '#10b981',
-            color: 'white',
+            backgroundColor: 'var(--button-primary-bg)',
+            color: 'var(--text-inverse)',
             border: 'none',
             borderRadius: 10,
             padding: '12px 16px', // Slightly larger padding
@@ -399,8 +401,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           aria-label="Try again later — would you like to repeat this?"
           className="mastery-footer-button secondary"
           style={{
-            backgroundColor: '#ef4444',
-            color: 'white',
+            backgroundColor: 'var(--button-secondary-bg)',
+            color: 'var(--text-inverse)',
             border: 'none',
             borderRadius: 10,
             padding: '12px 16px', // Slightly larger padding
