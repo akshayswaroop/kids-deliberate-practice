@@ -2,6 +2,7 @@ import React from 'react';
 import './PracticeCard.css';
 import { isTransliterationMode } from '../../features/game/modeConfig';
 import GradientText from './GradientText.jsx';
+import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetector';
 
 import FlyingUnicorn from './FlyingUnicorn.jsx';
 import SadBalloonAnimation from './SadBalloonAnimation.jsx';
@@ -151,31 +152,31 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             // Responsive typography within the 30vh Question Area
             // Enhanced readability for long text (especially story comprehension)
             let fontSize = 'clamp(24px, min(6vw, 8vh), 72px)';
-            let lineHeight = 1.1;
+            let lineHeight = getScriptLineHeight(text); // Use script-aware line height
             let padding = '8px 16px';
             
             // Better scaling for long text comprehension questions
             if (len > 100) {
               // Very long text (story comprehension questions)
               fontSize = 'clamp(16px, min(3vw, 3.5vh), 24px)';
-              lineHeight = 1.5;
+              lineHeight = Math.max(getScriptLineHeight(text), 1.5); // Ensure minimum 1.5 for very long text
               padding = '12px 20px';
             } else if (len > 80) {
               // Long story questions
               fontSize = 'clamp(17px, min(3.2vw, 4vh), 28px)';
-              lineHeight = 1.4;
+              lineHeight = Math.max(getScriptLineHeight(text), 1.4);
               padding = '10px 18px';
             } else if (len > 60) {
               fontSize = 'clamp(18px, min(4vw, 5vh), 48px)';
-              lineHeight = 1.2;
+              lineHeight = Math.max(getScriptLineHeight(text), 1.2);
               padding = '6px 12px';
             } else if (len > 40) {
               fontSize = 'clamp(20px, min(5vw, 6vh), 56px)';
-              lineHeight = 1.15;
+              lineHeight = Math.max(getScriptLineHeight(text), 1.15);
               padding = '6px 14px';
             } else if (len > 28) {
               fontSize = 'clamp(22px, min(5.5vw, 7vh), 64px)';
-              lineHeight = 1.1;
+              lineHeight = getScriptLineHeight(text);
               padding = '8px 16px';
             }
 
@@ -209,10 +210,11 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                 }}>
                   {/* Use GradientText component for rainbow progress fill */}
                   <GradientText 
-                    progress={Math.max(5, activeProgress)}
+                    progress={activeProgress}
                     gradientColors="red, orange, yellow, green, blue, indigo, violet"
                     neutralColor="var(--text-tertiary)"
                     style={{ textAlign: 'center', width: '100%' }}
+                    className={getScriptFontClass(mainWord || '')}
                   >
                     {mainWord}
                   </GradientText>
@@ -296,7 +298,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               boxSizing: 'border-box'
             }}>
               {answer && (
-                <div className="answer-panel__headline" style={{ 
+                <div className={`answer-panel__headline ${getScriptFontClass(answer || '')}`} style={{ 
                   maxWidth: '100%',
                   fontSize: 'clamp(16px, 3vw, 28px)', // Responsive typography
                   lineHeight: 1.4,
@@ -305,7 +307,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                 }}>{answer}</div>
               )}
               {notes && (
-                <div className="answer-panel__notes" style={{ 
+                <div className={`answer-panel__notes ${getScriptFontClass(notes || '')}`} style={{ 
                   maxWidth: '100%',
                   fontSize: 'clamp(14px, 2.5vw, 22px)', // Responsive typography
                   lineHeight: 1.5,

@@ -1,5 +1,5 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -7,6 +7,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Multi-script font stacks */
+  --font-devanagari: 'Noto Sans Devanagari', 'Noto Sans', system-ui, sans-serif;
+  --font-kannada: 'Noto Sans Kannada', 'Noto Sans', system-ui, sans-serif;
+  --font-multilingual: 'Noto Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
 
   /* Light theme variables */
   --bg-primary: #f8fafc;
@@ -147,4 +152,23 @@ button:focus,
 button:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+/* Script-specific font classes */
+.text-devanagari {
+  font-family: var(--font-devanagari);
+  font-weight: 400;
+  line-height: 1.8 !important; /* Increased for Devanagari characters which need more vertical space */
+}
+
+.text-kannada {
+  font-family: var(--font-kannada);
+  font-weight: 400;
+  line-height: 1.7 !important; /* Increased for Kannada characters */
+}
+
+.text-multilingual {
+  font-family: var(--font-multilingual);
+  font-weight: 400;
+  line-height: 1.7 !important; /* Increased for mixed scripts */
 }
