@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import gameReducer from '../features/game/slice';
 import type { RootState as GameState } from '../features/game/state';
 import { traceMiddleware } from './tracing/traceMiddleware';
-import { getInitialWords } from './bootstrapState';
+import { loadAllWords } from './subjectLoader';
 
 function loadGameState(): GameState | undefined {
   try {
@@ -37,7 +37,7 @@ const loaded = loadGameState();
 let gameState = loaded;
 if (loaded) {
   try {
-    const initialWords = getInitialWords();
+    const initialWords = loadAllWords();
     Object.values(loaded.users || {}).forEach((user: any) => {
       user.words = user.words || {};
       // Add any missing words from initial set (new words/subjects)

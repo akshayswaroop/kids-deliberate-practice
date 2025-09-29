@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './state';
 import { isMastered } from './modeConfig';
-import { getInitialWords } from '../../app/bootstrapState';
+import { loadAllWords } from '../../app/subjectLoader';
 // Thunks moved to actions.ts
 
 // Use semantic/opaque user ids in core state instead of real names.
@@ -10,7 +10,7 @@ export const DEFAULT_USER_ID = 'user_default';
 
 export const makeUser = (displayName?: string) => ({
   displayName,
-  words: getInitialWords(),
+  words: loadAllWords(),
   sessions: {},
   activeSessions: {},
   settings: {
