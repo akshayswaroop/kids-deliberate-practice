@@ -124,20 +124,21 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         visible={showSadBalloon}
         onAnimationEnd={handleSadBalloonEnd}
       />
-      {/* Question Area - 25% of vertical space */}
+      {/* Question Area - Flexible space for readability */}
       <div style={{
         textAlign: 'center',
         color: 'var(--text-primary)',
         width: '100%',
         boxSizing: 'border-box',
-        flex: '0 0 25%', // 25% of container height
+        flex: '0 0 auto', // Size to content, not fixed percentage
+        minHeight: '20%', // Minimum 20% of container height
+        maxHeight: '40%', // Maximum 40% for very long text
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         padding: '16px 12px 16px 12px', // uniform horizontal padding
-        minHeight: 0,
-        overflow: 'hidden', // Prevent overflow from this section
+        overflow: 'visible', // Allow text to be visible
         borderBottomLeftRadius: '0px', // visually connect to answer panel
         borderBottomRightRadius: '0px',
         borderTopLeftRadius: '16px', // match other panels
@@ -148,11 +149,23 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             const text = String(mainWord || '');
             const len = text.length;
             // Responsive typography within the 30vh Question Area
-            // Use both viewport width and height for scaling
+            // Enhanced readability for long text (especially story comprehension)
             let fontSize = 'clamp(24px, min(6vw, 8vh), 72px)';
             let lineHeight = 1.1;
             let padding = '8px 16px';
-            if (len > 60) {
+            
+            // Better scaling for long text comprehension questions
+            if (len > 100) {
+              // Very long text (story comprehension questions)
+              fontSize = 'clamp(16px, min(3vw, 3.5vh), 24px)';
+              lineHeight = 1.5;
+              padding = '12px 20px';
+            } else if (len > 80) {
+              // Long story questions
+              fontSize = 'clamp(17px, min(3.2vw, 4vh), 28px)';
+              lineHeight = 1.4;
+              padding = '10px 18px';
+            } else if (len > 60) {
               fontSize = 'clamp(18px, min(4vw, 5vh), 48px)';
               lineHeight = 1.2;
               padding = '6px 12px';
@@ -191,7 +204,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                   position: 'relative',
                   zIndex: 2,
                   minHeight: 0,
-                  flex: '1 1 auto'
+                  flex: '1 1 auto',
+                  textAlign: 'center' // Ensure centered text alignment
                 }}>
                   {/* Use GradientText component for rainbow progress fill */}
                   <GradientText 

@@ -1,0 +1,702 @@
+[
+  {
+    "id": "level1_1",
+    "complexity": 1,
+    "question": "Ravi had a red balloon. He played with it in the park. His friend asked, 'What color is your balloon?'",
+    "answer": "The balloon is red.",
+    "notes": ""
+  },
+  {
+    "id": "level1_2",
+    "complexity": 1,
+    "question": "Meena saw a puppy in her garden. The puppy wagged its tail happily. Who did Meena see?",
+    "answer": "Meena saw a puppy.",
+    "notes": ""
+  },
+  {
+    "id": "level1_3",
+    "complexity": 1,
+    "question": "A boy ate a sweet mango. He said it was very tasty. What did the boy eat?",
+    "answer": "The boy ate a mango.",
+    "notes": ""
+  },
+  {
+    "id": "level1_4",
+    "complexity": 1,
+    "question": "Sita drank cold water. She felt fresh after playing. What did Sita drink?",
+    "answer": "Sita drank water.",
+    "notes": ""
+  },
+  {
+    "id": "level1_5",
+    "complexity": 1,
+    "question": "A girl drew a sun. She colored it yellow. What did she draw?",
+    "answer": "She drew a sun.",
+    "notes": ""
+  },
+  {
+    "id": "level1_6",
+    "complexity": 1,
+    "question": "Ravi had a red balloon. He played with it in the park. His friend asked, 'What color is your balloon?'",
+    "answer": "The balloon is red.",
+    "notes": ""
+  },
+  {
+    "id": "level1_7",
+    "complexity": 1,
+    "question": "Meena saw a puppy in her garden. The puppy wagged its tail happily. Who did Meena see?",
+    "answer": "Meena saw a puppy.",
+    "notes": ""
+  },
+  {
+    "id": "level1_8",
+    "complexity": 1,
+    "question": "A boy ate a sweet mango. He said it was very tasty. What did the boy eat?",
+    "answer": "The boy ate a mango.",
+    "notes": ""
+  },
+  {
+    "id": "level1_9",
+    "complexity": 1,
+    "question": "Sita drank cold water. She felt fresh after playing. What did Sita drink?",
+    "answer": "Sita drank water.",
+    "notes": ""
+  },
+  {
+    "id": "level1_10",
+    "complexity": 1,
+    "question": "A girl drew a sun. She colored it yellow. What did she draw?",
+    "answer": "She drew a sun.",
+    "notes": ""
+  },
+  {
+    "id": "level1_11",
+    "complexity": 1,
+    "question": "Ravi had a red balloon. He played with it in the park. His friend asked, 'What color is your balloon?'",
+    "answer": "The balloon is red.",
+    "notes": ""
+  },
+  {
+    "id": "level1_12",
+    "complexity": 1,
+    "question": "Meena saw a puppy in her garden. The puppy wagged its tail happily. Who did Meena see?",
+    "answer": "Meena saw a puppy.",
+    "notes": ""
+  },
+  {
+    "id": "level1_13",
+    "complexity": 1,
+    "question": "A boy ate a sweet mango. He said it was very tasty. What did the boy eat?",
+    "answer": "The boy ate a mango.",
+    "notes": ""
+  },
+  {
+    "id": "level1_14",
+    "complexity": 1,
+    "question": "Sita drank cold water. She felt fresh after playing. What did Sita drink?",
+    "answer": "Sita drank water.",
+    "notes": ""
+  },
+  {
+    "id": "level1_15",
+    "complexity": 1,
+    "question": "A girl drew a sun. She colored it yellow. What did she draw?",
+    "answer": "She drew a sun.",
+    "notes": ""
+  },
+  {
+    "id": "level1_16",
+    "complexity": 1,
+    "question": "Ravi had a red balloon. He played with it in the park. His friend asked, 'What color is your balloon?'",
+    "answer": "The balloon is red.",
+    "notes": ""
+  },
+  {
+    "id": "level1_17",
+    "complexity": 1,
+    "question": "Meena saw a puppy in her garden. The puppy wagged its tail happily. Who did Meena see?",
+    "answer": "Meena saw a puppy.",
+    "notes": ""
+  },
+  {
+    "id": "level1_18",
+    "complexity": 1,
+    "question": "A boy ate a sweet mango. He said it was very tasty. What did the boy eat?",
+    "answer": "The boy ate a mango.",
+    "notes": ""
+  },
+  {
+    "id": "level1_19",
+    "complexity": 1,
+    "question": "Sita drank cold water. She felt fresh after playing. What did Sita drink?",
+    "answer": "Sita drank water.",
+    "notes": ""
+  },
+  {
+    "id": "level1_20",
+    "complexity": 1,
+    "question": "A girl drew a sun. She colored it yellow. What did she draw?",
+    "answer": "She drew a sun.",
+    "notes": ""
+  },
+  {
+    "id": "level2_1",
+    "complexity": 2,
+    "question": "Sita planted a small seed. After some days, a plant grew tall. What did Sita plant?",
+    "answer": "Sita planted a seed.",
+    "notes": ""
+  },
+  {
+    "id": "level2_2",
+    "complexity": 2,
+    "question": "Raju dropped his toy car. His sister picked it up and gave it back. Who gave the car back to Raju?",
+    "answer": "His sister gave the car back.",
+    "notes": ""
+  },
+  {
+    "id": "level2_3",
+    "complexity": 2,
+    "question": "A cat chased a mouse. The mouse ran into a hole. Who was chasing the mouse?",
+    "answer": "The cat was chasing the mouse.",
+    "notes": ""
+  },
+  {
+    "id": "level2_4",
+    "complexity": 2,
+    "question": "A boy kicked a ball. The ball went into the basket. Where did the ball go?",
+    "answer": "The ball went into the basket.",
+    "notes": ""
+  },
+  {
+    "id": "level2_5",
+    "complexity": 2,
+    "question": "Anita read a storybook. She smiled at the funny pictures. What made Anita smile?",
+    "answer": "The pictures made Anita smile.",
+    "notes": ""
+  },
+  {
+    "id": "level2_6",
+    "complexity": 2,
+    "question": "Sita planted a small seed. After some days, a plant grew tall. What did Sita plant?",
+    "answer": "Sita planted a seed.",
+    "notes": ""
+  },
+  {
+    "id": "level2_7",
+    "complexity": 2,
+    "question": "Raju dropped his toy car. His sister picked it up and gave it back. Who gave the car back to Raju?",
+    "answer": "His sister gave the car back.",
+    "notes": ""
+  },
+  {
+    "id": "level2_8",
+    "complexity": 2,
+    "question": "A cat chased a mouse. The mouse ran into a hole. Who was chasing the mouse?",
+    "answer": "The cat was chasing the mouse.",
+    "notes": ""
+  },
+  {
+    "id": "level2_9",
+    "complexity": 2,
+    "question": "A boy kicked a ball. The ball went into the basket. Where did the ball go?",
+    "answer": "The ball went into the basket.",
+    "notes": ""
+  },
+  {
+    "id": "level2_10",
+    "complexity": 2,
+    "question": "Anita read a storybook. She smiled at the funny pictures. What made Anita smile?",
+    "answer": "The pictures made Anita smile.",
+    "notes": ""
+  },
+  {
+    "id": "level2_11",
+    "complexity": 2,
+    "question": "Sita planted a small seed. After some days, a plant grew tall. What did Sita plant?",
+    "answer": "Sita planted a seed.",
+    "notes": ""
+  },
+  {
+    "id": "level2_12",
+    "complexity": 2,
+    "question": "Raju dropped his toy car. His sister picked it up and gave it back. Who gave the car back to Raju?",
+    "answer": "His sister gave the car back.",
+    "notes": ""
+  },
+  {
+    "id": "level2_13",
+    "complexity": 2,
+    "question": "A cat chased a mouse. The mouse ran into a hole. Who was chasing the mouse?",
+    "answer": "The cat was chasing the mouse.",
+    "notes": ""
+  },
+  {
+    "id": "level2_14",
+    "complexity": 2,
+    "question": "A boy kicked a ball. The ball went into the basket. Where did the ball go?",
+    "answer": "The ball went into the basket.",
+    "notes": ""
+  },
+  {
+    "id": "level2_15",
+    "complexity": 2,
+    "question": "Anita read a storybook. She smiled at the funny pictures. What made Anita smile?",
+    "answer": "The pictures made Anita smile.",
+    "notes": ""
+  },
+  {
+    "id": "level2_16",
+    "complexity": 2,
+    "question": "Sita planted a small seed. After some days, a plant grew tall. What did Sita plant?",
+    "answer": "Sita planted a seed.",
+    "notes": ""
+  },
+  {
+    "id": "level2_17",
+    "complexity": 2,
+    "question": "Raju dropped his toy car. His sister picked it up and gave it back. Who gave the car back to Raju?",
+    "answer": "His sister gave the car back.",
+    "notes": ""
+  },
+  {
+    "id": "level2_18",
+    "complexity": 2,
+    "question": "A cat chased a mouse. The mouse ran into a hole. Who was chasing the mouse?",
+    "answer": "The cat was chasing the mouse.",
+    "notes": ""
+  },
+  {
+    "id": "level2_19",
+    "complexity": 2,
+    "question": "A boy kicked a ball. The ball went into the basket. Where did the ball go?",
+    "answer": "The ball went into the basket.",
+    "notes": ""
+  },
+  {
+    "id": "level2_20",
+    "complexity": 2,
+    "question": "Anita read a storybook. She smiled at the funny pictures. What made Anita smile?",
+    "answer": "The pictures made Anita smile.",
+    "notes": ""
+  },
+  {
+    "id": "level3_1",
+    "complexity": 3,
+    "question": "Ravi forgot his homework notebook. His teacher asked him why. Ravi told the truth that he had left it at home. What did Ravi do that made the teacher happy?",
+    "answer": "Ravi told the truth.",
+    "notes": ""
+  },
+  {
+    "id": "level3_2",
+    "complexity": 3,
+    "question": "Anita saw an old woman carrying heavy bags. She helped her cross the road. What good thing did Anita do?",
+    "answer": "She helped the old woman.",
+    "notes": ""
+  },
+  {
+    "id": "level3_3",
+    "complexity": 3,
+    "question": "A boy saw his friend fall down. He quickly helped him up. What did the boy show?",
+    "answer": "The boy showed helpfulness.",
+    "notes": ""
+  },
+  {
+    "id": "level3_4",
+    "complexity": 3,
+    "question": "Seema shared her lunch with her friend. Her friend was very happy. What did Seema share?",
+    "answer": "Seema shared her lunch.",
+    "notes": ""
+  },
+  {
+    "id": "level3_5",
+    "complexity": 3,
+    "question": "Rohan said sorry after breaking a toy. His friend forgave him. What did Rohan say?",
+    "answer": "Rohan said sorry.",
+    "notes": ""
+  },
+  {
+    "id": "level3_6",
+    "complexity": 3,
+    "question": "Ravi forgot his homework notebook. His teacher asked him why. Ravi told the truth that he had left it at home. What did Ravi do that made the teacher happy?",
+    "answer": "Ravi told the truth.",
+    "notes": ""
+  },
+  {
+    "id": "level3_7",
+    "complexity": 3,
+    "question": "Anita saw an old woman carrying heavy bags. She helped her cross the road. What good thing did Anita do?",
+    "answer": "She helped the old woman.",
+    "notes": ""
+  },
+  {
+    "id": "level3_8",
+    "complexity": 3,
+    "question": "A boy saw his friend fall down. He quickly helped him up. What did the boy show?",
+    "answer": "The boy showed helpfulness.",
+    "notes": ""
+  },
+  {
+    "id": "level3_9",
+    "complexity": 3,
+    "question": "Seema shared her lunch with her friend. Her friend was very happy. What did Seema share?",
+    "answer": "Seema shared her lunch.",
+    "notes": ""
+  },
+  {
+    "id": "level3_10",
+    "complexity": 3,
+    "question": "Rohan said sorry after breaking a toy. His friend forgave him. What did Rohan say?",
+    "answer": "Rohan said sorry.",
+    "notes": ""
+  },
+  {
+    "id": "level3_11",
+    "complexity": 3,
+    "question": "Ravi forgot his homework notebook. His teacher asked him why. Ravi told the truth that he had left it at home. What did Ravi do that made the teacher happy?",
+    "answer": "Ravi told the truth.",
+    "notes": ""
+  },
+  {
+    "id": "level3_12",
+    "complexity": 3,
+    "question": "Anita saw an old woman carrying heavy bags. She helped her cross the road. What good thing did Anita do?",
+    "answer": "She helped the old woman.",
+    "notes": ""
+  },
+  {
+    "id": "level3_13",
+    "complexity": 3,
+    "question": "A boy saw his friend fall down. He quickly helped him up. What did the boy show?",
+    "answer": "The boy showed helpfulness.",
+    "notes": ""
+  },
+  {
+    "id": "level3_14",
+    "complexity": 3,
+    "question": "Seema shared her lunch with her friend. Her friend was very happy. What did Seema share?",
+    "answer": "Seema shared her lunch.",
+    "notes": ""
+  },
+  {
+    "id": "level3_15",
+    "complexity": 3,
+    "question": "Rohan said sorry after breaking a toy. His friend forgave him. What did Rohan say?",
+    "answer": "Rohan said sorry.",
+    "notes": ""
+  },
+  {
+    "id": "level3_16",
+    "complexity": 3,
+    "question": "Ravi forgot his homework notebook. His teacher asked him why. Ravi told the truth that he had left it at home. What did Ravi do that made the teacher happy?",
+    "answer": "Ravi told the truth.",
+    "notes": ""
+  },
+  {
+    "id": "level3_17",
+    "complexity": 3,
+    "question": "Anita saw an old woman carrying heavy bags. She helped her cross the road. What good thing did Anita do?",
+    "answer": "She helped the old woman.",
+    "notes": ""
+  },
+  {
+    "id": "level3_18",
+    "complexity": 3,
+    "question": "A boy saw his friend fall down. He quickly helped him up. What did the boy show?",
+    "answer": "The boy showed helpfulness.",
+    "notes": ""
+  },
+  {
+    "id": "level3_19",
+    "complexity": 3,
+    "question": "Seema shared her lunch with her friend. Her friend was very happy. What did Seema share?",
+    "answer": "Seema shared her lunch.",
+    "notes": ""
+  },
+  {
+    "id": "level3_20",
+    "complexity": 3,
+    "question": "Rohan said sorry after breaking a toy. His friend forgave him. What did Rohan say?",
+    "answer": "Rohan said sorry.",
+    "notes": ""
+  },
+  {
+    "id": "level4_1",
+    "complexity": 4,
+    "question": "Mohan’s football broke. His friend offered to share his own ball. What did the friend’s action show?",
+    "answer": "The friend showed sharing and care.",
+    "notes": ""
+  },
+  {
+    "id": "level4_2",
+    "complexity": 4,
+    "question": "A girl saw a puppy shivering in the cold. She gave it a blanket. What did the girl show?",
+    "answer": "She showed kindness to animals.",
+    "notes": ""
+  },
+  {
+    "id": "level4_3",
+    "complexity": 4,
+    "question": "Children planted trees in the park. The park became green. What did the children do?",
+    "answer": "They planted trees.",
+    "notes": ""
+  },
+  {
+    "id": "level4_4",
+    "complexity": 4,
+    "question": "A boy found a lost wallet. He gave it to the teacher. What quality did the boy show?",
+    "answer": "The boy showed honesty.",
+    "notes": ""
+  },
+  {
+    "id": "level4_5",
+    "complexity": 4,
+    "question": "A girl studied hard for her test. She got good marks. What helped the girl succeed?",
+    "answer": "Her hard work helped her succeed.",
+    "notes": ""
+  },
+  {
+    "id": "level4_6",
+    "complexity": 4,
+    "question": "Mohan’s football broke. His friend offered to share his own ball. What did the friend’s action show?",
+    "answer": "The friend showed sharing and care.",
+    "notes": ""
+  },
+  {
+    "id": "level4_7",
+    "complexity": 4,
+    "question": "A girl saw a puppy shivering in the cold. She gave it a blanket. What did the girl show?",
+    "answer": "She showed kindness to animals.",
+    "notes": ""
+  },
+  {
+    "id": "level4_8",
+    "complexity": 4,
+    "question": "Children planted trees in the park. The park became green. What did the children do?",
+    "answer": "They planted trees.",
+    "notes": ""
+  },
+  {
+    "id": "level4_9",
+    "complexity": 4,
+    "question": "A boy found a lost wallet. He gave it to the teacher. What quality did the boy show?",
+    "answer": "The boy showed honesty.",
+    "notes": ""
+  },
+  {
+    "id": "level4_10",
+    "complexity": 4,
+    "question": "A girl studied hard for her test. She got good marks. What helped the girl succeed?",
+    "answer": "Her hard work helped her succeed.",
+    "notes": ""
+  },
+  {
+    "id": "level4_11",
+    "complexity": 4,
+    "question": "Mohan’s football broke. His friend offered to share his own ball. What did the friend’s action show?",
+    "answer": "The friend showed sharing and care.",
+    "notes": ""
+  },
+  {
+    "id": "level4_12",
+    "complexity": 4,
+    "question": "A girl saw a puppy shivering in the cold. She gave it a blanket. What did the girl show?",
+    "answer": "She showed kindness to animals.",
+    "notes": ""
+  },
+  {
+    "id": "level4_13",
+    "complexity": 4,
+    "question": "Children planted trees in the park. The park became green. What did the children do?",
+    "answer": "They planted trees.",
+    "notes": ""
+  },
+  {
+    "id": "level4_14",
+    "complexity": 4,
+    "question": "A boy found a lost wallet. He gave it to the teacher. What quality did the boy show?",
+    "answer": "The boy showed honesty.",
+    "notes": ""
+  },
+  {
+    "id": "level4_15",
+    "complexity": 4,
+    "question": "A girl studied hard for her test. She got good marks. What helped the girl succeed?",
+    "answer": "Her hard work helped her succeed.",
+    "notes": ""
+  },
+  {
+    "id": "level4_16",
+    "complexity": 4,
+    "question": "Mohan’s football broke. His friend offered to share his own ball. What did the friend’s action show?",
+    "answer": "The friend showed sharing and care.",
+    "notes": ""
+  },
+  {
+    "id": "level4_17",
+    "complexity": 4,
+    "question": "A girl saw a puppy shivering in the cold. She gave it a blanket. What did the girl show?",
+    "answer": "She showed kindness to animals.",
+    "notes": ""
+  },
+  {
+    "id": "level4_18",
+    "complexity": 4,
+    "question": "Children planted trees in the park. The park became green. What did the children do?",
+    "answer": "They planted trees.",
+    "notes": ""
+  },
+  {
+    "id": "level4_19",
+    "complexity": 4,
+    "question": "A boy found a lost wallet. He gave it to the teacher. What quality did the boy show?",
+    "answer": "The boy showed honesty.",
+    "notes": ""
+  },
+  {
+    "id": "level4_20",
+    "complexity": 4,
+    "question": "A girl studied hard for her test. She got good marks. What helped the girl succeed?",
+    "answer": "Her hard work helped her succeed.",
+    "notes": ""
+  },
+  {
+    "id": "level5_1",
+    "complexity": 5,
+    "question": "Meena and her friends cleaned the park. People in the neighborhood were happy. What lesson can we learn from them?",
+    "answer": "We should care for public places.",
+    "notes": ""
+  },
+  {
+    "id": "level5_2",
+    "complexity": 5,
+    "question": "A boy studied at night using a small lamp. His mother said he was very hardworking. What quality did the boy show?",
+    "answer": "The boy showed hard work.",
+    "notes": ""
+  },
+  {
+    "id": "level5_3",
+    "complexity": 5,
+    "question": "Children collected old books. They gave them to poor kids. What did the children show?",
+    "answer": "They showed sharing and kindness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_4",
+    "complexity": 5,
+    "question": "Ravi saw smoke in the kitchen. He quickly told his parents. What did Ravi’s action show?",
+    "answer": "He showed alertness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_5",
+    "complexity": 5,
+    "question": "Meena helped a blind man cross the road. The man blessed her. What quality did Meena show?",
+    "answer": "She showed kindness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_6",
+    "complexity": 5,
+    "question": "Meena and her friends cleaned the park. People in the neighborhood were happy. What lesson can we learn from them?",
+    "answer": "We should care for public places.",
+    "notes": ""
+  },
+  {
+    "id": "level5_7",
+    "complexity": 5,
+    "question": "A boy studied at night using a small lamp. His mother said he was very hardworking. What quality did the boy show?",
+    "answer": "The boy showed hard work.",
+    "notes": ""
+  },
+  {
+    "id": "level5_8",
+    "complexity": 5,
+    "question": "Children collected old books. They gave them to poor kids. What did the children show?",
+    "answer": "They showed sharing and kindness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_9",
+    "complexity": 5,
+    "question": "Ravi saw smoke in the kitchen. He quickly told his parents. What did Ravi’s action show?",
+    "answer": "He showed alertness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_10",
+    "complexity": 5,
+    "question": "Meena helped a blind man cross the road. The man blessed her. What quality did Meena show?",
+    "answer": "She showed kindness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_11",
+    "complexity": 5,
+    "question": "Meena and her friends cleaned the park. People in the neighborhood were happy. What lesson can we learn from them?",
+    "answer": "We should care for public places.",
+    "notes": ""
+  },
+  {
+    "id": "level5_12",
+    "complexity": 5,
+    "question": "A boy studied at night using a small lamp. His mother said he was very hardworking. What quality did the boy show?",
+    "answer": "The boy showed hard work.",
+    "notes": ""
+  },
+  {
+    "id": "level5_13",
+    "complexity": 5,
+    "question": "Children collected old books. They gave them to poor kids. What did the children show?",
+    "answer": "They showed sharing and kindness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_14",
+    "complexity": 5,
+    "question": "Ravi saw smoke in the kitchen. He quickly told his parents. What did Ravi’s action show?",
+    "answer": "He showed alertness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_15",
+    "complexity": 5,
+    "question": "Meena helped a blind man cross the road. The man blessed her. What quality did Meena show?",
+    "answer": "She showed kindness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_16",
+    "complexity": 5,
+    "question": "Meena and her friends cleaned the park. People in the neighborhood were happy. What lesson can we learn from them?",
+    "answer": "We should care for public places.",
+    "notes": ""
+  },
+  {
+    "id": "level5_17",
+    "complexity": 5,
+    "question": "A boy studied at night using a small lamp. His mother said he was very hardworking. What quality did the boy show?",
+    "answer": "The boy showed hard work.",
+    "notes": ""
+  },
+  {
+    "id": "level5_18",
+    "complexity": 5,
+    "question": "Children collected old books. They gave them to poor kids. What did the children show?",
+    "answer": "They showed sharing and kindness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_19",
+    "complexity": 5,
+    "question": "Ravi saw smoke in the kitchen. He quickly told his parents. What did Ravi’s action show?",
+    "answer": "He showed alertness.",
+    "notes": ""
+  },
+  {
+    "id": "level5_20",
+    "complexity": 5,
+    "question": "Meena helped a blind man cross the road. The man blessed her. What quality did Meena show?",
+    "answer": "She showed kindness.",
+    "notes": ""
+  }
+]

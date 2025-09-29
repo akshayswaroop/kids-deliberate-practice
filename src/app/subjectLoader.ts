@@ -10,6 +10,7 @@ import humanBodyBank from '../assets/human_body_grade3_full.json';
 import indiaGeographyBank from '../assets/india_geography_questions.json';
 import gramPanchayatBank from '../assets/gram_panchayat_questions.json';
 import hanumanBank from '../assets/hanuman_chalisa_kids.json';
+import storyComprehensionBank from '../assets/story_comprehension_100.json';
 
 // Map bank paths to imported data
 const BANK_DATA_MAP: Record<string, any> = {
@@ -22,6 +23,7 @@ const BANK_DATA_MAP: Record<string, any> = {
   'india_geography_questions.json': indiaGeographyBank,
   'gram_panchayat_questions.json': gramPanchayatBank,
   'hanuman_chalisa_kids.json': hanumanBank,
+  'story_comprehension_100.json': storyComprehensionBank,
 };
 
 // Unified question bank item interface
@@ -78,6 +80,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
   { name: 'indiageography', bankPath: 'india_geography_questions.json', language: 'indiageography', displayIcon: '🗺️', displayLabel: 'India Geography' },
   { name: 'grampanchayat', bankPath: 'gram_panchayat_questions.json', language: 'grampanchayat', displayIcon: '🏛️', displayLabel: 'Gram Panchayat' },
   { name: 'hanuman', bankPath: 'hanuman_chalisa_kids.json', language: 'hanuman', displayIcon: '🕉️', displayLabel: 'Hanuman Chalisa' },
+  { name: 'comprehension', bankPath: 'story_comprehension_100.json', language: 'comprehension', displayIcon: '📚', displayLabel: 'Story Comprehension' },
   // ADD NEW SUBJECTS HERE - no code changes needed elsewhere!
 ];
 

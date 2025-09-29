@@ -47,6 +47,13 @@ export const MODE_CONFIG = {
       border: '2px solid rgba(245,158,11,0.12)',
       shadow: '0 4px 12px rgba(245,158,11,0.08)',
       textColor: '#92400e'
+    },
+    // Story Comprehension mode: shows reading comprehension questions with answers
+    comprehension: {
+      background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(67,56,202,0.05))',
+      border: '2px solid rgba(99,102,241,0.2)',
+      shadow: '0 4px 12px rgba(99,102,241,0.1)',
+      textColor: '#4338ca'
     }
   }
 } as const;
