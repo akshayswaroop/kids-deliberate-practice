@@ -142,13 +142,14 @@ describe("Complete Math Learning Journey", () => {
     const user2 = state2.users[userId];
     const mathSession = user2.sessions[mathSessionId];
 
+    const complexityLevel = user2.settings.complexityLevels.mathtables || 1; // Use same default as the app
     if (user2.currentMode === 'mathtables' && 
-        user2.settings.complexityLevels.mathtables === 1 &&
+        complexityLevel === 1 &&
         mathSession.wordIds.length > 0 &&
         mathSession.wordIds.every(id => id.startsWith('2x'))) {
       step2.success(`User sees Math mode with ${mathSession.wordIds.length} level 1 questions (2x tables)`);
     } else {
-      step2.failure(`Expected Math mode with level 1 (2x) questions, got mode: ${user2.currentMode}, level: ${user2.settings.complexityLevels.mathtables}`);
+      step2.failure(`Expected Math mode with level 1 (2x) questions, got mode: ${user2.currentMode}, level: ${complexityLevel}`);
     }
 
     // STEP 3: User masters questions one by one
@@ -320,11 +321,12 @@ describe("Complete Math Learning Journey", () => {
 
     const finalState = store.getState().game as RootState;
     const finalUser = finalState.users[userId];
+    const finalComplexityLevel = finalUser.settings.complexityLevels.mathtables || 1; // Use same default as the app
 
-    if (finalUser.settings.complexityLevels.mathtables === 1) {
+    if (finalComplexityLevel === 1) {
       step.success("User correctly stays at level 1 with partial mastery");
     } else {
-      step.failure(`Expected to stay at level 1, but progressed to level ${finalUser.settings.complexityLevels.mathtables}`);
+      step.failure(`Expected to stay at level 1, but progressed to level ${finalComplexityLevel}`);
     }
   });
 });
