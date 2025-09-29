@@ -135,9 +135,14 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '16px',
+        padding: '16px 12px 16px 12px', // uniform horizontal padding
         minHeight: 0,
-        overflow: 'hidden' // Prevent overflow from this section
+        overflow: 'hidden', // Prevent overflow from this section
+        borderBottomLeftRadius: '0px', // visually connect to answer panel
+        borderBottomRightRadius: '0px',
+        borderTopLeftRadius: '16px', // match other panels
+        borderTopRightRadius: '16px',
+        marginBottom: '-4px' // reduce gap between panels
       }}>
           {(() => {
             const text = String(mainWord || '');
@@ -239,10 +244,14 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         boxSizing: 'border-box',
         display: 'flex',
         flexDirection: 'column',
+        borderTopLeftRadius: '0px', // visually connect to question panel
+        borderTopRightRadius: '0px',
         borderRadius: '16px',
         background: 'var(--bg-secondary)',
         boxShadow: '0 2px 18px rgba(79,70,229,0.04)',
-        overflow: 'auto' // Allow scrolling if content is too long
+        overflow: 'auto', // Allow scrolling if content is too long
+        marginTop: '-4px', // reduce gap between panels
+        marginBottom: '-4px' // reduce gap to button panel
       }}>
         {/* Main answer/notes area - fills available Answer Area space */}
         <div className="answer-panel" style={{ 
@@ -329,13 +338,15 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
       {/* Action Buttons Area - 25% of vertical space, docked at bottom */}
       <div style={{
         flex: '0 0 auto', // Size to content
-        minHeight: '140px',
-        width: '100%',
+  minHeight: '140px',
+  width: 'auto',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'stretch', // stretch buttons vertically for balance
-        gap: '20px',
-        padding: '10px 16px',
+  gap: '28px', // slightly increased for optical balance
+        padding: '10px 12px', // match answer panel horizontal padding
+        marginLeft: '12px', // match answer panel inset
+        marginRight: '12px',
         background: 'var(--bg-accent)',
         borderRadius: '16px 16px 0 0',
         boxShadow: 'var(--shadow-strong)',
@@ -347,46 +358,12 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         flexShrink: 0 // Prevent shrinking
       }}>
         {/* Reveal Answer button - only for non-English modes */}
-        {!isEnglishMode && (
-          <button
-            onClick={() => { 
-              if (isDebug) { console.debug('[PracticeCard] onRevealAnswer clicked', mainWord, 'current revealed:', isAnswerRevealed); } 
-              onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
-            }}
-            aria-label={isAnswerRevealed ? "Hide Answer" : "Reveal Answer"}
-            className="mastery-footer-button reveal"
-            style={{
-              backgroundColor: 'var(--color-warning)',
-              color: 'var(--text-inverse)',
-              border: 'none',
-              borderRadius: 12,
-              padding: 'clamp(8px, 2vh, 14px) clamp(12px, 3vw, 18px)',
-              fontSize: 'clamp(12px, 2.5vw, 16px)',
-              fontWeight: 800,
-              cursor: 'pointer',
-              display: 'flex',
-              gap: '6px',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'transform 180ms ease, box-shadow 180ms ease',
-              boxShadow: '0 8px 20px rgba(245,158,11,0.12)',
-              minHeight: 'clamp(40px, 8vh, 60px)', // slightly reduced minHeight
-              flex: '1 1 auto',
-              maxWidth: '140px'
-            }}
-          >
-            <span style={{fontSize: 'clamp(14px, 3vw, 18px)'}}>{isAnswerRevealed ? '🙈' : '👁️'}</span>
-            <span>{isAnswerRevealed ? 'Hide Answer' : 'Reveal Answer'}</span>
-          </button>
-        )}
+        {/* Button order: Read it well! (primary), Try again later (primary), Reveal Answer (secondary) */}
         <button
           onClick={() => {
             if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); }
-            // Create confetti burst effect
             createConfettiBurst();
-            // Trigger unicorn animation
             setShowUnicorn(true);
-            // Play yippu sound effect
             try {
               const audio = new window.Audio('/happy-logo-167474.mp3');
               audio.volume = 0.7;
@@ -395,29 +372,28 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               if (isDebug) console.warn('Sound failed:', e);
             }
             onCorrect && onCorrect();
-            // Auto-progress to next word after confetti animation duration (2500ms)
             if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after correct', mainWord); } onNext(); }, 2500);
           }}
           aria-label="Mark as read — great job"
           className="mastery-footer-button primary"
           style={{
-            backgroundColor: 'var(--button-primary-bg)',
-            color: 'var(--text-inverse)',
+            backgroundColor: 'var(--button-primary-bg, #2563eb)', // blue primary
+            color: 'var(--text-inverse, #fff)',
             border: 'none',
-            borderRadius: 12,
-            padding: 'clamp(10px, 2.5vh, 16px) clamp(14px, 3.5vw, 20px)',
-            fontSize: 'clamp(14px, 3vw, 18px)',
-            fontWeight: 800,
+            borderRadius: 10,
+            padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
+            fontSize: 'clamp(13px, 2.2vw, 16px)',
+            fontWeight: 700,
             cursor: 'pointer',
             display: 'flex',
             gap: '8px',
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'transform 180ms ease, box-shadow 180ms ease',
-            boxShadow: '0 8px 20px rgba(16,185,129,0.14)',
-            minHeight: 'clamp(40px, 8vh, 56px)', // slightly reduced minHeight
+            boxShadow: '0 4px 12px rgba(37,99,235,0.10)',
+            minHeight: 'clamp(30px, 5vh, 38px)',
             flex: '1 1 auto',
-            maxWidth: '160px'
+            maxWidth: '140px'
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🎉</span>
@@ -426,11 +402,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         <button
           onClick={() => {
             if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); }
-            // Add bounce animation to wrong choices
             triggerBounceAnimation();
-            // Show sad balloon animation
             setShowSadBalloon(true);
-            // Play brass fail sound effect and delay next word until both sound and animation end
             let soundPlayed = false;
             let soundEnded = false;
             let animationEnded = false;
@@ -454,39 +427,69 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               soundEnded = true;
             }
             onWrong && onWrong();
-            // Listen for sad balloon animation end
             setTimeout(() => {
               animationEnded = true;
               maybeNext();
-            }, 2500); // matches SadBalloonAnimation duration and sound
-            // If sound fails, fallback to previous delay
+            }, 2500);
             if (!soundPlayed) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after wrong (fallback)', mainWord); } onNext && onNext(); }, 2500);
           }}
           aria-label="Try again later — would you like to repeat this?"
           className="mastery-footer-button secondary"
           style={{
-            backgroundColor: 'var(--button-secondary-bg)',
-            color: 'var(--text-inverse)',
+            backgroundColor: 'var(--button-secondary-bg, #64748b)', // muted filled
+            color: 'var(--text-inverse, #fff)',
             border: 'none',
-            borderRadius: 12,
-            padding: 'clamp(10px, 2.5vh, 16px) clamp(14px, 3.5vw, 20px)',
-            fontSize: 'clamp(14px, 3vw, 18px)',
-            fontWeight: 800,
+            borderRadius: 10,
+            padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
+            fontSize: 'clamp(13px, 2.2vw, 16px)',
+            fontWeight: 700,
             cursor: 'pointer',
             display: 'flex',
             gap: '8px',
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'transform 180ms ease, box-shadow 180ms ease',
-            boxShadow: '0 8px 20px rgba(239,68,68,0.12)',
-            minHeight: 'clamp(40px, 8vh, 56px)', // slightly reduced minHeight
+            boxShadow: '0 4px 12px rgba(100,116,139,0.10)',
+            minHeight: 'clamp(30px, 5vh, 38px)',
             flex: '1 1 auto',
-            maxWidth: '160px'
+            maxWidth: '140px'
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🔁</span>
           <span>Try again later</span>
         </button>
+        {!isEnglishMode && (
+          <button
+            onClick={() => { 
+              if (isDebug) { console.debug('[PracticeCard] onRevealAnswer clicked', mainWord, 'current revealed:', isAnswerRevealed); } 
+              onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
+            }}
+            aria-label={isAnswerRevealed ? "Hide Answer" : "Reveal Answer"}
+            className="mastery-footer-button reveal"
+            style={{
+              backgroundColor: 'transparent', // outlined secondary
+              color: 'var(--button-primary-bg, #2563eb)',
+              border: '2px solid var(--button-primary-bg, #2563eb)',
+              borderRadius: 10,
+              padding: 'clamp(3px, 0.6vh, 6px) clamp(12px, 2vw, 16px)',
+              fontSize: 'clamp(13px, 2.2vw, 16px)',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'flex',
+              gap: '6px',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'transform 180ms ease, box-shadow 180ms ease',
+              boxShadow: 'none',
+              minHeight: 'clamp(28px, 4.5vh, 36px)',
+              flex: '1 1 auto',
+              maxWidth: '130px'
+            }}
+          >
+            <span style={{fontSize: 'clamp(14px, 3vw, 18px)'}}>{isAnswerRevealed ? '🙈' : '👁️'}</span>
+            <span>{isAnswerRevealed ? 'Hide Answer' : 'Reveal Answer'}</span>
+          </button>
+        )}
         {/* Next button removed: progression will auto-trigger after actions */}
       </div>
     </div>
