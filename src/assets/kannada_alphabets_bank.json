@@ -4,76 +4,3282 @@
     "complexity": 1,
     "question": "ಅ",
     "answer": "Hindi: अ | English: A",
-    "notes": "Examples:\n• ಅಮ್ಮ (Amma) = माँ (mother)\n• ಅಕ್ಕಿ (Akki) = चावल (rice)\n• ಅಡಿ (Adi) = पैर (foot)"
+    "notes": "Examples:\n• ಅಮ್ಮ (अम्मा) = mother\n• ಅಕ್ಕಿ (अक्कि) = rice\n• ಅಡಿ (अडि) = foot"
   },
   {
     "id": "swaragalu_02",
     "complexity": 1,
     "question": "ಆ",
-    "answer": "Hindi: आ | English: Ā",
-    "notes": "Examples:\n• ಆಟ (Āṭa) = खेल (game/play)\n• ಆನೆ (Āne) = हाथी (elephant)\n• ಆಭರಣ (Ābharaṇa) = गहना (jewelry)"
+    "answer": "Hindi: आ | English: Aa",
+    "notes": "Examples:\n• ಆಟ (आट) = game/play\n• ಆನೆ (हाथी) = elephant\n• ಆಭರಣ (आभरण) = jewelry"
   },
   {
     "id": "swaragalu_03",
     "complexity": 1,
     "question": "ಇ",
     "answer": "Hindi: इ | English: I",
-    "notes": "Examples:\n• ಇಲಿ (Ili) = चूहा (mouse)\n• ಇಟ್ಟು (Iṭṭu) = ईंट (brick)\n• ಇಂದ್ರ (Indra) = इन्द्र (Lord Indra)"
+    "notes": "Examples:\n• ಇಲಿ (इली) = mouse\n• ಇಟ್ಟಿಗೆ (इट्टिगे) = brick\n• ಇಂದ್ರ (इन्द्र) = Indra"
   },
   {
     "id": "swaragalu_04",
     "complexity": 1,
     "question": "ಈ",
-    "answer": "Hindi: ई | English: Ī",
-    "notes": "Examples:\n• ಈಗ (Īga) = अभी (now)\n• ಈರುಳ್ಳಿ (Īruḷḷi) = प्याज (onion)\n• ಈಕ (Īka) = मादा (female)"
+    "answer": "Hindi: ई | English: Ee",
+    "notes": "Examples:\n• ಈಗ (अभी) = now\n• ಈಶ್ವರ (ईश्वर) = Lord\n• ಈರುಳ್ಳಿ (प्याज़) = onion"
+  },
+  {
+    "id": "swaragalu_05",
+    "complexity": 1,
+    "question": "ಉ",
+    "answer": "Hindi: उ | English: U",
+    "notes": "Examples:\n• ಉಡುಪು (उडुपु) = clothes\n• ಉದಯ (उदय) = sunrise\n• ಉದ್ದು (उद्दु) = lentil"
+  },
+  {
+    "id": "swaragalu_06",
+    "complexity": 1,
+    "question": "ಊ",
+    "answer": "Hindi: ऊ | English: Oo",
+    "notes": "Examples:\n• ಊಟ (ऊट) = meal\n• ಊರು (ऊरु) = town\n• ಊದಲು (ऊदलु) = to blow"
+  },
+  {
+    "id": "swaragalu_07",
+    "complexity": 1,
+    "question": "ಋ",
+    "answer": "Hindi: ऋ | English: Ri",
+    "notes": "Examples:\n• ಋತು (ऋतु) = season\n• ಋಣ (ऋण) = debt\n• ಋಷಿ (ऋषि) = sage"
+  },
+  {
+    "id": "swaragalu_08",
+    "complexity": 1,
+    "question": "ಎ",
+    "answer": "Hindi: ए | English: E",
+    "notes": "Examples:\n• ಎಲೆ (एले) = leaf\n• ಎಮ್ಮೆ (एम्मे) = buffalo\n• ಎಳು (एळु) = seven"
+  },
+  {
+    "id": "swaragalu_09",
+    "complexity": 1,
+    "question": "ಏ",
+    "answer": "Hindi: ऐ (ए long) | English: Ee (long E)",
+    "notes": "Examples:\n• ಏನು (एनु) = what\n• ಏಕ (एक) = one/single\n• ಏಣಿ (एणि) = ladder"
+  },
+  {
+    "id": "swaragalu_10",
+    "complexity": 1,
+    "question": "ಐ",
+    "answer": "Hindi: ऐ | English: Ai",
+    "notes": "Examples:\n• ಐದು (ऐदु) = five\n• ಐಶ್ವರ್ಯ (ऐश्वर्य) = wealth\n• ಐವರ (ऐवर) = five people"
+  },
+  {
+    "id": "swaragalu_11",
+    "complexity": 1,
+    "question": "ಒ",
+    "answer": "Hindi: ओ | English: O",
+    "notes": "Examples:\n• ಒಂಟೆ (ओंटे) = camel\n• ಒಂದು (ओंदु) = one\n• ಒಲವು (ओलवु) = affection"
+  },
+  {
+    "id": "swaragalu_12",
+    "complexity": 1,
+    "question": "ಓ",
+    "answer": "Hindi: ओ (long) | English: Oo (long O)",
+    "notes": "Examples:\n• ಓದು (ओदु) = read\n• ಓಟ (ओट) = run\n• ಓಲೆ (ओले) = thatch/leaf"
+  },
+  {
+    "id": "swaragalu_13",
+    "complexity": 1,
+    "question": "ಔ",
+    "answer": "Hindi: औ | English: Au",
+    "notes": "Examples:\n• ಔಷಧ (औषध) = medicine\n• ಔದಾರ್ಯ (औदार्य) = generosity\n• ಔಪಚಾರಿಕ (औपचारिक) = formal"
+  },
+  {
+    "id": "swaragalu_14",
+    "complexity": 1,
+    "question": "ಅಂ",
+    "answer": "Hindi: अं | English: Am (anusvara)",
+    "notes": "Examples:\n• ಸಂಸ್ಕೃತ (संस्कृत) = Sanskrit\n• ಅಂಕ (अंक) = mark/number\n• ಅಂಬ (अंब) = mother (poetic)"
+  },
+  {
+    "id": "swaragalu_15",
+    "complexity": 1,
+    "question": "ಅಃ",
+    "answer": "Hindi: अः | English: Ah (visarga)",
+    "notes": "Examples:\n• ಬ್ರಹ್ಮಃ (ब्रह्मः) (lit.)\n• ವಿಷ್ಣುಃ (विष्णुः) (lit.)\n• शः-like visarga marker"
   },
   {
     "id": "vyanjanagalu_01",
     "complexity": 2,
     "question": "ಕ",
     "answer": "Hindi: क | English: Ka",
-    "notes": "Examples:\n• ಕಾಗೆ (Kāge) = कौआ (crow)\n• ಕಡಲೆ (Kaḍale) = चना (gram/chickpea)\n• ಕರಡಿ (Karaḍi) = भालू (bear)"
+    "notes": "Examples:\n• ಕಾಗೆ (कौआ) = crow\n• ಕಲ್ಲು (कल्लु) = stone\n• ಕಡಿ (कडि) = piece/bite"
   },
   {
     "id": "vyanjanagalu_02",
     "complexity": 2,
     "question": "ಖ",
     "answer": "Hindi: ख | English: Kha",
-    "notes": "Examples:\n• ಖಡ್ಗ (Khaḍga) = तलवार (sword)\n• ಖಾನಾ (Khānā) = खाना (food)\n• ಖರ್ಚು (Kharchu) = खर्च (expense)"
+    "notes": "Examples:\n• ಖಡ್ಗ (खड्ग) = sword\n• ಖರ್ಚು (खर्च) = expense\n• ಖುಷಿ (खुशी) = happiness"
   },
   {
     "id": "vyanjanagalu_03",
     "complexity": 2,
     "question": "ಗ",
     "answer": "Hindi: ग | English: Ga",
-    "notes": "Examples:\n• ಗಜ (Gaja) = हाथी (elephant)\n• ಗಡಿಯಾರ (Gaḍiyāra) = घड़ी (clock)\n• ಗಂಗಾ (Gaṅgā) = गंगा (River Ganga)"
+    "notes": "Examples:\n• ಗಜ (गज) = elephant\n• ಗಂಗಾ (गंगा) = Ganga\n• ಗಡಿಯಾರ (घड़ी) = clock"
+  },
+  {
+    "id": "vyanjanagalu_04",
+    "complexity": 2,
+    "question": "ಘ",
+    "answer": "Hindi: घ | English: Gha",
+    "notes": "Examples:\n• ಘಂಟೆ (घंटे) = bell\n• ಘರ (घर) = house\n• ಘಟಕ (घटक) = unit"
+  },
+  {
+    "id": "vyanjanagalu_05",
+    "complexity": 2,
+    "question": "ಙ",
+    "answer": "Hindi: ङ | English: Nga",
+    "notes": "Examples:\n• ಅಂಗ (अंग) = limb\n• ಭಂಗ (भंग) = break\n• ರಂಗ (रंग) = color"
+  },
+  {
+    "id": "vyanjanagalu_06",
+    "complexity": 2,
+    "question": "ಚ",
+    "answer": "Hindi: च | English: Cha",
+    "notes": "Examples:\n• ಚಂದ್ರ (चंद्र) = moon\n• ಚಾಕು (चाकु) = knife\n• ಚಪ್ಪಲಿ (चप्पलि) = slippers"
+  },
+  {
+    "id": "vyanjanagalu_07",
+    "complexity": 2,
+    "question": "ಛ",
+    "answer": "Hindi: छ | English: Chha",
+    "notes": "Examples:\n• ಛತ್ರ (छत्र) = umbrella\n• ಛಾಯೆ (छाये) = shadow\n• ಛಂದ (छंद) = metre"
+  },
+  {
+    "id": "vyanjanagalu_08",
+    "complexity": 2,
+    "question": "ಜ",
+    "answer": "Hindi: ज | English: Ja",
+    "notes": "Examples:\n• ಜಲ (जल) = water\n• ಜಾಗೃತಿ (जागृति) = awareness\n• ಜಾಮ (जाम) = jam"
+  },
+  {
+    "id": "vyanjanagalu_09",
+    "complexity": 2,
+    "question": "ಝ",
+    "answer": "Hindi: झ | English: Jha",
+    "notes": "Examples:\n• ಝರಿ (झरि) = stream\n• ಝಂಡಾ (झंडा) = flag\n• ಝಟಪಟ (झटपट) = quickly"
+  },
+  {
+    "id": "vyanjanagalu_10",
+    "complexity": 2,
+    "question": "ಞ",
+    "answer": "Hindi: ञ | English: Nya",
+    "notes": "Examples:\n• ಜ್ಞ (ज्ञ) context\n• ಞಾನ (ञान) (rare)\n• Use in conjuncts"
+  },
+  {
+    "id": "vyanjanagalu_11",
+    "complexity": 2,
+    "question": "ಟ",
+    "answer": "Hindi: ट | English: Ta (retroflex)",
+    "notes": "Examples:\n• ಟಮಾಟ (टमाट) = tomato\n• ಟಪಾಸು (टपासु) = crackers\n• ಟವಲು (टवलु) = towel"
+  },
+  {
+    "id": "vyanjanagalu_12",
+    "complexity": 2,
+    "question": "ಠ",
+    "answer": "Hindi: ठ | English: Tha (retroflex)",
+    "notes": "Examples:\n• ಠಕ್ಕನೆ (ठक्कने) = suddenly\n• ಠಾಣೆ (ठाणे) = station\n• ಠೇವಣಿ (ठेवणि) = deposit"
+  },
+  {
+    "id": "vyanjanagalu_13",
+    "complexity": 2,
+    "question": "ಡ",
+    "answer": "Hindi: ड | English: Da (retroflex)",
+    "notes": "Examples:\n• ಡಬ್ಬಿ (डब्बि) = box\n• ಡಂಗುರ (डंगुर) = drum\n• ಡಾಲಿ (डालि) = basket"
+  },
+  {
+    "id": "vyanjanagalu_14",
+    "complexity": 2,
+    "question": "ಢ",
+    "answer": "Hindi: ढ | English: Dha (retroflex)",
+    "notes": "Examples:\n• ಢೋಳ (ढोल) = drum\n• ಢಕ್ಕन् (ढक्कन) = lid\n• ಢಗಮಗ (ढगमग) = dazzling"
+  },
+  {
+    "id": "vyanjanagalu_15",
+    "complexity": 2,
+    "question": "ಣ",
+    "answer": "Hindi: ण | English: Na (retroflex)",
+    "notes": "Examples:\n• ಣಗು (णगु) = smile (lit.)\n• ಪತ್ನಿ (पत्नी) context\n• Use in Kannada words"
+  },
+  {
+    "id": "vyanjanagalu_16",
+    "complexity": 2,
+    "question": "ತ",
+    "answer": "Hindi: त | English: Ta (dental)",
+    "notes": "Examples:\n• ತಾಯಿ (तायी) = mother\n• ತಂಪು (तंपु) = cool\n• ತರು (तरु) = bring"
+  },
+  {
+    "id": "vyanjanagalu_17",
+    "complexity": 2,
+    "question": "ಥ",
+    "answer": "Hindi: थ | English: Tha (dental)",
+    "notes": "Examples:\n• ಥಂಡ (ठंड) (influence)\n• ಥಟ್ಟನೆ (थटने) = suddenly\n• ಥಳ (थळ) = place (regional)"
+  },
+  {
+    "id": "vyanjanagalu_18",
+    "complexity": 2,
+    "question": "ದ",
+    "answer": "Hindi: द | English: Da (dental)",
+    "notes": "Examples:\n• ದೀಪ (दीप) = lamp\n• ದಿನ (दिन) = day\n• ದಾರಿ (दारी) = path"
+  },
+  {
+    "id": "vyanjanagalu_19",
+    "complexity": 2,
+    "question": "ಧ",
+    "answer": "Hindi: ध | English: Dha (dental)",
+    "notes": "Examples:\n• ಧನುಷ (धनुष) = bow\n• ಧರ್ಮ (धर्म) = duty/religion\n• ಧೂಳು (धूलु) = dust"
+  },
+  {
+    "id": "vyanjanagalu_20",
+    "complexity": 2,
+    "question": "ನ",
+    "answer": "Hindi: न | English: Na",
+    "notes": "Examples:\n• ನದಿ (नदि) = river\n• ನಮಸ್ಕಾರ (नमस्कार) = greeting\n• ನಗು (नगु) = smile"
+  },
+  {
+    "id": "vyanjanagalu_21",
+    "complexity": 2,
+    "question": "ಪ",
+    "answer": "Hindi: प | English: Pa",
+    "notes": "Examples:\n• ಪತ್ರ (पत्र) = letter\n• ಪಾಪ (पाप) = sin\n• ಪಟ (पट) = cloth/board"
+  },
+  {
+    "id": "vyanjanagalu_22",
+    "complexity": 2,
+    "question": "ಫ",
+    "answer": "Hindi: फ | English: Pha",
+    "notes": "Examples:\n• ಫಲ (फल) = fruit\n• ಫೋನ್ (फोन) = phone\n• ಫೈಲ್ (फाइल) = file"
+  },
+  {
+    "id": "vyanjanagalu_23",
+    "complexity": 2,
+    "question": "ಬ",
+    "answer": "Hindi: ब | English: Ba",
+    "notes": "Examples:\n• ಬಾಲ (बाल) = hair/child\n• ಬಟ್ಟೆ (बट्टे) = clothes\n• ಬಂಗಾರ (बंगार) = gold"
+  },
+  {
+    "id": "vyanjanagalu_24",
+    "complexity": 2,
+    "question": "ಭ",
+    "answer": "Hindi: भ | English: Bha",
+    "notes": "Examples:\n• ಭವನ (भवन) = building\n• ಭಾರತ (भारत) = India\n• ಭಯ (भय) = fear"
+  },
+  {
+    "id": "vyanjanagalu_25",
+    "complexity": 2,
+    "question": "ಮ",
+    "answer": "Hindi: म | English: Ma",
+    "notes": "Examples:\n• ಮನೆ (मने) = house\n• ಮೀನು (मीनु) = fish\n• ಮಗು (मगु) = child"
+  },
+  {
+    "id": "vyanjanagalu_26",
+    "complexity": 2,
+    "question": "ಯ",
+    "answer": "Hindi: य | English: Ya",
+    "notes": "Examples:\n• ಯೋಗ (योग) = yoga\n• ಯಾರು (यारु) = who\n• ಯಾನ (यान) = vehicle"
+  },
+  {
+    "id": "vyanjanagalu_27",
+    "complexity": 2,
+    "question": "ರ",
+    "answer": "Hindi: र | English: Ra",
+    "notes": "Examples:\n• ರವಿ (रवि) = sun\n• ರಾಶಿ (राशि) = sign\n• ರಥ (रथ) = chariot"
+  },
+  {
+    "id": "vyanjanagalu_28",
+    "complexity": 2,
+    "question": "ಲ",
+    "answer": "Hindi: ल | English: La",
+    "notes": "Examples:\n• ಲಲಿ (ललि) = girl (lit.)\n• ಲಕ್ಷ್ಮೀ (लक्ष्मी) = Lakshmi\n• ಲೋಟ (लोट) = mug"
+  },
+  {
+    "id": "vyanjanagalu_29",
+    "complexity": 2,
+    "question": "ವ",
+    "answer": "Hindi: व | English: Va",
+    "notes": "Examples:\n• ವರ್ಷ (वर्ष) = year/rain\n• ವಾಟೆ (वाटे) = path\n• ವಿಜಯ (विजय) = victory"
+  },
+  {
+    "id": "vyanjanagalu_30",
+    "complexity": 2,
+    "question": "ಶ",
+    "answer": "Hindi: श | English: Sha",
+    "notes": "Examples:\n• ಶರತ್ (शरत) = autumn\n• ಶಕ್ತಿ (शक्ति) = power\n• ಶಾಲೆ (शाले) = school"
+  },
+  {
+    "id": "vyanjanagalu_31",
+    "complexity": 2,
+    "question": "ಷ",
+    "answer": "Hindi: ष | English: Ṣa",
+    "notes": "Examples:\n• ಷಟ್ಕೋಣ (षट्कोण) = hexagon\n• ಷಡ್ರಸ (षड्रस) = six tastes\n• ಷಡ್ಭुज (षड्भुज) = six-armed (lit.)"
+  },
+  {
+    "id": "vyanjanagalu_32",
+    "complexity": 2,
+    "question": "ಸ",
+    "answer": "Hindi: स | English: Sa",
+    "notes": "Examples:\n• ಸಾಗರ (सागर) = ocean\n• ಸಮಯ (समय) = time\n• ಸಕ್ಕರೆ (सक्करे) = sugar"
+  },
+  {
+    "id": "vyanjanagalu_33",
+    "complexity": 2,
+    "question": "ಹ",
+    "answer": "Hindi: ह | English: Ha",
+    "notes": "Examples:\n• ಹಂಸ (हंस) = swan\n• ಹಸಿರು (हसिरु) = green\n• ಹಣ್ಣು (हण्णु) = fruit"
+  },
+  {
+    "id": "vyanjanagalu_34",
+    "complexity": 2,
+    "question": "ಳ",
+    "answer": "Hindi: ळ | English: Ḷa",
+    "notes": "Examples:\n• ಹಳದಿ (हलदि) = yellow\n• ಬೆಳಕು (बेलकु) = light\n• ಮಳೆ (मळे) = rain"
   },
   {
     "id": "matregalu_01",
     "complexity": 3,
     "question": "ಾ",
-    "answer": "Hindi: ा | English: Ā (long A vowel mark)",
-    "notes": "Examples:\n• ಮಾಲೆ (Māle) = माला (garland)\n• ಕಾಲು (Kālu) = पैर (leg/foot)\n• ದಾರಿ (Dāri) = रास्ता (path/road)"
+    "answer": "Hindi: ा | English: aa",
+    "notes": "Examples:\n• ಮಾಲೆ (माले) = garland\n• ಕಾಲು (कालु) = leg\n• ದಾರಿ (दारी) = path"
   },
   {
     "id": "matregalu_02",
     "complexity": 3,
     "question": "ಿ",
-    "answer": "Hindi: ि | English: I (short I vowel mark)",
-    "notes": "Examples:\n• ಮಿನುಗು (Minugu) = चमक (shine/sparkle)\n• ಕಿರಿ (Kiri) = छोटा (small)\n• ಚಿತ್ರ (Chitra) = चित्र (picture)"
+    "answer": "Hindi: ि | English: i",
+    "notes": "Examples:\n• ಚಿತ್ರ (चित्र) = picture\n• ಮಿಠಾಯಿ (मिठायी) = sweet\n• ಕಿರು (किरु) = small"
   },
   {
-    "id": "ottakshara_01",
-    "complexity": 4,
-    "question": "ಕ್ಕ",
-    "answer": "Hindi: क्क | English: Kka (double K consonant)",
-    "notes": "Examples:\n• ಅಕ್ಕ (Akka) = बड़ी बहन (elder sister)\n• ಹಕ್ಕಿ (Hakki) = पक्षी (bird)\n• ಮಕ್ಕಳು (Makkalu) = बच्चे (children)"
+    "id": "matregalu_03",
+    "complexity": 3,
+    "question": "ೀ",
+    "answer": "Hindi: ी | English: ii",
+    "notes": "Examples:\n• ಮೀನು (मीनु) = fish\n• ಕೀರ್ತಿ (कीर्ति) = fame\n• ನೀರು (नीरु) = water"
   },
   {
-    "id": "ottakshara_02",
-    "complexity": 4,
-    "question": "ತ್ರ",
-    "answer": "Hindi: त्र | English: Tra (T+R consonant cluster)",
-    "notes": "Examples:\n• ಮಿತ್ರ (Mitra) = मित्र (friend)\n• ಚಿತ್ರ (Chitra) = चित्र (picture)\n• ಪಾತ್ರ (Pātra) = पात्र (vessel/character)"
+    "id": "matregalu_04",
+    "complexity": 3,
+    "question": "ು",
+    "answer": "Hindi: ु | English: u",
+    "notes": "Examples:\n• ಪುಸ್ತಕ (पुस्तक) = book\n• ಕುಡಿ (कुडि) = drink\n• ಬುಟ್ಟಿ (बुट्टि) = basket"
+  },
+  {
+    "id": "matregalu_05",
+    "complexity": 3,
+    "question": "ೂ",
+    "answer": "Hindi: ू | English: uu",
+    "notes": "Examples:\n• ಮೂಗು (मूगु) = nose\n• ಕೂದಲು (कूदलु) = hair\n• ಬೂದಿ (बूदि) = ash"
+  },
+  {
+    "id": "matregalu_06",
+    "complexity": 3,
+    "question": "ೃ",
+    "answer": "Hindi: ृ | English: ru/ri",
+    "notes": "Examples:\n• ಕೃಪೆ (कृपे) = kindness\n• ಶೃಂಗ (शृंग) = horn\n• ವೃಕ್ಷ (वृक्ष) = tree"
+  },
+  {
+    "id": "matregalu_07",
+    "complexity": 3,
+    "question": "ೆ",
+    "answer": "Hindi: े | English: e",
+    "notes": "Examples:\n• ಬೆಕ್ಕು (बेक्कु) = cat\n• ನೆರೆ (नेरे) = neighbor\n• ಮೆಣಸಿನಕಾಯಿ (मेणसिनकायि) = chili"
+  },
+  {
+    "id": "matregalu_08",
+    "complexity": 3,
+    "question": "ೇ",
+    "answer": "Hindi: े (long) | English: ee/ē",
+    "notes": "Examples:\n• ಮೇಜು (मेज़ु) = table\n• ನೇತಿ (नेति) = wax/ghee (context)\n• ಕೇಸರಿ (केसरी) = saffron"
+  },
+  {
+    "id": "matregalu_09",
+    "complexity": 3,
+    "question": "ೈ",
+    "answer": "Hindi: ै | English: ai",
+    "notes": "Examples:\n• ಮೈ (मै) = body\n• ಹೈದು (हैदु) = five (dial.)\n• ಶೈಲಿ (शैली) = style"
+  },
+  {
+    "id": "matregalu_10",
+    "complexity": 3,
+    "question": "ೊ",
+    "answer": "Hindi: ो | English: o",
+    "notes": "Examples:\n• ಕೊನೆ (कोने) = end\n• ಹೊಸ (होस) = new\n• ಮೊಟ್ಟೆ (मोट्टे) = egg"
+  },
+  {
+    "id": "matregalu_11",
+    "complexity": 3,
+    "question": "ೋ",
+    "answer": "Hindi: ो (long) | English: oo/ō",
+    "notes": "Examples:\n• ಮೋಡ (मोड) = cloud\n• ಕೋಲು (कोलु) = stick\n• ದೋಣಿ (दोनि) = boat"
+  },
+  {
+    "id": "matregalu_12",
+    "complexity": 3,
+    "question": "ೌ",
+    "answer": "Hindi: ौ | English: au",
+    "notes": "Examples:\n• ಹೌದು (हौदु) = yes\n• ಕೌಶಲ (कौशल) = skill\n• ಮೌನ (मौन) = silence"
+  },
+  {
+    "id": "barakhadi_001",
+    "complexity": 3,
+    "question": "ಕಾ",
+    "answer": "Hindi: का | English: kaa",
+    "notes": "Examples:\n• Pronounce: k + aa → kaa\n• Kannada→Hindi: ಕ+ಾ → ಕಾ (का)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_002",
+    "complexity": 3,
+    "question": "ಕಿ",
+    "answer": "Hindi: कि | English: ki",
+    "notes": "Examples:\n• Pronounce: k + i → ki\n• Kannada→Hindi: ಕ+ಿ → ಕಿ (कि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_003",
+    "complexity": 3,
+    "question": "ಕೀ",
+    "answer": "Hindi: की | English: kii",
+    "notes": "Examples:\n• Pronounce: k + ii → kii\n• Kannada→Hindi: ಕ+ೀ → ಕೀ (की)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_004",
+    "complexity": 3,
+    "question": "ಕು",
+    "answer": "Hindi: कु | English: ku",
+    "notes": "Examples:\n• Pronounce: k + u → ku\n• Kannada→Hindi: ಕ+ು → ಕು (कु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_005",
+    "complexity": 3,
+    "question": "ಕೂ",
+    "answer": "Hindi: कू | English: kuu",
+    "notes": "Examples:\n• Pronounce: k + uu → kuu\n• Kannada→Hindi: ಕ+ೂ → ಕೂ (कू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_006",
+    "complexity": 3,
+    "question": "ಕೃ",
+    "answer": "Hindi: कृ | English: kri",
+    "notes": "Examples:\n• Pronounce: k + ru/ri → kri\n• Kannada→Hindi: ಕ+ೃ → ಕೃ (कृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_007",
+    "complexity": 3,
+    "question": "ಕೆ",
+    "answer": "Hindi: के | English: ke",
+    "notes": "Examples:\n• Pronounce: k + e → ke\n• Kannada→Hindi: ಕ+ೆ → ಕೆ (के)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_008",
+    "complexity": 3,
+    "question": "ಕೇ",
+    "answer": "Hindi: के (long) | English: kee",
+    "notes": "Examples:\n• Pronounce: k + ee/ē → kee\n• Kannada→Hindi: ಕ+ೇ → ಕೇ (के (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_009",
+    "complexity": 3,
+    "question": "ಕೈ",
+    "answer": "Hindi: कै | English: kai",
+    "notes": "Examples:\n• Pronounce: k + ai → kai\n• Kannada→Hindi: ಕ+ೈ → ಕೈ (कै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_010",
+    "complexity": 3,
+    "question": "ಕೊ",
+    "answer": "Hindi: को | English: ko",
+    "notes": "Examples:\n• Pronounce: k + o → ko\n• Kannada→Hindi: ಕ+ೊ → ಕೊ (को)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_011",
+    "complexity": 3,
+    "question": "ಕೋ",
+    "answer": "Hindi: को (long) | English: koo",
+    "notes": "Examples:\n• Pronounce: k + oo/ō → koo\n• Kannada→Hindi: ಕ+ೋ → ಕೋ (को (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_012",
+    "complexity": 3,
+    "question": "ಕೌ",
+    "answer": "Hindi: कौ | English: kau",
+    "notes": "Examples:\n• Pronounce: k + au → kau\n• Kannada→Hindi: ಕ+ೌ → ಕೌ (कौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_013",
+    "complexity": 3,
+    "question": "ಖಾ",
+    "answer": "Hindi: खा | English: khaa",
+    "notes": "Examples:\n• Pronounce: kh + aa → khaa\n• Kannada→Hindi: ಖ+ಾ → ಖಾ (खा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_014",
+    "complexity": 3,
+    "question": "ಖಿ",
+    "answer": "Hindi: खि | English: khi",
+    "notes": "Examples:\n• Pronounce: kh + i → khi\n• Kannada→Hindi: ಖ+ಿ → ಖಿ (खि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_015",
+    "complexity": 3,
+    "question": "ಖೀ",
+    "answer": "Hindi: खी | English: khii",
+    "notes": "Examples:\n• Pronounce: kh + ii → khii\n• Kannada→Hindi: ಖ+ೀ → ಖೀ (खी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_016",
+    "complexity": 3,
+    "question": "ಖು",
+    "answer": "Hindi: खु | English: khu",
+    "notes": "Examples:\n• Pronounce: kh + u → khu\n• Kannada→Hindi: ಖ+ು → ಖು (खु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_017",
+    "complexity": 3,
+    "question": "ಖೂ",
+    "answer": "Hindi: खू | English: khuu",
+    "notes": "Examples:\n• Pronounce: kh + uu → khuu\n• Kannada→Hindi: ಖ+ೂ → ಖೂ (खू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_018",
+    "complexity": 3,
+    "question": "ಖೃ",
+    "answer": "Hindi: खृ | English: khri",
+    "notes": "Examples:\n• Pronounce: kh + ru/ri → khri\n• Kannada→Hindi: ಖ+ೃ → ಖೃ (खृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_019",
+    "complexity": 3,
+    "question": "ಖೆ",
+    "answer": "Hindi: खे | English: khe",
+    "notes": "Examples:\n• Pronounce: kh + e → khe\n• Kannada→Hindi: ಖ+ೆ → ಖೆ (खे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_020",
+    "complexity": 3,
+    "question": "ಖೇ",
+    "answer": "Hindi: खे (long) | English: khee",
+    "notes": "Examples:\n• Pronounce: kh + ee/ē → khee\n• Kannada→Hindi: ಖ+ೇ → ಖೇ (खे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_021",
+    "complexity": 3,
+    "question": "ಖೈ",
+    "answer": "Hindi: खै | English: khai",
+    "notes": "Examples:\n• Pronounce: kh + ai → khai\n• Kannada→Hindi: ಖ+ೈ → ಖೈ (खै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_022",
+    "complexity": 3,
+    "question": "ಖೊ",
+    "answer": "Hindi: खो | English: kho",
+    "notes": "Examples:\n• Pronounce: kh + o → kho\n• Kannada→Hindi: ಖ+ೊ → ಖೊ (खो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_023",
+    "complexity": 3,
+    "question": "ಖೋ",
+    "answer": "Hindi: खो (long) | English: khoo",
+    "notes": "Examples:\n• Pronounce: kh + oo/ō → khoo\n• Kannada→Hindi: ಖ+ೋ → ಖೋ (खो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_024",
+    "complexity": 3,
+    "question": "ಖೌ",
+    "answer": "Hindi: खौ | English: khau",
+    "notes": "Examples:\n• Pronounce: kh + au → khau\n• Kannada→Hindi: ಖ+ೌ → ಖೌ (खौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_025",
+    "complexity": 3,
+    "question": "ಗಾ",
+    "answer": "Hindi: गा | English: gaa",
+    "notes": "Examples:\n• Pronounce: g + aa → gaa\n• Kannada→Hindi: ಗ+ಾ → ಗಾ (गा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_026",
+    "complexity": 3,
+    "question": "ಗಿ",
+    "answer": "Hindi: गि | English: gi",
+    "notes": "Examples:\n• Pronounce: g + i → gi\n• Kannada→Hindi: ಗ+ಿ → ಗಿ (गि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_027",
+    "complexity": 3,
+    "question": "ಗೀ",
+    "answer": "Hindi: गी | English: gii",
+    "notes": "Examples:\n• Pronounce: g + ii → gii\n• Kannada→Hindi: ಗ+ೀ → ಗೀ (गी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_028",
+    "complexity": 3,
+    "question": "ಗು",
+    "answer": "Hindi: गु | English: gu",
+    "notes": "Examples:\n• Pronounce: g + u → gu\n• Kannada→Hindi: ಗ+ು → ಗು (गु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_029",
+    "complexity": 3,
+    "question": "ಗೂ",
+    "answer": "Hindi: गू | English: guu",
+    "notes": "Examples:\n• Pronounce: g + uu → guu\n• Kannada→Hindi: ಗ+ೂ → ಗೂ (गू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_030",
+    "complexity": 3,
+    "question": "ಗೃ",
+    "answer": "Hindi: गृ | English: gri",
+    "notes": "Examples:\n• Pronounce: g + ru/ri → gri\n• Kannada→Hindi: ಗ+ೃ → ಗೃ (गृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_031",
+    "complexity": 3,
+    "question": "ಗೆ",
+    "answer": "Hindi: गे | English: ge",
+    "notes": "Examples:\n• Pronounce: g + e → ge\n• Kannada→Hindi: ಗ+ೆ → ಗೆ (गे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_032",
+    "complexity": 3,
+    "question": "ಗೇ",
+    "answer": "Hindi: गे (long) | English: gee",
+    "notes": "Examples:\n• Pronounce: g + ee/ē → gee\n• Kannada→Hindi: ಗ+ೇ → ಗೇ (गे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_033",
+    "complexity": 3,
+    "question": "ಗೈ",
+    "answer": "Hindi: गै | English: gai",
+    "notes": "Examples:\n• Pronounce: g + ai → gai\n• Kannada→Hindi: ಗ+ೈ → ಗೈ (गै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_034",
+    "complexity": 3,
+    "question": "ಗೊ",
+    "answer": "Hindi: गो | English: go",
+    "notes": "Examples:\n• Pronounce: g + o → go\n• Kannada→Hindi: ಗ+ೊ → ಗೊ (गो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_035",
+    "complexity": 3,
+    "question": "ಗೋ",
+    "answer": "Hindi: गो (long) | English: goo",
+    "notes": "Examples:\n• Pronounce: g + oo/ō → goo\n• Kannada→Hindi: ಗ+ೋ → ಗೋ (गो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_036",
+    "complexity": 3,
+    "question": "ಗೌ",
+    "answer": "Hindi: गौ | English: gau",
+    "notes": "Examples:\n• Pronounce: g + au → gau\n• Kannada→Hindi: ಗ+ೌ → ಗೌ (गौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_037",
+    "complexity": 3,
+    "question": "ಘಾ",
+    "answer": "Hindi: घा | English: ghaa",
+    "notes": "Examples:\n• Pronounce: gh + aa → ghaa\n• Kannada→Hindi: ಘ+ಾ → ಘಾ (घा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_038",
+    "complexity": 3,
+    "question": "ಘಿ",
+    "answer": "Hindi: घि | English: ghi",
+    "notes": "Examples:\n• Pronounce: gh + i → ghi\n• Kannada→Hindi: ಘ+ಿ → ಘಿ (घि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_039",
+    "complexity": 3,
+    "question": "ಘೀ",
+    "answer": "Hindi: घी | English: ghii",
+    "notes": "Examples:\n• Pronounce: gh + ii → ghii\n• Kannada→Hindi: ಘ+ೀ → ಘೀ (घी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_040",
+    "complexity": 3,
+    "question": "ಘು",
+    "answer": "Hindi: घु | English: ghu",
+    "notes": "Examples:\n• Pronounce: gh + u → ghu\n• Kannada→Hindi: ಘ+ು → ಘು (घु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_041",
+    "complexity": 3,
+    "question": "ಘೂ",
+    "answer": "Hindi: घू | English: ghuu",
+    "notes": "Examples:\n• Pronounce: gh + uu → ghuu\n• Kannada→Hindi: ಘ+ೂ → ಘೂ (घू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_042",
+    "complexity": 3,
+    "question": "ಘೃ",
+    "answer": "Hindi: घृ | English: ghri",
+    "notes": "Examples:\n• Pronounce: gh + ru/ri → ghri\n• Kannada→Hindi: ಘ+ೃ → ಘೃ (घृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_043",
+    "complexity": 3,
+    "question": "ಘೆ",
+    "answer": "Hindi: घे | English: ghe",
+    "notes": "Examples:\n• Pronounce: gh + e → ghe\n• Kannada→Hindi: ಘ+ೆ → ಘೆ (घे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_044",
+    "complexity": 3,
+    "question": "ಘೇ",
+    "answer": "Hindi: घे (long) | English: ghee",
+    "notes": "Examples:\n• Pronounce: gh + ee/ē → ghee\n• Kannada→Hindi: ಘ+ೇ → ಘೇ (घे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_045",
+    "complexity": 3,
+    "question": "ಘೈ",
+    "answer": "Hindi: घै | English: ghai",
+    "notes": "Examples:\n• Pronounce: gh + ai → ghai\n• Kannada→Hindi: ಘ+ೈ → ಘೈ (घै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_046",
+    "complexity": 3,
+    "question": "ಘೊ",
+    "answer": "Hindi: घो | English: gho",
+    "notes": "Examples:\n• Pronounce: gh + o → gho\n• Kannada→Hindi: ಘ+ೊ → ಘೊ (घो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_047",
+    "complexity": 3,
+    "question": "ಘೋ",
+    "answer": "Hindi: घो (long) | English: ghoo",
+    "notes": "Examples:\n• Pronounce: gh + oo/ō → ghoo\n• Kannada→Hindi: ಘ+ೋ → ಘೋ (घो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_048",
+    "complexity": 3,
+    "question": "ಘೌ",
+    "answer": "Hindi: घौ | English: ghau",
+    "notes": "Examples:\n• Pronounce: gh + au → ghau\n• Kannada→Hindi: ಘ+ೌ → ಘೌ (घौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_049",
+    "complexity": 3,
+    "question": "ಙಾ",
+    "answer": "Hindi: ङा | English: ngaa",
+    "notes": "Examples:\n• Pronounce: ng + aa → ngaa\n• Kannada→Hindi: ಙ+ಾ → ಙಾ (ङा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_050",
+    "complexity": 3,
+    "question": "ಙಿ",
+    "answer": "Hindi: ङि | English: ngi",
+    "notes": "Examples:\n• Pronounce: ng + i → ngi\n• Kannada→Hindi: ಙ+ಿ → ಙಿ (ङि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_051",
+    "complexity": 3,
+    "question": "ಙೀ",
+    "answer": "Hindi: ङी | English: ngii",
+    "notes": "Examples:\n• Pronounce: ng + ii → ngii\n• Kannada→Hindi: ಙ+ೀ → ಙೀ (ङी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_052",
+    "complexity": 3,
+    "question": "ಙು",
+    "answer": "Hindi: ङु | English: ngu",
+    "notes": "Examples:\n• Pronounce: ng + u → ngu\n• Kannada→Hindi: ಙ+ು → ಙು (ङु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_053",
+    "complexity": 3,
+    "question": "ಙೂ",
+    "answer": "Hindi: ङू | English: nguu",
+    "notes": "Examples:\n• Pronounce: ng + uu → nguu\n• Kannada→Hindi: ಙ+ೂ → ಙೂ (ङू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_054",
+    "complexity": 3,
+    "question": "ಙೃ",
+    "answer": "Hindi: ङृ | English: ngri",
+    "notes": "Examples:\n• Pronounce: ng + ru/ri → ngri\n• Kannada→Hindi: ಙ+ೃ → ಙೃ (ङृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_055",
+    "complexity": 3,
+    "question": "ಙೆ",
+    "answer": "Hindi: ङे | English: nge",
+    "notes": "Examples:\n• Pronounce: ng + e → nge\n• Kannada→Hindi: ಙ+ೆ → ಙೆ (ङे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_056",
+    "complexity": 3,
+    "question": "ಙೇ",
+    "answer": "Hindi: ङे (long) | English: ngee",
+    "notes": "Examples:\n• Pronounce: ng + ee/ē → ngee\n• Kannada→Hindi: ಙ+ೇ → ಙೇ (ङे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_057",
+    "complexity": 3,
+    "question": "ಙೈ",
+    "answer": "Hindi: ङै | English: ngai",
+    "notes": "Examples:\n• Pronounce: ng + ai → ngai\n• Kannada→Hindi: ಙ+ೈ → ಙೈ (ङै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_058",
+    "complexity": 3,
+    "question": "ಙೊ",
+    "answer": "Hindi: ङो | English: ngo",
+    "notes": "Examples:\n• Pronounce: ng + o → ngo\n• Kannada→Hindi: ಙ+ೊ → ಙೊ (ङो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_059",
+    "complexity": 3,
+    "question": "ಙೋ",
+    "answer": "Hindi: ङो (long) | English: ngoo",
+    "notes": "Examples:\n• Pronounce: ng + oo/ō → ngoo\n• Kannada→Hindi: ಙ+ೋ → ಙೋ (ङो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_060",
+    "complexity": 3,
+    "question": "ಙೌ",
+    "answer": "Hindi: ङौ | English: ngau",
+    "notes": "Examples:\n• Pronounce: ng + au → ngau\n• Kannada→Hindi: ಙ+ೌ → ಙೌ (ङौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_061",
+    "complexity": 3,
+    "question": "ಚಾ",
+    "answer": "Hindi: चा | English: chaa",
+    "notes": "Examples:\n• Pronounce: ch + aa → chaa\n• Kannada→Hindi: ಚ+ಾ → ಚಾ (चा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_062",
+    "complexity": 3,
+    "question": "ಚಿ",
+    "answer": "Hindi: चि | English: chi",
+    "notes": "Examples:\n• Pronounce: ch + i → chi\n• Kannada→Hindi: ಚ+ಿ → ಚಿ (चि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_063",
+    "complexity": 3,
+    "question": "ಚೀ",
+    "answer": "Hindi: ची | English: chii",
+    "notes": "Examples:\n• Pronounce: ch + ii → chii\n• Kannada→Hindi: ಚ+ೀ → ಚೀ (ची)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_064",
+    "complexity": 3,
+    "question": "ಚು",
+    "answer": "Hindi: चु | English: chu",
+    "notes": "Examples:\n• Pronounce: ch + u → chu\n• Kannada→Hindi: ಚ+ು → ಚು (चु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_065",
+    "complexity": 3,
+    "question": "ಚೂ",
+    "answer": "Hindi: चू | English: chuu",
+    "notes": "Examples:\n• Pronounce: ch + uu → chuu\n• Kannada→Hindi: ಚ+ೂ → ಚೂ (चू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_066",
+    "complexity": 3,
+    "question": "ಚೃ",
+    "answer": "Hindi: चृ | English: chri",
+    "notes": "Examples:\n• Pronounce: ch + ru/ri → chri\n• Kannada→Hindi: ಚ+ೃ → ಚೃ (चृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_067",
+    "complexity": 3,
+    "question": "ಚೆ",
+    "answer": "Hindi: चे | English: che",
+    "notes": "Examples:\n• Pronounce: ch + e → che\n• Kannada→Hindi: ಚ+ೆ → ಚೆ (चे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_068",
+    "complexity": 3,
+    "question": "ಚೇ",
+    "answer": "Hindi: चे (long) | English: chee",
+    "notes": "Examples:\n• Pronounce: ch + ee/ē → chee\n• Kannada→Hindi: ಚ+ೇ → ಚೇ (चे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_069",
+    "complexity": 3,
+    "question": "ಚೈ",
+    "answer": "Hindi: चै | English: chai",
+    "notes": "Examples:\n• Pronounce: ch + ai → chai\n• Kannada→Hindi: ಚ+ೈ → ಚೈ (चै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_070",
+    "complexity": 3,
+    "question": "ಚೊ",
+    "answer": "Hindi: चो | English: cho",
+    "notes": "Examples:\n• Pronounce: ch + o → cho\n• Kannada→Hindi: ಚ+ೊ → ಚೊ (चो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_071",
+    "complexity": 3,
+    "question": "ಚೋ",
+    "answer": "Hindi: चो (long) | English: choo",
+    "notes": "Examples:\n• Pronounce: ch + oo/ō → choo\n• Kannada→Hindi: ಚ+ೋ → ಚೋ (चो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_072",
+    "complexity": 3,
+    "question": "ಚೌ",
+    "answer": "Hindi: चौ | English: chau",
+    "notes": "Examples:\n• Pronounce: ch + au → chau\n• Kannada→Hindi: ಚ+ೌ → ಚೌ (चौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_073",
+    "complexity": 3,
+    "question": "ಛಾ",
+    "answer": "Hindi: छा | English: chhaa",
+    "notes": "Examples:\n• Pronounce: chh + aa → chhaa\n• Kannada→Hindi: ಛ+ಾ → ಛಾ (छा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_074",
+    "complexity": 3,
+    "question": "ಛಿ",
+    "answer": "Hindi: छि | English: chhi",
+    "notes": "Examples:\n• Pronounce: chh + i → chhi\n• Kannada→Hindi: ಛ+ಿ → ಛಿ (छि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_075",
+    "complexity": 3,
+    "question": "ಛೀ",
+    "answer": "Hindi: छी | English: chhii",
+    "notes": "Examples:\n• Pronounce: chh + ii → chhii\n• Kannada→Hindi: ಛ+ೀ → ಛೀ (छी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_076",
+    "complexity": 3,
+    "question": "ಛು",
+    "answer": "Hindi: छु | English: chhu",
+    "notes": "Examples:\n• Pronounce: chh + u → chhu\n• Kannada→Hindi: ಛ+ು → ಛು (छु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_077",
+    "complexity": 3,
+    "question": "ಛೂ",
+    "answer": "Hindi: छू | English: chhuu",
+    "notes": "Examples:\n• Pronounce: chh + uu → chhuu\n• Kannada→Hindi: ಛ+ೂ → ಛೂ (छू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_078",
+    "complexity": 3,
+    "question": "ಛೃ",
+    "answer": "Hindi: छृ | English: chhri",
+    "notes": "Examples:\n• Pronounce: chh + ru/ri → chhri\n• Kannada→Hindi: ಛ+ೃ → ಛೃ (छृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_079",
+    "complexity": 3,
+    "question": "ಛೆ",
+    "answer": "Hindi: छे | English: chhe",
+    "notes": "Examples:\n• Pronounce: chh + e → chhe\n• Kannada→Hindi: ಛ+ೆ → ಛೆ (छे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_080",
+    "complexity": 3,
+    "question": "ಛೇ",
+    "answer": "Hindi: छे (long) | English: chhee",
+    "notes": "Examples:\n• Pronounce: chh + ee/ē → chhee\n• Kannada→Hindi: ಛ+ೇ → ಛೇ (छे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_081",
+    "complexity": 3,
+    "question": "ಛೈ",
+    "answer": "Hindi: छै | English: chhai",
+    "notes": "Examples:\n• Pronounce: chh + ai → chhai\n• Kannada→Hindi: ಛ+ೈ → ಛೈ (छै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_082",
+    "complexity": 3,
+    "question": "ಛೊ",
+    "answer": "Hindi: छो | English: chho",
+    "notes": "Examples:\n• Pronounce: chh + o → chho\n• Kannada→Hindi: ಛ+ೊ → ಛೊ (छो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_083",
+    "complexity": 3,
+    "question": "ಛೋ",
+    "answer": "Hindi: छो (long) | English: chhoo",
+    "notes": "Examples:\n• Pronounce: chh + oo/ō → chhoo\n• Kannada→Hindi: ಛ+ೋ → ಛೋ (छो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_084",
+    "complexity": 3,
+    "question": "ಛೌ",
+    "answer": "Hindi: छौ | English: chhau",
+    "notes": "Examples:\n• Pronounce: chh + au → chhau\n• Kannada→Hindi: ಛ+ೌ → ಛೌ (छौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_085",
+    "complexity": 3,
+    "question": "ಜಾ",
+    "answer": "Hindi: जा | English: jaa",
+    "notes": "Examples:\n• Pronounce: j + aa → jaa\n• Kannada→Hindi: ಜ+ಾ → ಜಾ (जा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_086",
+    "complexity": 3,
+    "question": "ಜಿ",
+    "answer": "Hindi: जि | English: ji",
+    "notes": "Examples:\n• Pronounce: j + i → ji\n• Kannada→Hindi: ಜ+ಿ → ಜಿ (जि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_087",
+    "complexity": 3,
+    "question": "ಜೀ",
+    "answer": "Hindi: जी | English: jii",
+    "notes": "Examples:\n• Pronounce: j + ii → jii\n• Kannada→Hindi: ಜ+ೀ → ಜೀ (जी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_088",
+    "complexity": 3,
+    "question": "ಜು",
+    "answer": "Hindi: जु | English: ju",
+    "notes": "Examples:\n• Pronounce: j + u → ju\n• Kannada→Hindi: ಜ+ು → ಜು (जु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_089",
+    "complexity": 3,
+    "question": "ಜೂ",
+    "answer": "Hindi: जू | English: juu",
+    "notes": "Examples:\n• Pronounce: j + uu → juu\n• Kannada→Hindi: ಜ+ೂ → ಜೂ (जू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_090",
+    "complexity": 3,
+    "question": "ಜೃ",
+    "answer": "Hindi: जृ | English: jri",
+    "notes": "Examples:\n• Pronounce: j + ru/ri → jri\n• Kannada→Hindi: ಜ+ೃ → ಜೃ (जृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_091",
+    "complexity": 3,
+    "question": "ಜೆ",
+    "answer": "Hindi: जे | English: je",
+    "notes": "Examples:\n• Pronounce: j + e → je\n• Kannada→Hindi: ಜ+ೆ → ಜೆ (जे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_092",
+    "complexity": 3,
+    "question": "ಜೇ",
+    "answer": "Hindi: जे (long) | English: jee",
+    "notes": "Examples:\n• Pronounce: j + ee/ē → jee\n• Kannada→Hindi: ಜ+ೇ → ಜೇ (जे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_093",
+    "complexity": 3,
+    "question": "ಜೈ",
+    "answer": "Hindi: जै | English: jai",
+    "notes": "Examples:\n• Pronounce: j + ai → jai\n• Kannada→Hindi: ಜ+ೈ → ಜೈ (जै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_094",
+    "complexity": 3,
+    "question": "ಜೊ",
+    "answer": "Hindi: जो | English: jo",
+    "notes": "Examples:\n• Pronounce: j + o → jo\n• Kannada→Hindi: ಜ+ೊ → ಜೊ (जो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_095",
+    "complexity": 3,
+    "question": "ಜೋ",
+    "answer": "Hindi: जो (long) | English: joo",
+    "notes": "Examples:\n• Pronounce: j + oo/ō → joo\n• Kannada→Hindi: ಜ+ೋ → ಜೋ (जो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_096",
+    "complexity": 3,
+    "question": "ಜೌ",
+    "answer": "Hindi: जौ | English: jau",
+    "notes": "Examples:\n• Pronounce: j + au → jau\n• Kannada→Hindi: ಜ+ೌ → ಜೌ (जौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_097",
+    "complexity": 3,
+    "question": "ಝಾ",
+    "answer": "Hindi: झा | English: jhaa",
+    "notes": "Examples:\n• Pronounce: jh + aa → jhaa\n• Kannada→Hindi: ಝ+ಾ → ಝಾ (झा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_098",
+    "complexity": 3,
+    "question": "ಝಿ",
+    "answer": "Hindi: झि | English: jhi",
+    "notes": "Examples:\n• Pronounce: jh + i → jhi\n• Kannada→Hindi: ಝ+ಿ → ಝಿ (झि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_099",
+    "complexity": 3,
+    "question": "ಝೀ",
+    "answer": "Hindi: झी | English: jhii",
+    "notes": "Examples:\n• Pronounce: jh + ii → jhii\n• Kannada→Hindi: ಝ+ೀ → ಝೀ (झी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_100",
+    "complexity": 3,
+    "question": "ಝು",
+    "answer": "Hindi: झु | English: jhu",
+    "notes": "Examples:\n• Pronounce: jh + u → jhu\n• Kannada→Hindi: ಝ+ು → ಝು (झु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_101",
+    "complexity": 3,
+    "question": "ಝೂ",
+    "answer": "Hindi: झू | English: jhuu",
+    "notes": "Examples:\n• Pronounce: jh + uu → jhuu\n• Kannada→Hindi: ಝ+ೂ → ಝೂ (झू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_102",
+    "complexity": 3,
+    "question": "ಝೃ",
+    "answer": "Hindi: झृ | English: jhri",
+    "notes": "Examples:\n• Pronounce: jh + ru/ri → jhri\n• Kannada→Hindi: ಝ+ೃ → ಝೃ (झृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_103",
+    "complexity": 3,
+    "question": "ಝೆ",
+    "answer": "Hindi: झे | English: jhe",
+    "notes": "Examples:\n• Pronounce: jh + e → jhe\n• Kannada→Hindi: ಝ+ೆ → ಝೆ (झे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_104",
+    "complexity": 3,
+    "question": "ಝೇ",
+    "answer": "Hindi: झे (long) | English: jhee",
+    "notes": "Examples:\n• Pronounce: jh + ee/ē → jhee\n• Kannada→Hindi: ಝ+ೇ → ಝೇ (झे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_105",
+    "complexity": 3,
+    "question": "ಝೈ",
+    "answer": "Hindi: झै | English: jhai",
+    "notes": "Examples:\n• Pronounce: jh + ai → jhai\n• Kannada→Hindi: ಝ+ೈ → ಝೈ (झै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_106",
+    "complexity": 3,
+    "question": "ಝೊ",
+    "answer": "Hindi: झो | English: jho",
+    "notes": "Examples:\n• Pronounce: jh + o → jho\n• Kannada→Hindi: ಝ+ೊ → ಝೊ (झो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_107",
+    "complexity": 3,
+    "question": "ಝೋ",
+    "answer": "Hindi: झो (long) | English: jhoo",
+    "notes": "Examples:\n• Pronounce: jh + oo/ō → jhoo\n• Kannada→Hindi: ಝ+ೋ → ಝೋ (झो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_108",
+    "complexity": 3,
+    "question": "ಝೌ",
+    "answer": "Hindi: झौ | English: jhau",
+    "notes": "Examples:\n• Pronounce: jh + au → jhau\n• Kannada→Hindi: ಝ+ೌ → ಝೌ (झौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_109",
+    "complexity": 3,
+    "question": "ಞಾ",
+    "answer": "Hindi: ञा | English: nyaa",
+    "notes": "Examples:\n• Pronounce: ny + aa → nyaa\n• Kannada→Hindi: ಞ+ಾ → ಞಾ (ञा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_110",
+    "complexity": 3,
+    "question": "ಞಿ",
+    "answer": "Hindi: ञि | English: nyi",
+    "notes": "Examples:\n• Pronounce: ny + i → nyi\n• Kannada→Hindi: ಞ+ಿ → ಞಿ (ञि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_111",
+    "complexity": 3,
+    "question": "ಞೀ",
+    "answer": "Hindi: ञी | English: nyii",
+    "notes": "Examples:\n• Pronounce: ny + ii → nyii\n• Kannada→Hindi: ಞ+ೀ → ಞೀ (ञी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_112",
+    "complexity": 3,
+    "question": "ಞು",
+    "answer": "Hindi: ञु | English: nyu",
+    "notes": "Examples:\n• Pronounce: ny + u → nyu\n• Kannada→Hindi: ಞ+ು → ಞು (ञु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_113",
+    "complexity": 3,
+    "question": "ಞೂ",
+    "answer": "Hindi: ञू | English: nyuu",
+    "notes": "Examples:\n• Pronounce: ny + uu → nyuu\n• Kannada→Hindi: ಞ+ೂ → ಞೂ (ञू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_114",
+    "complexity": 3,
+    "question": "ಞೃ",
+    "answer": "Hindi: ञृ | English: nyri",
+    "notes": "Examples:\n• Pronounce: ny + ru/ri → nyri\n• Kannada→Hindi: ಞ+ೃ → ಞೃ (ञृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_115",
+    "complexity": 3,
+    "question": "ಞೆ",
+    "answer": "Hindi: ञे | English: nye",
+    "notes": "Examples:\n• Pronounce: ny + e → nye\n• Kannada→Hindi: ಞ+ೆ → ಞೆ (ञे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_116",
+    "complexity": 3,
+    "question": "ಞೇ",
+    "answer": "Hindi: ञे (long) | English: nyee",
+    "notes": "Examples:\n• Pronounce: ny + ee/ē → nyee\n• Kannada→Hindi: ಞ+ೇ → ಞೇ (ञे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_117",
+    "complexity": 3,
+    "question": "ಞೈ",
+    "answer": "Hindi: ञै | English: nyai",
+    "notes": "Examples:\n• Pronounce: ny + ai → nyai\n• Kannada→Hindi: ಞ+ೈ → ಞೈ (ञै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_118",
+    "complexity": 3,
+    "question": "ಞೊ",
+    "answer": "Hindi: ञो | English: nyo",
+    "notes": "Examples:\n• Pronounce: ny + o → nyo\n• Kannada→Hindi: ಞ+ೊ → ಞೊ (ञो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_119",
+    "complexity": 3,
+    "question": "ಞೋ",
+    "answer": "Hindi: ञो (long) | English: nyoo",
+    "notes": "Examples:\n• Pronounce: ny + oo/ō → nyoo\n• Kannada→Hindi: ಞ+ೋ → ಞೋ (ञो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_120",
+    "complexity": 3,
+    "question": "ಞೌ",
+    "answer": "Hindi: ञौ | English: nyau",
+    "notes": "Examples:\n• Pronounce: ny + au → nyau\n• Kannada→Hindi: ಞ+ೌ → ಞೌ (ञौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_121",
+    "complexity": 3,
+    "question": "ಟಾ",
+    "answer": "Hindi: टा | English: ṭaa",
+    "notes": "Examples:\n• Pronounce: ṭ + aa → ṭaa\n• Kannada→Hindi: ಟ+ಾ → ಟಾ (टा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_122",
+    "complexity": 3,
+    "question": "ಟಿ",
+    "answer": "Hindi: टि | English: ṭi",
+    "notes": "Examples:\n• Pronounce: ṭ + i → ṭi\n• Kannada→Hindi: ಟ+ಿ → ಟಿ (टि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_123",
+    "complexity": 3,
+    "question": "ಟೀ",
+    "answer": "Hindi: टी | English: ṭii",
+    "notes": "Examples:\n• Pronounce: ṭ + ii → ṭii\n• Kannada→Hindi: ಟ+ೀ → ಟೀ (टी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_124",
+    "complexity": 3,
+    "question": "ಟು",
+    "answer": "Hindi: टु | English: ṭu",
+    "notes": "Examples:\n• Pronounce: ṭ + u → ṭu\n• Kannada→Hindi: ಟ+ು → ಟು (टु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_125",
+    "complexity": 3,
+    "question": "ಟೂ",
+    "answer": "Hindi: टू | English: ṭuu",
+    "notes": "Examples:\n• Pronounce: ṭ + uu → ṭuu\n• Kannada→Hindi: ಟ+ೂ → ಟೂ (टू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_126",
+    "complexity": 3,
+    "question": "ಟೃ",
+    "answer": "Hindi: टृ | English: ṭri",
+    "notes": "Examples:\n• Pronounce: ṭ + ru/ri → ṭri\n• Kannada→Hindi: ಟ+ೃ → ಟೃ (टृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_127",
+    "complexity": 3,
+    "question": "ಟೆ",
+    "answer": "Hindi: टे | English: ṭe",
+    "notes": "Examples:\n• Pronounce: ṭ + e → ṭe\n• Kannada→Hindi: ಟ+ೆ → ಟೆ (टे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_128",
+    "complexity": 3,
+    "question": "ಟೇ",
+    "answer": "Hindi: टे (long) | English: ṭee",
+    "notes": "Examples:\n• Pronounce: ṭ + ee/ē → ṭee\n• Kannada→Hindi: ಟ+ೇ → ಟೇ (टे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_129",
+    "complexity": 3,
+    "question": "ಟೈ",
+    "answer": "Hindi: टै | English: ṭai",
+    "notes": "Examples:\n• Pronounce: ṭ + ai → ṭai\n• Kannada→Hindi: ಟ+ೈ → ಟೈ (टै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_130",
+    "complexity": 3,
+    "question": "ಟೊ",
+    "answer": "Hindi: टो | English: ṭo",
+    "notes": "Examples:\n• Pronounce: ṭ + o → ṭo\n• Kannada→Hindi: ಟ+ೊ → ಟೊ (टो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_131",
+    "complexity": 3,
+    "question": "ಟೋ",
+    "answer": "Hindi: टो (long) | English: ṭoo",
+    "notes": "Examples:\n• Pronounce: ṭ + oo/ō → ṭoo\n• Kannada→Hindi: ಟ+ೋ → ಟೋ (टो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_132",
+    "complexity": 3,
+    "question": "ಟೌ",
+    "answer": "Hindi: टौ | English: ṭau",
+    "notes": "Examples:\n• Pronounce: ṭ + au → ṭau\n• Kannada→Hindi: ಟ+ೌ → ಟೌ (टौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_133",
+    "complexity": 3,
+    "question": "ಠಾ",
+    "answer": "Hindi: ठा | English: ṭhaa",
+    "notes": "Examples:\n• Pronounce: ṭh + aa → ṭhaa\n• Kannada→Hindi: ಠ+ಾ → ಠಾ (ठा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_134",
+    "complexity": 3,
+    "question": "ಠಿ",
+    "answer": "Hindi: ठि | English: ṭhi",
+    "notes": "Examples:\n• Pronounce: ṭh + i → ṭhi\n• Kannada→Hindi: ಠ+ಿ → ಠಿ (ठि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_135",
+    "complexity": 3,
+    "question": "ಠೀ",
+    "answer": "Hindi: ठी | English: ṭhii",
+    "notes": "Examples:\n• Pronounce: ṭh + ii → ṭhii\n• Kannada→Hindi: ಠ+ೀ → ಠೀ (ठी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_136",
+    "complexity": 3,
+    "question": "ಠು",
+    "answer": "Hindi: ठु | English: ṭhu",
+    "notes": "Examples:\n• Pronounce: ṭh + u → ṭhu\n• Kannada→Hindi: ಠ+ು → ಠು (ठु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_137",
+    "complexity": 3,
+    "question": "ಠೂ",
+    "answer": "Hindi: ठू | English: ṭhuu",
+    "notes": "Examples:\n• Pronounce: ṭh + uu → ṭhuu\n• Kannada→Hindi: ಠ+ೂ → ಠೂ (ठू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_138",
+    "complexity": 3,
+    "question": "ಠೃ",
+    "answer": "Hindi: ठृ | English: ṭhri",
+    "notes": "Examples:\n• Pronounce: ṭh + ru/ri → ṭhri\n• Kannada→Hindi: ಠ+ೃ → ಠೃ (ठृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_139",
+    "complexity": 3,
+    "question": "ಠೆ",
+    "answer": "Hindi: ठे | English: ṭhe",
+    "notes": "Examples:\n• Pronounce: ṭh + e → ṭhe\n• Kannada→Hindi: ಠ+ೆ → ಠೆ (ठे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_140",
+    "complexity": 3,
+    "question": "ಠೇ",
+    "answer": "Hindi: ठे (long) | English: ṭhee",
+    "notes": "Examples:\n• Pronounce: ṭh + ee/ē → ṭhee\n• Kannada→Hindi: ಠ+ೇ → ಠೇ (ठे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_141",
+    "complexity": 3,
+    "question": "ಠೈ",
+    "answer": "Hindi: ठै | English: ṭhai",
+    "notes": "Examples:\n• Pronounce: ṭh + ai → ṭhai\n• Kannada→Hindi: ಠ+ೈ → ಠೈ (ठै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_142",
+    "complexity": 3,
+    "question": "ಠೊ",
+    "answer": "Hindi: ठो | English: ṭho",
+    "notes": "Examples:\n• Pronounce: ṭh + o → ṭho\n• Kannada→Hindi: ಠ+ೊ → ಠೊ (ठो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_143",
+    "complexity": 3,
+    "question": "ಠೋ",
+    "answer": "Hindi: ठो (long) | English: ṭhoo",
+    "notes": "Examples:\n• Pronounce: ṭh + oo/ō → ṭhoo\n• Kannada→Hindi: ಠ+ೋ → ಠೋ (ठो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_144",
+    "complexity": 3,
+    "question": "ಠೌ",
+    "answer": "Hindi: ठौ | English: ṭhau",
+    "notes": "Examples:\n• Pronounce: ṭh + au → ṭhau\n• Kannada→Hindi: ಠ+ೌ → ಠೌ (ठौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_145",
+    "complexity": 3,
+    "question": "ಡಾ",
+    "answer": "Hindi: डा | English: ḍaa",
+    "notes": "Examples:\n• Pronounce: ḍ + aa → ḍaa\n• Kannada→Hindi: ಡ+ಾ → ಡಾ (डा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_146",
+    "complexity": 3,
+    "question": "ಡಿ",
+    "answer": "Hindi: डि | English: ḍi",
+    "notes": "Examples:\n• Pronounce: ḍ + i → ḍi\n• Kannada→Hindi: ಡ+ಿ → ಡಿ (डि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_147",
+    "complexity": 3,
+    "question": "ಡೀ",
+    "answer": "Hindi: डी | English: ḍii",
+    "notes": "Examples:\n• Pronounce: ḍ + ii → ḍii\n• Kannada→Hindi: ಡ+ೀ → ಡೀ (डी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_148",
+    "complexity": 3,
+    "question": "ಡು",
+    "answer": "Hindi: डु | English: ḍu",
+    "notes": "Examples:\n• Pronounce: ḍ + u → ḍu\n• Kannada→Hindi: ಡ+ು → ಡು (डु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_149",
+    "complexity": 3,
+    "question": "ಡೂ",
+    "answer": "Hindi: डू | English: ḍuu",
+    "notes": "Examples:\n• Pronounce: ḍ + uu → ḍuu\n• Kannada→Hindi: ಡ+ೂ → ಡೂ (डू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_150",
+    "complexity": 3,
+    "question": "ಡೃ",
+    "answer": "Hindi: डृ | English: ḍri",
+    "notes": "Examples:\n• Pronounce: ḍ + ru/ri → ḍri\n• Kannada→Hindi: ಡ+ೃ → ಡೃ (डृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_151",
+    "complexity": 3,
+    "question": "ಡೆ",
+    "answer": "Hindi: डे | English: ḍe",
+    "notes": "Examples:\n• Pronounce: ḍ + e → ḍe\n• Kannada→Hindi: ಡ+ೆ → ಡೆ (डे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_152",
+    "complexity": 3,
+    "question": "ಡೇ",
+    "answer": "Hindi: डे (long) | English: ḍee",
+    "notes": "Examples:\n• Pronounce: ḍ + ee/ē → ḍee\n• Kannada→Hindi: ಡ+ೇ → ಡೇ (डे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_153",
+    "complexity": 3,
+    "question": "ಡೈ",
+    "answer": "Hindi: डै | English: ḍai",
+    "notes": "Examples:\n• Pronounce: ḍ + ai → ḍai\n• Kannada→Hindi: ಡ+ೈ → ಡೈ (डै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_154",
+    "complexity": 3,
+    "question": "ಡೊ",
+    "answer": "Hindi: डो | English: ḍo",
+    "notes": "Examples:\n• Pronounce: ḍ + o → ḍo\n• Kannada→Hindi: ಡ+ೊ → ಡೊ (डो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_155",
+    "complexity": 3,
+    "question": "ಡೋ",
+    "answer": "Hindi: डो (long) | English: ḍoo",
+    "notes": "Examples:\n• Pronounce: ḍ + oo/ō → ḍoo\n• Kannada→Hindi: ಡ+ೋ → ಡೋ (डो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_156",
+    "complexity": 3,
+    "question": "ಡೌ",
+    "answer": "Hindi: डौ | English: ḍau",
+    "notes": "Examples:\n• Pronounce: ḍ + au → ḍau\n• Kannada→Hindi: ಡ+ೌ → ಡೌ (डौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_157",
+    "complexity": 3,
+    "question": "ಢಾ",
+    "answer": "Hindi: ढा | English: ḍhaa",
+    "notes": "Examples:\n• Pronounce: ḍh + aa → ḍhaa\n• Kannada→Hindi: ಢ+ಾ → ಢಾ (ढा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_158",
+    "complexity": 3,
+    "question": "ಢಿ",
+    "answer": "Hindi: ढि | English: ḍhi",
+    "notes": "Examples:\n• Pronounce: ḍh + i → ḍhi\n• Kannada→Hindi: ಢ+ಿ → ಢಿ (ढि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_159",
+    "complexity": 3,
+    "question": "ಢೀ",
+    "answer": "Hindi: ढी | English: ḍhii",
+    "notes": "Examples:\n• Pronounce: ḍh + ii → ḍhii\n• Kannada→Hindi: ಢ+ೀ → ಢೀ (ढी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_160",
+    "complexity": 3,
+    "question": "ಢು",
+    "answer": "Hindi: ढु | English: ḍhu",
+    "notes": "Examples:\n• Pronounce: ḍh + u → ḍhu\n• Kannada→Hindi: ಢ+ು → ಢು (ढु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_161",
+    "complexity": 3,
+    "question": "ಢೂ",
+    "answer": "Hindi: ढू | English: ḍhuu",
+    "notes": "Examples:\n• Pronounce: ḍh + uu → ḍhuu\n• Kannada→Hindi: ಢ+ೂ → ಢೂ (ढू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_162",
+    "complexity": 3,
+    "question": "ಢೃ",
+    "answer": "Hindi: ढृ | English: ḍhri",
+    "notes": "Examples:\n• Pronounce: ḍh + ru/ri → ḍhri\n• Kannada→Hindi: ಢ+ೃ → ಢೃ (ढृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_163",
+    "complexity": 3,
+    "question": "ಢೆ",
+    "answer": "Hindi: ढे | English: ḍhe",
+    "notes": "Examples:\n• Pronounce: ḍh + e → ḍhe\n• Kannada→Hindi: ಢ+ೆ → ಢೆ (ढे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_164",
+    "complexity": 3,
+    "question": "ಢೇ",
+    "answer": "Hindi: ढे (long) | English: ḍhee",
+    "notes": "Examples:\n• Pronounce: ḍh + ee/ē → ḍhee\n• Kannada→Hindi: ಢ+ೇ → ಢೇ (ढे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_165",
+    "complexity": 3,
+    "question": "ಢೈ",
+    "answer": "Hindi: ढै | English: ḍhai",
+    "notes": "Examples:\n• Pronounce: ḍh + ai → ḍhai\n• Kannada→Hindi: ಢ+ೈ → ಢೈ (ढै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_166",
+    "complexity": 3,
+    "question": "ಢೊ",
+    "answer": "Hindi: ढो | English: ḍho",
+    "notes": "Examples:\n• Pronounce: ḍh + o → ḍho\n• Kannada→Hindi: ಢ+ೊ → ಢೊ (ढो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_167",
+    "complexity": 3,
+    "question": "ಢೋ",
+    "answer": "Hindi: ढो (long) | English: ḍhoo",
+    "notes": "Examples:\n• Pronounce: ḍh + oo/ō → ḍhoo\n• Kannada→Hindi: ಢ+ೋ → ಢೋ (ढो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_168",
+    "complexity": 3,
+    "question": "ಢೌ",
+    "answer": "Hindi: ढौ | English: ḍhau",
+    "notes": "Examples:\n• Pronounce: ḍh + au → ḍhau\n• Kannada→Hindi: ಢ+ೌ → ಢೌ (ढौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_169",
+    "complexity": 3,
+    "question": "ಣಾ",
+    "answer": "Hindi: णा | English: ṇaa",
+    "notes": "Examples:\n• Pronounce: ṇ + aa → ṇaa\n• Kannada→Hindi: ಣ+ಾ → ಣಾ (णा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_170",
+    "complexity": 3,
+    "question": "ಣಿ",
+    "answer": "Hindi: णि | English: ṇi",
+    "notes": "Examples:\n• Pronounce: ṇ + i → ṇi\n• Kannada→Hindi: ಣ+ಿ → ಣಿ (णि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_171",
+    "complexity": 3,
+    "question": "ಣೀ",
+    "answer": "Hindi: णी | English: ṇii",
+    "notes": "Examples:\n• Pronounce: ṇ + ii → ṇii\n• Kannada→Hindi: ಣ+ೀ → ಣೀ (णी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_172",
+    "complexity": 3,
+    "question": "ಣು",
+    "answer": "Hindi: णु | English: ṇu",
+    "notes": "Examples:\n• Pronounce: ṇ + u → ṇu\n• Kannada→Hindi: ಣ+ು → ಣು (णु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_173",
+    "complexity": 3,
+    "question": "ಣೂ",
+    "answer": "Hindi: णू | English: ṇuu",
+    "notes": "Examples:\n• Pronounce: ṇ + uu → ṇuu\n• Kannada→Hindi: ಣ+ೂ → ಣೂ (णू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_174",
+    "complexity": 3,
+    "question": "ಣೃ",
+    "answer": "Hindi: णृ | English: ṇri",
+    "notes": "Examples:\n• Pronounce: ṇ + ru/ri → ṇri\n• Kannada→Hindi: ಣ+ೃ → ಣೃ (णृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_175",
+    "complexity": 3,
+    "question": "ಣೆ",
+    "answer": "Hindi: णे | English: ṇe",
+    "notes": "Examples:\n• Pronounce: ṇ + e → ṇe\n• Kannada→Hindi: ಣ+ೆ → ಣೆ (णे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_176",
+    "complexity": 3,
+    "question": "ಣೇ",
+    "answer": "Hindi: णे (long) | English: ṇee",
+    "notes": "Examples:\n• Pronounce: ṇ + ee/ē → ṇee\n• Kannada→Hindi: ಣ+ೇ → ಣೇ (णे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_177",
+    "complexity": 3,
+    "question": "ಣೈ",
+    "answer": "Hindi: णै | English: ṇai",
+    "notes": "Examples:\n• Pronounce: ṇ + ai → ṇai\n• Kannada→Hindi: ಣ+ೈ → ಣೈ (णै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_178",
+    "complexity": 3,
+    "question": "ಣೊ",
+    "answer": "Hindi: णो | English: ṇo",
+    "notes": "Examples:\n• Pronounce: ṇ + o → ṇo\n• Kannada→Hindi: ಣ+ೊ → ಣೊ (णो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_179",
+    "complexity": 3,
+    "question": "ಣೋ",
+    "answer": "Hindi: णो (long) | English: ṇoo",
+    "notes": "Examples:\n• Pronounce: ṇ + oo/ō → ṇoo\n• Kannada→Hindi: ಣ+ೋ → ಣೋ (णो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_180",
+    "complexity": 3,
+    "question": "ಣೌ",
+    "answer": "Hindi: णौ | English: ṇau",
+    "notes": "Examples:\n• Pronounce: ṇ + au → ṇau\n• Kannada→Hindi: ಣ+ೌ → ಣೌ (णौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_181",
+    "complexity": 3,
+    "question": "ತಾ",
+    "answer": "Hindi: ता | English: taa",
+    "notes": "Examples:\n• Pronounce: t + aa → taa\n• Kannada→Hindi: ತ+ಾ → ತಾ (ता)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_182",
+    "complexity": 3,
+    "question": "ತಿ",
+    "answer": "Hindi: ति | English: ti",
+    "notes": "Examples:\n• Pronounce: t + i → ti\n• Kannada→Hindi: ತ+ಿ → ತಿ (ति)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_183",
+    "complexity": 3,
+    "question": "ತೀ",
+    "answer": "Hindi: ती | English: tii",
+    "notes": "Examples:\n• Pronounce: t + ii → tii\n• Kannada→Hindi: ತ+ೀ → ತೀ (ती)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_184",
+    "complexity": 3,
+    "question": "ತು",
+    "answer": "Hindi: तु | English: tu",
+    "notes": "Examples:\n• Pronounce: t + u → tu\n• Kannada→Hindi: ತ+ು → ತು (तु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_185",
+    "complexity": 3,
+    "question": "ತೂ",
+    "answer": "Hindi: तू | English: tuu",
+    "notes": "Examples:\n• Pronounce: t + uu → tuu\n• Kannada→Hindi: ತ+ೂ → ತೂ (तू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_186",
+    "complexity": 3,
+    "question": "ತೃ",
+    "answer": "Hindi: तृ | English: tri",
+    "notes": "Examples:\n• Pronounce: t + ru/ri → tri\n• Kannada→Hindi: ತ+ೃ → ತೃ (तृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_187",
+    "complexity": 3,
+    "question": "ತೆ",
+    "answer": "Hindi: ते | English: te",
+    "notes": "Examples:\n• Pronounce: t + e → te\n• Kannada→Hindi: ತ+ೆ → ತೆ (ते)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_188",
+    "complexity": 3,
+    "question": "ತೇ",
+    "answer": "Hindi: ते (long) | English: tee",
+    "notes": "Examples:\n• Pronounce: t + ee/ē → tee\n• Kannada→Hindi: ತ+ೇ → ತೇ (ते (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_189",
+    "complexity": 3,
+    "question": "ತೈ",
+    "answer": "Hindi: तै | English: tai",
+    "notes": "Examples:\n• Pronounce: t + ai → tai\n• Kannada→Hindi: ತ+ೈ → ತೈ (तै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_190",
+    "complexity": 3,
+    "question": "ತೊ",
+    "answer": "Hindi: तो | English: to",
+    "notes": "Examples:\n• Pronounce: t + o → to\n• Kannada→Hindi: ತ+ೊ → ತೊ (तो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_191",
+    "complexity": 3,
+    "question": "ತೋ",
+    "answer": "Hindi: तो (long) | English: too",
+    "notes": "Examples:\n• Pronounce: t + oo/ō → too\n• Kannada→Hindi: ತ+ೋ → ತೋ (तो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_192",
+    "complexity": 3,
+    "question": "ತೌ",
+    "answer": "Hindi: तौ | English: tau",
+    "notes": "Examples:\n• Pronounce: t + au → tau\n• Kannada→Hindi: ತ+ೌ → ತೌ (तौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_193",
+    "complexity": 3,
+    "question": "ಥಾ",
+    "answer": "Hindi: था | English: thaa",
+    "notes": "Examples:\n• Pronounce: th + aa → thaa\n• Kannada→Hindi: ಥ+ಾ → ಥಾ (था)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_194",
+    "complexity": 3,
+    "question": "ಥಿ",
+    "answer": "Hindi: थि | English: thi",
+    "notes": "Examples:\n• Pronounce: th + i → thi\n• Kannada→Hindi: ಥ+ಿ → ಥಿ (थि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_195",
+    "complexity": 3,
+    "question": "ಥೀ",
+    "answer": "Hindi: थी | English: thii",
+    "notes": "Examples:\n• Pronounce: th + ii → thii\n• Kannada→Hindi: ಥ+ೀ → ಥೀ (थी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_196",
+    "complexity": 3,
+    "question": "ಥು",
+    "answer": "Hindi: थु | English: thu",
+    "notes": "Examples:\n• Pronounce: th + u → thu\n• Kannada→Hindi: ಥ+ು → ಥು (थु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_197",
+    "complexity": 3,
+    "question": "ಥೂ",
+    "answer": "Hindi: थू | English: thuu",
+    "notes": "Examples:\n• Pronounce: th + uu → thuu\n• Kannada→Hindi: ಥ+ೂ → ಥೂ (थू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_198",
+    "complexity": 3,
+    "question": "ಥೃ",
+    "answer": "Hindi: थृ | English: thri",
+    "notes": "Examples:\n• Pronounce: th + ru/ri → thri\n• Kannada→Hindi: ಥ+ೃ → ಥೃ (थृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_199",
+    "complexity": 3,
+    "question": "ಥೆ",
+    "answer": "Hindi: थे | English: the",
+    "notes": "Examples:\n• Pronounce: th + e → the\n• Kannada→Hindi: ಥ+ೆ → ಥೆ (थे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_200",
+    "complexity": 3,
+    "question": "ಥೇ",
+    "answer": "Hindi: थे (long) | English: thee",
+    "notes": "Examples:\n• Pronounce: th + ee/ē → thee\n• Kannada→Hindi: ಥ+ೇ → ಥೇ (थे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_201",
+    "complexity": 3,
+    "question": "ಥೈ",
+    "answer": "Hindi: थै | English: thai",
+    "notes": "Examples:\n• Pronounce: th + ai → thai\n• Kannada→Hindi: ಥ+ೈ → ಥೈ (थै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_202",
+    "complexity": 3,
+    "question": "ಥೊ",
+    "answer": "Hindi: थो | English: tho",
+    "notes": "Examples:\n• Pronounce: th + o → tho\n• Kannada→Hindi: ಥ+ೊ → ಥೊ (थो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_203",
+    "complexity": 3,
+    "question": "ಥೋ",
+    "answer": "Hindi: थो (long) | English: thoo",
+    "notes": "Examples:\n• Pronounce: th + oo/ō → thoo\n• Kannada→Hindi: ಥ+ೋ → ಥೋ (थो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_204",
+    "complexity": 3,
+    "question": "ಥೌ",
+    "answer": "Hindi: थौ | English: thau",
+    "notes": "Examples:\n• Pronounce: th + au → thau\n• Kannada→Hindi: ಥ+ೌ → ಥೌ (थौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_205",
+    "complexity": 3,
+    "question": "ದಾ",
+    "answer": "Hindi: दा | English: daa",
+    "notes": "Examples:\n• Pronounce: d + aa → daa\n• Kannada→Hindi: ದ+ಾ → ದಾ (दा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_206",
+    "complexity": 3,
+    "question": "ದಿ",
+    "answer": "Hindi: दि | English: di",
+    "notes": "Examples:\n• Pronounce: d + i → di\n• Kannada→Hindi: ದ+ಿ → ದಿ (दि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_207",
+    "complexity": 3,
+    "question": "ದೀ",
+    "answer": "Hindi: दी | English: dii",
+    "notes": "Examples:\n• Pronounce: d + ii → dii\n• Kannada→Hindi: ದ+ೀ → ದೀ (दी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_208",
+    "complexity": 3,
+    "question": "ದು",
+    "answer": "Hindi: दु | English: du",
+    "notes": "Examples:\n• Pronounce: d + u → du\n• Kannada→Hindi: ದ+ು → ದು (दु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_209",
+    "complexity": 3,
+    "question": "ದೂ",
+    "answer": "Hindi: दू | English: duu",
+    "notes": "Examples:\n• Pronounce: d + uu → duu\n• Kannada→Hindi: ದ+ೂ → ದೂ (दू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_210",
+    "complexity": 3,
+    "question": "ದೃ",
+    "answer": "Hindi: दृ | English: dri",
+    "notes": "Examples:\n• Pronounce: d + ru/ri → dri\n• Kannada→Hindi: ದ+ೃ → ದೃ (दृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_211",
+    "complexity": 3,
+    "question": "ದೆ",
+    "answer": "Hindi: दे | English: de",
+    "notes": "Examples:\n• Pronounce: d + e → de\n• Kannada→Hindi: ದ+ೆ → ದೆ (दे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_212",
+    "complexity": 3,
+    "question": "ದೇ",
+    "answer": "Hindi: दे (long) | English: dee",
+    "notes": "Examples:\n• Pronounce: d + ee/ē → dee\n• Kannada→Hindi: ದ+ೇ → ದೇ (दे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_213",
+    "complexity": 3,
+    "question": "ದೈ",
+    "answer": "Hindi: दै | English: dai",
+    "notes": "Examples:\n• Pronounce: d + ai → dai\n• Kannada→Hindi: ದ+ೈ → ದೈ (दै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_214",
+    "complexity": 3,
+    "question": "ದೊ",
+    "answer": "Hindi: दो | English: do",
+    "notes": "Examples:\n• Pronounce: d + o → do\n• Kannada→Hindi: ದ+ೊ → ದೊ (दो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_215",
+    "complexity": 3,
+    "question": "ದೋ",
+    "answer": "Hindi: दो (long) | English: doo",
+    "notes": "Examples:\n• Pronounce: d + oo/ō → doo\n• Kannada→Hindi: ದ+ೋ → ದೋ (दो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_216",
+    "complexity": 3,
+    "question": "ದೌ",
+    "answer": "Hindi: दौ | English: dau",
+    "notes": "Examples:\n• Pronounce: d + au → dau\n• Kannada→Hindi: ದ+ೌ → ದೌ (दौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_217",
+    "complexity": 3,
+    "question": "ಧಾ",
+    "answer": "Hindi: धा | English: dhaa",
+    "notes": "Examples:\n• Pronounce: dh + aa → dhaa\n• Kannada→Hindi: ಧ+ಾ → ಧಾ (धा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_218",
+    "complexity": 3,
+    "question": "ಧಿ",
+    "answer": "Hindi: धि | English: dhi",
+    "notes": "Examples:\n• Pronounce: dh + i → dhi\n• Kannada→Hindi: ಧ+ಿ → ಧಿ (धि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_219",
+    "complexity": 3,
+    "question": "ಧೀ",
+    "answer": "Hindi: धी | English: dhii",
+    "notes": "Examples:\n• Pronounce: dh + ii → dhii\n• Kannada→Hindi: ಧ+ೀ → ಧೀ (धी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_220",
+    "complexity": 3,
+    "question": "ಧು",
+    "answer": "Hindi: धु | English: dhu",
+    "notes": "Examples:\n• Pronounce: dh + u → dhu\n• Kannada→Hindi: ಧ+ು → ಧು (धु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_221",
+    "complexity": 3,
+    "question": "ಧೂ",
+    "answer": "Hindi: धू | English: dhuu",
+    "notes": "Examples:\n• Pronounce: dh + uu → dhuu\n• Kannada→Hindi: ಧ+ೂ → ಧೂ (धू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_222",
+    "complexity": 3,
+    "question": "ಧೃ",
+    "answer": "Hindi: धृ | English: dhri",
+    "notes": "Examples:\n• Pronounce: dh + ru/ri → dhri\n• Kannada→Hindi: ಧ+ೃ → ಧೃ (धृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_223",
+    "complexity": 3,
+    "question": "ಧೆ",
+    "answer": "Hindi: धे | English: dhe",
+    "notes": "Examples:\n• Pronounce: dh + e → dhe\n• Kannada→Hindi: ಧ+ೆ → ಧೆ (धे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_224",
+    "complexity": 3,
+    "question": "ಧೇ",
+    "answer": "Hindi: धे (long) | English: dhee",
+    "notes": "Examples:\n• Pronounce: dh + ee/ē → dhee\n• Kannada→Hindi: ಧ+ೇ → ಧೇ (धे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_225",
+    "complexity": 3,
+    "question": "ಧೈ",
+    "answer": "Hindi: धै | English: dhai",
+    "notes": "Examples:\n• Pronounce: dh + ai → dhai\n• Kannada→Hindi: ಧ+ೈ → ಧೈ (धै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_226",
+    "complexity": 3,
+    "question": "ಧೊ",
+    "answer": "Hindi: धो | English: dho",
+    "notes": "Examples:\n• Pronounce: dh + o → dho\n• Kannada→Hindi: ಧ+ೊ → ಧೊ (धो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_227",
+    "complexity": 3,
+    "question": "ಧೋ",
+    "answer": "Hindi: धो (long) | English: dhoo",
+    "notes": "Examples:\n• Pronounce: dh + oo/ō → dhoo\n• Kannada→Hindi: ಧ+ೋ → ಧೋ (धो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_228",
+    "complexity": 3,
+    "question": "ಧೌ",
+    "answer": "Hindi: धौ | English: dhau",
+    "notes": "Examples:\n• Pronounce: dh + au → dhau\n• Kannada→Hindi: ಧ+ೌ → ಧೌ (धौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_229",
+    "complexity": 3,
+    "question": "ನಾ",
+    "answer": "Hindi: ना | English: naa",
+    "notes": "Examples:\n• Pronounce: n + aa → naa\n• Kannada→Hindi: ನ+ಾ → ನಾ (ना)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_230",
+    "complexity": 3,
+    "question": "ನಿ",
+    "answer": "Hindi: नि | English: ni",
+    "notes": "Examples:\n• Pronounce: n + i → ni\n• Kannada→Hindi: ನ+ಿ → ನಿ (नि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_231",
+    "complexity": 3,
+    "question": "ನೀ",
+    "answer": "Hindi: नी | English: nii",
+    "notes": "Examples:\n• Pronounce: n + ii → nii\n• Kannada→Hindi: ನ+ೀ → ನೀ (नी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_232",
+    "complexity": 3,
+    "question": "ನು",
+    "answer": "Hindi: नु | English: nu",
+    "notes": "Examples:\n• Pronounce: n + u → nu\n• Kannada→Hindi: ನ+ು → ನು (नु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_233",
+    "complexity": 3,
+    "question": "ನೂ",
+    "answer": "Hindi: नू | English: nuu",
+    "notes": "Examples:\n• Pronounce: n + uu → nuu\n• Kannada→Hindi: ನ+ೂ → ನೂ (नू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_234",
+    "complexity": 3,
+    "question": "ನೃ",
+    "answer": "Hindi: नृ | English: nri",
+    "notes": "Examples:\n• Pronounce: n + ru/ri → nri\n• Kannada→Hindi: ನ+ೃ → ನೃ (नृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_235",
+    "complexity": 3,
+    "question": "ನೆ",
+    "answer": "Hindi: ने | English: ne",
+    "notes": "Examples:\n• Pronounce: n + e → ne\n• Kannada→Hindi: ನ+ೆ → ನೆ (ने)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_236",
+    "complexity": 3,
+    "question": "ನೇ",
+    "answer": "Hindi: ने (long) | English: nee",
+    "notes": "Examples:\n• Pronounce: n + ee/ē → nee\n• Kannada→Hindi: ನ+ೇ → ನೇ (ने (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_237",
+    "complexity": 3,
+    "question": "ನೈ",
+    "answer": "Hindi: नै | English: nai",
+    "notes": "Examples:\n• Pronounce: n + ai → nai\n• Kannada→Hindi: ನ+ೈ → ನೈ (नै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_238",
+    "complexity": 3,
+    "question": "ನೊ",
+    "answer": "Hindi: नो | English: no",
+    "notes": "Examples:\n• Pronounce: n + o → no\n• Kannada→Hindi: ನ+ೊ → ನೊ (नो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_239",
+    "complexity": 3,
+    "question": "ನೋ",
+    "answer": "Hindi: नो (long) | English: noo",
+    "notes": "Examples:\n• Pronounce: n + oo/ō → noo\n• Kannada→Hindi: ನ+ೋ → ನೋ (नो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_240",
+    "complexity": 3,
+    "question": "ನೌ",
+    "answer": "Hindi: नौ | English: nau",
+    "notes": "Examples:\n• Pronounce: n + au → nau\n• Kannada→Hindi: ನ+ೌ → ನೌ (नौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_241",
+    "complexity": 3,
+    "question": "ಪಾ",
+    "answer": "Hindi: पा | English: paa",
+    "notes": "Examples:\n• Pronounce: p + aa → paa\n• Kannada→Hindi: ಪ+ಾ → ಪಾ (पा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_242",
+    "complexity": 3,
+    "question": "ಪಿ",
+    "answer": "Hindi: पि | English: pi",
+    "notes": "Examples:\n• Pronounce: p + i → pi\n• Kannada→Hindi: ಪ+ಿ → ಪಿ (पि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_243",
+    "complexity": 3,
+    "question": "ಪೀ",
+    "answer": "Hindi: पी | English: pii",
+    "notes": "Examples:\n• Pronounce: p + ii → pii\n• Kannada→Hindi: ಪ+ೀ → ಪೀ (पी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_244",
+    "complexity": 3,
+    "question": "ಪು",
+    "answer": "Hindi: पु | English: pu",
+    "notes": "Examples:\n• Pronounce: p + u → pu\n• Kannada→Hindi: ಪ+ು → ಪು (पु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_245",
+    "complexity": 3,
+    "question": "ಪೂ",
+    "answer": "Hindi: पू | English: puu",
+    "notes": "Examples:\n• Pronounce: p + uu → puu\n• Kannada→Hindi: ಪ+ೂ → ಪೂ (पू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_246",
+    "complexity": 3,
+    "question": "ಪೃ",
+    "answer": "Hindi: पृ | English: pri",
+    "notes": "Examples:\n• Pronounce: p + ru/ri → pri\n• Kannada→Hindi: ಪ+ೃ → ಪೃ (पृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_247",
+    "complexity": 3,
+    "question": "ಪೆ",
+    "answer": "Hindi: पे | English: pe",
+    "notes": "Examples:\n• Pronounce: p + e → pe\n• Kannada→Hindi: ಪ+ೆ → ಪೆ (पे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_248",
+    "complexity": 3,
+    "question": "ಪೇ",
+    "answer": "Hindi: पे (long) | English: pee",
+    "notes": "Examples:\n• Pronounce: p + ee/ē → pee\n• Kannada→Hindi: ಪ+ೇ → ಪೇ (पे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_249",
+    "complexity": 3,
+    "question": "ಪೈ",
+    "answer": "Hindi: पै | English: pai",
+    "notes": "Examples:\n• Pronounce: p + ai → pai\n• Kannada→Hindi: ಪ+ೈ → ಪೈ (पै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_250",
+    "complexity": 3,
+    "question": "ಪೊ",
+    "answer": "Hindi: पो | English: po",
+    "notes": "Examples:\n• Pronounce: p + o → po\n• Kannada→Hindi: ಪ+ೊ → ಪೊ (पो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_251",
+    "complexity": 3,
+    "question": "ಪೋ",
+    "answer": "Hindi: पो (long) | English: poo",
+    "notes": "Examples:\n• Pronounce: p + oo/ō → poo\n• Kannada→Hindi: ಪ+ೋ → ಪೋ (पो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_252",
+    "complexity": 3,
+    "question": "ಪೌ",
+    "answer": "Hindi: पौ | English: pau",
+    "notes": "Examples:\n• Pronounce: p + au → pau\n• Kannada→Hindi: ಪ+ೌ → ಪೌ (पौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_253",
+    "complexity": 3,
+    "question": "ಫಾ",
+    "answer": "Hindi: फा | English: phaa",
+    "notes": "Examples:\n• Pronounce: ph + aa → phaa\n• Kannada→Hindi: ಫ+ಾ → ಫಾ (फा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_254",
+    "complexity": 3,
+    "question": "ಫಿ",
+    "answer": "Hindi: फि | English: phi",
+    "notes": "Examples:\n• Pronounce: ph + i → phi\n• Kannada→Hindi: ಫ+ಿ → ಫಿ (फि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_255",
+    "complexity": 3,
+    "question": "ಫೀ",
+    "answer": "Hindi: फी | English: phii",
+    "notes": "Examples:\n• Pronounce: ph + ii → phii\n• Kannada→Hindi: ಫ+ೀ → ಫೀ (फी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_256",
+    "complexity": 3,
+    "question": "ಫು",
+    "answer": "Hindi: फु | English: phu",
+    "notes": "Examples:\n• Pronounce: ph + u → phu\n• Kannada→Hindi: ಫ+ು → ಫು (फु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_257",
+    "complexity": 3,
+    "question": "ಫೂ",
+    "answer": "Hindi: फू | English: phuu",
+    "notes": "Examples:\n• Pronounce: ph + uu → phuu\n• Kannada→Hindi: ಫ+ೂ → ಫೂ (फू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_258",
+    "complexity": 3,
+    "question": "ಫೃ",
+    "answer": "Hindi: फृ | English: phri",
+    "notes": "Examples:\n• Pronounce: ph + ru/ri → phri\n• Kannada→Hindi: ಫ+ೃ → ಫೃ (फृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_259",
+    "complexity": 3,
+    "question": "ಫೆ",
+    "answer": "Hindi: फे | English: phe",
+    "notes": "Examples:\n• Pronounce: ph + e → phe\n• Kannada→Hindi: ಫ+ೆ → ಫೆ (फे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_260",
+    "complexity": 3,
+    "question": "ಫೇ",
+    "answer": "Hindi: फे (long) | English: phee",
+    "notes": "Examples:\n• Pronounce: ph + ee/ē → phee\n• Kannada→Hindi: ಫ+ೇ → ಫೇ (फे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_261",
+    "complexity": 3,
+    "question": "ಫೈ",
+    "answer": "Hindi: फै | English: phai",
+    "notes": "Examples:\n• Pronounce: ph + ai → phai\n• Kannada→Hindi: ಫ+ೈ → ಫೈ (फै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_262",
+    "complexity": 3,
+    "question": "ಫೊ",
+    "answer": "Hindi: फो | English: pho",
+    "notes": "Examples:\n• Pronounce: ph + o → pho\n• Kannada→Hindi: ಫ+ೊ → ಫೊ (फो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_263",
+    "complexity": 3,
+    "question": "ಫೋ",
+    "answer": "Hindi: फो (long) | English: phoo",
+    "notes": "Examples:\n• Pronounce: ph + oo/ō → phoo\n• Kannada→Hindi: ಫ+ೋ → ಫೋ (फो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_264",
+    "complexity": 3,
+    "question": "ಫೌ",
+    "answer": "Hindi: फौ | English: phau",
+    "notes": "Examples:\n• Pronounce: ph + au → phau\n• Kannada→Hindi: ಫ+ೌ → ಫೌ (फौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_265",
+    "complexity": 3,
+    "question": "ಬಾ",
+    "answer": "Hindi: बा | English: baa",
+    "notes": "Examples:\n• Pronounce: b + aa → baa\n• Kannada→Hindi: ಬ+ಾ → ಬಾ (बा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_266",
+    "complexity": 3,
+    "question": "ಬಿ",
+    "answer": "Hindi: बि | English: bi",
+    "notes": "Examples:\n• Pronounce: b + i → bi\n• Kannada→Hindi: ಬ+ಿ → ಬಿ (बि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_267",
+    "complexity": 3,
+    "question": "ಬೀ",
+    "answer": "Hindi: बी | English: bii",
+    "notes": "Examples:\n• Pronounce: b + ii → bii\n• Kannada→Hindi: ಬ+ೀ → ಬೀ (बी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_268",
+    "complexity": 3,
+    "question": "ಬು",
+    "answer": "Hindi: बु | English: bu",
+    "notes": "Examples:\n• Pronounce: b + u → bu\n• Kannada→Hindi: ಬ+ು → ಬು (बु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_269",
+    "complexity": 3,
+    "question": "ಬೂ",
+    "answer": "Hindi: बू | English: buu",
+    "notes": "Examples:\n• Pronounce: b + uu → buu\n• Kannada→Hindi: ಬ+ೂ → ಬೂ (बू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_270",
+    "complexity": 3,
+    "question": "ಬೃ",
+    "answer": "Hindi: बृ | English: bri",
+    "notes": "Examples:\n• Pronounce: b + ru/ri → bri\n• Kannada→Hindi: ಬ+ೃ → ಬೃ (बृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_271",
+    "complexity": 3,
+    "question": "ಬೆ",
+    "answer": "Hindi: बे | English: be",
+    "notes": "Examples:\n• Pronounce: b + e → be\n• Kannada→Hindi: ಬ+ೆ → ಬೆ (बे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_272",
+    "complexity": 3,
+    "question": "ಬೇ",
+    "answer": "Hindi: बे (long) | English: bee",
+    "notes": "Examples:\n• Pronounce: b + ee/ē → bee\n• Kannada→Hindi: ಬ+ೇ → ಬೇ (बे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_273",
+    "complexity": 3,
+    "question": "ಬೈ",
+    "answer": "Hindi: बै | English: bai",
+    "notes": "Examples:\n• Pronounce: b + ai → bai\n• Kannada→Hindi: ಬ+ೈ → ಬೈ (बै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_274",
+    "complexity": 3,
+    "question": "ಬೊ",
+    "answer": "Hindi: बो | English: bo",
+    "notes": "Examples:\n• Pronounce: b + o → bo\n• Kannada→Hindi: ಬ+ೊ → ಬೊ (बो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_275",
+    "complexity": 3,
+    "question": "ಬೋ",
+    "answer": "Hindi: बो (long) | English: boo",
+    "notes": "Examples:\n• Pronounce: b + oo/ō → boo\n• Kannada→Hindi: ಬ+ೋ → ಬೋ (बो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_276",
+    "complexity": 3,
+    "question": "ಬೌ",
+    "answer": "Hindi: बौ | English: bau",
+    "notes": "Examples:\n• Pronounce: b + au → bau\n• Kannada→Hindi: ಬ+ೌ → ಬೌ (बौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_277",
+    "complexity": 3,
+    "question": "ಭಾ",
+    "answer": "Hindi: भा | English: bhaa",
+    "notes": "Examples:\n• Pronounce: bh + aa → bhaa\n• Kannada→Hindi: ಭ+ಾ → ಭಾ (भा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_278",
+    "complexity": 3,
+    "question": "ಭಿ",
+    "answer": "Hindi: भि | English: bhi",
+    "notes": "Examples:\n• Pronounce: bh + i → bhi\n• Kannada→Hindi: ಭ+ಿ → ಭಿ (भि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_279",
+    "complexity": 3,
+    "question": "ಭೀ",
+    "answer": "Hindi: भी | English: bhii",
+    "notes": "Examples:\n• Pronounce: bh + ii → bhii\n• Kannada→Hindi: ಭ+ೀ → ಭೀ (भी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_280",
+    "complexity": 3,
+    "question": "ಭು",
+    "answer": "Hindi: भु | English: bhu",
+    "notes": "Examples:\n• Pronounce: bh + u → bhu\n• Kannada→Hindi: ಭ+ು → ಭು (भु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_281",
+    "complexity": 3,
+    "question": "ಭೂ",
+    "answer": "Hindi: भू | English: bhuu",
+    "notes": "Examples:\n• Pronounce: bh + uu → bhuu\n• Kannada→Hindi: ಭ+ೂ → ಭೂ (भू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_282",
+    "complexity": 3,
+    "question": "ಭೃ",
+    "answer": "Hindi: भृ | English: bhri",
+    "notes": "Examples:\n• Pronounce: bh + ru/ri → bhri\n• Kannada→Hindi: ಭ+ೃ → ಭೃ (भृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_283",
+    "complexity": 3,
+    "question": "ಭೆ",
+    "answer": "Hindi: भे | English: bhe",
+    "notes": "Examples:\n• Pronounce: bh + e → bhe\n• Kannada→Hindi: ಭ+ೆ → ಭೆ (भे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_284",
+    "complexity": 3,
+    "question": "ಭೇ",
+    "answer": "Hindi: भे (long) | English: bhee",
+    "notes": "Examples:\n• Pronounce: bh + ee/ē → bhee\n• Kannada→Hindi: ಭ+ೇ → ಭೇ (भे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_285",
+    "complexity": 3,
+    "question": "ಭೈ",
+    "answer": "Hindi: भै | English: bhai",
+    "notes": "Examples:\n• Pronounce: bh + ai → bhai\n• Kannada→Hindi: ಭ+ೈ → ಭೈ (भै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_286",
+    "complexity": 3,
+    "question": "ಭೊ",
+    "answer": "Hindi: भो | English: bho",
+    "notes": "Examples:\n• Pronounce: bh + o → bho\n• Kannada→Hindi: ಭ+ೊ → ಭೊ (भो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_287",
+    "complexity": 3,
+    "question": "ಭೋ",
+    "answer": "Hindi: भो (long) | English: bhoo",
+    "notes": "Examples:\n• Pronounce: bh + oo/ō → bhoo\n• Kannada→Hindi: ಭ+ೋ → ಭೋ (भो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_288",
+    "complexity": 3,
+    "question": "ಭೌ",
+    "answer": "Hindi: भौ | English: bhau",
+    "notes": "Examples:\n• Pronounce: bh + au → bhau\n• Kannada→Hindi: ಭ+ೌ → ಭೌ (भौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_289",
+    "complexity": 3,
+    "question": "ಮಾ",
+    "answer": "Hindi: मा | English: maa",
+    "notes": "Examples:\n• Pronounce: m + aa → maa\n• Kannada→Hindi: ಮ+ಾ → ಮಾ (मा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_290",
+    "complexity": 3,
+    "question": "ಮಿ",
+    "answer": "Hindi: मि | English: mi",
+    "notes": "Examples:\n• Pronounce: m + i → mi\n• Kannada→Hindi: ಮ+ಿ → ಮಿ (मि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_291",
+    "complexity": 3,
+    "question": "ಮೀ",
+    "answer": "Hindi: मी | English: mii",
+    "notes": "Examples:\n• Pronounce: m + ii → mii\n• Kannada→Hindi: ಮ+ೀ → ಮೀ (मी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_292",
+    "complexity": 3,
+    "question": "ಮು",
+    "answer": "Hindi: मु | English: mu",
+    "notes": "Examples:\n• Pronounce: m + u → mu\n• Kannada→Hindi: ಮ+ು → ಮು (मु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_293",
+    "complexity": 3,
+    "question": "ಮೂ",
+    "answer": "Hindi: मू | English: muu",
+    "notes": "Examples:\n• Pronounce: m + uu → muu\n• Kannada→Hindi: ಮ+ೂ → ಮೂ (मू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_294",
+    "complexity": 3,
+    "question": "ಮೃ",
+    "answer": "Hindi: मृ | English: mri",
+    "notes": "Examples:\n• Pronounce: m + ru/ri → mri\n• Kannada→Hindi: ಮ+ೃ → ಮೃ (मृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_295",
+    "complexity": 3,
+    "question": "ಮೆ",
+    "answer": "Hindi: मे | English: me",
+    "notes": "Examples:\n• Pronounce: m + e → me\n• Kannada→Hindi: ಮ+ೆ → ಮೆ (मे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_296",
+    "complexity": 3,
+    "question": "ಮೇ",
+    "answer": "Hindi: मे (long) | English: mee",
+    "notes": "Examples:\n• Pronounce: m + ee/ē → mee\n• Kannada→Hindi: ಮ+ೇ → ಮೇ (मे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_297",
+    "complexity": 3,
+    "question": "ಮೈ",
+    "answer": "Hindi: मै | English: mai",
+    "notes": "Examples:\n• Pronounce: m + ai → mai\n• Kannada→Hindi: ಮ+ೈ → ಮೈ (मै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_298",
+    "complexity": 3,
+    "question": "ಮೊ",
+    "answer": "Hindi: मो | English: mo",
+    "notes": "Examples:\n• Pronounce: m + o → mo\n• Kannada→Hindi: ಮ+ೊ → ಮೊ (मो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_299",
+    "complexity": 3,
+    "question": "ಮೋ",
+    "answer": "Hindi: मो (long) | English: moo",
+    "notes": "Examples:\n• Pronounce: m + oo/ō → moo\n• Kannada→Hindi: ಮ+ೋ → ಮೋ (मो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_300",
+    "complexity": 3,
+    "question": "ಮೌ",
+    "answer": "Hindi: मौ | English: mau",
+    "notes": "Examples:\n• Pronounce: m + au → mau\n• Kannada→Hindi: ಮ+ೌ → ಮೌ (मौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_301",
+    "complexity": 3,
+    "question": "ಯಾ",
+    "answer": "Hindi: या | English: yaa",
+    "notes": "Examples:\n• Pronounce: y + aa → yaa\n• Kannada→Hindi: ಯ+ಾ → ಯಾ (या)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_302",
+    "complexity": 3,
+    "question": "ಯಿ",
+    "answer": "Hindi: यि | English: yi",
+    "notes": "Examples:\n• Pronounce: y + i → yi\n• Kannada→Hindi: ಯ+ಿ → ಯಿ (यि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_303",
+    "complexity": 3,
+    "question": "ಯೀ",
+    "answer": "Hindi: यी | English: yii",
+    "notes": "Examples:\n• Pronounce: y + ii → yii\n• Kannada→Hindi: ಯ+ೀ → ಯೀ (यी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_304",
+    "complexity": 3,
+    "question": "ಯು",
+    "answer": "Hindi: यु | English: yu",
+    "notes": "Examples:\n• Pronounce: y + u → yu\n• Kannada→Hindi: ಯ+ು → ಯು (यु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_305",
+    "complexity": 3,
+    "question": "ಯೂ",
+    "answer": "Hindi: यू | English: yuu",
+    "notes": "Examples:\n• Pronounce: y + uu → yuu\n• Kannada→Hindi: ಯ+ೂ → ಯೂ (यू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_306",
+    "complexity": 3,
+    "question": "ಯೃ",
+    "answer": "Hindi: यृ | English: yri",
+    "notes": "Examples:\n• Pronounce: y + ru/ri → yri\n• Kannada→Hindi: ಯ+ೃ → ಯೃ (यृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_307",
+    "complexity": 3,
+    "question": "ಯೆ",
+    "answer": "Hindi: ये | English: ye",
+    "notes": "Examples:\n• Pronounce: y + e → ye\n• Kannada→Hindi: ಯ+ೆ → ಯೆ (ये)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_308",
+    "complexity": 3,
+    "question": "ಯೇ",
+    "answer": "Hindi: ये (long) | English: yee",
+    "notes": "Examples:\n• Pronounce: y + ee/ē → yee\n• Kannada→Hindi: ಯ+ೇ → ಯೇ (ये (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_309",
+    "complexity": 3,
+    "question": "ಯೈ",
+    "answer": "Hindi: यै | English: yai",
+    "notes": "Examples:\n• Pronounce: y + ai → yai\n• Kannada→Hindi: ಯ+ೈ → ಯೈ (यै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_310",
+    "complexity": 3,
+    "question": "ಯೊ",
+    "answer": "Hindi: यो | English: yo",
+    "notes": "Examples:\n• Pronounce: y + o → yo\n• Kannada→Hindi: ಯ+ೊ → ಯೊ (यो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_311",
+    "complexity": 3,
+    "question": "ಯೋ",
+    "answer": "Hindi: यो (long) | English: yoo",
+    "notes": "Examples:\n• Pronounce: y + oo/ō → yoo\n• Kannada→Hindi: ಯ+ೋ → ಯೋ (यो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_312",
+    "complexity": 3,
+    "question": "ಯೌ",
+    "answer": "Hindi: यौ | English: yau",
+    "notes": "Examples:\n• Pronounce: y + au → yau\n• Kannada→Hindi: ಯ+ೌ → ಯೌ (यौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_313",
+    "complexity": 3,
+    "question": "ರಾ",
+    "answer": "Hindi: रा | English: raa",
+    "notes": "Examples:\n• Pronounce: r + aa → raa\n• Kannada→Hindi: ರ+ಾ → ರಾ (रा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_314",
+    "complexity": 3,
+    "question": "ರಿ",
+    "answer": "Hindi: रि | English: ri",
+    "notes": "Examples:\n• Pronounce: r + i → ri\n• Kannada→Hindi: ರ+ಿ → ರಿ (रि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_315",
+    "complexity": 3,
+    "question": "ರೀ",
+    "answer": "Hindi: री | English: rii",
+    "notes": "Examples:\n• Pronounce: r + ii → rii\n• Kannada→Hindi: ರ+ೀ → ರೀ (री)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_316",
+    "complexity": 3,
+    "question": "ರು",
+    "answer": "Hindi: रु | English: ru",
+    "notes": "Examples:\n• Pronounce: r + u → ru\n• Kannada→Hindi: ರ+ು → ರು (रु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_317",
+    "complexity": 3,
+    "question": "ರೂ",
+    "answer": "Hindi: रू | English: ruu",
+    "notes": "Examples:\n• Pronounce: r + uu → ruu\n• Kannada→Hindi: ರ+ೂ → ರೂ (रू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_318",
+    "complexity": 3,
+    "question": "ರೃ",
+    "answer": "Hindi: रृ | English: rri",
+    "notes": "Examples:\n• Pronounce: r + ru/ri → rri\n• Kannada→Hindi: ರ+ೃ → ರೃ (रृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_319",
+    "complexity": 3,
+    "question": "ರೆ",
+    "answer": "Hindi: रे | English: re",
+    "notes": "Examples:\n• Pronounce: r + e → re\n• Kannada→Hindi: ರ+ೆ → ರೆ (रे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_320",
+    "complexity": 3,
+    "question": "ರೇ",
+    "answer": "Hindi: रे (long) | English: ree",
+    "notes": "Examples:\n• Pronounce: r + ee/ē → ree\n• Kannada→Hindi: ರ+ೇ → ರೇ (रे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_321",
+    "complexity": 3,
+    "question": "ರೈ",
+    "answer": "Hindi: रै | English: rai",
+    "notes": "Examples:\n• Pronounce: r + ai → rai\n• Kannada→Hindi: ರ+ೈ → ರೈ (रै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_322",
+    "complexity": 3,
+    "question": "ರೊ",
+    "answer": "Hindi: रो | English: ro",
+    "notes": "Examples:\n• Pronounce: r + o → ro\n• Kannada→Hindi: ರ+ೊ → ರೊ (रो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_323",
+    "complexity": 3,
+    "question": "ರೋ",
+    "answer": "Hindi: रो (long) | English: roo",
+    "notes": "Examples:\n• Pronounce: r + oo/ō → roo\n• Kannada→Hindi: ರ+ೋ → ರೋ (रो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_324",
+    "complexity": 3,
+    "question": "ರೌ",
+    "answer": "Hindi: रौ | English: rau",
+    "notes": "Examples:\n• Pronounce: r + au → rau\n• Kannada→Hindi: ರ+ೌ → ರೌ (रौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_325",
+    "complexity": 3,
+    "question": "ಲಾ",
+    "answer": "Hindi: ला | English: laa",
+    "notes": "Examples:\n• Pronounce: l + aa → laa\n• Kannada→Hindi: ಲ+ಾ → ಲಾ (ला)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_326",
+    "complexity": 3,
+    "question": "ಲಿ",
+    "answer": "Hindi: लि | English: li",
+    "notes": "Examples:\n• Pronounce: l + i → li\n• Kannada→Hindi: ಲ+ಿ → ಲಿ (लि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_327",
+    "complexity": 3,
+    "question": "ಲೀ",
+    "answer": "Hindi: ली | English: lii",
+    "notes": "Examples:\n• Pronounce: l + ii → lii\n• Kannada→Hindi: ಲ+ೀ → ಲೀ (ली)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_328",
+    "complexity": 3,
+    "question": "ಲು",
+    "answer": "Hindi: लु | English: lu",
+    "notes": "Examples:\n• Pronounce: l + u → lu\n• Kannada→Hindi: ಲ+ು → ಲು (लु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_329",
+    "complexity": 3,
+    "question": "ಲೂ",
+    "answer": "Hindi: लू | English: luu",
+    "notes": "Examples:\n• Pronounce: l + uu → luu\n• Kannada→Hindi: ಲ+ೂ → ಲೂ (लू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_330",
+    "complexity": 3,
+    "question": "ಲೃ",
+    "answer": "Hindi: लृ | English: lri",
+    "notes": "Examples:\n• Pronounce: l + ru/ri → lri\n• Kannada→Hindi: ಲ+ೃ → ಲೃ (लृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_331",
+    "complexity": 3,
+    "question": "ಲೆ",
+    "answer": "Hindi: ले | English: le",
+    "notes": "Examples:\n• Pronounce: l + e → le\n• Kannada→Hindi: ಲ+ೆ → ಲೆ (ले)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_332",
+    "complexity": 3,
+    "question": "ಲೇ",
+    "answer": "Hindi: ले (long) | English: lee",
+    "notes": "Examples:\n• Pronounce: l + ee/ē → lee\n• Kannada→Hindi: ಲ+ೇ → ಲೇ (ले (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_333",
+    "complexity": 3,
+    "question": "ಲೈ",
+    "answer": "Hindi: लै | English: lai",
+    "notes": "Examples:\n• Pronounce: l + ai → lai\n• Kannada→Hindi: ಲ+ೈ → ಲೈ (लै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_334",
+    "complexity": 3,
+    "question": "ಲೊ",
+    "answer": "Hindi: लो | English: lo",
+    "notes": "Examples:\n• Pronounce: l + o → lo\n• Kannada→Hindi: ಲ+ೊ → ಲೊ (लो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_335",
+    "complexity": 3,
+    "question": "ಲೋ",
+    "answer": "Hindi: लो (long) | English: loo",
+    "notes": "Examples:\n• Pronounce: l + oo/ō → loo\n• Kannada→Hindi: ಲ+ೋ → ಲೋ (लो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_336",
+    "complexity": 3,
+    "question": "ಲೌ",
+    "answer": "Hindi: लौ | English: lau",
+    "notes": "Examples:\n• Pronounce: l + au → lau\n• Kannada→Hindi: ಲ+ೌ → ಲೌ (लौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_337",
+    "complexity": 3,
+    "question": "ವಾ",
+    "answer": "Hindi: वा | English: vaa",
+    "notes": "Examples:\n• Pronounce: v + aa → vaa\n• Kannada→Hindi: ವ+ಾ → ವಾ (वा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_338",
+    "complexity": 3,
+    "question": "ವಿ",
+    "answer": "Hindi: वि | English: vi",
+    "notes": "Examples:\n• Pronounce: v + i → vi\n• Kannada→Hindi: ವ+ಿ → ವಿ (वि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_339",
+    "complexity": 3,
+    "question": "ವೀ",
+    "answer": "Hindi: वी | English: vii",
+    "notes": "Examples:\n• Pronounce: v + ii → vii\n• Kannada→Hindi: ವ+ೀ → ವೀ (वी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_340",
+    "complexity": 3,
+    "question": "ವು",
+    "answer": "Hindi: वु | English: vu",
+    "notes": "Examples:\n• Pronounce: v + u → vu\n• Kannada→Hindi: ವ+ು → ವು (वु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_341",
+    "complexity": 3,
+    "question": "ವೂ",
+    "answer": "Hindi: वू | English: vuu",
+    "notes": "Examples:\n• Pronounce: v + uu → vuu\n• Kannada→Hindi: ವ+ೂ → ವೂ (वू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_342",
+    "complexity": 3,
+    "question": "ವೃ",
+    "answer": "Hindi: वृ | English: vri",
+    "notes": "Examples:\n• Pronounce: v + ru/ri → vri\n• Kannada→Hindi: ವ+ೃ → ವೃ (वृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_343",
+    "complexity": 3,
+    "question": "ವೆ",
+    "answer": "Hindi: वे | English: ve",
+    "notes": "Examples:\n• Pronounce: v + e → ve\n• Kannada→Hindi: ವ+ೆ → ವೆ (वे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_344",
+    "complexity": 3,
+    "question": "ವೇ",
+    "answer": "Hindi: वे (long) | English: vee",
+    "notes": "Examples:\n• Pronounce: v + ee/ē → vee\n• Kannada→Hindi: ವ+ೇ → ವೇ (वे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_345",
+    "complexity": 3,
+    "question": "ವೈ",
+    "answer": "Hindi: वै | English: vai",
+    "notes": "Examples:\n• Pronounce: v + ai → vai\n• Kannada→Hindi: ವ+ೈ → ವೈ (वै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_346",
+    "complexity": 3,
+    "question": "ವೊ",
+    "answer": "Hindi: वो | English: vo",
+    "notes": "Examples:\n• Pronounce: v + o → vo\n• Kannada→Hindi: ವ+ೊ → ವೊ (वो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_347",
+    "complexity": 3,
+    "question": "ವೋ",
+    "answer": "Hindi: वो (long) | English: voo",
+    "notes": "Examples:\n• Pronounce: v + oo/ō → voo\n• Kannada→Hindi: ವ+ೋ → ವೋ (वो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_348",
+    "complexity": 3,
+    "question": "ವೌ",
+    "answer": "Hindi: वौ | English: vau",
+    "notes": "Examples:\n• Pronounce: v + au → vau\n• Kannada→Hindi: ವ+ೌ → ವೌ (वौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_349",
+    "complexity": 3,
+    "question": "ಶಾ",
+    "answer": "Hindi: शा | English: śaa",
+    "notes": "Examples:\n• Pronounce: ś + aa → śaa\n• Kannada→Hindi: ಶ+ಾ → ಶಾ (शा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_350",
+    "complexity": 3,
+    "question": "ಶಿ",
+    "answer": "Hindi: शि | English: śi",
+    "notes": "Examples:\n• Pronounce: ś + i → śi\n• Kannada→Hindi: ಶ+ಿ → ಶಿ (शि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_351",
+    "complexity": 3,
+    "question": "ಶೀ",
+    "answer": "Hindi: शी | English: śii",
+    "notes": "Examples:\n• Pronounce: ś + ii → śii\n• Kannada→Hindi: ಶ+ೀ → ಶೀ (शी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_352",
+    "complexity": 3,
+    "question": "ಶು",
+    "answer": "Hindi: शु | English: śu",
+    "notes": "Examples:\n• Pronounce: ś + u → śu\n• Kannada→Hindi: ಶ+ು → ಶು (शु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_353",
+    "complexity": 3,
+    "question": "ಶೂ",
+    "answer": "Hindi: शू | English: śuu",
+    "notes": "Examples:\n• Pronounce: ś + uu → śuu\n• Kannada→Hindi: ಶ+ೂ → ಶೂ (शू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_354",
+    "complexity": 3,
+    "question": "ಶೃ",
+    "answer": "Hindi: शृ | English: śri",
+    "notes": "Examples:\n• Pronounce: ś + ru/ri → śri\n• Kannada→Hindi: ಶ+ೃ → ಶೃ (शृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_355",
+    "complexity": 3,
+    "question": "ಶೆ",
+    "answer": "Hindi: शे | English: śe",
+    "notes": "Examples:\n• Pronounce: ś + e → śe\n• Kannada→Hindi: ಶ+ೆ → ಶೆ (शे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_356",
+    "complexity": 3,
+    "question": "ಶೇ",
+    "answer": "Hindi: शे (long) | English: śee",
+    "notes": "Examples:\n• Pronounce: ś + ee/ē → śee\n• Kannada→Hindi: ಶ+ೇ → ಶೇ (शे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_357",
+    "complexity": 3,
+    "question": "ಶೈ",
+    "answer": "Hindi: शै | English: śai",
+    "notes": "Examples:\n• Pronounce: ś + ai → śai\n• Kannada→Hindi: ಶ+ೈ → ಶೈ (शै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_358",
+    "complexity": 3,
+    "question": "ಶೊ",
+    "answer": "Hindi: शो | English: śo",
+    "notes": "Examples:\n• Pronounce: ś + o → śo\n• Kannada→Hindi: ಶ+ೊ → ಶೊ (शो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_359",
+    "complexity": 3,
+    "question": "ಶೋ",
+    "answer": "Hindi: शो (long) | English: śoo",
+    "notes": "Examples:\n• Pronounce: ś + oo/ō → śoo\n• Kannada→Hindi: ಶ+ೋ → ಶೋ (शो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_360",
+    "complexity": 3,
+    "question": "ಶೌ",
+    "answer": "Hindi: शौ | English: śau",
+    "notes": "Examples:\n• Pronounce: ś + au → śau\n• Kannada→Hindi: ಶ+ೌ → ಶೌ (शौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_361",
+    "complexity": 3,
+    "question": "ಷಾ",
+    "answer": "Hindi: षा | English: ṣaa",
+    "notes": "Examples:\n• Pronounce: ṣ + aa → ṣaa\n• Kannada→Hindi: ಷ+ಾ → ಷಾ (षा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_362",
+    "complexity": 3,
+    "question": "ಷಿ",
+    "answer": "Hindi: षि | English: ṣi",
+    "notes": "Examples:\n• Pronounce: ṣ + i → ṣi\n• Kannada→Hindi: ಷ+ಿ → ಷಿ (षि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_363",
+    "complexity": 3,
+    "question": "ಷೀ",
+    "answer": "Hindi: षी | English: ṣii",
+    "notes": "Examples:\n• Pronounce: ṣ + ii → ṣii\n• Kannada→Hindi: ಷ+ೀ → ಷೀ (षी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_364",
+    "complexity": 3,
+    "question": "ಷು",
+    "answer": "Hindi: षु | English: ṣu",
+    "notes": "Examples:\n• Pronounce: ṣ + u → ṣu\n• Kannada→Hindi: ಷ+ು → ಷು (षु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_365",
+    "complexity": 3,
+    "question": "ಷೂ",
+    "answer": "Hindi: षू | English: ṣuu",
+    "notes": "Examples:\n• Pronounce: ṣ + uu → ṣuu\n• Kannada→Hindi: ಷ+ೂ → ಷೂ (षू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_366",
+    "complexity": 3,
+    "question": "ಷೃ",
+    "answer": "Hindi: षृ | English: ṣri",
+    "notes": "Examples:\n• Pronounce: ṣ + ru/ri → ṣri\n• Kannada→Hindi: ಷ+ೃ → ಷೃ (षृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_367",
+    "complexity": 3,
+    "question": "ಷೆ",
+    "answer": "Hindi: षे | English: ṣe",
+    "notes": "Examples:\n• Pronounce: ṣ + e → ṣe\n• Kannada→Hindi: ಷ+ೆ → ಷೆ (षे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_368",
+    "complexity": 3,
+    "question": "ಷೇ",
+    "answer": "Hindi: षे (long) | English: ṣee",
+    "notes": "Examples:\n• Pronounce: ṣ + ee/ē → ṣee\n• Kannada→Hindi: ಷ+ೇ → ಷೇ (षे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_369",
+    "complexity": 3,
+    "question": "ಷೈ",
+    "answer": "Hindi: षै | English: ṣai",
+    "notes": "Examples:\n• Pronounce: ṣ + ai → ṣai\n• Kannada→Hindi: ಷ+ೈ → ಷೈ (षै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_370",
+    "complexity": 3,
+    "question": "ಷೊ",
+    "answer": "Hindi: षो | English: ṣo",
+    "notes": "Examples:\n• Pronounce: ṣ + o → ṣo\n• Kannada→Hindi: ಷ+ೊ → ಷೊ (षो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_371",
+    "complexity": 3,
+    "question": "ಷೋ",
+    "answer": "Hindi: षो (long) | English: ṣoo",
+    "notes": "Examples:\n• Pronounce: ṣ + oo/ō → ṣoo\n• Kannada→Hindi: ಷ+ೋ → ಷೋ (षो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_372",
+    "complexity": 3,
+    "question": "ಷೌ",
+    "answer": "Hindi: षौ | English: ṣau",
+    "notes": "Examples:\n• Pronounce: ṣ + au → ṣau\n• Kannada→Hindi: ಷ+ೌ → ಷೌ (षौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_373",
+    "complexity": 3,
+    "question": "ಸಾ",
+    "answer": "Hindi: सा | English: saa",
+    "notes": "Examples:\n• Pronounce: s + aa → saa\n• Kannada→Hindi: ಸ+ಾ → ಸಾ (सा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_374",
+    "complexity": 3,
+    "question": "ಸಿ",
+    "answer": "Hindi: सि | English: si",
+    "notes": "Examples:\n• Pronounce: s + i → si\n• Kannada→Hindi: ಸ+ಿ → ಸಿ (सि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_375",
+    "complexity": 3,
+    "question": "ಸೀ",
+    "answer": "Hindi: सी | English: sii",
+    "notes": "Examples:\n• Pronounce: s + ii → sii\n• Kannada→Hindi: ಸ+ೀ → ಸೀ (सी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_376",
+    "complexity": 3,
+    "question": "ಸು",
+    "answer": "Hindi: सु | English: su",
+    "notes": "Examples:\n• Pronounce: s + u → su\n• Kannada→Hindi: ಸ+ು → ಸು (सु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_377",
+    "complexity": 3,
+    "question": "ಸೂ",
+    "answer": "Hindi: सू | English: suu",
+    "notes": "Examples:\n• Pronounce: s + uu → suu\n• Kannada→Hindi: ಸ+ೂ → ಸೂ (सू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_378",
+    "complexity": 3,
+    "question": "ಸೃ",
+    "answer": "Hindi: सृ | English: sri",
+    "notes": "Examples:\n• Pronounce: s + ru/ri → sri\n• Kannada→Hindi: ಸ+ೃ → ಸೃ (सृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_379",
+    "complexity": 3,
+    "question": "ಸೆ",
+    "answer": "Hindi: से | English: se",
+    "notes": "Examples:\n• Pronounce: s + e → se\n• Kannada→Hindi: ಸ+ೆ → ಸೆ (से)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_380",
+    "complexity": 3,
+    "question": "ಸೇ",
+    "answer": "Hindi: से (long) | English: see",
+    "notes": "Examples:\n• Pronounce: s + ee/ē → see\n• Kannada→Hindi: ಸ+ೇ → ಸೇ (से (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_381",
+    "complexity": 3,
+    "question": "ಸೈ",
+    "answer": "Hindi: सै | English: sai",
+    "notes": "Examples:\n• Pronounce: s + ai → sai\n• Kannada→Hindi: ಸ+ೈ → ಸೈ (सै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_382",
+    "complexity": 3,
+    "question": "ಸೊ",
+    "answer": "Hindi: सो | English: so",
+    "notes": "Examples:\n• Pronounce: s + o → so\n• Kannada→Hindi: ಸ+ೊ → ಸೊ (सो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_383",
+    "complexity": 3,
+    "question": "ಸೋ",
+    "answer": "Hindi: सो (long) | English: soo",
+    "notes": "Examples:\n• Pronounce: s + oo/ō → soo\n• Kannada→Hindi: ಸ+ೋ → ಸೋ (सो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_384",
+    "complexity": 3,
+    "question": "ಸೌ",
+    "answer": "Hindi: सौ | English: sau",
+    "notes": "Examples:\n• Pronounce: s + au → sau\n• Kannada→Hindi: ಸ+ೌ → ಸೌ (सौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_385",
+    "complexity": 3,
+    "question": "ಹಾ",
+    "answer": "Hindi: हा | English: haa",
+    "notes": "Examples:\n• Pronounce: h + aa → haa\n• Kannada→Hindi: ಹ+ಾ → ಹಾ (हा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_386",
+    "complexity": 3,
+    "question": "ಹಿ",
+    "answer": "Hindi: हि | English: hi",
+    "notes": "Examples:\n• Pronounce: h + i → hi\n• Kannada→Hindi: ಹ+ಿ → ಹಿ (हि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_387",
+    "complexity": 3,
+    "question": "ಹೀ",
+    "answer": "Hindi: ही | English: hii",
+    "notes": "Examples:\n• Pronounce: h + ii → hii\n• Kannada→Hindi: ಹ+ೀ → ಹೀ (ही)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_388",
+    "complexity": 3,
+    "question": "ಹು",
+    "answer": "Hindi: हु | English: hu",
+    "notes": "Examples:\n• Pronounce: h + u → hu\n• Kannada→Hindi: ಹ+ು → ಹು (हु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_389",
+    "complexity": 3,
+    "question": "ಹೂ",
+    "answer": "Hindi: हू | English: huu",
+    "notes": "Examples:\n• Pronounce: h + uu → huu\n• Kannada→Hindi: ಹ+ೂ → ಹೂ (हू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_390",
+    "complexity": 3,
+    "question": "ಹೃ",
+    "answer": "Hindi: हृ | English: hri",
+    "notes": "Examples:\n• Pronounce: h + ru/ri → hri\n• Kannada→Hindi: ಹ+ೃ → ಹೃ (हृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_391",
+    "complexity": 3,
+    "question": "ಹೆ",
+    "answer": "Hindi: हे | English: he",
+    "notes": "Examples:\n• Pronounce: h + e → he\n• Kannada→Hindi: ಹ+ೆ → ಹೆ (हे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_392",
+    "complexity": 3,
+    "question": "ಹೇ",
+    "answer": "Hindi: हे (long) | English: hee",
+    "notes": "Examples:\n• Pronounce: h + ee/ē → hee\n• Kannada→Hindi: ಹ+ೇ → ಹೇ (हे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_393",
+    "complexity": 3,
+    "question": "ಹೈ",
+    "answer": "Hindi: है | English: hai",
+    "notes": "Examples:\n• Pronounce: h + ai → hai\n• Kannada→Hindi: ಹ+ೈ → ಹೈ (है)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_394",
+    "complexity": 3,
+    "question": "ಹೊ",
+    "answer": "Hindi: हो | English: ho",
+    "notes": "Examples:\n• Pronounce: h + o → ho\n• Kannada→Hindi: ಹ+ೊ → ಹೊ (हो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_395",
+    "complexity": 3,
+    "question": "ಹೋ",
+    "answer": "Hindi: हो (long) | English: hoo",
+    "notes": "Examples:\n• Pronounce: h + oo/ō → hoo\n• Kannada→Hindi: ಹ+ೋ → ಹೋ (हो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_396",
+    "complexity": 3,
+    "question": "ಹೌ",
+    "answer": "Hindi: हौ | English: hau",
+    "notes": "Examples:\n• Pronounce: h + au → hau\n• Kannada→Hindi: ಹ+ೌ → ಹೌ (हौ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_397",
+    "complexity": 3,
+    "question": "ಳಾ",
+    "answer": "Hindi: ळा | English: ḷaa",
+    "notes": "Examples:\n• Pronounce: ḷ + aa → ḷaa\n• Kannada→Hindi: ಳ+ಾ → ಳಾ (ळा)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_398",
+    "complexity": 3,
+    "question": "ಳಿ",
+    "answer": "Hindi: ळि | English: ḷi",
+    "notes": "Examples:\n• Pronounce: ḷ + i → ḷi\n• Kannada→Hindi: ಳ+ಿ → ಳಿ (ळि)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_399",
+    "complexity": 3,
+    "question": "ಳೀ",
+    "answer": "Hindi: ळी | English: ḷii",
+    "notes": "Examples:\n• Pronounce: ḷ + ii → ḷii\n• Kannada→Hindi: ಳ+ೀ → ಳೀ (ळी)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_400",
+    "complexity": 3,
+    "question": "ಳು",
+    "answer": "Hindi: ळु | English: ḷu",
+    "notes": "Examples:\n• Pronounce: ḷ + u → ḷu\n• Kannada→Hindi: ಳ+ು → ಳು (ळु)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_401",
+    "complexity": 3,
+    "question": "ಳೂ",
+    "answer": "Hindi: ळू | English: ḷuu",
+    "notes": "Examples:\n• Pronounce: ḷ + uu → ḷuu\n• Kannada→Hindi: ಳ+ೂ → ಳೂ (ळू)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_402",
+    "complexity": 3,
+    "question": "ಳೃ",
+    "answer": "Hindi: ळृ | English: ḷri",
+    "notes": "Examples:\n• Pronounce: ḷ + ru/ri → ḷri\n• Kannada→Hindi: ಳ+ೃ → ಳೃ (ळृ)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_403",
+    "complexity": 3,
+    "question": "ಳೆ",
+    "answer": "Hindi: ळे | English: ḷe",
+    "notes": "Examples:\n• Pronounce: ḷ + e → ḷe\n• Kannada→Hindi: ಳ+ೆ → ಳೆ (ळे)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_404",
+    "complexity": 3,
+    "question": "ಳೇ",
+    "answer": "Hindi: ळे (long) | English: ḷee",
+    "notes": "Examples:\n• Pronounce: ḷ + ee/ē → ḷee\n• Kannada→Hindi: ಳ+ೇ → ಳೇ (ळे (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_405",
+    "complexity": 3,
+    "question": "ಳೈ",
+    "answer": "Hindi: ळै | English: ḷai",
+    "notes": "Examples:\n• Pronounce: ḷ + ai → ḷai\n• Kannada→Hindi: ಳ+ೈ → ಳೈ (ळै)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_406",
+    "complexity": 3,
+    "question": "ಳೊ",
+    "answer": "Hindi: ळो | English: ḷo",
+    "notes": "Examples:\n• Pronounce: ḷ + o → ḷo\n• Kannada→Hindi: ಳ+ೊ → ಳೊ (ळो)\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_407",
+    "complexity": 3,
+    "question": "ಳೋ",
+    "answer": "Hindi: ळो (long) | English: ḷoo",
+    "notes": "Examples:\n• Pronounce: ḷ + oo/ō → ḷoo\n• Kannada→Hindi: ಳ+ೋ → ಳೋ (ळो (long))\n• Practice tip: trace the letter & say it 3 times."
+  },
+  {
+    "id": "barakhadi_408",
+    "complexity": 3,
+    "question": "ಳೌ",
+    "answer": "Hindi: ळौ | English: ḷau",
+    "notes": "Examples:\n• Pronounce: ḷ + au → ḷau\n• Kannada→Hindi: ಳ+ೌ → ಳೌ (ळौ)\n• Practice tip: trace the letter & say it 3 times."
   }
 ]

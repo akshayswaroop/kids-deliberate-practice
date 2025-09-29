@@ -1,793 +1,282 @@
 [
   {
-    "id": "an",
+    "id": "phonics_01",
     "complexity": 1,
-    "question": "an",
-    "answer": "",
-    "notes": "Basic phonics word"
+    "question": "I am in the room.",
+    "answer": "मैं कमरे में हूँ।",
+    "notes": ""
   },
   {
-    "id": "at",
+    "id": "phonics_02",
     "complexity": 1,
-    "question": "at",
-    "answer": "",
-    "notes": "Basic phonics word"
+    "question": "He is my friend.",
+    "answer": "वह मेरा दोस्त है।",
+    "notes": ""
   },
   {
-    "id": "am",
+    "id": "phonics_03",
     "complexity": 1,
-    "question": "am",
-    "answer": "",
-    "notes": "Basic phonics word"
+    "question": "She said no to the toy.",
+    "answer": "उसने खिलौने को ना कहा।",
+    "notes": ""
   },
   {
-    "id": "as",
+    "id": "phonics_04",
     "complexity": 1,
-    "question": "as",
-    "answer": "",
-    "notes": "Basic phonics word"
+    "question": "We go to school.",
+    "answer": "हम स्कूल जाते हैं।",
+    "notes": ""
   },
   {
-    "id": "be",
+    "id": "phonics_05",
     "complexity": 1,
-    "question": "be",
-    "answer": "",
-    "notes": "Basic phonics word"
+    "question": "It is on the table.",
+    "answer": "यह मेज़ पर है।",
+    "notes": ""
   },
   {
-    "id": "by",
+    "id": "phonics_06",
     "complexity": 1,
-    "question": "by",
-    "answer": "",
-    "notes": "Basic phonics word"
+    "question": "He said hi to me.",
+    "answer": "उसने मुझे नमस्ते कहा।",
+    "notes": ""
   },
   {
-    "id": "do",
+    "id": "phonics_07",
     "complexity": 1,
-    "question": "do",
-    "answer": "",
-    "notes": "Basic phonics word"
+    "question": "If you run, you win.",
+    "answer": "अगर तुम दौड़ो, तो तुम जीतोगे।",
+    "notes": ""
   },
   {
-    "id": "go",
+    "id": "phonics_08",
     "complexity": 1,
-    "question": "go",
-    "answer": "",
-    "notes": "Basic phonics word"
+    "question": "This is my cup.",
+    "answer": "यह मेरा कप है।",
+    "notes": ""
   },
   {
-    "id": "he",
+    "id": "phonics_09",
     "complexity": 1,
-    "question": "he",
-    "answer": "",
-    "notes": "Basic phonics word"
+    "question": "He is so tall.",
+    "answer": "वह बहुत लंबा है।",
+    "notes": ""
   },
   {
-    "id": "hi",
+    "id": "phonics_10",
     "complexity": 1,
-    "question": "hi",
-    "answer": "",
-    "notes": "Basic phonics word"
+    "question": "We sit by the fire.",
+    "answer": "हम आग के पास बैठे हैं।",
+    "notes": ""
   },
   {
-    "id": "if",
-    "complexity": 1,
-    "question": "if",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "in",
-    "complexity": 1,
-    "question": "in",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "is",
-    "complexity": 1,
-    "question": "is",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "it",
-    "complexity": 1,
-    "question": "it",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "me",
-    "complexity": 1,
-    "question": "me",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "my",
-    "complexity": 1,
-    "question": "my",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "no",
-    "complexity": 1,
-    "question": "no",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "of",
-    "complexity": 1,
-    "question": "of",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "on",
-    "complexity": 1,
-    "question": "on",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "or",
-    "complexity": 1,
-    "question": "or",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "so",
-    "complexity": 1,
-    "question": "so",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "to",
-    "complexity": 1,
-    "question": "to",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "up",
-    "complexity": 1,
-    "question": "up",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "us",
-    "complexity": 1,
-    "question": "us",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "we",
-    "complexity": 1,
-    "question": "we",
-    "answer": "",
-    "notes": "Basic phonics word"
-  },
-  {
-    "id": "bat",
+    "id": "phonics_11",
     "complexity": 2,
-    "question": "bat",
-    "answer": "",
-    "notes": "Three letter CVC word"
+    "question": "The cat sat on the mat.",
+    "answer": "बिल्ली चटाई पर बैठी।",
+    "notes": ""
   },
   {
-    "id": "cat",
+    "id": "phonics_12",
     "complexity": 2,
-    "question": "cat",
-    "answer": "",
-    "notes": "Three letter CVC word"
+    "question": "The dog ran fast.",
+    "answer": "कुत्ता तेज दौड़ा।",
+    "notes": ""
   },
   {
-    "id": "dog",
+    "id": "phonics_13",
     "complexity": 2,
-    "question": "dog",
-    "answer": "",
-    "notes": "Three letter CVC word"
+    "question": "The fan is on.",
+    "answer": "पंखा चालू है।",
+    "notes": ""
   },
   {
-    "id": "egg",
+    "id": "phonics_14",
     "complexity": 2,
-    "question": "egg",
-    "answer": "",
-    "notes": "Three letter CVC word"
+    "question": "The rat ate the jam.",
+    "answer": "चूहे ने जैम खाया।",
+    "notes": ""
   },
   {
-    "id": "fan",
+    "id": "phonics_15",
     "complexity": 2,
-    "question": "fan",
-    "answer": "",
-    "notes": "Three letter CVC word"
+    "question": "The kid has a pen.",
+    "answer": "बच्चे के पास पेन है।",
+    "notes": ""
   },
   {
-    "id": "hat",
+    "id": "phonics_16",
     "complexity": 2,
-    "question": "hat",
-    "answer": "",
-    "notes": "Three letter CVC word"
+    "question": "The sun is hot.",
+    "answer": "सूरज गर्म है।",
+    "notes": ""
   },
   {
-    "id": "jam",
+    "id": "phonics_17",
     "complexity": 2,
-    "question": "jam",
-    "answer": "",
-    "notes": "Three letter CVC word"
+    "question": "The box has a toy.",
+    "answer": "डिब्बे में खिलौना है।",
+    "notes": ""
   },
   {
-    "id": "kid",
+    "id": "phonics_18",
     "complexity": 2,
-    "question": "kid",
-    "answer": "",
-    "notes": "Three letter CVC word"
+    "question": "The bus is red.",
+    "answer": "बस लाल है।",
+    "notes": ""
   },
   {
-    "id": "log",
+    "id": "phonics_19",
     "complexity": 2,
-    "question": "log",
-    "answer": "",
-    "notes": "Three letter CVC word"
+    "question": "The cup is full.",
+    "answer": "कप भरा हुआ है।",
+    "notes": ""
   },
   {
-    "id": "man",
+    "id": "phonics_20",
     "complexity": 2,
-    "question": "man",
-    "answer": "",
-    "notes": "Three letter CVC word"
+    "question": "The hen laid an egg.",
+    "answer": "मुर्गी ने अंडा दिया।",
+    "notes": ""
   },
   {
-    "id": "nap",
-    "complexity": 2,
-    "question": "nap",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "owl",
-    "complexity": 2,
-    "question": "owl",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "pan",
-    "complexity": 2,
-    "question": "pan",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "rat",
-    "complexity": 2,
-    "question": "rat",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "sun",
-    "complexity": 2,
-    "question": "sun",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "tap",
-    "complexity": 2,
-    "question": "tap",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "van",
-    "complexity": 2,
-    "question": "van",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "win",
-    "complexity": 2,
-    "question": "win",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "zip",
-    "complexity": 2,
-    "question": "zip",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "box",
-    "complexity": 2,
-    "question": "box",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "bus",
-    "complexity": 2,
-    "question": "bus",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "cup",
-    "complexity": 2,
-    "question": "cup",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "dot",
-    "complexity": 2,
-    "question": "dot",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "fox",
-    "complexity": 2,
-    "question": "fox",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "gum",
-    "complexity": 2,
-    "question": "gum",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "hen",
-    "complexity": 2,
-    "question": "hen",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "jar",
-    "complexity": 2,
-    "question": "jar",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "kit",
-    "complexity": 2,
-    "question": "kit",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "lap",
-    "complexity": 2,
-    "question": "lap",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "map",
-    "complexity": 2,
-    "question": "map",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "net",
-    "complexity": 2,
-    "question": "net",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "pen",
-    "complexity": 2,
-    "question": "pen",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "red",
-    "complexity": 2,
-    "question": "red",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "sad",
-    "complexity": 2,
-    "question": "sad",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "ten",
-    "complexity": 2,
-    "question": "ten",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "vet",
-    "complexity": 2,
-    "question": "vet",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "wax",
-    "complexity": 2,
-    "question": "wax",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "yak",
-    "complexity": 2,
-    "question": "yak",
-    "answer": "",
-    "notes": "Three letter CVC word"
-  },
-  {
-    "id": "big",
+    "id": "phonics_21",
     "complexity": 3,
-    "question": "big",
-    "answer": "",
-    "notes": "Complex CVC word"
+    "question": "The man is big.",
+    "answer": "आदमी बड़ा है।",
+    "notes": ""
   },
   {
-    "id": "bug",
+    "id": "phonics_22",
     "complexity": 3,
-    "question": "bug",
-    "answer": "",
-    "notes": "Complex CVC word"
+    "question": "The boy dug a pit.",
+    "answer": "लड़के ने गड्ढा खोदा।",
+    "notes": ""
   },
   {
-    "id": "cut",
+    "id": "phonics_23",
     "complexity": 3,
-    "question": "cut",
-    "answer": "",
-    "notes": "Complex CVC word"
+    "question": "She has a red top.",
+    "answer": "उसके पास लाल टॉप है।",
+    "notes": ""
   },
   {
-    "id": "dig",
+    "id": "phonics_24",
     "complexity": 3,
-    "question": "dig",
-    "answer": "",
-    "notes": "Complex CVC word"
+    "question": "The jet is fast.",
+    "answer": "जेट तेज है।",
+    "notes": ""
   },
   {
-    "id": "fit",
+    "id": "phonics_25",
     "complexity": 3,
-    "question": "fit",
-    "answer": "",
-    "notes": "Complex CVC word"
+    "question": "The boy can run.",
+    "answer": "लड़का दौड़ सकता है।",
+    "notes": ""
   },
   {
-    "id": "got",
+    "id": "phonics_26",
     "complexity": 3,
-    "question": "got",
-    "answer": "",
-    "notes": "Complex CVC word"
+    "question": "She can sit on the mat.",
+    "answer": "वह चटाई पर बैठ सकती है।",
+    "notes": ""
   },
   {
-    "id": "hot",
+    "id": "phonics_27",
     "complexity": 3,
-    "question": "hot",
-    "answer": "",
-    "notes": "Complex CVC word"
+    "question": "He is not sad.",
+    "answer": "वह उदास नहीं है।",
+    "notes": ""
   },
   {
-    "id": "jet",
+    "id": "phonics_28",
     "complexity": 3,
-    "question": "jet",
-    "answer": "",
-    "notes": "Complex CVC word"
+    "question": "She can mix the food.",
+    "answer": "वह खाना मिला सकती है।",
+    "notes": ""
   },
   {
-    "id": "let",
+    "id": "phonics_29",
     "complexity": 3,
-    "question": "let",
-    "answer": "",
-    "notes": "Complex CVC word"
+    "question": "The bag is wet.",
+    "answer": "बैग गीला है।",
+    "notes": ""
   },
   {
-    "id": "mix",
+    "id": "phonics_30",
     "complexity": 3,
-    "question": "mix",
-    "answer": "",
-    "notes": "Complex CVC word"
+    "question": "Yes, I am here.",
+    "answer": "हाँ, मैं यहाँ हूँ।",
+    "notes": ""
   },
   {
-    "id": "not",
-    "complexity": 3,
-    "question": "not",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "pit",
-    "complexity": 3,
-    "question": "pit",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "run",
-    "complexity": 3,
-    "question": "run",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "sit",
-    "complexity": 3,
-    "question": "sit",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "top",
-    "complexity": 3,
-    "question": "top",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "wet",
-    "complexity": 3,
-    "question": "wet",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "yes",
-    "complexity": 3,
-    "question": "yes",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "zig",
-    "complexity": 3,
-    "question": "zig",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "hop",
-    "complexity": 3,
-    "question": "hop",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "mat",
-    "complexity": 3,
-    "question": "mat",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "pat",
-    "complexity": 3,
-    "question": "pat",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "rag",
-    "complexity": 3,
-    "question": "rag",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "sip",
-    "complexity": 3,
-    "question": "sip",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "tag",
-    "complexity": 3,
-    "question": "tag",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "wig",
-    "complexity": 3,
-    "question": "wig",
-    "answer": "",
-    "notes": "Complex CVC word"
-  },
-  {
-    "id": "frog",
+    "id": "phonics_31",
     "complexity": 4,
-    "question": "frog",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
+    "question": "The frog can jump.",
+    "answer": "मेंढक कूद सकता है।",
+    "notes": ""
   },
   {
-    "id": "clap",
+    "id": "phonics_32",
     "complexity": 4,
-    "question": "clap",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
+    "question": "She will clap her hands.",
+    "answer": "वह ताली बजाएगी।",
+    "notes": ""
   },
   {
-    "id": "trap",
+    "id": "phonics_33",
     "complexity": 4,
-    "question": "trap",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
+    "question": "The drum is loud.",
+    "answer": "ड्रम की आवाज़ तेज है।",
+    "notes": ""
   },
   {
-    "id": "snap",
+    "id": "phonics_34",
     "complexity": 4,
-    "question": "snap",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
+    "question": "The flag is high.",
+    "answer": "झंडा ऊँचा है।",
+    "notes": ""
   },
   {
-    "id": "flag",
+    "id": "phonics_35",
     "complexity": 4,
-    "question": "flag",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
+    "question": "He can grip the bat.",
+    "answer": "वह बल्ला पकड़ सकता है।",
+    "notes": ""
   },
   {
-    "id": "drum",
+    "id": "phonics_36",
     "complexity": 4,
-    "question": "drum",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
+    "question": "The crab is small.",
+    "answer": "केकड़ा छोटा है।",
+    "notes": ""
   },
   {
-    "id": "plug",
+    "id": "phonics_37",
     "complexity": 4,
-    "question": "plug",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
+    "question": "The drop is on the leaf.",
+    "answer": "बूँद पत्ते पर है।",
+    "notes": ""
   },
   {
-    "id": "grip",
+    "id": "phonics_38",
     "complexity": 4,
-    "question": "grip",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
+    "question": "She has a glad smile.",
+    "answer": "उसकी मुस्कान खुशी भरी है।",
+    "notes": ""
   },
   {
-    "id": "skip",
+    "id": "phonics_39",
     "complexity": 4,
-    "question": "skip",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
+    "question": "The slip was on the desk.",
+    "answer": "पर्ची मेज़ पर थी।",
+    "notes": ""
   },
   {
-    "id": "spin",
+    "id": "phonics_40",
     "complexity": 4,
-    "question": "spin",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "brim",
-    "complexity": 4,
-    "question": "brim",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "crab",
-    "complexity": 4,
-    "question": "crab",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "drop",
-    "complexity": 4,
-    "question": "drop",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "flap",
-    "complexity": 4,
-    "question": "flap",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "grin",
-    "complexity": 4,
-    "question": "grin",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "plan",
-    "complexity": 4,
-    "question": "plan",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "slip",
-    "complexity": 4,
-    "question": "slip",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "snug",
-    "complexity": 4,
-    "question": "snug",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "twig",
-    "complexity": 4,
-    "question": "twig",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "trap",
-    "complexity": 4,
-    "question": "trap",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "blot",
-    "complexity": 4,
-    "question": "blot",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "clan",
-    "complexity": 4,
-    "question": "clan",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "drip",
-    "complexity": 4,
-    "question": "drip",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "flag",
-    "complexity": 4,
-    "question": "flag",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
-  },
-  {
-    "id": "glad",
-    "complexity": 4,
-    "question": "glad",
-    "answer": "",
-    "notes": "Four-letter word with consonant blend"
+    "question": "The twig fell down.",
+    "answer": "टहनी नीचे गिर गई।",
+    "notes": ""
   }
 ]
