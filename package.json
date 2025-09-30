@@ -12,6 +12,9 @@
     "test:all": "vitest",
     "test:unit": "vitest run --config vitest.config.unit.ts",
     "test:unit:watch": "vitest --config vitest.config.unit.ts",
+    "test:ui": "vitest --config vitest.config.unit.ts --ui",
+    "test:report": "vitest run --config vitest.config.unit.ts --reporter=html",
+    "test:open-report": "open ./test-results/index.html",
     "postinstall": "husky install",
     "validate": "./scripts/validate-dev.sh",
     "check-runtime": "node scripts/check-runtime-errors.js",
@@ -25,7 +28,7 @@
     "react-redux": "^9.2.0"
   },
   "devDependencies": {
-  "@eslint/js": "^9.36.0",
+    "@eslint/js": "^9.36.0",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^24.5.2",
@@ -35,22 +38,21 @@
     "@vitejs/plugin-react": "^5.0.3",
     "@vitest/browser": "3.2.4",
     "@vitest/coverage-v8": "3.2.4",
+    "@vitest/ui": "^3.2.4",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
-  "eslint-plugin-react-refresh": "^0.4.20",
-
-  "globals": "^16.4.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.4.0",
+    "husky": "^8.0.3",
     "jsdom": "^27.0.0",
     "playwright": "^1.55.1",
     "prettier": "^3.6.2",
-        "seedrandom": "^3.0.5",
-
-        "typescript": "~5.8.3",
-        "typescript-eslint": "^8.44.0",
-        "vite": "^7.1.7",
-        "vitest": "^3.2.4",
-        "husky": "^8.0.3"
+    "seedrandom": "^3.0.5",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.44.0",
+    "vite": "^7.1.7",
+    "vitest": "^3.2.4"
   }
 }

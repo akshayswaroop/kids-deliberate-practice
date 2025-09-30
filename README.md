@@ -25,31 +25,59 @@ npm run dev
 # Build for production
 npm run build
 
-## Run tests
-Use the unit test scripts below. Storybook-based component tests and the Storybook dev server have been removed.
+# Preview production build
+npm run preview
+```
 
+## ✅ Deployment Checklist
+
+Keep this minimal checklist handy before running or deploying the app:
+
+### Quick steps
+
+1. **Build** (compile + typecheck)
+   ```bash
+   npm run build
+   ```
+
+2. **Run unit tests**
+   ```bash
+   npm test
+   ```
+
+3. **Check runtime** (start dev server and validate console)
+   ```bash
+   npm run dev &
+   npm run check-runtime
+   ```
+
+4. **Preview production build**
+   ```bash
+   npm run preview
+   ```
+
+### Minimal checklist
+
+- [ ] `npm run build` ✅ (no compiler errors)
+- [ ] `npm test` ✅ (all tests pass)
+- [ ] `npm run check-runtime` ✅ (no console errors)
+- [ ] Manual smoke test in browser ✅
+
+## 🧪 Testing Strategy
+
+### Test Commands
+```bash
+npm test                  # Run all tests
 npm run test:unit         # Run unit tests only (fast: ~1.7s)
 npm run test:unit:watch   # Watch mode for development
 ```
 
-## 🧪 Testing Strategy
-
-### Quick Test Commands
-```bash
-npm run test:all          # All tests (unit + Storybook) - ~4s
-npm run test:unit         # Unit tests only (fast) - ~1.7s  
-npm run test:stories      # Storybook component tests - ~2s
-npm run test:unit:watch   # Watch mode for development
-npm run test:watch        # Continuous testing (all tests)
-```
-
 ### High-Leverage Tests (Essential)
-- **`selectors.test.ts`** - Mastery calculation algorithm (+20/-20% logic)
-- **`reducers.test.ts`** - Redux state mutations and integrity  
-- **`sessionGen.test.ts`** - Weighted word selection algorithm
-- **`HomePage.stories.jsx`** - Visual/interaction component testing
+- **Domain Tests** - Business logic and mastery calculations
+- **Infrastructure Tests** - Redux integration and state management  
+- **Integration Tests** - End-to-end user journeys and BDD scenarios
 
-**Total: 10 critical tests in ~2 seconds**
+**Total: 28 tests covering domain, infrastructure, and integration layers**
 
 ### Test Architecture
 - **Unit Tests**: `vitest.config.unit.ts` - Fast jsdom-based testing

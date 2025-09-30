@@ -1,5 +1,5 @@
 // No need to import React in TSX files with React 17+
-import { SUBJECT_CONFIGS } from '../subjectLoader';
+import { SUBJECT_CONFIGS } from '../../infrastructure/repositories/subjectLoader';
 
 interface ModeSelectorProps {
   mode: string;

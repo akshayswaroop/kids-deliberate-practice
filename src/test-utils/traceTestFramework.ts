@@ -1,5 +1,7 @@
 /**
- * Trace-Based Testing Framework
+ * Timport gameReducer from '../infrastructure/state/gameSlice';
+import { traceMiddleware } from '../app/tracing/traceMiddleware';
+import type { RootState } from '../infrastructure/state/gameState';e-Based Testing Framework
  * 
  * Production-ready testing utilities that replace traditional unit tests.
  * Tests replay UI intents and assert on trace history instead of mocking.

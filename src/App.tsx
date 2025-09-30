@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import useAppDispatch from './app/hooks';
+import useAppDispatch from './infrastructure/hooks/reduxHooks';
 import { ThemeProvider } from './app/ui/ThemeContext';
+import { PracticeServiceProvider } from './app/providers/PracticeServiceProvider';
 // Removed attempt import - now handled by domain actions
-import { handleNextPressed, ensureActiveSession, markCurrentWordCorrect, markCurrentWordWrong } from './features/game/actions';
-import { revealAnswer } from './features/game/slice';
+import { handleNextPressed, ensureActiveSession, markCurrentWordCorrect, markCurrentWordWrong } from './infrastructure/state/gameActions';
+import { revealAnswer } from './infrastructure/state/gameSlice';
 import HomePage from './app/ui/HomePage';
 import Onboarding from './app/ui/Onboarding';
 import {
   selectShouldShowOnboarding,
   selectCurrentPracticeData,
   selectResponsiveColumns,
-} from './features/game/selectors';
+} from './infrastructure/state/gameSelectors';
 
 // Single, clean App implementation
 function App() {
@@ -80,35 +81,39 @@ function App() {
   if (shouldShowOnboarding) {
     return (
       <ThemeProvider>
-        <Onboarding onCreate={(userId, displayName) => { handleCreateUser(userId, displayName); handleSwitchUser(userId); }} />
+        <PracticeServiceProvider>
+          <Onboarding onCreate={(userId, displayName) => { handleCreateUser(userId, displayName); handleSwitchUser(userId); }} />
+        </PracticeServiceProvider>
       </ThemeProvider>
     );
   }
 
   return (
     <ThemeProvider>
-      <HomePage
-        users={users}
-        currentUserId={currentUserId}
-        onCreateUser={handleCreateUser}
-        onSwitchUser={handleSwitchUser}
-        onSetMode={handleSetMode}
-        mode={mode}
-        mainWord={practiceData.mainWord}
-        transliteration={practiceData.transliteration}
-        transliterationHi={practiceData.transliterationHi}
-        answer={practiceData.answer}
-        notes={practiceData.notes}
-        choices={practiceData.choices}
-        needsNewSession={practiceData.needsNewSession}
-        onCorrect={onCorrect}
-        onWrong={onWrong}
-        onNext={onNext}
-        onRevealAnswer={onRevealAnswer}
-        columns={columns}
-        isAnswerRevealed={practiceData.isAnswerRevealed}
-        isEnglishMode={practiceData.isEnglishMode}
-      />
+      <PracticeServiceProvider>
+        <HomePage
+          users={users}
+          currentUserId={currentUserId}
+          onCreateUser={handleCreateUser}
+          onSwitchUser={handleSwitchUser}
+          onSetMode={handleSetMode}
+          mode={mode}
+          mainWord={practiceData.mainWord}
+          transliteration={practiceData.transliteration}
+          transliterationHi={practiceData.transliterationHi}
+          answer={practiceData.answer}
+          notes={practiceData.notes}
+          choices={practiceData.choices}
+          needsNewSession={practiceData.needsNewSession}
+          onCorrect={onCorrect}
+          onWrong={onWrong}
+          onNext={onNext}
+          onRevealAnswer={onRevealAnswer}
+          columns={columns}
+          isAnswerRevealed={practiceData.isAnswerRevealed}
+          isEnglishMode={practiceData.isEnglishMode}
+        />
+      </PracticeServiceProvider>
     </ThemeProvider>
   );
 }

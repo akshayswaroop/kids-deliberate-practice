@@ -2,14 +2,13 @@
 import ProfileForm from './ProfileForm';
 // @ts-ignore
 import ModeSelector from './ModeSelector';
-// @ts-ignore
-import PracticePanel from './PracticePanel';
+import EnhancedPracticePanel from './EnhancedPracticePanel';
 import TraceExport from './TraceExport';
 import ThemeToggle from './ThemeToggle';
 import { useState } from 'react';
 import './TraceExport.css';
 
-import type { UserState } from '../../features/game/state';
+import type { UserState } from '../../infrastructure/state/gameState';
 
 interface HomePageProps {
   users: Record<string, UserState>;
@@ -171,7 +170,25 @@ export default function HomePage({
             </button>
           </div>
         ) : (
-          <PracticePanel mainWord={mainWord} transliteration={transliteration} transliterationHi={transliterationHi} answer={answer} notes={notes} choices={choices} onCorrect={onCorrect} onWrong={onWrong} onNext={onNext} onRevealAnswer={onRevealAnswer} columns={columns} mode={mode} isAnswerRevealed={isAnswerRevealed} isEnglishMode={isEnglishMode} />
+          // 🎯 DDD-Enhanced Practice Panel
+          <EnhancedPracticePanel 
+            mainWord={mainWord} 
+            transliteration={transliteration} 
+            transliterationHi={transliterationHi} 
+            answer={answer} 
+            notes={notes} 
+            choices={choices} 
+            onCorrect={onCorrect} 
+            onWrong={onWrong} 
+            onNext={onNext} 
+            onRevealAnswer={onRevealAnswer} 
+            columns={columns} 
+            mode={mode} 
+            isAnswerRevealed={isAnswerRevealed} 
+            isEnglishMode={isEnglishMode}
+            currentUserId={currentUserId || 'demo-user'}
+            currentWord={mainWord || choices[0]?.id || 'unknown'}
+          />
         )}
       </div>
       <TraceExport isVisible={showTraceExport} onClose={() => setShowTraceExport(false)} />

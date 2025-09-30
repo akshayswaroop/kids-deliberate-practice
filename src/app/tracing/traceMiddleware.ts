@@ -5,8 +5,8 @@
  * Captures every action with rich domain context for testing and debugging.
  */
 import { createListenerMiddleware } from '@reduxjs/toolkit';
-import type { RootState } from '../../features/game/state';
-import { isMastered } from '../../features/game/modeConfig';
+import type { RootState } from '../../infrastructure/state/gameState';
+import { MasteryConfiguration } from '../../domain/value-objects/ModeConfiguration';
 import type {
   TraceEntry,
   TraceSession,
@@ -154,8 +154,8 @@ function analyzeDomainChanges(stateBefore: RootState, stateAfter: RootState, act
               wordId,
               oldStep: beforeWord.step || 0,
               newStep: afterWord.step || 0,
-              wasMastered: isMastered(beforeWord),
-              nowMastered: isMastered(afterWord),
+              wasMastered: MasteryConfiguration.isMastered(beforeWord),
+              nowMastered: MasteryConfiguration.isMastered(afterWord),
             };
           }
         }
@@ -197,7 +197,7 @@ function analyzeDomainChanges(stateBefore: RootState, stateAfter: RootState, act
 
         if (afterUser && afterUser.words) {
           const sessionWords = session.wordIds.map((id: string) => afterUser.words[id]).filter(Boolean);
-          const unmasteredCount = sessionWords.filter((w: any) => !isMastered(w)).length;
+          const unmasteredCount = sessionWords.filter((w: any) => !MasteryConfiguration.isMastered(w)).length;
           const masteredCount = sessionWords.length - unmasteredCount;
 
           context.sessionGeneration = {

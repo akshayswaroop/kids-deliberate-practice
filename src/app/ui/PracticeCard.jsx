@@ -1,6 +1,6 @@
 import React from 'react';
 import './PracticeCard.css';
-import { isTransliterationMode } from '../../features/game/modeConfig';
+import { ModeConfiguration } from '../../domain/value-objects/ModeConfiguration';
 import GradientText from './GradientText.jsx';
 import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetector';
 
