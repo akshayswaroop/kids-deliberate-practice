@@ -6,4 +6,5 @@ import react from '@vitejs/plugin-react';
 // Minimal Vite config without Storybook Vitest integration
 export default defineConfig({
   plugins: [react()],
+  base: '/kids-deliberate-practice/', // for GitHub Pages deployment
 });

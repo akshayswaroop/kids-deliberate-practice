@@ -147,7 +147,8 @@ describe('Repository Pattern with Domain Services', () => {
         }
       ],
       currentStreak: 3,
-      longestStreak: 7
+      longestStreak: 7,
+      turnaroundCount: 2 // Added to match LearningStatistics type
     };
 
     vi.mocked(mockProgressRepository.getStatistics).mockResolvedValue(mockStats);

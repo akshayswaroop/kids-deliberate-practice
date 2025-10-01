@@ -15,7 +15,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import gameSlice from '../state/gameSlice';
 import { traceMiddleware, traceAPI } from '../../app/tracing/traceMiddleware';
 import { handleNextPressed } from '../state/gameActions';
-import type { RootState, Word } from '../state/gameState';
+import type { RootState } from '../state/gameState';
 import { MasteryConfiguration } from '../../domain/value-objects/ModeConfiguration';
 
 // Test helper to create store with tracing

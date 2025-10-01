@@ -13,6 +13,7 @@ export interface PracticeCardProps {
   mode?: string;
   isAnswerRevealed?: boolean;
   isEnglishMode?: boolean;
+  currentUserId?: string;
 }
 
 export default function PracticeCard(props: PracticeCardProps): JSX.Element;

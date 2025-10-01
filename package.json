@@ -18,7 +18,9 @@
     "postinstall": "husky install",
     "validate": "./scripts/validate-dev.sh",
     "check-runtime": "node scripts/check-runtime-errors.js",
-    "dev:safe": "npm run build && npm run test && npm run dev"
+    "dev:safe": "npm run build && npm run test && npm run dev",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@microlink/react-json-view": "^1.27.0",
@@ -27,6 +29,7 @@
     "react-dom": "^19.1.1",
     "react-redux": "^9.2.0"
   },
+  "homepage": "https://akshayswaroop.github.io/kids-deliberate-practice/",
   "devDependencies": {
     "@eslint/js": "^9.36.0",
     "@testing-library/jest-dom": "^6.8.0",
@@ -44,6 +47,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "gh-pages": "^6.3.0",
     "globals": "^16.4.0",
     "husky": "^8.0.3",
     "jsdom": "^27.0.0",
