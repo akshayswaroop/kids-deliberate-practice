@@ -3,11 +3,10 @@ import ProfileForm from './ProfileForm';
 // @ts-ignore
 import ModeSelector from './ModeSelector';
 import EnhancedPracticePanel from './EnhancedPracticePanel';
-import TraceExport from './TraceExport';
 import ThemeToggle from './ThemeToggle';
 import ProgressStatsDisplay from './ProgressStatsDisplay';
 import { useState } from 'react';
-import './TraceExport.css';
+// Trace export UI removed
 
 import type { UserState } from '../../infrastructure/state/gameState';
 
@@ -61,8 +60,7 @@ export default function HomePage({
   const [username, setUsername] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
   
-  // Trace export state
-  const [showTraceExport, setShowTraceExport] = useState(false);
+  // Trace export UI removed
   
   // Top Bar Layout (single canonical layout kept)
   return (
@@ -92,31 +90,7 @@ export default function HomePage({
             <ProgressStatsDisplay currentUserId={currentUserId} compact subject={mode} />
             <ModeSelector compact mode={mode} onSetMode={onSetMode} />
             <ThemeToggle />
-            <button 
-              onClick={() => setShowTraceExport(true)}
-              style={{
-                background: 'var(--button-accent-bg)',
-                border: 'none',
-                color: 'var(--text-inverse)',
-                padding: '6px 12px',
-                borderRadius: 6,
-                fontSize: '0.75rem',
-                fontWeight: 500,
-                cursor: 'pointer',
-                transition: 'all 0.15s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = 'var(--shadow-medium)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0px)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-              title="Export trace data for debugging"
-            >
-              🔍
-            </button>
+            {/* Trace export button removed from UI */}
           </div>
         </div>
       </div>
@@ -199,7 +173,7 @@ export default function HomePage({
           />
         )}
       </div>
-      <TraceExport isVisible={showTraceExport} onClose={() => setShowTraceExport(false)} />
+  {/* TraceExport component removed */}
     </div>
   );
 }
