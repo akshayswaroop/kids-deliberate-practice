@@ -108,14 +108,16 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     }
   }, [wrongAnswerState, onNext, isDebug, mainWord]);
   
-  // Reset animations and buttons when mainWord changes (new question)
+  // Reset animations and buttons when mainWord OR answer changes (new question)
+  // This fixes the bug where same word appearing twice keeps buttons disabled
   React.useEffect(() => { 
+    if (isDebug) { console.debug('[PracticeCard] Question changed, resetting UI state', { mainWord, answer }); }
     setShowUnicorn(false); 
     setShowSadBalloon(false); 
     setIsTransitioning(false); // New question arrived, end transition
     setButtonsDisabled(false);
     setWrongAnswerState({ active: false, soundEnded: false, animationEnded: false });
-  }, [mainWord]);
+  }, [mainWord, answer, isDebug]);
 
   // Safety fallback: if buttons are disabled for more than 4 seconds, force re-enable
   React.useEffect(() => {
