@@ -505,6 +505,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             }
             
             onWrong && onWrong();
+            // Quick progression after 2.5 seconds (same as correct flow)
+            if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after wrong', mainWord); } onNext(); }, 2500);
           }}
           disabled={buttonsDisabled}
           aria-label="Try later — would you like to repeat this?"
