@@ -78,22 +78,62 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const [showSadBalloon, setShowSadBalloon] = React.useState(false);
   // Button disabled state to prevent multiple clicks
   const [buttonsDisabled, setButtonsDisabled] = React.useState(false);
-  // Track the previous question to detect when it changes (even if mainWord is the same)
-  const prevMainWordRef = React.useRef(null);
   
-  // Hide unicorn and sad balloon when mainWord changes (new card)
-  // Also reset buttons when moving to next question
+  // Coordination state for wrong-answer flow (sound + animation must both complete)
+  const [wrongAnswerState, setWrongAnswerState] = React.useState({
+    active: false,
+    soundEnded: false,
+    animationEnded: false
+  });
+
+  // Centralized coordination: when both sound and animation end, trigger progression
+  React.useEffect(() => {
+    if (wrongAnswerState.active && 
+        wrongAnswerState.soundEnded && 
+        wrongAnswerState.animationEnded) {
+      if (isDebug) { 
+        console.debug('[PracticeCard] Both sound and animation completed, triggering progression', mainWord); 
+      }
+      if (onNext) {
+        onNext();
+      } else {
+        // No onNext handler - re-enable buttons as fallback
+        if (isDebug) { console.warn('[PracticeCard] No onNext handler, re-enabling buttons'); }
+        setButtonsDisabled(false);
+      }
+      // Reset state after handling
+      setWrongAnswerState({ active: false, soundEnded: false, animationEnded: false });
+    }
+  }, [wrongAnswerState, onNext, isDebug, mainWord]);
+  
+  // Reset animations and buttons when mainWord changes (new question)
   React.useEffect(() => { 
     setShowUnicorn(false); 
     setShowSadBalloon(false); 
-    // Always re-enable buttons on any render with mainWord (handles same question appearing again)
     setButtonsDisabled(false);
-    prevMainWordRef.current = mainWord;
+    setWrongAnswerState({ active: false, soundEnded: false, animationEnded: false });
   }, [mainWord]);
+
+  // Safety fallback: if buttons are disabled for more than 4 seconds, force re-enable
+  React.useEffect(() => {
+    if (buttonsDisabled) {
+      const safetyTimer = setTimeout(() => {
+        if (isDebug) console.warn('[PracticeCard] Safety fallback: re-enabling buttons after timeout');
+        setButtonsDisabled(false);
+      }, 4000);
+      return () => clearTimeout(safetyTimer);
+    }
+  }, [buttonsDisabled, isDebug]);
+
   // Handler for unicorn animation end
   const handleUnicornEnd = React.useCallback(() => setShowUnicorn(false), []);
-  // Handler for sad balloon animation end
-  const handleSadBalloonEnd = React.useCallback(() => setShowSadBalloon(false), []);
+  
+  // Handler for sad balloon animation end - update coordination state
+  const handleSadBalloonEnd = React.useCallback(() => {
+    setShowSadBalloon(false);
+    if (isDebug) { console.debug('[PracticeCard] Sad animation ended', mainWord); }
+    setWrongAnswerState(prev => ({ ...prev, animationEnded: true }));
+  }, [isDebug, mainWord]);
   // Determine current active choice progress to render rainbow fill for the main question
   const activeChoice = (choices || []).find(c => String(c.label) === String(mainWord));
   const activeProgress = Math.min(100, Math.max(0, (activeChoice && (typeof activeChoice.progress === 'number' ? activeChoice.progress : Number(activeChoice && activeChoice.progress))) || 0));
@@ -438,34 +478,30 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); }
             triggerBounceAnimation();
             setShowSadBalloon(true);
-            let soundPlayed = false;
-            let soundEnded = false;
-            let animationEnded = false;
-            const maybeNext = () => {
-              if (soundEnded && animationEnded && onNext) {
-                if (isDebug) { console.debug('[PracticeCard] auto onNext after brass fail sound AND sad balloon animation ended', mainWord); }
-                onNext();
-              }
-            };
+            
+            // Initialize coordination state - both sound and animation must complete
+            setWrongAnswerState({
+              active: true,
+              soundEnded: false,
+              animationEnded: false
+            });
+            
+            // Start audio
             try {
               const audio = new window.Audio('/brass-fail-8-b-207131.mp3');
               audio.volume = 0.7;
               audio.play();
-              soundPlayed = true;
               audio.onended = () => {
-                soundEnded = true;
-                maybeNext();
+                if (isDebug) console.debug('[PracticeCard] Sad sound ended', mainWord);
+                setWrongAnswerState(prev => ({ ...prev, soundEnded: true }));
               };
             } catch (e) {
               if (isDebug) console.warn('Brass fail sound failed:', e);
-              soundEnded = true;
+              // If sound fails, mark it as ended immediately
+              setWrongAnswerState(prev => ({ ...prev, soundEnded: true }));
             }
+            
             onWrong && onWrong();
-            setTimeout(() => {
-              animationEnded = true;
-              maybeNext();
-            }, 2500);
-            if (!soundPlayed) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after wrong (fallback)', mainWord); } onNext && onNext(); }, 2500);
           }}
           disabled={buttonsDisabled}
           aria-label="Try later — would you like to repeat this?"

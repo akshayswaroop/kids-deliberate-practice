@@ -60,12 +60,12 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
   useEffect(() => {
     if (visible) {
       setShow(true);
-      // Match animation length to the brass-fail sound (~2500ms) with a small buffer.
-      const duration = reducedMotion ? 700 : 2800; // longer so UI lasts until sound ends
+      // Match animation length to the brass-fail sound (~2500ms exactly).
+      const duration = reducedMotion ? 700 : 2500; // exact match to audio duration
       const timer = setTimeout(() => {
         setShow(false);
         if (onAnimationEnd) onAnimationEnd();
-      }, duration + 250);
+      }, duration);
       return () => clearTimeout(timer);
     }
     setShow(false);
@@ -109,12 +109,12 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
           transform-origin: center;
         }
         .halo.animate {
-          animation: haloPop 1.4s cubic-bezier(.2,.9,.3,1) forwards;
+          animation: haloPop 2.5s cubic-bezier(.2,.9,.3,1) forwards;
         }
         @keyframes haloPop {
           0% { opacity: 0; transform: scale(0.88); }
-          20% { opacity: 1; transform: scale(1.06); }
-          60% { transform: scale(0.98); }
+          15% { opacity: 1; transform: scale(1.06); }
+          50% { transform: scale(0.98); }
           100% { opacity: 0; transform: scale(1.02); }
         }
 
@@ -124,11 +124,11 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
           box-shadow: 0 6px 22px rgba(0,0,0,0.14) inset;
           opacity: 0;
         }
-  .tile-outline.animate { animation: outlinePulse 1.6s ease forwards; }
+  .tile-outline.animate { animation: outlinePulse 2.5s ease forwards; }
         @keyframes outlinePulse {
           0% { opacity: 0; transform: scale(0.96); }
-          18% { opacity: 1; transform: scale(1.02); }
-          60% { transform: scale(1.0); }
+          12% { opacity: 1; transform: scale(1.02); }
+          50% { transform: scale(1.0); }
           100% { opacity: 0; transform: scale(1.0); }
         }
 
@@ -139,12 +139,12 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
           transform-origin: top center;
           opacity: 0;
         }
-  .tear.animate { animation: tearFall 1.8s cubic-bezier(.2,.9,.3,1) forwards; }
+  .tear.animate { animation: tearFall 2.5s cubic-bezier(.2,.9,.3,1) forwards; }
         @keyframes tearFall {
           0% { opacity: 0; transform: translateY(-6px) scale(0.8); }
-          18% { opacity: 1; transform: translateY(0px) scale(1.0); }
-          60% { transform: translateY(28px) scale(0.92); }
-          100% { transform: translateY(64px) scale(0.84); opacity: 0; }
+          12% { opacity: 1; transform: translateY(0px) scale(1.0); }
+          50% { transform: translateY(28px) scale(0.92); }
+          100% { transform: translateY(80px) scale(0.84); opacity: 0; }
         }
 
         /* reduced motion short-circuit */
@@ -159,14 +159,14 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
           transform-origin: center;
         }
         .sadface.animate {
-          animation: sadFacePop 1.9s cubic-bezier(.2,.9,.3,1) forwards;
+          animation: sadFacePop 2.5s cubic-bezier(.2,.9,.3,1) forwards;
         }
         @keyframes sadFacePop {
           0% { transform: translateY(0) scale(0.7); opacity: 0; }
-          18% { transform: translateY(-8px) scale(1.05); opacity: 1; }
-          40% { transform: translateY(0px) scale(0.95); }
-          68% { transform: translateY(-12px) scale(1.08); }
-          100% { transform: translateY(-28px) scale(1.02); opacity: 0; }
+          12% { transform: translateY(-8px) scale(1.05); opacity: 1; }
+          30% { transform: translateY(0px) scale(0.95); }
+          60% { transform: translateY(-12px) scale(1.08); }
+          100% { transform: translateY(-32px) scale(1.02); opacity: 0; }
         }
       `}</style>
 
@@ -225,26 +225,36 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
           />
         </div>
 
-        {/* Sad faces small overlays (subtle) */}
-        <div style={{ position: 'absolute', left: '30%', top: '26%' }}>
-          <svg width="48" height="48" viewBox="0 0 48 48" className={`sadface ${reducedMotion ? '' : 'animate'}`} style={{ animationDelay: reducedMotion ? '0ms' : '160ms' }} aria-hidden>
-            {/* Use a soft pastel face fill so it reads in both light and dark themes */}
-            <circle cx="24" cy="24" r="20" fill="#fff1f0" stroke="#ffb6b6" strokeWidth="2" />
-            {/* Eyes and mouth use a consistent dark color for contrast */}
-            <circle cx="18" cy="20" r="3" fill="#0f1724" />
-            <circle cx="30" cy="20" r="3" fill="#0f1724" />
-            <path d="M16 30 Q24 24 32 30" stroke="#0f1724" strokeWidth="2" fill="none" strokeLinecap="round" />
-          </svg>
-        </div>
-
-        <div style={{ position: 'absolute', left: '68%', top: '22%' }}>
-          <svg width="40" height="40" viewBox="0 0 48 48" className={`sadface ${reducedMotion ? '' : 'animate'}`} style={{ animationDelay: reducedMotion ? '0ms' : '320ms' }} aria-hidden>
-            <circle cx="24" cy="24" r="18" fill="#fff1f0" stroke="#ffd1d1" strokeWidth="1.8" />
-            <circle cx="19" cy="19" r="2.5" fill="#0f1724" />
-            <circle cx="29" cy="19" r="2.5" fill="#0f1724" />
-            <path d="M18 29 Q24 24 30 29" stroke="#0f1724" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-          </svg>
-        </div>
+        {/* Yellow sad face emojis - 15 scattered around the overlay */}
+        {[
+          { left: '20%', top: '15%', size: 44, delay: 100 },
+          { left: '75%', top: '18%', size: 38, delay: 180 },
+          { left: '50%', top: '10%', size: 42, delay: 260 },
+          { left: '35%', top: '25%', size: 40, delay: 340 },
+          { left: '65%', top: '28%', size: 36, delay: 420 },
+          { left: '12%', top: '35%', size: 38, delay: 500 },
+          { left: '88%', top: '32%', size: 40, delay: 580 },
+          { left: '45%', top: '38%', size: 42, delay: 660 },
+          { left: '28%', top: '48%', size: 36, delay: 740 },
+          { left: '72%', top: '45%', size: 38, delay: 820 },
+          { left: '55%', top: '52%', size: 40, delay: 900 },
+          { left: '18%', top: '58%', size: 38, delay: 980 },
+          { left: '82%', top: '55%', size: 42, delay: 1060 },
+          { left: '40%', top: '62%', size: 36, delay: 1140 },
+          { left: '60%', top: '65%', size: 40, delay: 1220 }
+        ].map((face, i) => (
+          <div key={i} style={{ position: 'absolute', left: face.left, top: face.top }}>
+            <svg width={face.size} height={face.size} viewBox="0 0 48 48" className={`sadface ${reducedMotion ? '' : 'animate'}`} style={{ animationDelay: reducedMotion ? '0ms' : `${face.delay}ms` }} aria-hidden>
+              {/* Bright yellow smiley face */}
+              <circle cx="24" cy="24" r="20" fill="#FFD700" stroke="#FFA500" strokeWidth="2" />
+              {/* Dark eyes for contrast */}
+              <circle cx="18" cy="20" r="3" fill="#1a1a1a" />
+              <circle cx="30" cy="20" r="3" fill="#1a1a1a" />
+              {/* Sad frown mouth */}
+              <path d="M16 32 Q24 26 32 32" stroke="#1a1a1a" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+            </svg>
+          </div>
+        ))}
       </div>
     </div>
   );
