@@ -44,10 +44,26 @@ if (loaded) {
       Object.entries(initialWords).forEach(([wordId, wordObj]) => {
         if (!user.words[wordId]) {
           user.words[wordId] = { ...wordObj };
+        } else {
+          // 🧠 Smart auto-refresh: Update content if it has changed
+          const existingWord = user.words[wordId];
+          const contentChanged = 
+            existingWord.answer !== wordObj.answer || 
+            existingWord.notes !== wordObj.notes;
+          
+          if (contentChanged) {
+            // Preserve all progress data, only update content
+            user.words[wordId] = {
+              ...existingWord,
+              answer: wordObj.answer,
+              notes: wordObj.notes
+            };
+            console.log(`🔄 [AUTO-REFRESH] Updated content for word: ${wordId}`);
+          }
         }
       });
     });
-    console.log('🔄 [MERGE] Added new words/subjects to existing users');
+    console.log('🔄 [MERGE] Added new words/subjects and auto-refreshed content for existing users');
   } catch (e) {
     console.error('❌ [MERGE] Failed to merge new words:', e);
   }
