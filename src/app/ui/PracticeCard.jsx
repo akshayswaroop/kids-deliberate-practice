@@ -76,8 +76,20 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const [showUnicorn, setShowUnicorn] = React.useState(false);
   // Sad balloon animation state
   const [showSadBalloon, setShowSadBalloon] = React.useState(false);
+  // Button disabled state to prevent multiple clicks
+  const [buttonsDisabled, setButtonsDisabled] = React.useState(false);
+  // Track the previous question to detect when it changes (even if mainWord is the same)
+  const prevMainWordRef = React.useRef(null);
+  
   // Hide unicorn and sad balloon when mainWord changes (new card)
-  React.useEffect(() => { setShowUnicorn(false); setShowSadBalloon(false); }, [mainWord]);
+  // Also reset buttons when moving to next question
+  React.useEffect(() => { 
+    setShowUnicorn(false); 
+    setShowSadBalloon(false); 
+    // Always re-enable buttons on any render with mainWord (handles same question appearing again)
+    setButtonsDisabled(false);
+    prevMainWordRef.current = mainWord;
+  }, [mainWord]);
   // Handler for unicorn animation end
   const handleUnicornEnd = React.useCallback(() => setShowUnicorn(false), []);
   // Handler for sad balloon animation end
@@ -377,6 +389,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         {/* Button order: Correct! (primary), Try later (primary), Reveal (secondary) */}
         <button
           onClick={() => {
+            if (buttonsDisabled) return; // Prevent multiple clicks
+            setButtonsDisabled(true); // Disable buttons immediately
             if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); }
             createConfettiBurst();
             setShowUnicorn(true);
@@ -390,26 +404,28 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             onCorrect && onCorrect();
             if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after correct', mainWord); } onNext(); }, 2500);
           }}
+          disabled={buttonsDisabled}
           aria-label="Mark as read — great job"
           className="mastery-footer-button primary"
           style={{
-            backgroundColor: 'var(--button-primary-bg, #2563eb)', // blue primary
-            color: 'var(--text-inverse, #fff)',
+            backgroundColor: buttonsDisabled ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-primary-bg, #2563eb)', // gray when disabled
+            color: buttonsDisabled ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
             border: 'none',
             borderRadius: 10,
             padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
             fontSize: 'clamp(13px, 2.2vw, 16px)',
             fontWeight: 700,
-            cursor: 'pointer',
+            cursor: buttonsDisabled ? 'not-allowed' : 'pointer',
             display: 'flex',
             gap: '8px',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'transform 180ms ease, box-shadow 180ms ease',
-            boxShadow: '0 4px 12px rgba(37,99,235,0.10)',
+            transition: 'transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease',
+            boxShadow: buttonsDisabled ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
             minHeight: 'clamp(30px, 5vh, 38px)',
             flex: '1 1 auto',
-            maxWidth: '140px'
+            maxWidth: '140px',
+            opacity: buttonsDisabled ? 0.6 : 1
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🎉</span>
@@ -417,6 +433,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         </button>
         <button
           onClick={() => {
+            if (buttonsDisabled) return; // Prevent multiple clicks
+            setButtonsDisabled(true); // Disable buttons immediately
             if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); }
             triggerBounceAnimation();
             setShowSadBalloon(true);
@@ -449,26 +467,28 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             }, 2500);
             if (!soundPlayed) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after wrong (fallback)', mainWord); } onNext && onNext(); }, 2500);
           }}
+          disabled={buttonsDisabled}
           aria-label="Try later — would you like to repeat this?"
           className="mastery-footer-button secondary"
           style={{
-            backgroundColor: 'var(--button-secondary-bg, #64748b)', // muted filled
-            color: 'var(--text-inverse, #fff)',
+            backgroundColor: buttonsDisabled ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-secondary-bg, #64748b)', // gray when disabled
+            color: buttonsDisabled ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
             border: 'none',
             borderRadius: 10,
             padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
             fontSize: 'clamp(13px, 2.2vw, 16px)',
             fontWeight: 700,
-            cursor: 'pointer',
+            cursor: buttonsDisabled ? 'not-allowed' : 'pointer',
             display: 'flex',
             gap: '8px',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'transform 180ms ease, box-shadow 180ms ease',
-            boxShadow: '0 4px 12px rgba(100,116,139,0.10)',
+            transition: 'transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease',
+            boxShadow: buttonsDisabled ? 'none' : '0 4px 12px rgba(100,116,139,0.10)',
             minHeight: 'clamp(30px, 5vh, 38px)',
             flex: '1 1 auto',
-            maxWidth: '140px'
+            maxWidth: '140px',
+            opacity: buttonsDisabled ? 0.6 : 1
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🔁</span>
