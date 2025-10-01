@@ -27,7 +27,26 @@ npm run build
 
 # Preview production build
 npm run preview
+
+# Deploy to production
+npm run deploy
 ```
+
+## 🌐 Deployment
+
+**Live Site**: https://kids-deliberate-practice.netlify.app
+
+### Deploy to Production
+
+```bash
+npm run deploy
+```
+
+This will:
+1. Build the project (`npm run build`)
+2. Deploy to Netlify production (`netlify deploy --prod --dir=dist`)
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ## ✅ Deployment Checklist
 

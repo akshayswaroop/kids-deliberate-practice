@@ -20,8 +20,8 @@
     "check-runtime": "node scripts/check-runtime-errors.js",
     "dev:safe": "npm run build && npm run test && npm run dev",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "netlify:deploy": "netlify deploy --prod"
+    "deploy": "npm run build && netlify deploy --prod --dir=dist",
+    "netlify:deploy": "netlify deploy --prod --dir=dist"
   },
   "dependencies": {
     "@microlink/react-json-view": "^1.27.0",
