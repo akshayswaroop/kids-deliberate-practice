@@ -116,7 +116,7 @@ During development you can open an interactive Diagnostics panel in the running 
 - **Progressive Learning**: Words filtered by current complexity level only - no mixing of difficulty levels
 - **Proper Learning Path**: Students must master current level before advancing to harder content
 - **Simplified UX**: No configuration dropdowns - focus on learning, not settings
-- **Multiple Subjects**: Support for English vocabulary, Kannada script, Math Tables, Human Body facts, and India Geography
+ - **Multiple Subjects**: Support for English words & questions, Kannada script, Math Tables, Human Body facts, and India Geography
 
 ### Multi-Language Support
 - **Kannada Script**: Proper Unicode rendering with 100+ curated words
