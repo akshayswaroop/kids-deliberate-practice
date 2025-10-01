@@ -1,224 +1,251 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-// Upgraded sad balloon animation: improved gradients, soft glow, particles and dark-mode aware shadows
+// Replace the large decorative balloon animation with a focused tile halo + falling tear animation.
+// The component keeps the same contract: props { visible, onAnimationEnd } and calls onAnimationEnd after animation.
 export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
   const [show, setShow] = useState(visible);
-  // Detect preferred color scheme to adapt glow/shadow colors
+  const [targetRect, setTargetRect] = useState(null);
+
   const [isDark, setIsDark] = useState(false);
 
+  // check reduced motion preference
+  const [reducedMotion, setReducedMotion] = useState(false);
   useEffect(() => {
     if (typeof window !== 'undefined' && window.matchMedia) {
-      const mq = window.matchMedia('(prefers-color-scheme: dark)');
-      const update = () => setIsDark(!!mq.matches);
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const darkMq = window.matchMedia('(prefers-color-scheme: dark)');
+      const update = () => setReducedMotion(!!mq.matches);
+      const updateDark = () => setIsDark(!!darkMq.matches);
       update();
+      updateDark();
       if (mq.addEventListener) mq.addEventListener('change', update);
       else if (mq.addListener) mq.addListener(update);
+      if (darkMq.addEventListener) darkMq.addEventListener('change', updateDark);
+      else if (darkMq.addListener) darkMq.addListener(updateDark);
       return () => {
         if (mq.removeEventListener) mq.removeEventListener('change', update);
         else if (mq.removeListener) mq.removeListener(update);
+        if (darkMq.removeEventListener) darkMq.removeEventListener('change', updateDark);
+        else if (darkMq.removeListener) darkMq.removeListener(updateDark);
       };
     }
     return undefined;
   }, []);
 
+  // Monitor main target position (.target-word-glow). If not found, fallback to center top.
+  useEffect(() => {
+    const findTarget = () => {
+      try {
+        const el = document.querySelector('.target-word-glow');
+        if (el) {
+          const r = el.getBoundingClientRect();
+          setTargetRect(r);
+          return;
+        }
+      } catch (e) {
+        // ignore
+      }
+      setTargetRect(null);
+    };
+    findTarget();
+    window.addEventListener('resize', findTarget);
+    window.addEventListener('scroll', findTarget, true);
+    return () => {
+      window.removeEventListener('resize', findTarget);
+      window.removeEventListener('scroll', findTarget, true);
+    };
+  }, [visible]);
+
   useEffect(() => {
     if (visible) {
       setShow(true);
-      // Hide after animation duration (2.6s) — slightly longer for refined fades
+      // Match animation length to the brass-fail sound (~2500ms) with a small buffer.
+      const duration = reducedMotion ? 700 : 2800; // longer so UI lasts until sound ends
       const timer = setTimeout(() => {
         setShow(false);
         if (onAnimationEnd) onAnimationEnd();
-      }, 2600);
+      }, duration + 250);
       return () => clearTimeout(timer);
-    } else {
-      setShow(false);
     }
-  }, [visible, onAnimationEnd]);
+    setShow(false);
+  }, [visible, onAnimationEnd, reducedMotion]);
 
   if (!show) return null;
 
-  // Choose shadow/glow colors based on theme
-  const shadowColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.12)';
-  const innerGlow = isDark ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.06)';
+  // Compute position for overlay: center over target if available
+  const left = targetRect ? (targetRect.left + targetRect.width / 2) : window.innerWidth / 2;
+  const top = targetRect ? (targetRect.top + targetRect.height / 2) : window.innerHeight * 0.2;
 
+  // Compute sizes based on targetRect for visibility
+  const haloWidth = targetRect ? Math.round(Math.max(220, targetRect.width * 1.8)) : 320;
+  const haloHeight = Math.round(haloWidth * 0.38);
+  const outlineInset = Math.round(Math.max(10, haloHeight * 0.18));
+  const tearW = targetRect ? Math.round(Math.min(28, Math.max(12, targetRect.width * 0.08))) : 16;
+  const tearH = Math.round(tearW * 1.6);
+
+  // Inline styles for the overlay; pointerEvents none so it doesn't block input
+  const overlayStyle = {
+    position: 'fixed',
+    left: 0,
+    top: 0,
+    width: '100vw',
+    height: '100vh',
+    pointerEvents: 'none',
+    zIndex: 2200,
+  };
+
+  // Halo and tear styling use CSS animations; define inlined <style> for encapsulation
   return (
-    <div
-      style={{
-        position: 'fixed',
-        left: 0,
-        top: '28vh',
-        width: '100vw',
-        height: '380px',
-        pointerEvents: 'none',
-        zIndex: 2100,
-        display: visible ? 'block' : 'none',
-        opacity: visible ? 1 : 0,
-        transition: 'opacity 220ms ease'
-      }}
-    >
-      <svg viewBox="0 0 560 380" width="100%" height="100%" aria-label="Sad balloons">
-        <defs>
-          {/* Soft glow filter used for dark/light modes */}
-          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="6" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
+    <div style={overlayStyle} aria-hidden>
+      <style>{`
+        .sad-overlay {
+          position: absolute;
+          transform: translate(-50%, -50%);
+          will-change: transform, opacity;
+        }
+        .halo {
+          opacity: 0;
+          transform-origin: center;
+        }
+        .halo.animate {
+          animation: haloPop 1.4s cubic-bezier(.2,.9,.3,1) forwards;
+        }
+        @keyframes haloPop {
+          0% { opacity: 0; transform: scale(0.88); }
+          20% { opacity: 1; transform: scale(1.06); }
+          60% { transform: scale(0.98); }
+          100% { opacity: 0; transform: scale(1.02); }
+        }
 
-          {/* Subtle highlight for balloons */}
-          <radialGradient id="highlight" cx="0.35" cy="0.3" r="0.8">
-            <stop offset="0%" stopColor={innerGlow} stopOpacity="1" />
-            <stop offset="60%" stopColor="transparent" stopOpacity="0" />
-          </radialGradient>
+        .tile-outline {
+          position: absolute;
+          border-radius: 12px;
+          box-shadow: 0 6px 22px rgba(0,0,0,0.14) inset;
+          opacity: 0;
+        }
+  .tile-outline.animate { animation: outlinePulse 1.6s ease forwards; }
+        @keyframes outlinePulse {
+          0% { opacity: 0; transform: scale(0.96); }
+          18% { opacity: 1; transform: scale(1.02); }
+          60% { transform: scale(1.0); }
+          100% { opacity: 0; transform: scale(1.0); }
+        }
 
-          {/* Vivid balloon gradients (tuned for contrast) */}
-          <radialGradient id="balloonRed" cx="0.4" cy="0.35" r="0.9">
-            <stop offset="0%" stopColor="#fff2f0" />
-            <stop offset="50%" stopColor="#ff5960" />
-            <stop offset="85%" stopColor="#ff2d55" />
-            <stop offset="100%" stopColor="#c81d25" />
-          </radialGradient>
-          <radialGradient id="balloonBlue" cx="0.4" cy="0.35" r="0.9">
-            <stop offset="0%" stopColor="#eef8ff" />
-            <stop offset="50%" stopColor="#2f8bff" />
-            <stop offset="85%" stopColor="#1d6fe9" />
-            <stop offset="100%" stopColor="#0b5ed7" />
-          </radialGradient>
-          <radialGradient id="balloonYellow" cx="0.4" cy="0.35" r="0.9">
-            <stop offset="0%" stopColor="#fffde7" />
-            <stop offset="50%" stopColor="#ffd54a" />
-            <stop offset="85%" stopColor="#ffbf00" />
-            <stop offset="100%" stopColor="#f59e0b" />
-          </radialGradient>
-          <radialGradient id="balloonGreen" cx="0.4" cy="0.35" r="0.9">
-            <stop offset="0%" stopColor="#f0fff3" />
-            <stop offset="50%" stopColor="#3cc26a" />
-            <stop offset="85%" stopColor="#32b36b" />
-            <stop offset="100%" stopColor="#15803d" />
-          </radialGradient>
-          <radialGradient id="balloonPurple" cx="0.4" cy="0.35" r="0.9">
-            <stop offset="0%" stopColor="#f6efff" />
-            <stop offset="50%" stopColor="#b06bff" />
-            <stop offset="85%" stopColor="#8b5cf6" />
-            <stop offset="100%" stopColor="#6d28d9" />
-          </radialGradient>
+        .tear {
+          border-radius: 8px 8px 10px 10px;
+          background: linear-gradient(180deg, rgba(160,220,255,1), rgba(30,150,240,1));
+          box-shadow: 0 10px 30px rgba(30,150,240,0.22);
+          transform-origin: top center;
+          opacity: 0;
+        }
+  .tear.animate { animation: tearFall 1.8s cubic-bezier(.2,.9,.3,1) forwards; }
+        @keyframes tearFall {
+          0% { opacity: 0; transform: translateY(-6px) scale(0.8); }
+          18% { opacity: 1; transform: translateY(0px) scale(1.0); }
+          60% { transform: translateY(28px) scale(0.92); }
+          100% { transform: translateY(64px) scale(0.84); opacity: 0; }
+        }
 
-          <style>{`
-            .balloon {
-              animation: floatBounce 2.6s cubic-bezier(.2,.9,.3,1) forwards;
-              filter: drop-shadow(0 10px 30px ${shadowColor});
-            }
-            .balloon1 { animation-delay: 0s; }
-            .balloon2 { animation-delay: 0.18s; }
-            .balloon3 { animation-delay: 0.36s; }
-            .balloon4 { animation-delay: 0.54s; }
-            .balloon5 { animation-delay: 0.72s; }
+        /* reduced motion short-circuit */
+        @media (prefers-reduced-motion: reduce) {
+          .halo.animate, .tile-outline.animate, .tear.animate {
+            animation-duration: 360ms !important;
+            animation-timing-function: linear !important;
+          }
+        }
+        .sadface {
+          opacity: 0;
+          transform-origin: center;
+        }
+        .sadface.animate {
+          animation: sadFacePop 1.9s cubic-bezier(.2,.9,.3,1) forwards;
+        }
+        @keyframes sadFacePop {
+          0% { transform: translateY(0) scale(0.7); opacity: 0; }
+          18% { transform: translateY(-8px) scale(1.05); opacity: 1; }
+          40% { transform: translateY(0px) scale(0.95); }
+          68% { transform: translateY(-12px) scale(1.08); }
+          100% { transform: translateY(-28px) scale(1.02); opacity: 0; }
+        }
+      `}</style>
 
-            @keyframes floatBounce {
-              0% { transform: translateY(70px) scale(0.82); opacity: 0; }
-              12% { transform: translateY(46px) scale(1.02); opacity: 1; }
-              28% { transform: translateY(18px) scale(0.96); }
-              44% { transform: translateY(0px) scale(1.06); }
-              60% { transform: translateY(-26px) scale(0.98); }
-              78% { transform: translateY(-52px) scale(1.08); }
-              90% { opacity: 1; }
-              100% { transform: translateY(-110px) scale(1.14); opacity: 0; }
-            }
+      <div
+        className="sad-overlay"
+        style={{ left, top }}
+      >
+        <div
+          className={`halo ${reducedMotion ? '' : 'animate'}`}
+          aria-hidden
+          style={{
+            width: haloWidth,
+            height: haloHeight,
+            borderRadius: haloHeight / 2,
+            background: isDark
+              ? `radial-gradient(closest-side, rgba(255,255,255,0.06), rgba(255,255,255,0))`
+              : `radial-gradient(closest-side, rgba(255,90,96,0.20), rgba(255,255,255,0))`,
+            boxShadow: isDark
+              ? '0 18px 48px rgba(255,90,96,0.08)'
+              : '0 18px 48px rgba(255,90,96,0.18)',
+            opacity: 1
+          }}
+        />
 
-            .string {
-              stroke-linecap: round;
-              stroke-opacity: 0.95;
-              transition: stroke 200ms ease;
-            }
+        <div
+          className={`tile-outline ${reducedMotion ? '' : 'animate'}`}
+          aria-hidden
+          style={{
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            margin: outlineInset,
+            border: `3px solid ${isDark ? 'rgba(255,255,255,0.22)' : 'rgba(220,40,47,0.95)'}`,
+            opacity: 1,
+            borderRadius: Math.max(8, Math.round(haloHeight * 0.22))
+          }}
+        />
 
-            .sadface {
-              animation: sadPulse 2.6s cubic-bezier(.2,.9,.3,1) forwards;
-              transform-origin: center;
-            }
-            .sadface1 { animation-delay: 0.12s; }
-            .sadface2 { animation-delay: 0.5s; }
+        {/* Multiple tears - staggered positions and delays */}
+        <div style={{ position: 'absolute', left: '50%', top: '46%', transform: 'translate(-50%, 0)' }}>
+          <div
+            className={`tear ${reducedMotion ? '' : 'animate'}`}
+            aria-hidden
+            style={{ width: tearW, height: tearH, marginLeft: -tearW - 6, animationDelay: reducedMotion ? '0ms' : '80ms' }}
+          />
+          <div
+            className={`tear ${reducedMotion ? '' : 'animate'}`}
+            aria-hidden
+            style={{ width: tearW, height: tearH, marginLeft: -Math.round(tearW / 2), animationDelay: reducedMotion ? '0ms' : '200ms' }}
+          />
+          <div
+            className={`tear ${reducedMotion ? '' : 'animate'}`}
+            aria-hidden
+            style={{ width: tearW, height: tearH, marginLeft: 6 + Math.round(tearW / 4), animationDelay: reducedMotion ? '0ms' : '340ms' }}
+          />
+        </div>
 
-            @keyframes sadPulse {
-              0% { transform: translateY(0) scale(0.78); opacity: 0; }
-              14% { transform: translateY(-8px) scale(1.06); opacity: 1; }
-              30% { transform: translateY(0px) scale(0.98); }
-              46% { transform: translateY(-10px) scale(1.08); }
-              64% { transform: translateY(0px) scale(1.0); }
-              84% { transform: translateY(-14px) scale(1.12); }
-              100% { transform: translateY(-24px) scale(1.08); opacity: 0; }
-            }
+        {/* Sad faces small overlays (subtle) */}
+        <div style={{ position: 'absolute', left: '30%', top: '26%' }}>
+          <svg width="48" height="48" viewBox="0 0 48 48" className={`sadface ${reducedMotion ? '' : 'animate'}`} style={{ animationDelay: reducedMotion ? '0ms' : '160ms' }} aria-hidden>
+            {/* Use a soft pastel face fill so it reads in both light and dark themes */}
+            <circle cx="24" cy="24" r="20" fill="#fff1f0" stroke="#ffb6b6" strokeWidth="2" />
+            {/* Eyes and mouth use a consistent dark color for contrast */}
+            <circle cx="18" cy="20" r="3" fill="#0f1724" />
+            <circle cx="30" cy="20" r="3" fill="#0f1724" />
+            <path d="M16 30 Q24 24 32 30" stroke="#0f1724" strokeWidth="2" fill="none" strokeLinecap="round" />
+          </svg>
+        </div>
 
-            /* small sparkling particles behind balloons for visual richness */
-            .sparkle { animation: sparkleAnim 2.6s ease forwards; opacity: 0; }
-            .sparkle1 { animation-delay: 0s; }
-            .sparkle2 { animation-delay: 0.2s; }
-            .sparkle3 { animation-delay: 0.45s; }
-            @keyframes sparkleAnim {
-              0% { transform: scale(0.6) translateY(6px); opacity: 0; }
-              25% { opacity: 1; transform: scale(1) translateY(0); }
-              70% { opacity: 0.7; transform: scale(0.9) translateY(-20px); }
-              100% { opacity: 0; transform: scale(0.8) translateY(-36px); }
-            }
-          `}</style>
-        </defs>
-
-        {/* Soft background vignette for depth */}
-        <rect x="0" y="0" width="560" height="380" fill="none" />
-
-        {/* Sparkles for depth */}
-        <g>
-          <circle className="sparkle sparkle1" cx="90" cy="210" r="3" fill="#fff" opacity="0.9" />
-          <circle className="sparkle sparkle2" cx="520" cy="170" r="2.8" fill="#fff" opacity="0.85" />
-          <circle className="sparkle sparkle3" cx="300" cy="240" r="2.6" fill="#fff" opacity="0.8" />
-        </g>
-
-        {/* Balloons - more colors, staggered lively animation */}
-        <g filter="url(#softGlow)">
-          <ellipse className="balloon balloon1" cx="120" cy="230" rx="30" ry="42" fill="url(#balloonRed)" />
-          <ellipse className="balloon balloon2" cx="440" cy="210" rx="26" ry="36" fill="url(#balloonBlue)" />
-          <ellipse className="balloon balloon3" cx="280" cy="270" rx="28" ry="38" fill="url(#balloonYellow)" />
-          <ellipse className="balloon balloon4" cx="200" cy="270" rx="24" ry="34" fill="url(#balloonGreen)" />
-          <ellipse className="balloon balloon5" cx="360" cy="250" rx="26" ry="36" fill="url(#balloonPurple)" />
-        </g>
-
-        {/* Balloon highlights */}
-        <ellipse cx="120" cy="212" rx="12" ry="8" fill="url(#highlight)" opacity="0.85" />
-        <ellipse cx="440" cy="198" rx="10" ry="6" fill="url(#highlight)" opacity="0.85" />
-        <ellipse cx="280" cy="252" rx="11" ry="7" fill="url(#highlight)" opacity="0.85" />
-        <ellipse cx="200" cy="252" rx="9" ry="6" fill="url(#highlight)" opacity="0.85" />
-        <ellipse cx="360" cy="232" rx="10" ry="6" fill="url(#highlight)" opacity="0.85" />
-
-        {/* Balloon strings with softened color */}
-        <path className="string" d="M120 272 Q120 310 138 342" stroke="#b91c1c" strokeWidth="2" fill="none" strokeOpacity="0.95" />
-        <path className="string" d="M440 244 Q440 290 420 344" stroke="#0b5ed7" strokeWidth="2" fill="none" strokeOpacity="0.95" />
-        <path className="string" d="M280 308 Q280 338 300 348" stroke="#b77903" strokeWidth="2" fill="none" strokeOpacity="0.95" />
-        <path className="string" d="M200 304 Q200 328 220 350" stroke="#137f3a" strokeWidth="2" fill="none" strokeOpacity="0.95" />
-        <path className="string" d="M360 284 Q360 318 380 352" stroke="#5b21b6" strokeWidth="2" fill="none" strokeOpacity="0.95" />
-
-        {/* Sad smiley faces - more expressive, staggered lively animation */}
-        <g className="sadface sadface1">
-          <circle cx="180" cy="120" r="34" fill="url(#balloonYellow)" stroke="#fbbf24" strokeWidth="3" />
-          <ellipse cx="170" cy="115" rx="4" ry="7" fill="#1f2937" />
-          <ellipse cx="190" cy="115" rx="4" ry="7" fill="#1f2937" />
-          <path d="M170 136 Q180 125 190 136" stroke="#1f2937" strokeWidth="3" fill="none" strokeLinecap="round" />
-          {/* Tear drop */}
-          <ellipse cx="175" cy="131" rx="2.5" ry="5" fill="#0ea5e9" opacity="0.9" />
-          {/* Soft cheek highlight */}
-          <ellipse cx="185" cy="137" rx="4" ry="2" fill="#fbbf24" opacity="0.25" />
-        </g>
-
-        <g className="sadface sadface2">
-          <circle cx="380" cy="100" r="30" fill="url(#balloonPurple)" stroke="#a78bfa" strokeWidth="3" />
-          <ellipse cx="370" cy="95" rx="3" ry="6" fill="#1f2937" />
-          <ellipse cx="390" cy="95" rx="3" ry="6" fill="#1f2937" />
-          <path d="M370 121 Q380 110 390 121" stroke="#1f2937" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <ellipse cx="375" cy="116" rx="2" ry="4" fill="#60a5fa" opacity="0.9" />
-          <ellipse cx="385" cy="121" rx="3" ry="1.5" fill="#a78bfa" opacity="0.22" />
-        </g>
-      </svg>
+        <div style={{ position: 'absolute', left: '68%', top: '22%' }}>
+          <svg width="40" height="40" viewBox="0 0 48 48" className={`sadface ${reducedMotion ? '' : 'animate'}`} style={{ animationDelay: reducedMotion ? '0ms' : '320ms' }} aria-hidden>
+            <circle cx="24" cy="24" r="18" fill="#fff1f0" stroke="#ffd1d1" strokeWidth="1.8" />
+            <circle cx="19" cy="19" r="2.5" fill="#0f1724" />
+            <circle cx="29" cy="19" r="2.5" fill="#0f1724" />
+            <path d="M18 29 Q24 24 30 29" stroke="#0f1724" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+          </svg>
+        </div>
+      </div>
     </div>
   );
 }
