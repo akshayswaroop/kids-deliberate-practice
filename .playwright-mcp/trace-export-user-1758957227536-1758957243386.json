@@ -1,0 +1,190 @@
+{
+  "exportTimestamp": 1758957243386,
+  "exportVersion": "1.0",
+  "userId": "user_1758957227536",
+  "traceCount": 4,
+  "traces": [
+    {
+      "id": "a4b6c3c1-b6b2-4cad-a39d-8b7f71f81197",
+      "timestamp": 1758957227545,
+      "sessionId": "1126405c-181d-42a5-bc1e-21602b9fc03b",
+      "action": {
+        "type": "game/addUser",
+        "payload": {
+          "userId": "user_1758957227536",
+          "displayName": "TestUser"
+        }
+      },
+      "stateBefore": {
+        "currentUserId": null,
+        "userCount": 0,
+        "activeMode": "none"
+      },
+      "stateAfter": {
+        "currentUserId": "user_1758957227536",
+        "userCount": 1,
+        "activeMode": "none"
+      },
+      "domainContext": {
+        "userManagement": {
+          "action": "created",
+          "userId": "user_1758957227536"
+        }
+      },
+      "performance": {
+        "actionDuration": 0,
+        "stateSerializationTime": 0
+      }
+    },
+    {
+      "id": "6a497c19-13b3-4c27-96b0-2f150882cabe",
+      "timestamp": 1758957227546,
+      "sessionId": "1126405c-181d-42a5-bc1e-21602b9fc03b",
+      "action": {
+        "type": "game/selectUser",
+        "payload": {
+          "userId": "user_1758957227536"
+        }
+      },
+      "stateBefore": {
+        "currentUserId": "user_1758957227536",
+        "userCount": 1,
+        "activeMode": "none"
+      },
+      "stateAfter": {
+        "currentUserId": "user_1758957227536",
+        "userCount": 1,
+        "activeMode": "none"
+      },
+      "domainContext": {
+        "userManagement": {
+          "action": "switched",
+          "userId": "user_1758957227536"
+        }
+      },
+      "performance": {
+        "actionDuration": 0,
+        "stateSerializationTime": 0
+      }
+    },
+    {
+      "id": "3006944c-e5bf-4638-ba98-f26e436089e1",
+      "timestamp": 1758957227556,
+      "sessionId": "1126405c-181d-42a5-bc1e-21602b9fc03b",
+      "action": {
+        "type": "game/addSession",
+        "payload": {
+          "sessionId": "session_1758957227554",
+          "session": {
+            "wordIds": [
+              "an",
+              "as",
+              "at",
+              "be",
+              "by",
+              "do",
+              "go",
+              "he",
+              "hi",
+              "if",
+              "in",
+              "is"
+            ],
+            "currentIndex": 0,
+            "revealed": false,
+            "mode": "practice",
+            "createdAt": 1758957227554,
+            "settings": {
+              "sessionSizes": {
+                "english": 12,
+                "kannada": 12,
+                "mathtables": 12,
+                "humanbody": 5,
+                "indiageography": 12,
+                "mixed": 12
+              },
+              "languages": [
+                "english"
+              ],
+              "complexityLevels": {
+                "english": 1,
+                "kannada": 1,
+                "mathtables": 1,
+                "indiageography": 1,
+                "hindi": 1
+              }
+            }
+          }
+        }
+      },
+      "stateBefore": {
+        "currentUserId": "user_1758957227536",
+        "userCount": 1,
+        "activeMode": "none"
+      },
+      "stateAfter": {
+        "currentUserId": "user_1758957227536",
+        "userCount": 1,
+        "activeMode": "none"
+      },
+      "domainContext": {
+        "sessionGeneration": {
+          "sessionId": "session_1758957227554",
+          "mode": "practice",
+          "totalWords": 12,
+          "unmasteredCount": 12,
+          "masteredCount": 0
+        }
+      },
+      "performance": {
+        "actionDuration": 0,
+        "stateSerializationTime": 0
+      }
+    },
+    {
+      "id": "3901922c-fed4-4620-8bfc-ad03923e19a9",
+      "timestamp": 1758957227557,
+      "sessionId": "1126405c-181d-42a5-bc1e-21602b9fc03b",
+      "action": {
+        "type": "game/setMode",
+        "payload": {
+          "mode": "english",
+          "sessionId": "session_1758957227554"
+        }
+      },
+      "stateBefore": {
+        "currentUserId": "user_1758957227536",
+        "userCount": 1,
+        "activeMode": "none"
+      },
+      "stateAfter": {
+        "currentUserId": "user_1758957227536",
+        "userCount": 1,
+        "activeMode": "english",
+        "currentWord": {
+          "id": "an",
+          "text": "an",
+          "step": 0,
+          "language": "english",
+          "complexityLevel": 1
+        },
+        "currentSession": {
+          "sessionId": "session_1758957227554",
+          "wordCount": 12,
+          "currentIndex": 0,
+          "revealed": false
+        }
+      },
+      "domainContext": {},
+      "performance": {
+        "actionDuration": 0,
+        "stateSerializationTime": 0
+      }
+    }
+  ],
+  "systemInfo": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+    "timestamp": "2025-09-27T07:14:03.386Z",
+    "url": "http://localhost:5173/"
+  }
+}

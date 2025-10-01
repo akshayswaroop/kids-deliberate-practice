@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run all tests before committing
+echo "🧪 Running tests before commit..."
+npm run test:all
+
+# Check if tests passed
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed! Commit blocked."
+  echo "Run 'npm run test:unit' to see specific failures."
+  exit 1
+fi
+
+echo "✅ All tests passed! Proceeding with commit."
