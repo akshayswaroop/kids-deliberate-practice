@@ -151,6 +151,7 @@ export class ReduxProgressRepository implements ProgressRepository {
     
     const subjectStats = this.calculateSubjectStatistics(wordsWithAttempts);
     const streakData = this.calculateStreakData(wordsWithAttempts);
+    const turnaroundCount = this.calculateTurnarounds(masteredWords);
 
     return {
       totalWordsAttempted: wordsWithAttempts.length,
@@ -161,7 +162,8 @@ export class ReduxProgressRepository implements ProgressRepository {
       averageAttemptsToMastery: this.calculateAverageAttemptsToMastery(masteredWords),
       subjectBreakdown: subjectStats,
       currentStreak: streakData.currentStreak,
-      longestStreak: streakData.longestStreak
+      longestStreak: streakData.longestStreak,
+      turnaroundCount
     };
   }
 
@@ -173,7 +175,8 @@ export class ReduxProgressRepository implements ProgressRepository {
       averageAttemptsToMastery: 0,
       subjectBreakdown: [],
       currentStreak: 0,
-      longestStreak: 0
+      longestStreak: 0,
+      turnaroundCount: 0
     };
   }
 
@@ -217,13 +220,98 @@ export class ReduxProgressRepository implements ProgressRepository {
   }
 
   private calculateStreakData(words: any[]): { currentStreak: number; longestStreak: number } {
-    // Simple implementation - could be enhanced with actual date-based streak calculation
-    const recentWords = words.filter(w => w.lastPracticedAt && 
-      (Date.now() - w.lastPracticedAt) < 7 * 24 * 60 * 60 * 1000); // Last 7 days
+    if (words.length === 0) {
+      return { currentStreak: 0, longestStreak: 0 };
+    }
+
+    // Extract all practice dates (YYYY-MM-DD format)
+    const practiceDates = new Set<string>();
+    for (const word of words) {
+      if (word.attempts && word.attempts.length > 0) {
+        for (const attempt of word.attempts) {
+          const date = new Date(attempt.timestamp);
+          const dateStr = date.toISOString().split('T')[0];
+          practiceDates.add(dateStr);
+        }
+      }
+    }
+
+    if (practiceDates.size === 0) {
+      return { currentStreak: 0, longestStreak: 0 };
+    }
+
+    // Convert to sorted array of dates
+    const sortedDates = Array.from(practiceDates)
+      .map(d => new Date(d))
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    // Calculate current streak (consecutive days ending today or yesterday)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const lastPracticeDate = sortedDates[sortedDates.length - 1];
+    lastPracticeDate.setHours(0, 0, 0, 0);
+    const isActiveToday = lastPracticeDate.getTime() === today.getTime();
+
+    let currentStreak = 0;
+    const checkDate = new Date(today);
+    if (!isActiveToday) {
+      checkDate.setDate(checkDate.getDate() - 1);
+    }
+
+    for (let i = sortedDates.length - 1; i >= 0; i--) {
+      const practiceDate = sortedDates[i];
+      practiceDate.setHours(0, 0, 0, 0);
+      
+      if (practiceDate.getTime() === checkDate.getTime()) {
+        currentStreak++;
+        checkDate.setDate(checkDate.getDate() - 1);
+      } else {
+        break;
+      }
+    }
+
+    // Calculate longest streak
+    let longestStreak = 0;
+    let tempStreak = 1;
     
-    return {
-      currentStreak: recentWords.length > 0 ? 1 : 0, // Simplified
-      longestStreak: Math.max(3, recentWords.length) // Simplified
-    };
+    for (let i = 1; i < sortedDates.length; i++) {
+      const prevDate = new Date(sortedDates[i - 1]);
+      const currDate = new Date(sortedDates[i]);
+      prevDate.setHours(0, 0, 0, 0);
+      currDate.setHours(0, 0, 0, 0);
+      
+      const dayDiff = Math.floor(
+        (currDate.getTime() - prevDate.getTime()) / (1000 * 60 * 60 * 24)
+      );
+      
+      if (dayDiff === 1) {
+        tempStreak++;
+      } else {
+        longestStreak = Math.max(longestStreak, tempStreak);
+        tempStreak = 1;
+      }
+    }
+    longestStreak = Math.max(longestStreak, tempStreak);
+
+    return { currentStreak, longestStreak };
+  }
+
+  /**
+   * 🌱 Calculate turnarounds: words that were once wrong but now mastered
+   * 
+   * Shows growth and resilience - "You conquered 18 tricky words!"
+   */
+  private calculateTurnarounds(masteredWords: any[]): number {
+    return masteredWords.filter(word => {
+      // Must be currently mastered (step >= 2)
+      if (word.step < 2) return false;
+      
+      // Must have at least one wrong attempt in history
+      const hasWrongAttempt = word.attempts.some((attempt: any) => 
+        attempt.result === 'wrong'
+      );
+      
+      return hasWrongAttempt;
+    }).length;
   }
 }

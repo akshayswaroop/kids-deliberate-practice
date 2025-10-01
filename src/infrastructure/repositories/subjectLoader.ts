@@ -85,6 +85,22 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
 ];
 
 /**
+ * Get the display label for a subject by its internal name.
+ * Falls back to capitalizing the name if not found in config.
+ * 
+ * @param subjectName - Internal subject name (e.g., 'mathtables', 'english')
+ * @returns Display label (e.g., 'Math Tables', 'English')
+ */
+export function getSubjectDisplayLabel(subjectName: string): string {
+  const config = SUBJECT_CONFIGS.find(s => s.name === subjectName || s.language === subjectName);
+  if (config) {
+    return config.displayLabel;
+  }
+  // Fallback: capitalize first letter
+  return subjectName.charAt(0).toUpperCase() + subjectName.slice(1);
+}
+
+/**
  * Load all words from all configured subjects
  * This is the only function that knows about specific JSON banks
  */

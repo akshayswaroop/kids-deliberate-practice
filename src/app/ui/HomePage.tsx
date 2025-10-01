@@ -5,6 +5,7 @@ import ModeSelector from './ModeSelector';
 import EnhancedPracticePanel from './EnhancedPracticePanel';
 import TraceExport from './TraceExport';
 import ThemeToggle from './ThemeToggle';
+import ProgressStatsDisplay from './ProgressStatsDisplay';
 import { useState } from 'react';
 import './TraceExport.css';
 
@@ -88,6 +89,7 @@ export default function HomePage({
             />
           </div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
+            <ProgressStatsDisplay currentUserId={currentUserId} compact subject={mode} />
             <ModeSelector compact mode={mode} onSetMode={onSetMode} />
             <ThemeToggle />
             <button 
@@ -149,6 +151,12 @@ export default function HomePage({
               🌟 You've completed all available questions in <strong>{mode}</strong> mode. 
               Add more questions to continue your learning journey! 📚✨
             </p>
+            
+            {/* Show Growth Story */}
+            <div style={{ width: '100%', maxWidth: '600px', marginBottom: '24px' }}>
+              <ProgressStatsDisplay currentUserId={currentUserId} />
+            </div>
+            
             <button
               onClick={onNext}
               style={{

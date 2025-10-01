@@ -185,6 +185,27 @@ export class ProgressTracker {
   }
 
   /**
+   * 🎯 BUSINESS LOGIC: Check if this word is a "turnaround"
+   * 
+   * A turnaround means the child once got the word wrong but later mastered it.
+   * This shows growth and resilience.
+   * 
+   * Business rule: Must have at least one wrong attempt AND be currently mastered.
+   */
+  isTurnaround(): boolean {
+    if (!this.isMastered()) {
+      return false; // Not mastered yet
+    }
+    
+    if (this.attempts.length === 0) {
+      return false; // No attempts yet
+    }
+
+    // Check if there's at least one wrong attempt in history
+    return this.attempts.some(attempt => !attempt.isCorrect());
+  }
+
+  /**
    * Convert to plain data for persistence
    */
   toData(): {

@@ -68,6 +68,9 @@ export interface LearningStatistics {
   subjectBreakdown: SubjectStatistics[];
   currentStreak: number;
   longestStreak: number;
+  
+  // 🌱 Turnaround metrics: shows growth and resilience
+  turnaroundCount: number; // Words that were once wrong but now mastered
 }
 
 export interface SubjectStatistics {

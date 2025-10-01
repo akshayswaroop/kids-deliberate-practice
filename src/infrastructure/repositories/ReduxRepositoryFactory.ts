@@ -11,7 +11,8 @@ import type {
   WordRepository,
   LearnerRepository,
   SessionRepository,
-  UnitOfWork
+  UnitOfWork,
+  StreakData
 } from '../../domain/repositories';
 import { ReduxProgressRepository } from './ReduxProgressRepository';
 import { ReduxWordRepository } from './ReduxWordRepository';
@@ -198,8 +199,30 @@ class ReduxSessionRepository implements SessionRepository {
   }
 
   async getSessionAnalytics(learnerId: any, _timeframe?: any): Promise<any> {
-    // Simplified analytics
+    const state = this.getState();
+    const learnerIdStr = learnerId.toString();
+    const user = state.users[learnerIdStr];
+    
+    if (!user) {
+      return {
+        totalSessions: 0,
+        totalPracticeTime: 0,
+        averageSessionDuration: 0,
+        overallAccuracy: 0,
+        consistencyScore: 0,
+        subjectBreakdown: [],
+        weeklyProgress: [],
+        streakData: {
+          currentStreak: 0,
+          longestStreak: 0,
+          isActiveToday: false
+        }
+      };
+    }
+
     const sessions = await this.findByLearner(learnerId);
+    const streakData = this.calculateDailyStreakFromWords(user.words);
+    
     return {
       totalSessions: sessions.length,
       totalPracticeTime: sessions.length * 300, // 5 min average
@@ -208,11 +231,105 @@ class ReduxSessionRepository implements SessionRepository {
       consistencyScore: 80,
       subjectBreakdown: [],
       weeklyProgress: [],
-      streakData: {
-        currentStreak: 3,
-        longestStreak: 7,
-        isActiveToday: true
+      streakData
+    };
+  }
+
+  /**
+   * 🔥 Calculate daily practice streak from word attempt history
+   * 
+   * Business rule: Streak = consecutive days with at least one practice attempt
+   */
+  private calculateDailyStreakFromWords(words: Record<string, any>): StreakData {
+    const wordList = Object.values(words);
+    
+    if (wordList.length === 0) {
+      return {
+        currentStreak: 0,
+        longestStreak: 0,
+        isActiveToday: false
+      };
+    }
+
+    // Extract all practice dates (YYYY-MM-DD format for comparison)
+    const practiceDates = new Set<string>();
+    for (const word of wordList) {
+      if (word.attempts && word.attempts.length > 0) {
+        for (const attempt of word.attempts) {
+          const date = new Date(attempt.timestamp);
+          const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD
+          practiceDates.add(dateStr);
+        }
       }
+    }
+
+    if (practiceDates.size === 0) {
+      return {
+        currentStreak: 0,
+        longestStreak: 0,
+        isActiveToday: false
+      };
+    }
+
+    // Convert to sorted array of dates
+    const sortedDates = Array.from(practiceDates)
+      .map(d => new Date(d))
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    // Check if practiced today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const lastPracticeDate = sortedDates[sortedDates.length - 1];
+    lastPracticeDate.setHours(0, 0, 0, 0);
+    const isActiveToday = lastPracticeDate.getTime() === today.getTime();
+
+    // Calculate current streak (consecutive days ending today or yesterday)
+    let currentStreak = 0;
+    const checkDate = new Date(today);
+    if (!isActiveToday) {
+      // If not practiced today, check from yesterday
+      checkDate.setDate(checkDate.getDate() - 1);
+    }
+
+    for (let i = sortedDates.length - 1; i >= 0; i--) {
+      const practiceDate = sortedDates[i];
+      practiceDate.setHours(0, 0, 0, 0);
+      
+      if (practiceDate.getTime() === checkDate.getTime()) {
+        currentStreak++;
+        checkDate.setDate(checkDate.getDate() - 1);
+      } else {
+        break; // Streak broken
+      }
+    }
+
+    // Calculate longest streak
+    let longestStreak = 0;
+    let tempStreak = 1;
+    
+    for (let i = 1; i < sortedDates.length; i++) {
+      const prevDate = new Date(sortedDates[i - 1]);
+      const currDate = new Date(sortedDates[i]);
+      prevDate.setHours(0, 0, 0, 0);
+      currDate.setHours(0, 0, 0, 0);
+      
+      const dayDiff = Math.floor(
+        (currDate.getTime() - prevDate.getTime()) / (1000 * 60 * 60 * 24)
+      );
+      
+      if (dayDiff === 1) {
+        tempStreak++;
+      } else {
+        longestStreak = Math.max(longestStreak, tempStreak);
+        tempStreak = 1;
+      }
+    }
+    longestStreak = Math.max(longestStreak, tempStreak);
+
+    return {
+      currentStreak,
+      longestStreak,
+      isActiveToday
     };
   }
 

@@ -7,7 +7,7 @@ import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetec
 import FlyingUnicorn from './FlyingUnicorn.jsx';
 import SadBalloonAnimation from './SadBalloonAnimation.jsx';
 
-export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode }) {
+export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode, currentUserId }) {
   const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
 
   // Animation helper functions
@@ -126,7 +126,9 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   }, [buttonsDisabled, isDebug]);
 
   // Handler for unicorn animation end
-  const handleUnicornEnd = React.useCallback(() => setShowUnicorn(false), []);
+  const handleUnicornEnd = React.useCallback(() => {
+    setShowUnicorn(false);
+  }, []);
   
   // Handler for sad balloon animation end - update coordination state
   const handleSadBalloonEnd = React.useCallback(() => {
@@ -177,6 +179,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         visible={showSadBalloon}
         onAnimationEnd={handleSadBalloonEnd}
       />
+      {/* Stats overlay removed - badges in header animate instead */}
       {/* Question Area - Flexible space for readability */}
       <div style={{
         textAlign: 'center',

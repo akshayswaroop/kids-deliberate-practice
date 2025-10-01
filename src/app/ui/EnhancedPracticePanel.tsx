@@ -165,6 +165,7 @@ export default function EnhancedPracticePanel({
         mode={mode}
         isAnswerRevealed={isAnswerRevealed}
         isEnglishMode={isEnglishMode}
+        currentUserId={currentUserId}
       />
     </div>
   );
