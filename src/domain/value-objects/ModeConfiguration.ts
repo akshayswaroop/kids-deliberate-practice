@@ -78,6 +78,10 @@ export class ModeConfiguration {
     }
   };
 
+  // Modes that always show answers (no reveal button needed)
+  // These are practice modes where the "answer" field contains instructions/prompts, not translations
+  private static readonly ALWAYS_SHOW_ANSWER_MODES = ['english'];
+
   // Domain Business Rules
   static isTransliterationMode(mode: string): boolean {
     return Object.prototype.hasOwnProperty.call(this.TRANSLITERATION_MODES, mode);
@@ -85,6 +89,10 @@ export class ModeConfiguration {
 
   static isAnswerMode(mode: string): boolean {
     return Object.prototype.hasOwnProperty.call(this.ANSWER_MODES, mode);
+  }
+
+  static shouldAlwaysShowAnswer(mode: string): boolean {
+    return this.ALWAYS_SHOW_ANSWER_MODES.includes(mode);
   }
 
   static getTransliterationModeConfig(mode: string): TransliterationModeConfig | null {

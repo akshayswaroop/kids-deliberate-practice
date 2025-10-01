@@ -341,7 +341,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           boxSizing: 'border-box'
         }}>
           {/* Title removed - showing answer/notes directly */}
-          {isAnswerRevealed ? (
+          {isAnswerRevealed || isEnglishMode ? (
             <div style={{ 
               display: 'flex', 
               flexDirection: 'column', 

@@ -239,6 +239,9 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   const shouldShowTransliteration = ModeConfiguration.getTransliterationModes().includes(mode) && session?.revealed === true;
   // Universal answer/notes logic - show if the word has these fields and session is revealed
   const shouldShowAnswer = session?.revealed === true;
+  
+  // Some modes always show answers (configured in domain)
+  const alwaysShowAnswer = ModeConfiguration.shouldAlwaysShowAnswer(mode);
 
   // If transliteration mode declares that its transliteration should act as the canonical answer,
   // surface the specified field on the current word as `answer` so the UI (details panel) shows it.
@@ -257,8 +260,8 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
     needsNewSession: session?.needsNewSession || false,
   transliteration: shouldShowTransliteration ? currentWord?.transliteration : undefined,
   transliterationHi: shouldShowTransliteration ? currentWord?.transliterationHi : undefined,
-  answer: computedAnswer || (shouldShowAnswer ? currentWord?.answer : undefined),
-  notes: computedNotes || (shouldShowAnswer ? currentWord?.notes : undefined),
+  answer: computedAnswer || (shouldShowAnswer || alwaysShowAnswer ? currentWord?.answer : undefined),
+  notes: computedNotes || (shouldShowAnswer || alwaysShowAnswer ? currentWord?.notes : undefined),
     choices,
     isAnswerRevealed: session?.revealed || false,
     isEnglishMode: mode === 'english'
