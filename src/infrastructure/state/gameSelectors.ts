@@ -224,7 +224,7 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
       sessionId: null,
       mainWord: '...',
       choices: [],
-      needsNewSession: true,
+      needsNewSession: false, // Don't show celebration for new users - let session creation happen
       isAnswerRevealed: false,
       isEnglishMode: false,
     };

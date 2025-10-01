@@ -78,6 +78,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const [showSadBalloon, setShowSadBalloon] = React.useState(false);
   // Button disabled state to prevent multiple clicks
   const [buttonsDisabled, setButtonsDisabled] = React.useState(false);
+  // Track if we're in a transition (waiting for next question)
+  const [isTransitioning, setIsTransitioning] = React.useState(false);
   
   // Coordination state for wrong-answer flow (sound + animation must both complete)
   const [wrongAnswerState, setWrongAnswerState] = React.useState({
@@ -110,6 +112,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   React.useEffect(() => { 
     setShowUnicorn(false); 
     setShowSadBalloon(false); 
+    setIsTransitioning(false); // New question arrived, end transition
     setButtonsDisabled(false);
     setWrongAnswerState({ active: false, soundEnded: false, animationEnded: false });
   }, [mainWord]);
@@ -432,8 +435,9 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         {/* Button order: Correct! (primary), Try later (primary), Reveal (secondary) */}
         <button
           onClick={() => {
-            if (buttonsDisabled) return; // Prevent multiple clicks
+            if (buttonsDisabled || isTransitioning) return; // Prevent multiple clicks
             setButtonsDisabled(true); // Disable buttons immediately
+            setIsTransitioning(true); // Mark as transitioning
             if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); }
             createConfettiBurst();
             setShowUnicorn(true);
@@ -447,28 +451,28 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             onCorrect && onCorrect();
             if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after correct', mainWord); } onNext(); }, 2500);
           }}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || isTransitioning}
           aria-label="Mark as read — great job"
           className="mastery-footer-button primary"
           style={{
-            backgroundColor: buttonsDisabled ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-primary-bg, #2563eb)', // gray when disabled
-            color: buttonsDisabled ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
+            backgroundColor: (buttonsDisabled || isTransitioning) ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-primary-bg, #2563eb)', // gray when disabled
+            color: (buttonsDisabled || isTransitioning) ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
             border: 'none',
             borderRadius: 10,
             padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
             fontSize: 'clamp(13px, 2.2vw, 16px)',
             fontWeight: 700,
-            cursor: buttonsDisabled ? 'not-allowed' : 'pointer',
+            cursor: (buttonsDisabled || isTransitioning) ? 'not-allowed' : 'pointer',
             display: 'flex',
             gap: '8px',
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease',
-            boxShadow: buttonsDisabled ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
+            boxShadow: (buttonsDisabled || isTransitioning) ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
             minHeight: 'clamp(30px, 5vh, 38px)',
             flex: '1 1 auto',
             maxWidth: '140px',
-            opacity: buttonsDisabled ? 0.6 : 1
+            opacity: (buttonsDisabled || isTransitioning) ? 0.6 : 1
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🎉</span>
@@ -476,8 +480,9 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         </button>
         <button
           onClick={() => {
-            if (buttonsDisabled) return; // Prevent multiple clicks
+            if (buttonsDisabled || isTransitioning) return; // Prevent multiple clicks
             setButtonsDisabled(true); // Disable buttons immediately
+            setIsTransitioning(true); // Mark as transitioning
             if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); }
             triggerBounceAnimation();
             setShowSadBalloon(true);
@@ -508,28 +513,28 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             // Quick progression after 2.5 seconds (same as correct flow)
             if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after wrong', mainWord); } onNext(); }, 2500);
           }}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || isTransitioning}
           aria-label="Try later — would you like to repeat this?"
           className="mastery-footer-button secondary"
           style={{
-            backgroundColor: buttonsDisabled ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-secondary-bg, #64748b)', // gray when disabled
-            color: buttonsDisabled ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
+            backgroundColor: (buttonsDisabled || isTransitioning) ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-secondary-bg, #64748b)', // gray when disabled
+            color: (buttonsDisabled || isTransitioning) ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
             border: 'none',
             borderRadius: 10,
             padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
             fontSize: 'clamp(13px, 2.2vw, 16px)',
             fontWeight: 700,
-            cursor: buttonsDisabled ? 'not-allowed' : 'pointer',
+            cursor: (buttonsDisabled || isTransitioning) ? 'not-allowed' : 'pointer',
             display: 'flex',
             gap: '8px',
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease',
-            boxShadow: buttonsDisabled ? 'none' : '0 4px 12px rgba(100,116,139,0.10)',
+            boxShadow: (buttonsDisabled || isTransitioning) ? 'none' : '0 4px 12px rgba(100,116,139,0.10)',
             minHeight: 'clamp(30px, 5vh, 38px)',
             flex: '1 1 auto',
             maxWidth: '140px',
-            opacity: buttonsDisabled ? 0.6 : 1
+            opacity: (buttonsDisabled || isTransitioning) ? 0.6 : 1
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🔁</span>
