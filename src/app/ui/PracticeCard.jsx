@@ -72,75 +72,57 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     }
   }, [mainWord]);
 
-  // Unicorn animation state
-  const [showUnicorn, setShowUnicorn] = React.useState(false);
-  // Sad balloon animation state
-  const [showSadBalloon, setShowSadBalloon] = React.useState(false);
-  // Button disabled state to prevent multiple clicks
-  const [buttonsDisabled, setButtonsDisabled] = React.useState(false);
-  // Track if we're in a transition (waiting for next question)
-  const [isTransitioning, setIsTransitioning] = React.useState(false);
-  
-  // Coordination state for wrong-answer flow (sound + animation must both complete)
-  const [wrongAnswerState, setWrongAnswerState] = React.useState({
-    active: false,
-    soundEnded: false,
-    animationEnded: false
-  });
 
-  // Centralized coordination: when both sound and animation end, trigger progression
-  React.useEffect(() => {
-    if (wrongAnswerState.active && 
-        wrongAnswerState.soundEnded && 
-        wrongAnswerState.animationEnded) {
-      if (isDebug) { 
-        console.debug('[PracticeCard] Both sound and animation completed, triggering progression', mainWord); 
-      }
-      if (onNext) {
-        onNext();
-      } else {
-        // No onNext handler - re-enable buttons as fallback
-        if (isDebug) { console.warn('[PracticeCard] No onNext handler, re-enabling buttons'); }
-        setButtonsDisabled(false);
-      }
-      // Reset state after handling
-      setWrongAnswerState({ active: false, soundEnded: false, animationEnded: false });
-    }
-  }, [wrongAnswerState, onNext, isDebug, mainWord]);
+  // --- Unified status state ---
+  // 'idle' = ready for input, 'animating' = correct/wrong animation, 'waiting' = waiting for next question
+  const [status, setStatus] = React.useState('idle');
+  // Animation states
+  const [showUnicorn, setShowUnicorn] = React.useState(false);
+  const [showSadBalloon, setShowSadBalloon] = React.useState(false);
+
+
+  // --- Centralized progression logic ---
+  // For wrong answer, coordinate sound and animation using Promise.all
+  const handleProgression = React.useCallback(() => {
+    if (onNext) onNext();
+    setStatus('idle');
+  }, [onNext]);
   
-  // Reset animations and buttons when mainWord OR answer changes (new question)
-  // This fixes the bug where same word appearing twice keeps buttons disabled
-  React.useEffect(() => { 
+
+  // Reset all state on new question
+  React.useEffect(() => {
     if (isDebug) { console.debug('[PracticeCard] Question changed, resetting UI state', { mainWord, answer }); }
-    setShowUnicorn(false); 
-    setShowSadBalloon(false); 
-    setIsTransitioning(false); // New question arrived, end transition
-    setButtonsDisabled(false);
-    setWrongAnswerState({ active: false, soundEnded: false, animationEnded: false });
+    setShowUnicorn(false);
+    setShowSadBalloon(false);
+    setStatus('idle');
   }, [mainWord, answer, isDebug]);
 
-  // Safety fallback: if buttons are disabled for more than 4 seconds, force re-enable
-  React.useEffect(() => {
-    if (buttonsDisabled) {
-      const safetyTimer = setTimeout(() => {
-        if (isDebug) console.warn('[PracticeCard] Safety fallback: re-enabling buttons after timeout');
-        setButtonsDisabled(false);
-      }, 4000);
-      return () => clearTimeout(safetyTimer);
-    }
-  }, [buttonsDisabled, isDebug]);
+
+  // No safety fallback needed with unified status
+
 
   // Handler for unicorn animation end
   const handleUnicornEnd = React.useCallback(() => {
     setShowUnicorn(false);
-  }, []);
-  
-  // Handler for sad balloon animation end - update coordination state
+    setStatus('waiting');
+    setTimeout(() => handleProgression(), 500); // Short delay for effect
+  }, [handleProgression]);
+
+  // Handler for sad balloon animation end
+  const [wrongSoundPromise, setWrongSoundPromise] = React.useState(null);
   const handleSadBalloonEnd = React.useCallback(() => {
     setShowSadBalloon(false);
     if (isDebug) { console.debug('[PracticeCard] Sad animation ended', mainWord); }
-    setWrongAnswerState(prev => ({ ...prev, animationEnded: true }));
-  }, [isDebug, mainWord]);
+    if (wrongSoundPromise) {
+      wrongSoundPromise.then(() => {
+        setStatus('waiting');
+        setTimeout(() => handleProgression(), 500);
+      });
+    } else {
+      setStatus('waiting');
+      setTimeout(() => handleProgression(), 500);
+    }
+  }, [isDebug, mainWord, wrongSoundPromise, handleProgression]);
   // Determine current active choice progress to render rainbow fill for the main question
   const activeChoice = (choices || []).find(c => String(c.label) === String(mainWord));
   const activeProgress = Math.min(100, Math.max(0, (activeChoice && (typeof activeChoice.progress === 'number' ? activeChoice.progress : Number(activeChoice && activeChoice.progress))) || 0));
@@ -437,9 +419,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         {/* Button order: Correct! (primary), Try later (primary), Reveal (secondary) */}
         <button
           onClick={() => {
-            if (buttonsDisabled || isTransitioning) return; // Prevent multiple clicks
-            setButtonsDisabled(true); // Disable buttons immediately
-            setIsTransitioning(true); // Mark as transitioning
+            if (status !== 'idle') return;
+            setStatus('animating');
             if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); }
             createConfettiBurst();
             setShowUnicorn(true);
@@ -451,30 +432,30 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               if (isDebug) console.warn('Sound failed:', e);
             }
             onCorrect && onCorrect();
-            if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after correct', mainWord); } onNext(); }, 2500);
+            // Progression will be handled by unicorn animation end
           }}
-          disabled={buttonsDisabled || isTransitioning}
+          disabled={status !== 'idle'}
           aria-label="Mark as read — great job"
           className="mastery-footer-button primary"
           style={{
-            backgroundColor: (buttonsDisabled || isTransitioning) ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-primary-bg, #2563eb)', // gray when disabled
-            color: (buttonsDisabled || isTransitioning) ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
+            backgroundColor: status !== 'idle' ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-primary-bg, #2563eb)',
+            color: status !== 'idle' ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
             border: 'none',
             borderRadius: 10,
             padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
             fontSize: 'clamp(13px, 2.2vw, 16px)',
             fontWeight: 700,
-            cursor: (buttonsDisabled || isTransitioning) ? 'not-allowed' : 'pointer',
+            cursor: status !== 'idle' ? 'not-allowed' : 'pointer',
             display: 'flex',
             gap: '8px',
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease',
-            boxShadow: (buttonsDisabled || isTransitioning) ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
+            boxShadow: status !== 'idle' ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
             minHeight: 'clamp(30px, 5vh, 38px)',
             flex: '1 1 auto',
             maxWidth: '140px',
-            opacity: (buttonsDisabled || isTransitioning) ? 0.6 : 1
+            opacity: status !== 'idle' ? 0.6 : 1
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🎉</span>
@@ -482,61 +463,51 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         </button>
         <button
           onClick={() => {
-            if (buttonsDisabled || isTransitioning) return; // Prevent multiple clicks
-            setButtonsDisabled(true); // Disable buttons immediately
-            setIsTransitioning(true); // Mark as transitioning
+            if (status !== 'idle') return;
+            setStatus('animating');
             if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); }
             triggerBounceAnimation();
             setShowSadBalloon(true);
-            
-            // Initialize coordination state - both sound and animation must complete
-            setWrongAnswerState({
-              active: true,
-              soundEnded: false,
-              animationEnded: false
-            });
-            
-            // Start audio
+            // Start audio and store promise
+            let soundPromise;
             try {
               const audio = new window.Audio('/brass-fail-8-b-207131.mp3');
               audio.volume = 0.7;
+              soundPromise = new Promise(resolve => {
+                audio.onended = resolve;
+                audio.onerror = resolve;
+              });
               audio.play();
-              audio.onended = () => {
-                if (isDebug) console.debug('[PracticeCard] Sad sound ended', mainWord);
-                setWrongAnswerState(prev => ({ ...prev, soundEnded: true }));
-              };
             } catch (e) {
               if (isDebug) console.warn('Brass fail sound failed:', e);
-              // If sound fails, mark it as ended immediately
-              setWrongAnswerState(prev => ({ ...prev, soundEnded: true }));
+              soundPromise = Promise.resolve();
             }
-            
+            setWrongSoundPromise(soundPromise);
             onWrong && onWrong();
-            // Quick progression after 2.5 seconds (same as correct flow)
-            if (onNext) setTimeout(() => { if (isDebug) { console.debug('[PracticeCard] auto onNext after wrong', mainWord); } onNext(); }, 2500);
+            // Progression will be handled by sad balloon animation end
           }}
-          disabled={buttonsDisabled || isTransitioning}
+          disabled={status !== 'idle'}
           aria-label="Try later — would you like to repeat this?"
           className="mastery-footer-button secondary"
           style={{
-            backgroundColor: (buttonsDisabled || isTransitioning) ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-secondary-bg, #64748b)', // gray when disabled
-            color: (buttonsDisabled || isTransitioning) ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
+            backgroundColor: status !== 'idle' ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-secondary-bg, #64748b)',
+            color: status !== 'idle' ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
             border: 'none',
             borderRadius: 10,
             padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
             fontSize: 'clamp(13px, 2.2vw, 16px)',
             fontWeight: 700,
-            cursor: (buttonsDisabled || isTransitioning) ? 'not-allowed' : 'pointer',
+            cursor: status !== 'idle' ? 'not-allowed' : 'pointer',
             display: 'flex',
             gap: '8px',
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease',
-            boxShadow: (buttonsDisabled || isTransitioning) ? 'none' : '0 4px 12px rgba(100,116,139,0.10)',
+            boxShadow: status !== 'idle' ? 'none' : '0 4px 12px rgba(100,116,139,0.10)',
             minHeight: 'clamp(30px, 5vh, 38px)',
             flex: '1 1 auto',
             maxWidth: '140px',
-            opacity: (buttonsDisabled || isTransitioning) ? 0.6 : 1
+            opacity: status !== 'idle' ? 0.6 : 1
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🔁</span>
