@@ -5,6 +5,7 @@ import ModeSelector from './ModeSelector';
 import EnhancedPracticePanel from './EnhancedPracticePanel';
 import ThemeToggle from './ThemeToggle';
 import ProgressStatsDisplay from './ProgressStatsDisplay';
+import KannadaRevision from './KannadaRevision';
 import { useState } from 'react';
 // Trace export UI removed
 
@@ -34,6 +35,7 @@ export default function HomePage({
   // Form state for ProfileForm (moved from component to container)
   const [username, setUsername] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [showKannadaRevision, setShowKannadaRevision] = useState(false);
 
   const handleCreateUser = (displayName?: string) => {
     const id = `user_${Date.now()}`;
@@ -68,12 +70,28 @@ export default function HomePage({
             <ProgressStatsDisplay currentUserId={ui.currentUserId} compact subject={ui.mode} />
             <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
             <ThemeToggle />
+            <button onClick={() => setShowKannadaRevision(true)} style={{ padding: '8px 12px', borderRadius: 8, border: 'none', background: 'linear-gradient(90deg,#ffd29b,#ff8a8a)', cursor: 'pointer' }}>Kannada Revision</button>
             {/* Trace export button removed from UI */}
           </div>
         </div>
       </div>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: 'var(--bg-secondary)', margin: '4px', borderRadius: 12, boxShadow: 'var(--shadow-soft)' }}>
-        {ui.practice.needsNewSession ? (
+      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: 'var(--bg-secondary)', margin: '4px', borderRadius: 12, boxShadow: 'var(--shadow-soft)', position: 'relative', overflow: 'hidden' }}>
+        {showKannadaRevision ? (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              padding: 16,
+              boxSizing: 'border-box',
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: 0,
+              overflow: 'hidden'
+            }}
+          >
+            <KannadaRevision onClose={() => setShowKannadaRevision(false)} />
+          </div>
+        ) : ui.practice.needsNewSession ? (
           <div style={{
             display: 'flex',
             flexDirection: 'column',
