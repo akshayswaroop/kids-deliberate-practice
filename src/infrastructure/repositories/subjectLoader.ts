@@ -11,6 +11,7 @@ import indiaGeographyBank from '../../assets/india_geography_questions.json';
 import gramPanchayatBank from '../../assets/gram_panchayat_questions.json';
 import hanumanBank from '../../assets/hanuman_chalisa_kids.json';
 import storyComprehensionBank from '../../assets/story_comprehension_100.json';
+import numberSpellingsBank from '../../assets/number_spellings_1_20.json';
 
 // Map bank paths to imported data
 const BANK_DATA_MAP: Record<string, any> = {
@@ -24,6 +25,7 @@ const BANK_DATA_MAP: Record<string, any> = {
   'gram_panchayat_questions.json': gramPanchayatBank,
   'hanuman_chalisa_kids.json': hanumanBank,
   'story_comprehension_100.json': storyComprehensionBank,
+  'number_spellings_1_20.json': numberSpellingsBank,
 };
 
 // Unified question bank item interface
@@ -116,6 +118,20 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
   { name: 'grampanchayat', bankPath: 'gram_panchayat_questions.json', language: 'grampanchayat', displayIcon: '🏛️', displayLabel: 'Gram Panchayat' },
   { name: 'hanuman', bankPath: 'hanuman_chalisa_kids.json', language: 'hanuman', displayIcon: '🕉️', displayLabel: 'Hanuman Chalisa' },
   { name: 'comprehension', bankPath: 'story_comprehension_100.json', language: 'comprehension', displayIcon: '📚', displayLabel: 'Story Comprehension' },
+  {
+    name: 'numberspellings',
+    bankPath: 'number_spellings_1_20.json',
+    language: 'numberspellings',
+    displayIcon: '🔤',
+    displayLabel: 'Number Spellings (1–20)',
+    revisionPanel: {
+      title: 'Number Spelling Revision',
+      buttonLabel: 'Number Spellings',
+      primaryField: 'text',
+      secondaryField: 'answer',
+      notesField: 'notes',
+    },
+  },
   // ADD NEW SUBJECTS HERE - no code changes needed elsewhere!
 ];
 
