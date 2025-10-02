@@ -6,7 +6,8 @@ import EnhancedPracticePanel from './EnhancedPracticePanel';
 import ThemeToggle from './ThemeToggle';
 import ProgressStatsDisplay from './ProgressStatsDisplay';
 import RevisionPanel from './RevisionPanel';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { traceAPI } from '../tracing/traceMiddleware';
 // Trace export UI removed
 
 import type { PracticeHomeViewModel } from '../presenters/practicePresenter';
@@ -37,6 +38,61 @@ export default function HomePage({
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showRevisionPanel, setShowRevisionPanel] = useState(false);
   const hasRevisionPanel = !!ui.revisionPanel;
+
+  const handleShareFeedback = useCallback(async () => {
+    if (typeof window === 'undefined') return;
+
+    const traceCount = traceAPI.getTraceCount();
+    if (!traceCount) {
+      window.alert('No trace entries recorded yet. Try reproducing the issue before exporting diagnostics.');
+      return;
+    }
+
+    const session = traceAPI.exportCurrentSession();
+    const fileName = `trace-${session.sessionId}.json`;
+    const payload = JSON.stringify(session, null, 2);
+
+    try {
+      const file = typeof File !== 'undefined' ? new File([payload], fileName, { type: 'application/json' }) : null;
+      const navigatorAny = window.navigator as Navigator & { canShare?: (data: any) => boolean; share?: (data: any) => Promise<void> };
+
+      if (file && navigatorAny?.canShare?.({ files: [file] }) && navigatorAny?.share) {
+        await navigatorAny.share({
+          files: [file],
+          title: 'Kids Practice Diagnostics Trace',
+          text: 'Trace export from Kids Deliberate Practice',
+        });
+        return;
+      }
+    } catch {
+      // Ignore and fall through to download + mailto fallback
+    }
+
+    const blob = new Blob([payload], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+
+    const subject = encodeURIComponent('Kids Practice Feedback with Diagnostics Trace');
+    const body = encodeURIComponent([
+      'Hi Kids Deliberate Practice team,',
+      '',
+      'I encountered an issue while using the app. The diagnostics trace was downloaded automatically just now.',
+      `Please attach the file "${fileName}" to this email before sending it.`,
+      '',
+      `Trace session id: ${session.sessionId}`,
+      '',
+      'Issue description:',
+      '',
+    ].join('\n'));
+
+    window.location.href = `mailto:dilsemonk@gmail.com?subject=${subject}&body=${body}`;
+  }, []);
 
   const handleCreateUser = (displayName?: string) => {
     const id = `user_${Date.now()}`;
@@ -87,6 +143,21 @@ export default function HomePage({
                 {ui.revisionPanel.buttonLabel}
               </button>
             )}
+            <button
+              type="button"
+              onClick={handleShareFeedback}
+              style={{
+                padding: '8px 12px',
+                borderRadius: 8,
+                border: 'none',
+                background: 'linear-gradient(90deg,#8ce0ff,#3b82f6)',
+                cursor: 'pointer',
+                color: 'var(--text-inverse)',
+                fontWeight: 600,
+              }}
+            >
+              Share Diagnostics
+            </button>
             {/* Trace export button removed from UI */}
           </div>
         </div>

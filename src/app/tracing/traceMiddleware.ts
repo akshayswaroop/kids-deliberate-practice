@@ -88,6 +88,20 @@ function getCurrentSession(): TraceSession {
   return (traceStorage as any).currentSession;
 }
 
+function cloneGameState(state: RootState | undefined): RootState | undefined {
+  if (!state) return state;
+  if (typeof structuredClone === 'function') {
+    try {
+      return structuredClone(state);
+    } catch {}
+  }
+  try {
+    return JSON.parse(JSON.stringify(state));
+  } catch {
+    return state;
+  }
+}
+
 /** Extract a lightweight StateContext from the game RootState */
 function extractStateContext(state: RootState): StateContext {
   if (!state || !state.users) {
@@ -307,6 +321,8 @@ traceMiddleware.startListening({
       stateBefore: beforeContext,
       stateAfter: afterContext,
       domainContext,
+      gameStateBefore: cloneGameState(stateBefore),
+      gameStateAfter: cloneGameState(stateAfter),
       performance: {
         actionDuration: endTime - startTime,
         stateSerializationTime,

@@ -5,6 +5,8 @@
  * Every UI action generates a TraceEntry with full context for debugging and testing.
  */
 
+import type { RootState as GameState } from '../../infrastructure/state/gameState';
+
 export interface TraceEntry {
   /** Unique trace entry ID */
   id: string;
@@ -38,6 +40,12 @@ export interface TraceEntry {
 
   /** Domain-specific context capturing learning mechanics changes */
   domainContext: DomainContext;
+
+  /** Full game state snapshot prior to the action (for deterministic replay) */
+  gameStateBefore?: GameState;
+
+  /** Full game state snapshot after the action */
+  gameStateAfter?: GameState;
 
   /** Serialized view model snapshot after the action */
   viewModel: Record<string, unknown>;

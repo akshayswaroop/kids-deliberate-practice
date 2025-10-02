@@ -9,13 +9,23 @@ import HomePage from './app/ui/HomePage';
 import Onboarding from './app/ui/Onboarding';
 import { buildPracticeAppViewModel } from './app/presenters/practicePresenter';
 import type { RootState as GameState } from './infrastructure/state/gameState';
+import TraceDiagnosticsApp from './app/diagnostics/TraceDiagnosticsApp';
 
 // Single, clean App implementation
 function App() {
+  if (typeof window !== 'undefined' && window.location.pathname.startsWith('/diagnostics')) {
+    return (
+      <ThemeProvider>
+        <TraceDiagnosticsApp />
+      </ThemeProvider>
+    );
+  }
+
   const dispatch = useAppDispatch();
   const gameState = useAppSelector(state => state.game as GameState);
   const [mode, setMode] = useState<string>('english');
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const [modeLocked, setModeLocked] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -27,31 +37,38 @@ function App() {
     const currentUserId = gameState.currentUserId;
     if (currentUserId) {
       const user = gameState.users[currentUserId];
-      const defaultMode = user?.settings?.languages?.[0];
-      if (defaultMode && mode !== defaultMode) {
+      const defaultMode = user?.currentMode || user?.settings?.languages?.[0];
+      if (!modeLocked && defaultMode && mode !== defaultMode) {
         setMode(defaultMode);
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameState.currentUserId]);
+  }, [gameState.currentUserId, modeLocked]);
 
   const handleCreateUser = (userId: string, displayName?: string) => {
     dispatch({ type: 'game/addUser', payload: { userId, displayName } });
   };
   const handleSwitchUser = (userId: string) => {
     dispatch({ type: 'game/selectUser', payload: { userId } });
+    setModeLocked(false);
   };
-  const handleSetMode = (newMode: string) => setMode(newMode);
+  const handleSetMode = (newMode: string) => {
+    setMode(newMode);
+    setModeLocked(true);
+  };
+
+  const isDiagnostics = typeof window !== 'undefined' && window.location.pathname.startsWith('/diagnostics');
 
   const viewModel = buildPracticeAppViewModel({ state: gameState, mode, windowWidth });
   const homeVM = viewModel.home;
 
   // ensure there's an active session for the current mode when the app mounts or mode changes
   useEffect(() => {
+    if (isDiagnostics) return;
     const currentUserId = gameState.currentUserId;
     if (!currentUserId) return;
     dispatch(ensureActiveSession({ mode } as any) as any);
-  }, [gameState.currentUserId, mode]);
+  }, [gameState.currentUserId, mode, dispatch, isDiagnostics]);
 
   // Clean UI actions - no session knowledge required
   const onCorrect = () => {
@@ -73,6 +90,14 @@ function App() {
       dispatch(revealAnswer({ sessionId, wordId, revealed }));
     }
   };
+
+  if (isDiagnostics) {
+    return (
+      <ThemeProvider>
+        <TraceDiagnosticsApp />
+      </ThemeProvider>
+    );
+  }
 
   if (viewModel.showOnboarding) {
     return (
