@@ -17,12 +17,10 @@ const makePersistMiddleware = () => (storeAPI: any) => (next: any) => (action: a
   const result = next(action);
   if (action.type.startsWith('game/')) {
     const state = storeAPI.getState();
-    console.log(`💾 [PERSIST] Saving state after action: ${action.type}`);
     try {
       localStorage.setItem('gameState', JSON.stringify(state.game));
-      console.log(`✅ [PERSIST] State saved successfully`);
-    } catch (e) {
-      console.error(`❌ [PERSIST] Failed to save state:`, e);
+    } catch {
+      // Persistence is best-effort; ignore storage failures
     }
   }
   return result;
@@ -54,14 +52,12 @@ export function createAppStore(opts?: { persist?: boolean; preloadedState?: { ga
             const contentChanged = existingWord.answer !== wordObj.answer || existingWord.notes !== wordObj.notes;
             if (contentChanged) {
               user.words[wordId] = { ...existingWord, answer: wordObj.answer, notes: wordObj.notes };
-              console.log(`🔄 [AUTO-REFRESH] Updated content for word: ${wordId}`);
             }
           }
         });
       });
-      console.log('🔄 [MERGE] Added new words/subjects and auto-refreshed content for existing users');
-    } catch (e) {
-      console.error('❌ [MERGE] Failed to merge new words:', e);
+    } catch {
+      // Ignore merge failures to avoid breaking app startup
     }
   }
 

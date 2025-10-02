@@ -6,7 +6,7 @@
  */
 
 import { SessionGenerationService } from '../../domain/services/SessionGenerationService';
-import { MasteryConfiguration } from '../../domain/value-objects/ModeConfiguration';
+import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
 import type { Word } from '../../infrastructure/state/gameState';
 
 export interface SessionApplicationServiceInterface {

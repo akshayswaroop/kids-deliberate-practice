@@ -297,14 +297,17 @@ export const userInteractions = {
    */
   masterWord(wordId: string, correctAttempts: number = 5, sessionId: string = 'test-session'): Array<{ type: string; payload: any }> {
     const actions = [];
+    let timestampSeed = Date.now();
     
     for (let i = 0; i < correctAttempts; i++) {
+      timestampSeed += 1;
       actions.push({
         type: 'game/attempt',
         payload: { 
           sessionId, 
           wordId, 
-          result: 'correct' 
+          result: 'correct',
+          now: timestampSeed,
         },
       });
     }
@@ -320,14 +323,19 @@ export const userInteractions = {
     sequence: boolean[],
     sessionId: string = 'test-session'
   ): Array<{ type: string; payload: any }> {
-    return sequence.map(correct => ({
-      type: 'game/attempt',
-      payload: { 
-        sessionId, 
-        wordId, 
-        result: correct ? 'correct' : 'wrong' 
-      },
-    }));
+    let timestampSeed = Date.now();
+    return sequence.map(correct => {
+      timestampSeed += 1;
+      return {
+        type: 'game/attempt',
+        payload: {
+          sessionId,
+          wordId,
+          result: correct ? 'correct' : 'wrong',
+          now: timestampSeed,
+        },
+      };
+    });
   },
 
   /**

@@ -128,7 +128,6 @@ export function useProgressStats({ userId, subject }: UseProgressStatsOptions): 
         setStats(filteredStats);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Failed to load stats'));
-        console.error('Failed to load progress stats:', err);
       } finally {
         setLoading(false);
       }

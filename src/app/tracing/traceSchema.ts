@@ -20,15 +20,27 @@ export interface TraceEntry {
     type: string;
     payload: any;
   };
-  
+
+  /**
+   * Intent (alias for action) captured explicitly per architecture contract.
+   * Kept separate for consumers that expect the intent/view model pair.
+   */
+  intent: {
+    type: string;
+    payload: any;
+  };
+
   /** Relevant state context before action (lightweight extract, not full state) */
   stateBefore: StateContext;
-  
+
   /** Relevant state context after action */
   stateAfter: StateContext;
-  
+
   /** Domain-specific context capturing learning mechanics changes */
   domainContext: DomainContext;
+
+  /** Serialized view model snapshot after the action */
+  viewModel: Record<string, unknown>;
   
   /** Performance metrics for this action */
   performance: {

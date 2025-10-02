@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './gameState';
-import { MasteryConfiguration } from '../../domain/value-objects/ModeConfiguration';
+import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
 import { loadAllWords } from '../repositories/subjectLoader';
 // Thunks moved to gameActions.ts
 
@@ -58,11 +58,17 @@ const gameSlice = createSlice({
         user.currentMode = action.payload.mode; // Track the current active mode
       }
     },
-    attempt: function (state, action: PayloadAction<{ sessionId: string; wordId: string; result: 'correct' | 'wrong'; now?: number }>) {
-  const uid = state.currentUserId;
-  if (!uid) return;
-  const user = state.users[uid];
-      const { sessionId, wordId, result, now = Date.now() } = action.payload;
+    attempt: function (
+      state,
+      action: PayloadAction<{ sessionId: string; wordId: string; result: 'correct' | 'wrong'; now: number }>
+    ) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      const { sessionId, wordId, result, now } = action.payload;
+      if (!user || typeof now !== 'number') {
+        return;
+      }
       const word = user.words[wordId];
       if (word) {
         // Add attempt to history
@@ -105,33 +111,18 @@ const gameSlice = createSlice({
         session.lastAttempt = result;
       }
     },
-    nextCard: function (state, action: PayloadAction<{ sessionId: string }>) {
-  const uid = state.currentUserId;
-  if (!uid) return;
-  const user = state.users[uid];
-      const { sessionId } = action.payload;
+    nextCard: function (
+      state,
+      action: PayloadAction<{ sessionId: string; nextIndex: number; needsNewSession?: boolean }>
+    ) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      const { sessionId, nextIndex, needsNewSession } = action.payload;
       const session = user.sessions[sessionId];
-      if (session) {
-        // Find unmastered words in the session (not mastered per config)
-        const unmasteredIndices: number[] = [];
-        for (let i = 0; i < session.wordIds.length; i++) {
-          const wordId = session.wordIds[i];
-          const word = user.words[wordId];
-          if (word && !MasteryConfiguration.isMastered(word)) {
-            unmasteredIndices.push(i);
-          }
-        }
-
-        // If there are unmastered words, randomly pick one
-        if (unmasteredIndices.length > 0) {
-          const randomIndex = Math.floor(Math.random() * unmasteredIndices.length);
-          session.currentIndex = unmasteredIndices[randomIndex];
-          session.needsNewSession = false;
-        } else {
-          // If all words are mastered, signal that a new session is needed
-          session.needsNewSession = true;
-        }
-
+      if (session && Number.isInteger(nextIndex) && nextIndex >= 0 && nextIndex < session.wordIds.length) {
+        session.currentIndex = nextIndex;
+        session.needsNewSession = !!needsNewSession;
         session.revealed = false;
         session.lastAttempt = undefined;
       }

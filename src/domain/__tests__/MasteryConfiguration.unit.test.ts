@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { MasteryConfiguration } from '../value-objects/ModeConfiguration';
+import { MasteryConfiguration } from '../value-objects/MasteryConfiguration';
 
 describe('MasteryConfiguration.isMastered', () => {
   test('returns false for undefined or null word', () => {

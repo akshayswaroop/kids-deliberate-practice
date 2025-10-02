@@ -1,6 +1,5 @@
 import React from 'react';
 import './PracticeCard.css';
-import { ModeConfiguration } from '../../domain/value-objects/ModeConfiguration';
 import GradientText from './GradientText.jsx';
 import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetector';
 
@@ -12,7 +11,6 @@ const PROGRESSION_DELAY_MS = 120;
 
 export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode, currentUserId }) {
   const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
-  const isDebug = env ? (env.DEV ?? env.MODE === 'development') : false;
   const isTestMode = env?.MODE === 'test';
 
   // Animation helper functions
@@ -63,20 +61,6 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     });
   };
 
-  React.useEffect(() => {
-    if (isDebug) {
-      // eslint-disable-next-line no-console
-      console.debug('[PracticeCard] mount mainWord=', mainWord, 'choicesCount=', choices ? choices.length : 0);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    if (isDebug) {
-      // eslint-disable-next-line no-console
-      console.debug('[PracticeCard] mainWord changed ->', mainWord);
-    }
-  }, [mainWord]);
-
 
   // --- Unified status state ---
   // 'idle' = ready for input, 'animating' = correct/wrong animation, 'waiting' = waiting for next question
@@ -96,11 +80,10 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
 
   // Reset all state on new question
   React.useEffect(() => {
-    if (isDebug) { console.debug('[PracticeCard] Question changed, resetting UI state', { mainWord, answer }); }
     setShowUnicorn(false);
     setShowSadBalloon(false);
     setStatus('idle');
-  }, [mainWord, answer, isDebug]);
+  }, [mainWord, answer]);
 
 
   // No safety fallback needed with unified status
@@ -117,7 +100,6 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const [wrongSoundPromise, setWrongSoundPromise] = React.useState(null);
   const handleSadBalloonEnd = React.useCallback(() => {
     setShowSadBalloon(false);
-    if (isDebug) { console.debug('[PracticeCard] Sad animation ended', mainWord); }
     if (wrongSoundPromise) {
       wrongSoundPromise.then(() => {
         setStatus('waiting');
@@ -127,7 +109,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
       setStatus('waiting');
       setTimeout(() => handleProgression(), PROGRESSION_DELAY_MS);
     }
-  }, [isDebug, mainWord, wrongSoundPromise, handleProgression]);
+  }, [wrongSoundPromise, handleProgression]);
   // Determine current active choice progress to render rainbow fill for the main question
   const activeChoice = (choices || []).find(c => String(c.label) === String(mainWord));
   const activeProgress = Math.min(100, Math.max(0, (activeChoice && (typeof activeChoice.progress === 'number' ? activeChoice.progress : Number(activeChoice && activeChoice.progress))) || 0));
@@ -429,22 +411,19 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           onClick={() => {
             if (status !== 'idle') return;
             if (isTestMode) {
-              if (isDebug) { console.debug('[PracticeCard] (test mode) onCorrect immediate progression', mainWord); }
-              onCorrect && onCorrect();
+onCorrect && onCorrect();
               handleProgression();
               return;
             }
             setStatus('animating');
-            if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); }
-            createConfettiBurst();
+createConfettiBurst();
             setShowUnicorn(true);
             try {
               const audio = new window.Audio('/happy-logo-167474.mp3');
               audio.volume = 0.7;
               audio.play();
             } catch (e) {
-              if (isDebug) console.warn('Sound failed:', e);
-            }
+}
             onCorrect && onCorrect();
             // Progression will be handled by unicorn animation end
           }}
@@ -480,14 +459,12 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           onClick={() => {
             if (status !== 'idle') return;
             if (isTestMode) {
-              if (isDebug) { console.debug('[PracticeCard] (test mode) onWrong immediate progression', mainWord); }
-              onWrong && onWrong();
+onWrong && onWrong();
               handleProgression();
               return;
             }
             setStatus('animating');
-            if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); }
-            triggerBounceAnimation();
+triggerBounceAnimation();
             setShowSadBalloon(true);
             // Start audio and store promise
             let soundPromise;
@@ -525,8 +502,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               });
               audio.play();
             } catch (e) {
-              if (isDebug) console.warn('Brass fail sound failed:', e);
-              soundPromise = Promise.resolve();
+soundPromise = Promise.resolve();
             }
             setWrongSoundPromise(soundPromise);
             onWrong && onWrong();
@@ -564,8 +540,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             data-testid="btn-reveal"
             onClick={() => { 
               if (interactionLocked) return;
-              if (isDebug) { console.debug('[PracticeCard] onRevealAnswer clicked', mainWord, 'current revealed:', isAnswerRevealed); } 
-              onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
+onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
             }}
             disabled={interactionLocked}
             aria-label={isAnswerRevealed ? "Hide Answer" : "Reveal Answer"}

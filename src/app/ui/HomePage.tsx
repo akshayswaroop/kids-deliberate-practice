@@ -5,7 +5,7 @@ import ModeSelector from './ModeSelector';
 import EnhancedPracticePanel from './EnhancedPracticePanel';
 import ThemeToggle from './ThemeToggle';
 import ProgressStatsDisplay from './ProgressStatsDisplay';
-import KannadaRevision from './KannadaRevision';
+import RevisionPanel from './RevisionPanel';
 import { useState, useEffect } from 'react';
 // Trace export UI removed
 
@@ -35,7 +35,8 @@ export default function HomePage({
   // Form state for ProfileForm (moved from component to container)
   const [username, setUsername] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [showKannadaRevision, setShowKannadaRevision] = useState(false);
+  const [showRevisionPanel, setShowRevisionPanel] = useState(false);
+  const hasRevisionPanel = !!ui.revisionPanel;
 
   const handleCreateUser = (displayName?: string) => {
     const id = `user_${Date.now()}`;
@@ -45,11 +46,10 @@ export default function HomePage({
 
   // Close the Kannada revision panel if user switches away from Kannada mode(s)
   useEffect(() => {
-    const allowed = ui.mode === 'kannada' || ui.mode === 'kannadaalphabets';
-    if (!allowed && showKannadaRevision) {
-      setShowKannadaRevision(false);
+    if (!hasRevisionPanel && showRevisionPanel) {
+      setShowRevisionPanel(false);
     }
-  }, [ui.mode, showKannadaRevision]);
+  }, [hasRevisionPanel, showRevisionPanel]);
 
   return (
     <div style={{ height: '100vh', background: 'var(--bg-primary)', fontFamily: 'system-ui, sans-serif', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
@@ -78,13 +78,13 @@ export default function HomePage({
             <ProgressStatsDisplay currentUserId={ui.currentUserId} compact subject={ui.mode} />
             <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
             <ThemeToggle />
-            {(ui.mode === 'kannada' || ui.mode === 'kannadaalphabets') && (
+            {hasRevisionPanel && ui.revisionPanel && (
               <button
-                data-testid="btn-kannada-revision"
-                onClick={() => setShowKannadaRevision(true)}
+                data-testid="btn-revision-panel"
+                onClick={() => setShowRevisionPanel(true)}
                 style={{ padding: '8px 12px', borderRadius: 8, border: 'none', background: 'linear-gradient(90deg,#ffd29b,#ff8a8a)', cursor: 'pointer' }}
               >
-                Kannada Revision
+                {ui.revisionPanel.buttonLabel}
               </button>
             )}
             {/* Trace export button removed from UI */}
@@ -92,7 +92,7 @@ export default function HomePage({
         </div>
       </div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: 'var(--bg-secondary)', margin: '4px', borderRadius: 12, boxShadow: 'var(--shadow-soft)', position: 'relative', overflow: 'hidden' }}>
-  {showKannadaRevision && (ui.mode === 'kannada' || ui.mode === 'kannadaalphabets') ? (
+        {showRevisionPanel && ui.revisionPanel ? (
           <div
             style={{
               position: 'absolute',
@@ -105,7 +105,11 @@ export default function HomePage({
               overflow: 'hidden'
             }}
           >
-            <KannadaRevision onClose={() => setShowKannadaRevision(false)} />
+            <RevisionPanel
+              title={ui.revisionPanel.title}
+              items={ui.revisionPanel.items}
+              onClose={() => setShowRevisionPanel(false)}
+            />
           </div>
         ) : ui.practice.needsNewSession ? (
           <div style={{

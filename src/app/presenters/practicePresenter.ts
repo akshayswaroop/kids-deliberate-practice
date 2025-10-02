@@ -28,6 +28,19 @@ export interface PracticePanelViewModel {
   card: PracticeCardViewModel;
 }
 
+export interface RevisionPanelItemViewModel {
+  id: string;
+  primary: string;
+  secondary?: string;
+  notes?: string;
+}
+
+export interface RevisionPanelViewModel {
+  title: string;
+  buttonLabel: string;
+  items: RevisionPanelItemViewModel[];
+}
+
 export interface ModeOptionViewModel {
   value: string;
   label: string;
@@ -46,6 +59,7 @@ export interface PracticeHomeViewModel {
   modeOptions: ModeOptionViewModel[];
   columns: number;
   practice: PracticePanelViewModel;
+  revisionPanel?: RevisionPanelViewModel;
 }
 
 export interface PracticeAppViewModel {
@@ -66,6 +80,44 @@ function buildModeOptions(): ModeOptionViewModel[] {
     label: config.displayLabel,
     icon: config.displayIcon,
   }));
+}
+
+function buildRevisionPanel(state: GameState, mode: string): RevisionPanelViewModel | undefined {
+  const subjectConfig = SUBJECT_CONFIGS.find(config => config.name === mode);
+  if (!subjectConfig || !subjectConfig.revisionPanel) {
+    return undefined;
+  }
+
+  const user = state.currentUserId ? state.users[state.currentUserId] : undefined;
+  if (!user) {
+    return undefined;
+  }
+
+  const { primaryField, secondaryField, notesField, title, buttonLabel } = subjectConfig.revisionPanel;
+  const items = Object.values(user.words)
+    .filter(word => word.language === subjectConfig.language)
+    .map(word => {
+      const primary = (word as any)[primaryField];
+      const secondary = secondaryField ? (word as any)[secondaryField] : undefined;
+      const notes = notesField ? (word as any)[notesField] : undefined;
+      return {
+        id: word.id,
+        primary: typeof primary === 'string' ? primary : '',
+        secondary: typeof secondary === 'string' ? secondary : undefined,
+        notes: typeof notes === 'string' ? notes : undefined,
+      } as RevisionPanelItemViewModel;
+    })
+    .filter(item => !!item.primary);
+
+  if (items.length === 0) {
+    return undefined;
+  }
+
+  return {
+    title,
+    buttonLabel: buttonLabel ?? subjectConfig.displayLabel,
+    items,
+  };
 }
 
 export function buildPracticeAppViewModel(params: {
@@ -107,6 +159,7 @@ export function buildPracticeAppViewModel(params: {
     modeOptions: buildModeOptions(),
     columns,
     practice: practiceView,
+    revisionPanel: buildRevisionPanel(state, mode),
   };
 
   return {
@@ -114,4 +167,3 @@ export function buildPracticeAppViewModel(params: {
     home: showOnboarding ? undefined : home,
   };
 }
-

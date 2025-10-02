@@ -16,7 +16,7 @@ import gameSlice from '../state/gameSlice';
 import { traceMiddleware, traceAPI } from '../../app/tracing/traceMiddleware';
 import { handleNextPressed } from '../state/gameActions';
 import type { RootState } from '../state/gameState';
-import { MasteryConfiguration } from '../../domain/value-objects/ModeConfiguration';
+import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
 
 // Test helper to create store with tracing
 function createTestStore() {
@@ -168,14 +168,17 @@ describe("Complete Math Learning Journey", () => {
     
     // Master ALL level 1 math words (not just session words) for proper progression
     // Make MASTER_STEP correct attempts for each word to master it
+    let timestampSeed = Date.now();
     for (const word of allLevel1MathWords) {
       for (let attempt = 1; attempt <= MasteryConfiguration.MASTER_STEP; attempt++) {
+        timestampSeed += 1;
         store.dispatch({
           type: 'game/attempt',
           payload: {
             sessionId: mathSessionId,
             wordId: word.id,
-            result: 'correct'
+            result: 'correct',
+            now: timestampSeed,
           }
         });
       }

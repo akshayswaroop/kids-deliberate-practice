@@ -5,7 +5,7 @@
  * based on mastery levels, complexity, and learning progression rules.
  */
 
-import { MasteryConfiguration } from '../value-objects/ModeConfiguration';
+import { MasteryConfiguration } from '../value-objects/MasteryConfiguration';
 
 export interface Word {
   id: string;
@@ -59,7 +59,6 @@ export class SessionGenerationService {
     });
 
     const selected = unmastered.slice(0, size).map(w => w.id);
-    console.log(`🧪 [SESSION_GEN] Selected ${selected.length}/${size} unmastered words (requested size ${size})`);
     return selected;
   }
 

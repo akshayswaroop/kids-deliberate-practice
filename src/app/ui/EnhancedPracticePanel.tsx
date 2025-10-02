@@ -40,71 +40,49 @@ export default function EnhancedPracticePanel({
   const handleCorrectWithDomain = useCallback(async () => {
     if (currentUserId && currentWordId) {
       try {
-        console.log('🎯 [DDD] Recording correct attempt:', { currentUserId, currentWordId });
-        // Use domain service to record attempt
         const result = await practiceService.recordPracticeAttempt(
           currentUserId,
           currentWordId,
           true
         );
-        
-        console.log('🎯 [DDD] Attempt result:', result);
-        
+
         if (result.success) {
-          // Show domain event message
           setDomainEventMessage(result.event || '🎉 Great job!');
-          
-          // Clear message after 2 seconds
           setTimeout(() => setDomainEventMessage(null), 2000);
-          
-          // Call original handler for Redux compatibility
           onCorrect();
+          return;
         }
-      } catch (error) {
-        console.error('🚨 [DDD] Domain service error:', error);
-        // Fallback to original handler
-        onCorrect();
+      } catch {
+        setDomainEventMessage('⚠️ Unable to reach practice service');
+        setTimeout(() => setDomainEventMessage(null), 2000);
       }
-    } else {
-      console.log('🔄 [Redux] Using original Redux handler (missing DDD props)');
-      // Use original Redux-based handler
-      onCorrect();
     }
+
+    onCorrect();
   }, [currentUserId, currentWordId, practiceService, onCorrect]);
 
   const handleWrongWithDomain = useCallback(async () => {
     if (currentUserId && currentWordId) {
       try {
-        console.log('🎯 [DDD] Recording wrong attempt:', { currentUserId, currentWordId });
-        // Use domain service to record attempt
         const result = await practiceService.recordPracticeAttempt(
           currentUserId,
           currentWordId,
           false
         );
-        
-        console.log('🎯 [DDD] Attempt result:', result);
-        
+
         if (result.success) {
-          // Show domain event message
           setDomainEventMessage(result.event || '📚 Keep practicing!');
-          
-          // Clear message after 2 seconds
           setTimeout(() => setDomainEventMessage(null), 2000);
-          
-          // Call original handler for Redux compatibility
           onWrong();
+          return;
         }
-      } catch (error) {
-        console.error('🚨 [DDD] Domain service error:', error);
-        // Fallback to original handler
-        onWrong();
+      } catch {
+        setDomainEventMessage('⚠️ Unable to reach practice service');
+        setTimeout(() => setDomainEventMessage(null), 2000);
       }
-    } else {
-      console.log('🔄 [Redux] Using original Redux handler (missing DDD props)');
-      // Use original Redux-based handler
-      onWrong();
     }
+
+    onWrong();
   }, [currentUserId, currentWordId, practiceService, onWrong]);
 
   return (

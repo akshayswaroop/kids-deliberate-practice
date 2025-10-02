@@ -88,12 +88,12 @@ export class ProgressTracker {
    * - Progress ≥ 2 = Mastered
    * - Mastery triggers cooldown period
    */
-  recordAttempt(correct: boolean): MasteryEvent | null {
-    const attempt = Attempt.create(correct);
+  recordAttempt(correct: boolean, timestamp: number): MasteryEvent | null {
+    const attempt = Attempt.create(correct, timestamp);
     this.attempts.push(attempt);
 
     const wasAlreadyMastered = this.isMastered();
-    
+
     // Apply progress change based on our domain rules
     if (correct) {
       this.progress = Math.min(5, this.progress + 1);
@@ -106,7 +106,7 @@ export class ProgressTracker {
     
     if (!wasAlreadyMastered && isNowMastered) {
       // Just achieved mastery!
-      this.masteryAchievedAt = new Date();
+      this.masteryAchievedAt = new Date(timestamp);
       this.cooldownSessionsLeft = 3; // Business rule: 3 sessions cooldown
       
       return MasteryEvent.masteryAchieved(this.wordId, this.learnerId, this.progress);

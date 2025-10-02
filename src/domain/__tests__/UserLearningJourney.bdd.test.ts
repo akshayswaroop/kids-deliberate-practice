@@ -12,7 +12,7 @@ import { PracticeSessionService } from '../services/PracticeSessionService';
 import { ProgressTracker } from '../entities/ProgressTracker';
 import { LearnerId } from '../value-objects/LearnerId';
 import { WordId } from '../value-objects/WordId';
-import { MasteryConfiguration } from '../value-objects/ModeConfiguration';
+import { MasteryConfiguration } from '../value-objects/MasteryConfiguration';
 import type { WordDrillInfo, SessionRequirements } from '../services/PracticeSessionService';
 
 describe('🎯 Complete User Learning Journey (Domain BDD)', () => {
@@ -53,7 +53,7 @@ describe('🎯 Complete User Learning Journey (Domain BDD)', () => {
     }
     const tracker = progressTrackers.get(wordId)!;
     for (let i = 0; i < attempts; i++) {
-      tracker.recordAttempt(true);
+      tracker.recordAttempt(true, Date.now());
     }
   }
 

@@ -1,7 +1,30 @@
 import { decrementCooldowns, addSession, setMode, nextCard, attempt, progressComplexityLevel } from './gameSlice';
-import { selectIsSessionFullyMastered, selectWordsByComplexityLevel, selectSessionSizeForMode, selectShouldProgressLevel } from './gameSelectors';
+import {
+  selectIsSessionFullyMastered,
+  selectWordsByComplexityLevel,
+  selectSessionSizeForMode,
+  selectShouldProgressLevel,
+} from './gameSelectors';
 import { SessionGenerationService } from '../../domain/services/SessionGenerationService';
-import type { Word } from './gameState';
+import type { Session, Word } from './gameState';
+import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
+
+const selectNextPracticeIndex = (session: Session | undefined, words: Record<string, Word>): number | null => {
+  if (!session || !Array.isArray(session.wordIds)) return null;
+  const unmasteredIndices: number[] = [];
+  for (let i = 0; i < session.wordIds.length; i++) {
+    const wordId = session.wordIds[i];
+    const word = words[wordId];
+    if (word && !MasteryConfiguration.isMastered(word)) {
+      unmasteredIndices.push(i);
+    }
+  }
+  if (unmasteredIndices.length === 0) {
+    return null;
+  }
+  const randomIndex = Math.floor(Math.random() * unmasteredIndices.length);
+  return unmasteredIndices[randomIndex];
+};
 
 // Thunk to handle UI 'Next' press orchestration. Keeps domain logic out of UI components.
 export const handleNextPressed = (payload: { mode: string }) => (dispatch: any, getState: any) => {
@@ -65,7 +88,12 @@ export const handleNextPressed = (payload: { mode: string }) => (dispatch: any, 
       dispatch(setMode({ mode: payload.mode, sessionId: newSessionId } as any));
     }
   } else {
-    dispatch(nextCard({ sessionId: activeSessionId } as any));
+    const nextIndex = selectNextPracticeIndex(currentSession, user.words);
+    if (nextIndex !== null) {
+      dispatch(nextCard({ sessionId: activeSessionId, nextIndex } as any));
+    } else {
+      dispatch(nextCard({ sessionId: activeSessionId, nextIndex: currentSession.currentIndex, needsNewSession: true } as any));
+    }
   }
 };
 
@@ -90,7 +118,8 @@ export const markCurrentWordCorrect = (payload: { mode: string }) => (dispatch: 
   }
   
   const wordId = session.wordIds[session.currentIndex];
-  dispatch(attempt({ sessionId: activeSessionId, wordId, result: 'correct' } as any));
+  const now = Date.now();
+  dispatch(attempt({ sessionId: activeSessionId, wordId, result: 'correct', now } as any));
 };
 
 // Clean domain action: Mark current word as wrong (UI doesn't need to know about sessions)
@@ -113,7 +142,8 @@ export const markCurrentWordWrong = (payload: { mode: string }) => (dispatch: an
   }
   
   const wordId = session.wordIds[session.currentIndex];
-  dispatch(attempt({ sessionId: activeSessionId, wordId, result: 'wrong' } as any));
+  const now = Date.now();
+  dispatch(attempt({ sessionId: activeSessionId, wordId, result: 'wrong', now } as any));
 };
 
 export const ensureActiveSession = (payload: { mode: string }) => (dispatch: any, getState: any) => {

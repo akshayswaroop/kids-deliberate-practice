@@ -33,7 +33,7 @@ describe('ProgressTracker (Rich Domain Entity)', () => {
     );
     
     // Act
-    const event = tracker.recordAttempt(true); // correct answer
+    const event = tracker.recordAttempt(true, Date.now()); // correct answer
     
     // Assert
     expect(tracker.getProgress()).toBe(1);
@@ -49,8 +49,8 @@ describe('ProgressTracker (Rich Domain Entity)', () => {
     );
     
     // Act - Get to progress 2 (mastery threshold)
-    tracker.recordAttempt(true); // progress = 1
-    const masteryEvent = tracker.recordAttempt(true); // progress = 2 -> MASTERY!
+    tracker.recordAttempt(true, Date.now()); // progress = 1
+    const masteryEvent = tracker.recordAttempt(true, Date.now()); // progress = 2 -> MASTERY!
     
     // Assert
     expect(tracker.getProgress()).toBe(2);
@@ -70,10 +70,10 @@ describe('ProgressTracker (Rich Domain Entity)', () => {
       WordId.fromString('word_123'),
       LearnerId.fromString('learner_456')
     );
-    tracker.recordAttempt(true); // progress = 1
+    tracker.recordAttempt(true, Date.now()); // progress = 1
     
     // Act
-    const event = tracker.recordAttempt(false); // wrong answer
+    const event = tracker.recordAttempt(false, Date.now()); // wrong answer
     
     // Assert
     expect(tracker.getProgress()).toBe(0); // Back to 0
@@ -102,8 +102,8 @@ describe('ProgressTracker (Rich Domain Entity)', () => {
       WordId.fromString('word_123'),
       LearnerId.fromString('learner_456')
     );
-    tracker.recordAttempt(true);
-    tracker.recordAttempt(true); // achieve mastery
+    tracker.recordAttempt(true, Date.now());
+    tracker.recordAttempt(true, Date.now()); // achieve mastery
     tracker.recordReveal();
     
     // Act - Convert to persistence data
@@ -131,7 +131,7 @@ describe('ProgressTracker (Rich Domain Entity)', () => {
  * const needsCooldown = isMastered(word);       // In more selectors
  * 
  * // ✅ NEW: Business logic encapsulated in domain entity
- * const masteryEvent = tracker.recordAttempt(true);  // All logic inside entity
+ * const masteryEvent = tracker.recordAttempt(true, Date.now());  // All logic inside entity
  * const isNowMastered = tracker.isMastered();        // Entity knows its own state
  * 
  * Benefits:

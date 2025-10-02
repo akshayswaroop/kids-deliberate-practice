@@ -36,7 +36,7 @@ describe('PracticeSessionService (Domain Service)', () => {
       WordId.fromString('word_struggling'),
       learnerId
     );
-    strugglingTracker.recordAttempt(true); // progress = 1 (struggling)
+    strugglingTracker.recordAttempt(true, Date.now()); // progress = 1 (struggling)
     progressTrackers.set('word_struggling', strugglingTracker);
 
     // New words have no trackers (will be created as needed)
@@ -73,8 +73,8 @@ describe('PracticeSessionService (Domain Service)', () => {
       WordId.fromString('word_mastered'),
       learnerId
     );
-    masteredTracker.recordAttempt(true); // progress = 1
-    masteredTracker.recordAttempt(true); // progress = 2 (mastered!)
+    masteredTracker.recordAttempt(true, Date.now()); // progress = 1
+    masteredTracker.recordAttempt(true, Date.now()); // progress = 2 (mastered!)
     
     // Simulate cooldown completion
     masteredTracker.decrementCooldown();
@@ -157,8 +157,8 @@ describe('PracticeSessionService (Domain Service)', () => {
     // Master all math words
     for (const word of words.filter(w => w.subject === 'math')) {
       const tracker = ProgressTracker.createNew(WordId.fromString(word.id), learnerId);
-      tracker.recordAttempt(true); // progress = 1
-      tracker.recordAttempt(true); // progress = 2 (mastered)
+      tracker.recordAttempt(true, Date.now()); // progress = 1
+      tracker.recordAttempt(true, Date.now()); // progress = 2 (mastered)
       progressTrackers.set(word.id, tracker);
     }
 
@@ -187,7 +187,7 @@ describe('PracticeSessionService (Domain Service)', () => {
       WordId.fromString('struggling1'),
       learnerId
     );
-    strugglingTracker.recordAttempt(true); // progress = 1 (struggling)
+    strugglingTracker.recordAttempt(true, Date.now()); // progress = 1 (struggling)
     progressTrackers.set('struggling1', strugglingTracker);
 
     const requirements: SessionRequirements = {

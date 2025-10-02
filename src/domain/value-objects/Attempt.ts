@@ -8,13 +8,13 @@ export class Attempt {
   private timestamp: number;
   private result: 'correct' | 'wrong';
 
-  private constructor(result: 'correct' | 'wrong', timestamp?: number) {
+  private constructor(result: 'correct' | 'wrong', timestamp: number) {
     this.result = result;
-    this.timestamp = timestamp || Date.now();
+    this.timestamp = timestamp;
   }
 
-  static create(correct: boolean): Attempt {
-    return new Attempt(correct ? 'correct' : 'wrong');
+  static create(correct: boolean, timestamp: number): Attempt {
+    return new Attempt(correct ? 'correct' : 'wrong', timestamp);
   }
 
   static fromData(data: { timestamp: number; result: 'correct' | 'wrong' }): Attempt {

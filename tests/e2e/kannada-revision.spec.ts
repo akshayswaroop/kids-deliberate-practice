@@ -14,20 +14,20 @@ test.describe('Story: Kannada Revision Library', () => {
 
     await page.getByTestId('practice-root').waitFor();
 
-    await expect(page.getByTestId('btn-kannada-revision')).toHaveCount(0);
+    await expect(page.getByTestId('btn-revision-panel')).toHaveCount(0);
 
     await page.selectOption('#mode-select', 'kannadaalphabets');
-    await expect(page.getByTestId('btn-kannada-revision')).toBeVisible();
+    await expect(page.getByTestId('btn-revision-panel')).toBeVisible();
     await page.waitForTimeout(50);
-    await page.getByTestId('btn-kannada-revision').click();
+    await page.getByTestId('btn-revision-panel').click();
 
-    await page.waitForFunction(() => !!document.querySelector('.kr-grid'), { timeout: 5000 });
+    await page.waitForFunction(() => !!document.querySelector('.revision-grid'), { timeout: 5000 });
 
-    const grid = page.locator('.kr-grid');
+    const grid = page.locator('.revision-grid');
     await expect(grid).toBeVisible();
 
     const metrics = await page.evaluate(() => {
-      const el = document.querySelector<HTMLElement>('.kr-grid');
+      const el = document.querySelector<HTMLElement>('.revision-grid');
       if (!el) return null;
       const { scrollHeight, clientHeight } = el;
       return { scrollHeight, clientHeight };
@@ -36,7 +36,7 @@ test.describe('Story: Kannada Revision Library', () => {
     expect(metrics && metrics.scrollHeight > metrics.clientHeight).toBeTruthy();
 
     const scrolled = await page.evaluate(() => {
-      const el = document.querySelector<HTMLElement>('.kr-grid');
+      const el = document.querySelector<HTMLElement>('.revision-grid');
       if (!el) return false;
       el.scrollTop = el.scrollHeight;
       return el.scrollTop > 0;

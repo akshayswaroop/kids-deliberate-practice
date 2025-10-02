@@ -3,7 +3,8 @@
 
 import type { RootState } from './gameState';
 import type { Word } from './gameState';
-import { MasteryConfiguration, ModeConfiguration } from '../../domain/value-objects/ModeConfiguration';
+import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
+import { ModeConfiguration } from '../config/modeConfiguration';
 
 // Step-based mastery calculation per new spec (0-5 where 5 = mastered)
 export function selectMasteryStep(state: RootState, wordId: string): number {

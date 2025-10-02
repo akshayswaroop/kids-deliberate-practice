@@ -33,8 +33,8 @@ export function StatsOverlay({ currentUserId, visible, isCorrect }: StatsOverlay
         const learnerId = LearnerId.fromString(currentUserId);
         const statistics = await progressRepo.getStatistics(learnerId);
         setStats(statistics);
-      } catch (error) {
-        console.error('Failed to load stats:', error);
+      } catch {
+        setStats(null);
       }
     };
     

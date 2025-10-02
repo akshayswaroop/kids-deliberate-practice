@@ -137,8 +137,8 @@ describe('Domain Events System', () => {
     const tracker = ProgressTracker.createNew(wordId, learnerId);
 
     // Act - Record attempts that lead to mastery
-    const event1 = tracker.recordAttempt(true);  // progress = 1
-    const event2 = tracker.recordAttempt(true);  // progress = 2 (mastered!)
+    const event1 = tracker.recordAttempt(true, Date.now());  // progress = 1
+    const event2 = tracker.recordAttempt(true, Date.now());  // progress = 2 (mastered!)
 
     // Assert - Should generate mastery achievement event
     expect(event1).toBeNull(); // No mastery yet
@@ -163,8 +163,8 @@ describe('Domain Events System', () => {
 
     // 2. Progress during session (would come from ProgressTracker)
     const tracker = ProgressTracker.createNew(WordId.fromString('word1'), learnerId);
-    const masteryEvent1 = tracker.recordAttempt(true);
-    const masteryEvent2 = tracker.recordAttempt(true); // Mastery achieved
+    const masteryEvent1 = tracker.recordAttempt(true, Date.now());
+    const masteryEvent2 = tracker.recordAttempt(true, Date.now()); // Mastery achieved
     
     if (masteryEvent1) sessionEvents.push(masteryEvent1);
     if (masteryEvent2) sessionEvents.push(masteryEvent2);
@@ -203,11 +203,11 @@ describe('Domain Events System', () => {
  * Compare to the OLD approach without events:
  * 
  * // ❌ OLD: Side effects hidden in business logic
- * tracker.recordAttempt(true);
+ * tracker.recordAttempt(true, Date.now());
  * // Hidden: notifications, achievements, analytics, audit logs
  * 
  * // ✅ NEW: All business moments explicit as events
- * const events = tracker.recordAttempt(true);
+ * const events = tracker.recordAttempt(true, Date.now());
  * events.forEach(event => eventDispatcher.dispatch(event));
  * 
  * Key Benefits:

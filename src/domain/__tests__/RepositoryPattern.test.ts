@@ -63,7 +63,7 @@ describe('Repository Pattern with Domain Services', () => {
 
     const progressMap = new Map<string, ProgressTracker>();
     const strugglingTracker = ProgressTracker.createNew(WordId.fromString('word2'), learnerId);
-    strugglingTracker.recordAttempt(true); // progress = 1 (struggling)
+    strugglingTracker.recordAttempt(true, Date.now()); // progress = 1 (struggling)
     progressMap.set('word2', strugglingTracker);
 
     // Configure mock repository responses
@@ -108,8 +108,8 @@ describe('Repository Pattern with Domain Services', () => {
     
     // Simulate mastery
     masteredTrackers.forEach(tracker => {
-      tracker.recordAttempt(true);
-      tracker.recordAttempt(true); // progress = 2 (mastered)
+      tracker.recordAttempt(true, Date.now());
+      tracker.recordAttempt(true, Date.now()); // progress = 2 (mastered)
     });
 
     vi.mocked(mockProgressRepository.findMasteredByLearnerAndSubject)

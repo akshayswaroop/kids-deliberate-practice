@@ -19,11 +19,11 @@ describe('Turnaround Detection (Growth & Resilience)', () => {
     );
     
     // Act: Wrong attempt, then multiple correct attempts to achieve mastery
-    tracker.recordAttempt(false); // wrong → progress = 0
+    tracker.recordAttempt(false, Date.now()); // wrong → progress = 0
     expect(tracker.isTurnaround()).toBe(false); // Not mastered yet
     
-    tracker.recordAttempt(true);  // correct → progress = 1
-    tracker.recordAttempt(true);  // correct → progress = 2 (mastered!)
+    tracker.recordAttempt(true, Date.now());  // correct → progress = 1
+    tracker.recordAttempt(true, Date.now());  // correct → progress = 2 (mastered!)
     
     // Assert: Now it's a turnaround (was wrong, now mastered)
     expect(tracker.isMastered()).toBe(true);
@@ -38,8 +38,8 @@ describe('Turnaround Detection (Growth & Resilience)', () => {
     );
     
     // Act: Only correct attempts
-    tracker.recordAttempt(true);  // progress = 1
-    tracker.recordAttempt(true);  // progress = 2 (mastered!)
+    tracker.recordAttempt(true, Date.now());  // progress = 1
+    tracker.recordAttempt(true, Date.now());  // progress = 2 (mastered!)
     
     // Assert: Mastered but not a turnaround (no struggle)
     expect(tracker.isMastered()).toBe(true);
@@ -54,8 +54,8 @@ describe('Turnaround Detection (Growth & Resilience)', () => {
     );
     
     // Act: Wrong attempt but not mastered yet
-    tracker.recordAttempt(false); // progress = 0
-    tracker.recordAttempt(true);  // progress = 1
+    tracker.recordAttempt(false, Date.now()); // progress = 0
+    tracker.recordAttempt(true, Date.now());  // progress = 1
     
     // Assert: Not mastered, so not a turnaround yet
     expect(tracker.isMastered()).toBe(false);
@@ -70,12 +70,12 @@ describe('Turnaround Detection (Growth & Resilience)', () => {
     );
     
     // Act: Multiple wrong attempts, then correct to mastery
-    tracker.recordAttempt(false); // progress = 0
-    tracker.recordAttempt(false); // progress = 0
-    tracker.recordAttempt(true);  // progress = 1
-    tracker.recordAttempt(false); // progress = 0
-    tracker.recordAttempt(true);  // progress = 1
-    tracker.recordAttempt(true);  // progress = 2 (mastered!)
+    tracker.recordAttempt(false, Date.now()); // progress = 0
+    tracker.recordAttempt(false, Date.now()); // progress = 0
+    tracker.recordAttempt(true, Date.now());  // progress = 1
+    tracker.recordAttempt(false, Date.now()); // progress = 0
+    tracker.recordAttempt(true, Date.now());  // progress = 1
+    tracker.recordAttempt(true, Date.now());  // progress = 2 (mastered!)
     
     // Assert: Turnaround shows resilience
     expect(tracker.isMastered()).toBe(true);
@@ -89,9 +89,9 @@ describe('Turnaround Detection (Growth & Resilience)', () => {
       LearnerId.fromString('learner_456')
     );
     
-    tracker.recordAttempt(false); // wrong
-    tracker.recordAttempt(true);  // correct
-    tracker.recordAttempt(true);  // mastered
+    tracker.recordAttempt(false, Date.now()); // wrong
+    tracker.recordAttempt(true, Date.now());  // correct
+    tracker.recordAttempt(true, Date.now());  // mastered
     
     // Act: Serialize and restore
     const data = tracker.toData();
@@ -181,9 +181,9 @@ describe('Turnaround Business Logic Examples', () => {
         LearnerId.fromString('learner_456')
       );
       
-      tracker.recordAttempt(false); // struggle
-      tracker.recordAttempt(true);  // improve
-      tracker.recordAttempt(true);  // mastered!
+      tracker.recordAttempt(false, Date.now()); // struggle
+      tracker.recordAttempt(true, Date.now());  // improve
+      tracker.recordAttempt(true, Date.now());  // mastered!
       
       if (tracker.isTurnaround()) {
         turnarounds.push(tracker);

@@ -6,7 +6,8 @@
  */
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import type { RootState } from '../../infrastructure/state/gameState';
-import { MasteryConfiguration } from '../../domain/value-objects/ModeConfiguration';
+import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
+import { buildPracticeAppViewModel } from '../presenters/practicePresenter';
 import type {
   TraceEntry,
   TraceSession,
@@ -223,8 +224,8 @@ function analyzeDomainChanges(stateBefore: RootState, stateAfter: RootState, act
         userId: action.payload?.userId || 'unknown',
       };
     }
-  } catch (error) {
-    console.warn('Trace domain analysis failed:', error);
+  } catch {
+    // Ignore trace analysis failures to keep trace pipeline resilient
   }
 
   return context;
@@ -255,20 +256,50 @@ traceMiddleware.startListening({
 
     const endTime = typeof performance !== 'undefined' ? performance.now() : Date.now();
 
+    const resolvedMode = (() => {
+      const stateMode = afterContext.activeMode && afterContext.activeMode !== 'none'
+        ? afterContext.activeMode
+        : undefined;
+      const payloadMode = (action.payload && (action.payload.mode || action.payload.language)) || undefined;
+      if (stateMode) return stateMode;
+      if (payloadMode && typeof payloadMode === 'string') return payloadMode;
+      const userId = stateAfter.currentUserId;
+      if (userId) {
+        const user = stateAfter.users[userId];
+        if (user?.currentMode) {
+          return user.currentMode;
+        }
+      }
+      return 'english';
+    })();
+
+    const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 1280;
+    const practiceViewModel = buildPracticeAppViewModel({
+      state: stateAfter,
+      mode: resolvedMode,
+      windowWidth,
+    });
+
+    const intent = {
+      type: action.type,
+      payload: action.payload,
+    };
+
     const entry: TraceEntry = {
       id: generateTraceId(),
       timestamp: Date.now(),
       sessionId: getCurrentSession().sessionId,
-      action: {
-        type: action.type,
-        payload: action.payload,
-      },
+      action: intent,
+      intent,
       stateBefore: beforeContext,
       stateAfter: afterContext,
       domainContext,
       performance: {
         actionDuration: endTime - startTime,
         stateSerializationTime,
+      },
+      viewModel: {
+        practiceApp: practiceViewModel,
       },
     };
 

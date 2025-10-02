@@ -65,8 +65,8 @@ export function CleanPracticeComponent() {
       setCurrentSession(result);
       setCurrentWordIndex(0);
       setAttemptResult(null);
-    } catch (error) {
-      console.error('Failed to start practice:', error);
+    } catch {
+      setAttemptResult({ success: false, event: '⚠️ Unable to start practice session.' });
     } finally {
       setIsLoading(false);
     }
@@ -80,8 +80,8 @@ export function CleanPracticeComponent() {
       setCurrentSession(result);
       setCurrentWordIndex(0);
       setAttemptResult(null);
-    } catch (error) {
-      console.error('Failed to start adaptive session:', error);
+    } catch {
+      setAttemptResult({ success: false, event: '⚠️ Unable to start adaptive session.' });
     } finally {
       setIsLoading(false);
     }
@@ -116,8 +116,8 @@ export function CleanPracticeComponent() {
           setAttemptResult(null);
         }
       }, 1500);
-    } catch (error) {
-      console.error('Failed to record attempt:', error);
+    } catch {
+      setAttemptResult({ success: false, event: '⚠️ Unable to record attempt.' });
     } finally {
       setIsLoading(false);
     }

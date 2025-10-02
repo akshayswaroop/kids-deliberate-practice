@@ -1,4 +1,4 @@
-.kr-container {
+.revision-container {
   padding: 20px;
   height: 100%;
   box-sizing: border-box;
@@ -9,12 +9,12 @@
   min-height: 0; /* allow children to scroll */
   overflow-y: auto;
 }
-.kr-header {
+.revision-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.kr-grid {
+.revision-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 12px;
@@ -25,7 +25,7 @@
   min-height: 0; /* allow vertical scrolling inside parent flex container */
   height: 100%;
 }
-.kr-tile {
+.revision-tile {
   background: var(--bg-accent);
   border-radius: 12px;
   padding: 12px;
@@ -36,7 +36,7 @@
   min-height: 120px;
   box-shadow: var(--shadow-soft);
 }
-.kr-letter {
+.revision-primary {
   font-size: 48px;
   font-weight: 900;
   background: linear-gradient(90deg, #ff5f6d, #ffc371, #9be15d, #00c6ff, #a18cd1);
@@ -46,18 +46,18 @@
   display: block;
   text-align: center;
 }
-.kr-answer {
+.revision-secondary {
   margin-top: 8px;
   font-size: 14px;
   color: var(--text-secondary);
   text-align: center;
 }
-.kr-notes {
+.revision-notes {
   margin-top: 6px;
   font-size: 12px;
   color: var(--text-tertiary);
 }
-.kr-close {
+.revision-close {
   background: transparent;
   border: 1px solid var(--text-secondary);
   color: var(--text-secondary);

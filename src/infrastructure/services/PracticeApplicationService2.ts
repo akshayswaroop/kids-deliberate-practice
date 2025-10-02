@@ -81,7 +81,7 @@ export class PracticeApplicationService {
       }
 
       // Record attempt (generates domain events)
-      progress.recordAttempt({ isCorrect, timestamp: new Date() } as any);
+      progress.recordAttempt(isCorrect, Date.now());
       
       // Save updated progress
       await progressRepo.save(progress);

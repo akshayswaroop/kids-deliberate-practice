@@ -24,8 +24,10 @@ export class ProgressTrackerMapper {
     
     // Restore the state from Redux (we'll need to add this method to ProgressTracker)
     // For now, create attempts to simulate the progress
+    let replayTimestamp = reduxWord.lastPracticedAt ?? 0;
     for (let i = 0; i < reduxWord.step; i++) {
-      tracker.recordAttempt(true); // Simulate correct attempts to reach current step
+      replayTimestamp += 1;
+      tracker.recordAttempt(true, replayTimestamp); // Simulate correct attempts to reach current step
     }
     
     return tracker;

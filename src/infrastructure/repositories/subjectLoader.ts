@@ -42,6 +42,13 @@ export interface SubjectConfig {
   language: string;       // e.g., 'english', 'kannada', 'mathtables'
   displayIcon: string;    // e.g., '🇺🇸', '🇮🇳', '🔢'
   displayLabel: string;   // e.g., 'English', 'Kannada', 'Math Tables'
+  revisionPanel?: {
+    title: string;
+    buttonLabel?: string;
+    primaryField: keyof Word;
+    secondaryField?: keyof Word;
+    notesField?: keyof Word;
+  };
 }
 
 /**
@@ -72,8 +79,34 @@ export function loadSubjectWords(bankData: QuestionBankItem[], language: string)
  */
 export const SUBJECT_CONFIGS: SubjectConfig[] = [
   { name: 'english', bankPath: 'english_questions_bank.json', language: 'english', displayIcon: '🇺🇸', displayLabel: 'English' },
-  { name: 'kannada', bankPath: 'kannada_words_bank.json', language: 'kannada', displayIcon: '🇮🇳', displayLabel: 'Kannada' },
-  { name: 'kannadaalphabets', bankPath: 'kannada_alphabets_bank.json', language: 'kannadaalphabets', displayIcon: '🔤', displayLabel: 'Kannada Alphabets' },
+  {
+    name: 'kannada',
+    bankPath: 'kannada_words_bank.json',
+    language: 'kannada',
+    displayIcon: '🇮🇳',
+    displayLabel: 'Kannada',
+    revisionPanel: {
+      title: 'Kannada Revision',
+      buttonLabel: 'Kannada Revision',
+      primaryField: 'text',
+      secondaryField: 'answer',
+      notesField: 'notes',
+    },
+  },
+  {
+    name: 'kannadaalphabets',
+    bankPath: 'kannada_alphabets_bank.json',
+    language: 'kannadaalphabets',
+    displayIcon: '🔤',
+    displayLabel: 'Kannada Alphabets',
+    revisionPanel: {
+      title: 'Kannada Alphabet Revision',
+      buttonLabel: 'Alphabet Revision',
+      primaryField: 'text',
+      secondaryField: 'answer',
+      notesField: 'notes',
+    },
+  },
   { name: 'hindialphabets', bankPath: 'hindi_full_barakhadi_bank.json', language: 'hindialphabets', displayIcon: '🇮🇳', displayLabel: 'Hindi Alphabets' },
   { name: 'mathtables', bankPath: 'math_tables_bank.json', language: 'mathtables', displayIcon: '🔢', displayLabel: 'Math Tables' },
   { name: 'humanbody', bankPath: 'human_body_grade3_full.json', language: 'humanbody', displayIcon: '🧠', displayLabel: 'Human Body' },
@@ -114,11 +147,9 @@ export function loadAllWords(): Record<string, Word> {
       if (bankData) {
         const subjectWords = loadSubjectWords(bankData, subjectConfig.language);
         Object.assign(allWords, subjectWords);
-      } else {
-        console.error(`Bank data not found for: ${subjectConfig.bankPath}`);
       }
-    } catch (error) {
-      console.error(`Failed to load subject: ${subjectConfig.name}`, error);
+    } catch {
+      // Ignore individual subject failures so other banks can still load
     }
   }
   

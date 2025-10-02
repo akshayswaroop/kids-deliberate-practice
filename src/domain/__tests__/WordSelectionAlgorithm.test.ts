@@ -67,8 +67,8 @@ describe('🔍 Word Selection Algorithm: Struggling vs Strong Priority', () => {
     masteredWordIds.forEach(wordId => {
       const tracker = ProgressTracker.createNew(WordId.fromString(wordId), learnerId);
       // Simulate getting answers correct → reaches mastery (progress >= 2)
-      tracker.recordAttempt(true);  // progress = 1
-      tracker.recordAttempt(true);  // progress = 2 (MASTERED!)
+      tracker.recordAttempt(true, Date.now());  // progress = 1
+      tracker.recordAttempt(true, Date.now());  // progress = 2 (MASTERED!)
       // This triggers cooldownSessionsLeft = 3
       progressTrackers.set(wordId, tracker);
     });
@@ -79,9 +79,9 @@ describe('🔍 Word Selection Algorithm: Struggling vs Strong Priority', () => {
     strugglingWordIds.forEach(wordId => {
       const tracker = ProgressTracker.createNew(WordId.fromString(wordId), learnerId);
       // Simulate mixed results - some progress but not mastered
-      tracker.recordAttempt(true);  // progress = 1 
-      tracker.recordAttempt(false); // progress = 0
-      tracker.recordAttempt(true);  // progress = 1 (STRUGGLING - has progress but < 2)
+      tracker.recordAttempt(true, Date.now());  // progress = 1 
+      tracker.recordAttempt(false, Date.now()); // progress = 0
+      tracker.recordAttempt(true, Date.now());  // progress = 1 (STRUGGLING - has progress but < 2)
       progressTrackers.set(wordId, tracker);
     });
     
@@ -197,8 +197,8 @@ describe('🔍 Word Selection Algorithm: Struggling vs Strong Priority', () => {
     const strugglingTracker1 = progressTrackers.get('word_10')!;
     const strugglingTracker2 = progressTrackers.get('word_11')!;
     
-    strugglingTracker1.recordAttempt(true); // progress = 1 → 2 (mastered!)
-    strugglingTracker2.recordAttempt(true); // progress = 1 → 2 (mastered!)
+    strugglingTracker1.recordAttempt(true, Date.now()); // progress = 1 → 2 (mastered!)
+    strugglingTracker2.recordAttempt(true, Date.now()); // progress = 1 → 2 (mastered!)
     
     // Decrement cooldowns for all mastered words (1 session passed)
     progressTrackers.forEach(tracker => {
