@@ -14,7 +14,14 @@ test.describe('Story: Kannada Revision Library', () => {
 
     await page.getByTestId('practice-root').waitFor();
 
-    await page.getByRole('button', { name: 'Kannada Revision' }).click();
+    await expect(page.getByTestId('btn-kannada-revision')).toHaveCount(0);
+
+    await page.selectOption('#mode-select', 'kannadaalphabets');
+    await expect(page.getByTestId('btn-kannada-revision')).toBeVisible();
+    await page.waitForTimeout(50);
+    await page.getByTestId('btn-kannada-revision').click();
+
+    await page.waitForFunction(() => !!document.querySelector('.kr-grid'), { timeout: 5000 });
 
     const grid = page.locator('.kr-grid');
     await expect(grid).toBeVisible();

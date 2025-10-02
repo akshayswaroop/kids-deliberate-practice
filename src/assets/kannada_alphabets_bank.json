@@ -471,14 +471,14 @@
   {
     "id": "barakhadi_007",
     "question": "ಕೆ",
-    "answer": "Hindi: के",
+    "answer": "Hindi: के — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_008",
     "question": "ಕೇ",
-    "answer": "Hindi: के",
+    "answer": "Hindi: के — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -492,14 +492,14 @@
   {
     "id": "barakhadi_010",
     "question": "ಕೊ",
-    "answer": "Hindi: को",
+    "answer": "Hindi: को — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_011",
     "question": "ಕೋ",
-    "answer": "Hindi: को",
+    "answer": "Hindi: को — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -555,14 +555,14 @@
   {
     "id": "barakhadi_019",
     "question": "ಖೆ",
-    "answer": "Hindi: खे",
+    "answer": "Hindi: खे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_020",
     "question": "ಖೇ",
-    "answer": "Hindi: खे",
+    "answer": "Hindi: खे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -576,14 +576,14 @@
   {
     "id": "barakhadi_022",
     "question": "ಖೊ",
-    "answer": "Hindi: खो",
+    "answer": "Hindi: खो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_023",
     "question": "ಖೋ",
-    "answer": "Hindi: खो",
+    "answer": "Hindi: खो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -639,14 +639,14 @@
   {
     "id": "barakhadi_031",
     "question": "ಗೆ",
-    "answer": "Hindi: गे",
+    "answer": "Hindi: गे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_032",
     "question": "ಗೇ",
-    "answer": "Hindi: गे",
+    "answer": "Hindi: गे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -660,14 +660,14 @@
   {
     "id": "barakhadi_034",
     "question": "ಗೊ",
-    "answer": "Hindi: गो",
+    "answer": "Hindi: गो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_035",
     "question": "ಗೋ",
-    "answer": "Hindi: गो",
+    "answer": "Hindi: गो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -723,14 +723,14 @@
   {
     "id": "barakhadi_043",
     "question": "ಘೆ",
-    "answer": "Hindi: घे",
+    "answer": "Hindi: घे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_044",
     "question": "ಘೇ",
-    "answer": "Hindi: घे",
+    "answer": "Hindi: घे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -744,14 +744,14 @@
   {
     "id": "barakhadi_046",
     "question": "ಘೊ",
-    "answer": "Hindi: घो",
+    "answer": "Hindi: घो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_047",
     "question": "ಘೋ",
-    "answer": "Hindi: घो",
+    "answer": "Hindi: घो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -807,14 +807,14 @@
   {
     "id": "barakhadi_055",
     "question": "ಙೆ",
-    "answer": "Hindi: ङे",
+    "answer": "Hindi: ङे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_056",
     "question": "ಙೇ",
-    "answer": "Hindi: ङे",
+    "answer": "Hindi: ङे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -828,14 +828,14 @@
   {
     "id": "barakhadi_058",
     "question": "ಙೊ",
-    "answer": "Hindi: ङो",
+    "answer": "Hindi: ङो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_059",
     "question": "ಙೋ",
-    "answer": "Hindi: ङो",
+    "answer": "Hindi: ङो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -891,14 +891,14 @@
   {
     "id": "barakhadi_067",
     "question": "ಚೆ",
-    "answer": "Hindi: चे",
+    "answer": "Hindi: चे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_068",
     "question": "ಚೇ",
-    "answer": "Hindi: चे",
+    "answer": "Hindi: चे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -912,14 +912,14 @@
   {
     "id": "barakhadi_070",
     "question": "ಚೊ",
-    "answer": "Hindi: चो",
+    "answer": "Hindi: चो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_071",
     "question": "ಚೋ",
-    "answer": "Hindi: चो",
+    "answer": "Hindi: चो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -975,14 +975,14 @@
   {
     "id": "barakhadi_079",
     "question": "ಛೆ",
-    "answer": "Hindi: छे",
+    "answer": "Hindi: छे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_080",
     "question": "ಛೇ",
-    "answer": "Hindi: छे",
+    "answer": "Hindi: छे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -996,14 +996,14 @@
   {
     "id": "barakhadi_082",
     "question": "ಛೊ",
-    "answer": "Hindi: छो",
+    "answer": "Hindi: छो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_083",
     "question": "ಛೋ",
-    "answer": "Hindi: छो",
+    "answer": "Hindi: छो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1059,14 +1059,14 @@
   {
     "id": "barakhadi_091",
     "question": "ಜೆ",
-    "answer": "Hindi: जे",
+    "answer": "Hindi: जे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_092",
     "question": "ಜೇ",
-    "answer": "Hindi: जे",
+    "answer": "Hindi: जे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1080,14 +1080,14 @@
   {
     "id": "barakhadi_094",
     "question": "ಜೊ",
-    "answer": "Hindi: जो",
+    "answer": "Hindi: जो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_095",
     "question": "ಜೋ",
-    "answer": "Hindi: जो",
+    "answer": "Hindi: जो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1143,14 +1143,14 @@
   {
     "id": "barakhadi_103",
     "question": "ಝೆ",
-    "answer": "Hindi: झे",
+    "answer": "Hindi: झे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_104",
     "question": "ಝೇ",
-    "answer": "Hindi: झे",
+    "answer": "Hindi: झे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1164,14 +1164,14 @@
   {
     "id": "barakhadi_106",
     "question": "ಝೊ",
-    "answer": "Hindi: झो",
+    "answer": "Hindi: झो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_107",
     "question": "ಝೋ",
-    "answer": "Hindi: झो",
+    "answer": "Hindi: झो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1227,14 +1227,14 @@
   {
     "id": "barakhadi_115",
     "question": "ಞೆ",
-    "answer": "Hindi: ञे",
+    "answer": "Hindi: ञे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_116",
     "question": "ಞೇ",
-    "answer": "Hindi: ञे",
+    "answer": "Hindi: ञे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1248,14 +1248,14 @@
   {
     "id": "barakhadi_118",
     "question": "ಞೊ",
-    "answer": "Hindi: ञो",
+    "answer": "Hindi: ञो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_119",
     "question": "ಞೋ",
-    "answer": "Hindi: ञो",
+    "answer": "Hindi: ञो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1311,14 +1311,14 @@
   {
     "id": "barakhadi_127",
     "question": "ಟೆ",
-    "answer": "Hindi: टे",
+    "answer": "Hindi: टे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_128",
     "question": "ಟೇ",
-    "answer": "Hindi: टे",
+    "answer": "Hindi: टे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1332,14 +1332,14 @@
   {
     "id": "barakhadi_130",
     "question": "ಟೊ",
-    "answer": "Hindi: टो",
+    "answer": "Hindi: टो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_131",
     "question": "ಟೋ",
-    "answer": "Hindi: टो",
+    "answer": "Hindi: टो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1395,14 +1395,14 @@
   {
     "id": "barakhadi_139",
     "question": "ಠೆ",
-    "answer": "Hindi: ठे",
+    "answer": "Hindi: ठे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_140",
     "question": "ಠೇ",
-    "answer": "Hindi: ठे",
+    "answer": "Hindi: ठे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1416,14 +1416,14 @@
   {
     "id": "barakhadi_142",
     "question": "ಠೊ",
-    "answer": "Hindi: ठो",
+    "answer": "Hindi: ठो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_143",
     "question": "ಠೋ",
-    "answer": "Hindi: ठो",
+    "answer": "Hindi: ठो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1479,14 +1479,14 @@
   {
     "id": "barakhadi_151",
     "question": "ಡೆ",
-    "answer": "Hindi: डे",
+    "answer": "Hindi: डे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_152",
     "question": "ಡೇ",
-    "answer": "Hindi: डे",
+    "answer": "Hindi: डे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1500,14 +1500,14 @@
   {
     "id": "barakhadi_154",
     "question": "ಡೊ",
-    "answer": "Hindi: डो",
+    "answer": "Hindi: डो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_155",
     "question": "ಡೋ",
-    "answer": "Hindi: डो",
+    "answer": "Hindi: डो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1563,14 +1563,14 @@
   {
     "id": "barakhadi_163",
     "question": "ಢೆ",
-    "answer": "Hindi: ढे",
+    "answer": "Hindi: ढे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_164",
     "question": "ಢೇ",
-    "answer": "Hindi: ढे",
+    "answer": "Hindi: ढे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1584,14 +1584,14 @@
   {
     "id": "barakhadi_166",
     "question": "ಢೊ",
-    "answer": "Hindi: ढो",
+    "answer": "Hindi: ढो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_167",
     "question": "ಢೋ",
-    "answer": "Hindi: ढो",
+    "answer": "Hindi: ढो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1647,14 +1647,14 @@
   {
     "id": "barakhadi_175",
     "question": "ಣೆ",
-    "answer": "Hindi: णे",
+    "answer": "Hindi: णे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_176",
     "question": "ಣೇ",
-    "answer": "Hindi: णे",
+    "answer": "Hindi: णे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1668,14 +1668,14 @@
   {
     "id": "barakhadi_178",
     "question": "ಣೊ",
-    "answer": "Hindi: णो",
+    "answer": "Hindi: णो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_179",
     "question": "ಣೋ",
-    "answer": "Hindi: णो",
+    "answer": "Hindi: णो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1731,14 +1731,14 @@
   {
     "id": "barakhadi_187",
     "question": "ತೆ",
-    "answer": "Hindi: ते",
+    "answer": "Hindi: ते — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_188",
     "question": "ತೇ",
-    "answer": "Hindi: ते",
+    "answer": "Hindi: ते — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1752,14 +1752,14 @@
   {
     "id": "barakhadi_190",
     "question": "ತೊ",
-    "answer": "Hindi: तो",
+    "answer": "Hindi: तो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_191",
     "question": "ತೋ",
-    "answer": "Hindi: तो",
+    "answer": "Hindi: तो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1815,14 +1815,14 @@
   {
     "id": "barakhadi_199",
     "question": "ಥೆ",
-    "answer": "Hindi: थे",
+    "answer": "Hindi: थे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_200",
     "question": "ಥೇ",
-    "answer": "Hindi: थे",
+    "answer": "Hindi: थे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1836,14 +1836,14 @@
   {
     "id": "barakhadi_202",
     "question": "ಥೊ",
-    "answer": "Hindi: थो",
+    "answer": "Hindi: थो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_203",
     "question": "ಥೋ",
-    "answer": "Hindi: थो",
+    "answer": "Hindi: थो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1899,14 +1899,14 @@
   {
     "id": "barakhadi_211",
     "question": "ದೆ",
-    "answer": "Hindi: दे",
+    "answer": "Hindi: दे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_212",
     "question": "ದೇ",
-    "answer": "Hindi: दे",
+    "answer": "Hindi: दे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -1920,14 +1920,14 @@
   {
     "id": "barakhadi_214",
     "question": "ದೊ",
-    "answer": "Hindi: दो",
+    "answer": "Hindi: दो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_215",
     "question": "ದೋ",
-    "answer": "Hindi: दो",
+    "answer": "Hindi: दो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -1983,14 +1983,14 @@
   {
     "id": "barakhadi_223",
     "question": "ಧೆ",
-    "answer": "Hindi: धे",
+    "answer": "Hindi: धे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_224",
     "question": "ಧೇ",
-    "answer": "Hindi: धे",
+    "answer": "Hindi: धे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2004,14 +2004,14 @@
   {
     "id": "barakhadi_226",
     "question": "ಧೊ",
-    "answer": "Hindi: धो",
+    "answer": "Hindi: धो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_227",
     "question": "ಧೋ",
-    "answer": "Hindi: धो",
+    "answer": "Hindi: धो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2067,14 +2067,14 @@
   {
     "id": "barakhadi_235",
     "question": "ನೆ",
-    "answer": "Hindi: ने",
+    "answer": "Hindi: ने — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_236",
     "question": "ನೇ",
-    "answer": "Hindi: ने",
+    "answer": "Hindi: ने — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2088,14 +2088,14 @@
   {
     "id": "barakhadi_238",
     "question": "ನೊ",
-    "answer": "Hindi: नो",
+    "answer": "Hindi: नो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_239",
     "question": "ನೋ",
-    "answer": "Hindi: नो",
+    "answer": "Hindi: नो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2151,14 +2151,14 @@
   {
     "id": "barakhadi_247",
     "question": "ಪೆ",
-    "answer": "Hindi: पे",
+    "answer": "Hindi: पे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_248",
     "question": "ಪೇ",
-    "answer": "Hindi: पे",
+    "answer": "Hindi: पे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2172,14 +2172,14 @@
   {
     "id": "barakhadi_250",
     "question": "ಪೊ",
-    "answer": "Hindi: पो",
+    "answer": "Hindi: पो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_251",
     "question": "ಪೋ",
-    "answer": "Hindi: पो",
+    "answer": "Hindi: पो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2235,14 +2235,14 @@
   {
     "id": "barakhadi_259",
     "question": "ಫೆ",
-    "answer": "Hindi: फे",
+    "answer": "Hindi: फे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_260",
     "question": "ಫೇ",
-    "answer": "Hindi: फे",
+    "answer": "Hindi: फे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2256,14 +2256,14 @@
   {
     "id": "barakhadi_262",
     "question": "ಫೊ",
-    "answer": "Hindi: फो",
+    "answer": "Hindi: फो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_263",
     "question": "ಫೋ",
-    "answer": "Hindi: फो",
+    "answer": "Hindi: फो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2319,14 +2319,14 @@
   {
     "id": "barakhadi_271",
     "question": "ಬೆ",
-    "answer": "Hindi: बे",
+    "answer": "Hindi: बे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_272",
     "question": "ಬೇ",
-    "answer": "Hindi: बे",
+    "answer": "Hindi: बे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2340,14 +2340,14 @@
   {
     "id": "barakhadi_274",
     "question": "ಬೊ",
-    "answer": "Hindi: बो",
+    "answer": "Hindi: बो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_275",
     "question": "ಬೋ",
-    "answer": "Hindi: बो",
+    "answer": "Hindi: बो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2403,14 +2403,14 @@
   {
     "id": "barakhadi_283",
     "question": "ಭೆ",
-    "answer": "Hindi: भे",
+    "answer": "Hindi: भे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_284",
     "question": "ಭೇ",
-    "answer": "Hindi: भे",
+    "answer": "Hindi: भे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2424,14 +2424,14 @@
   {
     "id": "barakhadi_286",
     "question": "ಭೊ",
-    "answer": "Hindi: भो",
+    "answer": "Hindi: भो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_287",
     "question": "ಭೋ",
-    "answer": "Hindi: भो",
+    "answer": "Hindi: भो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2487,14 +2487,14 @@
   {
     "id": "barakhadi_295",
     "question": "ಮೆ",
-    "answer": "Hindi: मे",
+    "answer": "Hindi: मे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_296",
     "question": "ಮೇ",
-    "answer": "Hindi: मे",
+    "answer": "Hindi: मे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2508,14 +2508,14 @@
   {
     "id": "barakhadi_298",
     "question": "ಮೊ",
-    "answer": "Hindi: मो",
+    "answer": "Hindi: मो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_299",
     "question": "ಮೋ",
-    "answer": "Hindi: मो",
+    "answer": "Hindi: मो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2571,14 +2571,14 @@
   {
     "id": "barakhadi_307",
     "question": "ಯೆ",
-    "answer": "Hindi: ये",
+    "answer": "Hindi: ये — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_308",
     "question": "ಯೇ",
-    "answer": "Hindi: ये",
+    "answer": "Hindi: ये — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2592,14 +2592,14 @@
   {
     "id": "barakhadi_310",
     "question": "ಯೊ",
-    "answer": "Hindi: यो",
+    "answer": "Hindi: यो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_311",
     "question": "ಯೋ",
-    "answer": "Hindi: यो",
+    "answer": "Hindi: यो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2655,14 +2655,14 @@
   {
     "id": "barakhadi_319",
     "question": "ರೆ",
-    "answer": "Hindi: रे",
+    "answer": "Hindi: रे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_320",
     "question": "ರೇ",
-    "answer": "Hindi: रे",
+    "answer": "Hindi: रे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2676,14 +2676,14 @@
   {
     "id": "barakhadi_322",
     "question": "ರೊ",
-    "answer": "Hindi: रो",
+    "answer": "Hindi: रो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_323",
     "question": "ರೋ",
-    "answer": "Hindi: रो",
+    "answer": "Hindi: रो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2739,14 +2739,14 @@
   {
     "id": "barakhadi_331",
     "question": "ಲೆ",
-    "answer": "Hindi: ले",
+    "answer": "Hindi: ले — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_332",
     "question": "ಲೇ",
-    "answer": "Hindi: ले",
+    "answer": "Hindi: ले — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2760,14 +2760,14 @@
   {
     "id": "barakhadi_334",
     "question": "ಲೊ",
-    "answer": "Hindi: लो",
+    "answer": "Hindi: लो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_335",
     "question": "ಲೋ",
-    "answer": "Hindi: लो",
+    "answer": "Hindi: लो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2823,14 +2823,14 @@
   {
     "id": "barakhadi_343",
     "question": "ವೆ",
-    "answer": "Hindi: वे",
+    "answer": "Hindi: वे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_344",
     "question": "ವೇ",
-    "answer": "Hindi: वे",
+    "answer": "Hindi: वे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2844,14 +2844,14 @@
   {
     "id": "barakhadi_346",
     "question": "ವೊ",
-    "answer": "Hindi: वो",
+    "answer": "Hindi: वो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_347",
     "question": "ವೋ",
-    "answer": "Hindi: वो",
+    "answer": "Hindi: वो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2907,14 +2907,14 @@
   {
     "id": "barakhadi_355",
     "question": "ಶೆ",
-    "answer": "Hindi: शे",
+    "answer": "Hindi: शे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_356",
     "question": "ಶೇ",
-    "answer": "Hindi: शे",
+    "answer": "Hindi: शे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -2928,14 +2928,14 @@
   {
     "id": "barakhadi_358",
     "question": "ಶೊ",
-    "answer": "Hindi: शो",
+    "answer": "Hindi: शो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_359",
     "question": "ಶೋ",
-    "answer": "Hindi: शो",
+    "answer": "Hindi: शो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -2991,14 +2991,14 @@
   {
     "id": "barakhadi_367",
     "question": "ಷೆ",
-    "answer": "Hindi: षे",
+    "answer": "Hindi: षे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_368",
     "question": "ಷೇ",
-    "answer": "Hindi: षे",
+    "answer": "Hindi: षे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -3012,14 +3012,14 @@
   {
     "id": "barakhadi_370",
     "question": "ಷೊ",
-    "answer": "Hindi: षो",
+    "answer": "Hindi: षो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_371",
     "question": "ಷೋ",
-    "answer": "Hindi: षो",
+    "answer": "Hindi: षो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -3075,14 +3075,14 @@
   {
     "id": "barakhadi_379",
     "question": "ಸೆ",
-    "answer": "Hindi: से",
+    "answer": "Hindi: से — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_380",
     "question": "ಸೇ",
-    "answer": "Hindi: से",
+    "answer": "Hindi: से — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -3096,14 +3096,14 @@
   {
     "id": "barakhadi_382",
     "question": "ಸೊ",
-    "answer": "Hindi: सो",
+    "answer": "Hindi: सो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_383",
     "question": "ಸೋ",
-    "answer": "Hindi: सो",
+    "answer": "Hindi: सो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -3159,14 +3159,14 @@
   {
     "id": "barakhadi_391",
     "question": "ಹೆ",
-    "answer": "Hindi: हे",
+    "answer": "Hindi: हे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_392",
     "question": "ಹೇ",
-    "answer": "Hindi: हे",
+    "answer": "Hindi: हे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -3180,14 +3180,14 @@
   {
     "id": "barakhadi_394",
     "question": "ಹೊ",
-    "answer": "Hindi: हो",
+    "answer": "Hindi: हो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_395",
     "question": "ಹೋ",
-    "answer": "Hindi: हो",
+    "answer": "Hindi: हो — long ō sound",
     "notes": "",
     "complexity": 4
   },
@@ -3243,14 +3243,14 @@
   {
     "id": "barakhadi_403",
     "question": "ಳೆ",
-    "answer": "Hindi: ळे",
+    "answer": "Hindi: ळे — short e sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_404",
     "question": "ಳೇ",
-    "answer": "Hindi: ळे",
+    "answer": "Hindi: ळे — long ē sound",
     "notes": "",
     "complexity": 4
   },
@@ -3264,14 +3264,14 @@
   {
     "id": "barakhadi_406",
     "question": "ಳೊ",
-    "answer": "Hindi: ळो",
+    "answer": "Hindi: ळो — short o sound",
     "notes": "",
     "complexity": 4
   },
   {
     "id": "barakhadi_407",
     "question": "ಳೋ",
-    "answer": "Hindi: ळो",
+    "answer": "Hindi: ळो — long ō sound",
     "notes": "",
     "complexity": 4
   },

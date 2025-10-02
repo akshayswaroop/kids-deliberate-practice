@@ -6,7 +6,7 @@ import EnhancedPracticePanel from './EnhancedPracticePanel';
 import ThemeToggle from './ThemeToggle';
 import ProgressStatsDisplay from './ProgressStatsDisplay';
 import KannadaRevision from './KannadaRevision';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // Trace export UI removed
 
 import type { PracticeHomeViewModel } from '../presenters/practicePresenter';
@@ -43,6 +43,14 @@ export default function HomePage({
     onSwitchUser(id);
   };
 
+  // Close the Kannada revision panel if user switches away from Kannada mode(s)
+  useEffect(() => {
+    const allowed = ui.mode === 'kannada' || ui.mode === 'kannadaalphabets';
+    if (!allowed && showKannadaRevision) {
+      setShowKannadaRevision(false);
+    }
+  }, [ui.mode, showKannadaRevision]);
+
   return (
     <div style={{ height: '100vh', background: 'var(--bg-primary)', fontFamily: 'system-ui, sans-serif', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
       <div style={{ width: '100%', background: 'var(--gradient-rainbow)', padding: '12px 48px 12px 20px', position: 'relative' }}>
@@ -70,13 +78,21 @@ export default function HomePage({
             <ProgressStatsDisplay currentUserId={ui.currentUserId} compact subject={ui.mode} />
             <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
             <ThemeToggle />
-            <button onClick={() => setShowKannadaRevision(true)} style={{ padding: '8px 12px', borderRadius: 8, border: 'none', background: 'linear-gradient(90deg,#ffd29b,#ff8a8a)', cursor: 'pointer' }}>Kannada Revision</button>
+            {(ui.mode === 'kannada' || ui.mode === 'kannadaalphabets') && (
+              <button
+                data-testid="btn-kannada-revision"
+                onClick={() => setShowKannadaRevision(true)}
+                style={{ padding: '8px 12px', borderRadius: 8, border: 'none', background: 'linear-gradient(90deg,#ffd29b,#ff8a8a)', cursor: 'pointer' }}
+              >
+                Kannada Revision
+              </button>
+            )}
             {/* Trace export button removed from UI */}
           </div>
         </div>
       </div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: 'var(--bg-secondary)', margin: '4px', borderRadius: 12, boxShadow: 'var(--shadow-soft)', position: 'relative', overflow: 'hidden' }}>
-        {showKannadaRevision ? (
+  {showKannadaRevision && (ui.mode === 'kannada' || ui.mode === 'kannadaalphabets') ? (
           <div
             style={{
               position: 'absolute',
