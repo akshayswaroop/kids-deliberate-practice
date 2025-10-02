@@ -1,35 +1,33 @@
-import React from 'react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import PracticeCard from '../PracticeCard.jsx';
+import type { PracticeCardProps } from '../PracticeCard';
 
 vi.mock('../FlyingUnicorn.jsx', () => {
   const React = require('react');
-  return {
-    default: ({ visible, onAnimationEnd }) => {
-      React.useEffect(() => {
-        if (visible) {
-          onAnimationEnd?.();
-        }
-      }, [visible, onAnimationEnd]);
-      return <div data-testid="mock-flying-unicorn" />;
-    },
+  const Mock = ({ visible, onAnimationEnd }: { visible: boolean; onAnimationEnd?: () => void }) => {
+    React.useEffect(() => {
+      if (visible) {
+        onAnimationEnd?.();
+      }
+    }, [visible, onAnimationEnd]);
+    return <div data-testid="mock-flying-unicorn" />;
   };
+  return { default: Mock };
 });
 
 vi.mock('../SadBalloonAnimation.jsx', () => {
   const React = require('react');
-  return {
-    default: ({ visible, onAnimationEnd }) => {
-      React.useEffect(() => {
-        if (visible) {
-          onAnimationEnd?.();
-        }
-      }, [visible, onAnimationEnd]);
-      return <div data-testid="mock-sad-balloon" />;
-    },
+  const Mock = ({ visible, onAnimationEnd }: { visible: boolean; onAnimationEnd?: () => void }) => {
+    React.useEffect(() => {
+      if (visible) {
+        onAnimationEnd?.();
+      }
+    }, [visible, onAnimationEnd]);
+    return <div data-testid="mock-sad-balloon" />;
   };
+  return { default: Mock };
 });
 
 class FakeAudio {
@@ -53,7 +51,7 @@ class FakeAudio {
 describe('PracticeCard interaction locking', () => {
   const originalAudio = globalThis.Audio;
 
-  const baseStaticProps = {
+  const baseStaticProps: PracticeCardProps = {
     mainWord: 'Hello',
     transliteration: 'Hello',
     transliterationHi: 'ಹೆಲೊ',
@@ -65,7 +63,10 @@ describe('PracticeCard interaction locking', () => {
     isAnswerRevealed: false,
     isEnglishMode: false,
     currentUserId: 'user_test',
-  } as const;
+    onCorrect: () => {},
+    onWrong: () => {},
+    onNext: () => {},
+  };
 
   beforeEach(() => {
     vi.stubEnv('MODE', 'development');
