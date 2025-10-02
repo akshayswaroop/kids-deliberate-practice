@@ -36,6 +36,8 @@ export interface QuestionBankItem {
 }
 
 // Subject configuration interface
+type WordDisplayField = 'text' | 'wordKannada' | 'transliteration' | 'transliterationHi' | 'answer' | 'notes';
+
 export interface SubjectConfig {
   name: string;           // e.g., 'english', 'kannada', 'mathtables'
   bankPath: string;       // e.g., 'english_questions_bank.json'
@@ -45,9 +47,9 @@ export interface SubjectConfig {
   revisionPanel?: {
     title: string;
     buttonLabel?: string;
-    primaryField: keyof Word;
-    secondaryField?: keyof Word;
-    notesField?: keyof Word;
+    primaryField: WordDisplayField;
+    secondaryField?: WordDisplayField;
+    notesField?: WordDisplayField;
   };
 }
 

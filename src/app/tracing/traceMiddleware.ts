@@ -260,9 +260,22 @@ traceMiddleware.startListening({
       const stateMode = afterContext.activeMode && afterContext.activeMode !== 'none'
         ? afterContext.activeMode
         : undefined;
-      const payloadMode = (action.payload && (action.payload.mode || action.payload.language)) || undefined;
+
+      const payloadMode = (() => {
+        const payload = (action as any)?.payload;
+        if (payload && typeof payload === 'object') {
+          if (typeof (payload as any).mode === 'string') {
+            return (payload as any).mode as string;
+          }
+          if (typeof (payload as any).language === 'string') {
+            return (payload as any).language as string;
+          }
+        }
+        return undefined;
+      })();
+
       if (stateMode) return stateMode;
-      if (payloadMode && typeof payloadMode === 'string') return payloadMode;
+      if (payloadMode) return payloadMode;
       const userId = stateAfter.currentUserId;
       if (userId) {
         const user = stateAfter.users[userId];

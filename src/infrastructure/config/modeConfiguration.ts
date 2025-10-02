@@ -4,13 +4,13 @@
  * Holds subject-specific presentation rules so that domain stays agnostic.
  */
 
-import type { Word } from '../state/gameState';
+type WordAnswerField = 'transliteration' | 'transliterationHi' | 'answer' | 'notes';
 
 export interface TransliterationModeConfig {
   label: string;
   color: string;
   showAsAnswer: boolean;
-  answerField: keyof Word;
+  answerField: WordAnswerField;
 }
 
 export interface AnswerModeConfig {

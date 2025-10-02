@@ -53,8 +53,10 @@ describe('🎯 Product Behavior: Adaptive Learning Algorithm', () => {
 
   function simulateAnswers(wordId: string, correct: boolean, times: number = 1) {
     const tracker = progressData.get(wordId) || ProgressTracker.createNew(WordId.fromString(wordId), sarah);
+    let timestampSeed = Date.now();
     for (let i = 0; i < times; i++) {
-      tracker.recordAttempt(correct);
+      timestampSeed += 1;
+      tracker.recordAttempt(correct, timestampSeed);
     }
     progressData.set(wordId, tracker);
   }
