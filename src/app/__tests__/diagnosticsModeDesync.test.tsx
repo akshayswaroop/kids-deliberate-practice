@@ -91,7 +91,8 @@ describe('Diagnostics navigation mode synchronisation', () => {
     });
 
     const modeSelectAfter = document.getElementById('mode-select') as HTMLSelectElement;
-    // Desired behaviour: dropdown should stay on English when session/content remain English.
+    const userState = store.getState().game.users['user_1'];
+    expect(userState.currentMode).toBe('english');
     expect(modeSelectAfter.value).toBe('english');
   });
 });

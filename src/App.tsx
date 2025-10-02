@@ -4,7 +4,7 @@ import { ThemeProvider } from './app/ui/ThemeContext';
 import { PracticeServiceProvider } from './app/providers/PracticeServiceProvider';
 // Removed attempt import - now handled by domain actions
 import { handleNextPressed, ensureActiveSession, markCurrentWordCorrect, markCurrentWordWrong } from './infrastructure/state/gameActions';
-import { revealAnswer } from './infrastructure/state/gameSlice';
+import { revealAnswer, setMode as setModeAction } from './infrastructure/state/gameSlice';
 import HomePage from './app/ui/HomePage';
 import Onboarding from './app/ui/Onboarding';
 import { buildPracticeAppViewModel } from './app/presenters/practicePresenter';
@@ -23,9 +23,21 @@ function App() {
 
   const dispatch = useAppDispatch();
   const gameState = useAppSelector(state => state.game as GameState);
-  const [mode, setMode] = useState<string>('english');
+  const currentUserId = gameState.currentUserId;
+  const currentUser = currentUserId ? gameState.users[currentUserId] : undefined;
+  const [modeOverride, setModeOverride] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+      return window.sessionStorage.getItem('kdp:lastMode');
+    }
+    return null;
+  });
+  const derivedMode =
+    modeOverride ??
+    currentUser?.currentMode ??
+    currentUser?.settings?.languages?.[0] ??
+    'kannadaalphabets';
+  const mode = derivedMode;
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
-  const [modeLocked, setModeLocked] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -34,27 +46,37 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const currentUserId = gameState.currentUserId;
-    if (currentUserId) {
-      const user = gameState.users[currentUserId];
-      const defaultMode = user?.currentMode || user?.settings?.languages?.[0];
-      if (!modeLocked && defaultMode && mode !== defaultMode) {
-        setMode(defaultMode);
-      }
+    if (typeof window !== 'undefined' && !modeOverride) {
+      window.sessionStorage.setItem('kdp:lastMode', derivedMode);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameState.currentUserId, modeLocked]);
+  }, [modeOverride, derivedMode]);
+
+  useEffect(() => {
+    if (!modeOverride) return;
+    if (currentUser?.currentMode === modeOverride) {
+      setModeOverride(null);
+    }
+  }, [modeOverride, currentUser?.currentMode]);
 
   const handleCreateUser = (userId: string, displayName?: string) => {
     dispatch({ type: 'game/addUser', payload: { userId, displayName } });
   };
   const handleSwitchUser = (userId: string) => {
     dispatch({ type: 'game/selectUser', payload: { userId } });
-    setModeLocked(false);
+    setModeOverride(null);
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem('kdp:lastMode');
+    }
   };
   const handleSetMode = (newMode: string) => {
-    setMode(newMode);
-    setModeLocked(true);
+    setModeOverride(newMode);
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem('kdp:lastMode', newMode);
+    }
+    const existingSessionId = currentUser?.activeSessions?.[newMode];
+    if (existingSessionId) {
+      dispatch(setModeAction({ mode: newMode, sessionId: existingSessionId }));
+    }
   };
 
   const isDiagnostics = typeof window !== 'undefined' && window.location.pathname.startsWith('/diagnostics');
@@ -65,10 +87,9 @@ function App() {
   // ensure there's an active session for the current mode when the app mounts or mode changes
   useEffect(() => {
     if (isDiagnostics) return;
-    const currentUserId = gameState.currentUserId;
     if (!currentUserId) return;
     dispatch(ensureActiveSession({ mode } as any) as any);
-  }, [gameState.currentUserId, mode, dispatch, isDiagnostics]);
+  }, [currentUserId, mode, dispatch, isDiagnostics]);
 
   // Clean UI actions - no session knowledge required
   const onCorrect = () => {
