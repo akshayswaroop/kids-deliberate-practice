@@ -7,8 +7,13 @@ import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetec
 import FlyingUnicorn from './FlyingUnicorn.jsx';
 import SadBalloonAnimation from './SadBalloonAnimation.jsx';
 
+const SAD_EFFECT_BACKUP_TIMEOUT_MS = 3600;
+const PROGRESSION_DELAY_MS = 120;
+
 export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode, currentUserId }) {
-  const isDebug = (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.DEV : (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production'));
+  const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
+  const isDebug = env ? (env.DEV ?? env.MODE === 'development') : false;
+  const isTestMode = env?.MODE === 'test';
 
   // Animation helper functions
   const createConfettiBurst = () => {
@@ -105,7 +110,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const handleUnicornEnd = React.useCallback(() => {
     setShowUnicorn(false);
     setStatus('waiting');
-    setTimeout(() => handleProgression(), 500); // Short delay for effect
+    setTimeout(() => handleProgression(), PROGRESSION_DELAY_MS);
   }, [handleProgression]);
 
   // Handler for sad balloon animation end
@@ -116,11 +121,11 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     if (wrongSoundPromise) {
       wrongSoundPromise.then(() => {
         setStatus('waiting');
-        setTimeout(() => handleProgression(), 500);
+        setTimeout(() => handleProgression(), PROGRESSION_DELAY_MS);
       });
     } else {
       setStatus('waiting');
-      setTimeout(() => handleProgression(), 500);
+      setTimeout(() => handleProgression(), PROGRESSION_DELAY_MS);
     }
   }, [isDebug, mainWord, wrongSoundPromise, handleProgression]);
   // Determine current active choice progress to render rainbow fill for the main question
@@ -130,8 +135,10 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
 
 
 
+  const interactionLocked = status !== 'idle';
+
   return (
-    <div style={{
+    <div data-testid="practice-root" style={{
       backgroundColor: 'transparent',
       borderRadius: '16px',
       display: 'flex',
@@ -223,7 +230,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             }
 
               return (
-              <div className="target-word-glow" style={{ 
+              <div className="target-word-glow" data-testid="target-word" style={{ 
                   fontSize,
                   fontWeight: 900,
                   marginTop: 0,
@@ -293,7 +300,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
       </div>
 
       {/* Answer Area - 35% of vertical space */}
-      <div key={mainWord} className="details-panel" style={{
+      <div key={mainWord} className="details-panel" data-testid="details-panel" style={{
         width: '100%',
         flex: '1 1 auto', // Take remaining space
         minHeight: '160px',
@@ -312,7 +319,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         marginBottom: '-4px' // reduce gap to button panel
       }}>
         {/* Main answer/notes area - fills available Answer Area space */}
-        <div className="answer-panel" style={{ 
+        <div className="answer-panel" data-testid="answer-panel" style={{ 
           width: '100%', 
           maxWidth: '100%',
           flex: '1 1 auto', // Expand to fill available space
@@ -418,8 +425,15 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         {/* Reveal button - only for non-English modes */}
         {/* Button order: Correct! (primary), Try later (primary), Reveal (secondary) */}
         <button
+          data-testid="btn-correct"
           onClick={() => {
             if (status !== 'idle') return;
+            if (isTestMode) {
+              if (isDebug) { console.debug('[PracticeCard] (test mode) onCorrect immediate progression', mainWord); }
+              onCorrect && onCorrect();
+              handleProgression();
+              return;
+            }
             setStatus('animating');
             if (isDebug) { console.debug('[PracticeCard] onCorrect clicked', mainWord); }
             createConfettiBurst();
@@ -434,36 +448,43 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             onCorrect && onCorrect();
             // Progression will be handled by unicorn animation end
           }}
-          disabled={status !== 'idle'}
+          disabled={interactionLocked}
           aria-label="Mark as read — great job"
           className="mastery-footer-button primary"
           style={{
-            backgroundColor: status !== 'idle' ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-primary-bg, #2563eb)',
-            color: status !== 'idle' ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
+            backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-primary-bg, #2563eb)',
+            color: interactionLocked ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
             border: 'none',
             borderRadius: 10,
             padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
             fontSize: 'clamp(13px, 2.2vw, 16px)',
             fontWeight: 700,
-            cursor: status !== 'idle' ? 'not-allowed' : 'pointer',
+            cursor: interactionLocked ? 'not-allowed' : 'pointer',
             display: 'flex',
             gap: '8px',
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease',
-            boxShadow: status !== 'idle' ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
+            boxShadow: interactionLocked ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
             minHeight: 'clamp(30px, 5vh, 38px)',
             flex: '1 1 auto',
             maxWidth: '140px',
-            opacity: status !== 'idle' ? 0.6 : 1
+            opacity: interactionLocked ? 0.6 : 1
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🎉</span>
           <span>Correct</span>
         </button>
         <button
+          data-testid="btn-wrong"
           onClick={() => {
             if (status !== 'idle') return;
+            if (isTestMode) {
+              if (isDebug) { console.debug('[PracticeCard] (test mode) onWrong immediate progression', mainWord); }
+              onWrong && onWrong();
+              handleProgression();
+              return;
+            }
             setStatus('animating');
             if (isDebug) { console.debug('[PracticeCard] onWrong clicked', mainWord); }
             triggerBounceAnimation();
@@ -471,11 +492,36 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             // Start audio and store promise
             let soundPromise;
             try {
-              const audio = new window.Audio('/brass-fail-8-b-207131.mp3');
+              const audio = new window.Audio('/brass-fail-1-a-185074.mp3');
               audio.volume = 0.7;
               soundPromise = new Promise(resolve => {
-                audio.onended = resolve;
-                audio.onerror = resolve;
+                let resolved = false;
+
+                const cleanup = () => {
+                  if (resolved) return;
+                  resolved = true;
+                  audio.onended = null;
+                  audio.onerror = null;
+                  try {
+                    audio.pause?.();
+                    audio.currentTime = 0;
+                  } catch {}
+                  resolve();
+                };
+
+                const fallback = window.setTimeout(() => {
+                  cleanup();
+                }, SAD_EFFECT_BACKUP_TIMEOUT_MS);
+
+                audio.onended = () => {
+                  window.clearTimeout(fallback);
+                  cleanup();
+                };
+
+                audio.onerror = () => {
+                  window.clearTimeout(fallback);
+                  cleanup();
+                };
               });
               audio.play();
             } catch (e) {
@@ -486,28 +532,28 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             onWrong && onWrong();
             // Progression will be handled by sad balloon animation end
           }}
-          disabled={status !== 'idle'}
+          disabled={interactionLocked}
           aria-label="Try later — would you like to repeat this?"
           className="mastery-footer-button secondary"
           style={{
-            backgroundColor: status !== 'idle' ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-secondary-bg, #64748b)',
-            color: status !== 'idle' ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
+            backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-secondary-bg, #64748b)',
+            color: interactionLocked ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
             border: 'none',
             borderRadius: 10,
             padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
             fontSize: 'clamp(13px, 2.2vw, 16px)',
             fontWeight: 700,
-            cursor: status !== 'idle' ? 'not-allowed' : 'pointer',
+            cursor: interactionLocked ? 'not-allowed' : 'pointer',
             display: 'flex',
             gap: '8px',
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease',
-            boxShadow: status !== 'idle' ? 'none' : '0 4px 12px rgba(100,116,139,0.10)',
+            boxShadow: interactionLocked ? 'none' : '0 4px 12px rgba(100,116,139,0.10)',
             minHeight: 'clamp(30px, 5vh, 38px)',
             flex: '1 1 auto',
             maxWidth: '140px',
-            opacity: status !== 'idle' ? 0.6 : 1
+            opacity: interactionLocked ? 0.6 : 1
           }}
         >
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🔁</span>
@@ -515,30 +561,34 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         </button>
         {!isEnglishMode && (
           <button
+            data-testid="btn-reveal"
             onClick={() => { 
+              if (interactionLocked) return;
               if (isDebug) { console.debug('[PracticeCard] onRevealAnswer clicked', mainWord, 'current revealed:', isAnswerRevealed); } 
               onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
             }}
+            disabled={interactionLocked}
             aria-label={isAnswerRevealed ? "Hide Answer" : "Reveal Answer"}
             className="mastery-footer-button reveal"
             style={{
-              backgroundColor: 'transparent', // outlined secondary
-              color: 'var(--button-primary-bg, #2563eb)',
-              border: '2px solid var(--button-primary-bg, #2563eb)',
+              backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'transparent', // outlined secondary
+              color: interactionLocked ? 'var(--text-tertiary, #94a3b8)' : 'var(--button-primary-bg, #2563eb)',
+              border: interactionLocked ? '2px solid var(--bg-tertiary, #cbd5e1)' : '2px solid var(--button-primary-bg, #2563eb)',
               borderRadius: 10,
               padding: 'clamp(3px, 0.6vh, 6px) clamp(12px, 2vw, 16px)',
               fontSize: 'clamp(13px, 2.2vw, 16px)',
               fontWeight: 700,
-              cursor: 'pointer',
+              cursor: interactionLocked ? 'not-allowed' : 'pointer',
               display: 'flex',
               gap: '6px',
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'transform 180ms ease, box-shadow 180ms ease',
-              boxShadow: 'none',
+              boxShadow: interactionLocked ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
               minHeight: 'clamp(28px, 4.5vh, 36px)',
               flex: '1 1 auto',
-              maxWidth: '130px'
+              maxWidth: '130px',
+              opacity: interactionLocked ? 0.6 : 1
             }}
           >
             <span style={{fontSize: 'clamp(14px, 3vw, 18px)'}}>{isAnswerRevealed ? '🙈' : '👁️'}</span>

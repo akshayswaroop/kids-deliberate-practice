@@ -12,6 +12,13 @@
   </head>
   <body>
     <div id="root"></div>
+    <script type="module">
+      // Install test bridge only in test mode at runtime
+      var mode = (import.meta && import.meta.env && import.meta.env.MODE) || (window && window['VITE_MODE']) || (document.documentElement.getAttribute('data-mode'));
+      if (mode === 'test') {
+        import('/src/app/testBridge.ts').then(m => m.installTestBridge());
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

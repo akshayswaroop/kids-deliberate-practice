@@ -60,8 +60,8 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
   useEffect(() => {
     if (visible) {
       setShow(true);
-      // Match animation length to the brass-fail sound (~2500ms exactly).
-      const duration = reducedMotion ? 700 : 2500; // exact match to audio duration
+      // Match animation length to the new brass-fail cue (~3.2s) with a gentle tail.
+      const duration = reducedMotion ? 1000 : 3400;
       const timer = setTimeout(() => {
         setShow(false);
         if (onAnimationEnd) onAnimationEnd();
@@ -109,7 +109,7 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
           transform-origin: center;
         }
         .halo.animate {
-          animation: haloPop 2.5s cubic-bezier(.2,.9,.3,1) forwards;
+          animation: haloPop 3.2s cubic-bezier(.2,.9,.3,1) forwards;
         }
         @keyframes haloPop {
           0% { opacity: 0; transform: scale(0.88); }
@@ -124,7 +124,7 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
           box-shadow: 0 6px 22px rgba(0,0,0,0.14) inset;
           opacity: 0;
         }
-  .tile-outline.animate { animation: outlinePulse 2.5s ease forwards; }
+  .tile-outline.animate { animation: outlinePulse 3.2s ease forwards; }
         @keyframes outlinePulse {
           0% { opacity: 0; transform: scale(0.96); }
           12% { opacity: 1; transform: scale(1.02); }
@@ -139,7 +139,7 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
           transform-origin: top center;
           opacity: 0;
         }
-  .tear.animate { animation: tearFall 2.5s cubic-bezier(.2,.9,.3,1) forwards; }
+  .tear.animate { animation: tearFall 3.2s cubic-bezier(.2,.9,.3,1) forwards; }
         @keyframes tearFall {
           0% { opacity: 0; transform: translateY(-6px) scale(0.8); }
           12% { opacity: 1; transform: translateY(0px) scale(1.0); }

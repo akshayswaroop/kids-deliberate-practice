@@ -20,7 +20,7 @@ export default function Onboarding({ onCreate }: OnboardingProps) {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f8fafc', fontFamily: 'system-ui, sans-serif', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div data-testid="onboarding-container" style={{ minHeight: '100vh', background: '#f8fafc', fontFamily: 'system-ui, sans-serif', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ width: '100%', maxWidth: 600, borderRadius: 16, boxShadow: '0 8px 30px rgba(0,0,0,0.08)', background: '#fff', overflow: 'hidden' }}>
         <div style={{ width: '100%', background: rainbowBg, padding: '22px 32px 18px 32px', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
           <h1 style={{ margin: 0, color: '#fff', fontSize: 22, fontWeight: 800 }}>Kids Practice</h1>
@@ -31,12 +31,20 @@ export default function Onboarding({ onCreate }: OnboardingProps) {
           <p style={{ marginTop: 0, color: '#4b5563', fontSize: 17 }}>Short, calm sessions. Real memory. No cramming.</p>
           <div style={{ display: 'flex', gap: 10, marginTop: 18, alignItems: 'center' }}>
             <input
+              data-testid="onboarding-name-input"
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="Display name (optional)"
               style={{ flex: 1, padding: '12px 14px', borderRadius: 8, border: '1px solid #e5e7eb', fontSize: 16 }}
             />
-            <button onClick={handleCreate} disabled={creating} style={{ padding: '10px 20px', borderRadius: 8, background: '#4f46e5', color: '#fff', border: 'none', fontWeight: 700, fontSize: 16 }}>{creating ? 'Creating…' : 'Create'}</button>
+            <button
+              data-testid="onboarding-create-button"
+              onClick={handleCreate}
+              disabled={creating}
+              style={{ padding: '10px 20px', borderRadius: 8, background: '#4f46e5', color: '#fff', border: 'none', fontWeight: 700, fontSize: 16 }}
+            >
+              {creating ? 'Creating…' : 'Create'}
+            </button>
           </div>
           <ul style={{ marginTop: 22, marginBottom: 0, paddingLeft: 20, color: '#334155', fontSize: 15, lineHeight: 1.7 }}>
             <li>See progress daily</li>

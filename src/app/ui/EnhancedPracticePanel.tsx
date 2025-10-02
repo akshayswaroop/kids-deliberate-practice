@@ -9,50 +9,28 @@ import { useState, useCallback } from 'react';
 // @ts-ignore
 import PracticeCard from './PracticeCard.jsx';
 import { usePracticeApplicationService } from '../providers/PracticeServiceProvider';
+import type { PracticePanelViewModel } from '../presenters/practicePresenter';
 
 interface EnhancedPracticePanelProps {
-  // Existing props for backwards compatibility
-  mainWord: string;
-  transliteration?: string;
-  transliterationHi?: string;
-  answer?: string;
-  notes?: string;
-  needsNewSession?: boolean;
-  choices: Array<{ id: string; label: string; progress: number }>;
+  practice: PracticePanelViewModel;
+  mode: string;
   onCorrect: () => void;
   onWrong: () => void;
   onNext: () => void;
   onRevealAnswer?: (revealed: boolean) => void;
-  columns?: number;
-  mode?: string;
-  isAnswerRevealed?: boolean;
-  isEnglishMode?: boolean;
-  
-  // New DDD-specific props
-  currentUserId?: string;
-  currentWord?: string; // The actual word being practiced (not just ID)
+  currentUserId?: string | null;
 }
 
-export default function EnhancedPracticePanel({ 
-  mainWord, 
-  transliteration, 
-  transliterationHi,
-  answer,
-  notes,
-  needsNewSession: _needsNewSession,
+export default function EnhancedPracticePanel({
+  practice,
+  mode,
   onCorrect,
   onWrong,
   onNext,
   onRevealAnswer,
-  columns,
-  mode,
-  isAnswerRevealed,
-  isEnglishMode,
-  choices,
-  // DDD props
   currentUserId,
-  currentWord
 }: EnhancedPracticePanelProps) {
+  const { card, currentWordId } = practice;
   
   // 🎯 DDD Services (when enabled)
   const practiceService = usePracticeApplicationService();
@@ -60,13 +38,13 @@ export default function EnhancedPracticePanel({
 
   // 🎯 Enhanced handlers that use domain services
   const handleCorrectWithDomain = useCallback(async () => {
-    if (currentUserId && currentWord) {
+    if (currentUserId && currentWordId) {
       try {
-        console.log('🎯 [DDD] Recording correct attempt:', { currentUserId, currentWord });
+        console.log('🎯 [DDD] Recording correct attempt:', { currentUserId, currentWordId });
         // Use domain service to record attempt
         const result = await practiceService.recordPracticeAttempt(
           currentUserId,
-          currentWord,
+          currentWordId,
           true
         );
         
@@ -92,16 +70,16 @@ export default function EnhancedPracticePanel({
       // Use original Redux-based handler
       onCorrect();
     }
-  }, [currentUserId, currentWord, practiceService, onCorrect]);
+  }, [currentUserId, currentWordId, practiceService, onCorrect]);
 
   const handleWrongWithDomain = useCallback(async () => {
-    if (currentUserId && currentWord) {
+    if (currentUserId && currentWordId) {
       try {
-        console.log('🎯 [DDD] Recording wrong attempt:', { currentUserId, currentWord });
+        console.log('🎯 [DDD] Recording wrong attempt:', { currentUserId, currentWordId });
         // Use domain service to record attempt
         const result = await practiceService.recordPracticeAttempt(
           currentUserId,
-          currentWord,
+          currentWordId,
           false
         );
         
@@ -127,7 +105,7 @@ export default function EnhancedPracticePanel({
       // Use original Redux-based handler
       onWrong();
     }
-  }, [currentUserId, currentWord, practiceService, onWrong]);
+  }, [currentUserId, currentWordId, practiceService, onWrong]);
 
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -151,21 +129,21 @@ export default function EnhancedPracticePanel({
       )}
 
       <PracticeCard
-        mainWord={mainWord}
-        transliteration={transliteration}
-        transliterationHi={transliterationHi}
-        answer={answer}
-        notes={notes}
-        choices={choices}
+        mainWord={card.mainWord}
+        transliteration={card.transliteration}
+        transliterationHi={card.transliterationHi}
+        answer={card.answer}
+        notes={card.notes}
+        choices={card.choices}
         onCorrect={handleCorrectWithDomain}
         onWrong={handleWrongWithDomain}
         onNext={onNext}
         onRevealAnswer={onRevealAnswer}
-        columns={columns}
+        columns={card.columns}
         mode={mode}
-        isAnswerRevealed={isAnswerRevealed}
-        isEnglishMode={isEnglishMode}
-        currentUserId={currentUserId}
+        isAnswerRevealed={card.isAnswerRevealed}
+        isEnglishMode={card.isEnglishMode}
+        currentUserId={currentUserId ?? undefined}
       />
     </div>
   );

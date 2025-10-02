@@ -1,13 +1,11 @@
-// No need to import React in TSX files with React 17+
-import { SUBJECT_CONFIGS } from '../../infrastructure/repositories/subjectLoader';
-
 interface ModeSelectorProps {
   mode: string;
   onSetMode: (mode: string) => void;
   compact?: boolean;
+  options: Array<{ value: string; label: string; icon: string }>;
 }
 
-export default function ModeSelector({ mode, onSetMode, compact = false }: ModeSelectorProps) {
+export default function ModeSelector({ mode, onSetMode, compact = false, options }: ModeSelectorProps) {
   return (
     <div style={{ marginBottom: compact ? 0 : 32, display: 'flex', alignItems: 'center' }}>
       <select 
@@ -27,9 +25,9 @@ export default function ModeSelector({ mode, onSetMode, compact = false }: ModeS
           transition: 'all 0.3s ease'
         }}
       >
-        {SUBJECT_CONFIGS.map(subject => (
-          <option key={subject.name} value={subject.name}>
-            {subject.displayIcon} {subject.displayLabel}
+        {options.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.icon} {option.label}
           </option>
         ))}
       </select>

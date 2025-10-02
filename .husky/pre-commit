@@ -1,15 +1,23 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# Run all tests before committing
-echo "🧪 Running tests before commit..."
-npm run test:all
-
-# Check if tests passed
+# Run unit tests first (fast)
+echo "🧪 Running unit tests (Vitest - unit) before commit..."
+npm run test:unit
 if [ $? -ne 0 ]; then
-  echo "❌ Tests failed! Commit blocked."
-  echo "Run 'npm run test:unit' to see specific failures."
+  echo "❌ Unit tests failed! Commit blocked."
+  echo "Run 'npm run test:unit' to see failures."
   exit 1
 fi
 
-echo "✅ All tests passed! Proceeding with commit."
+# Now run Playwright E2E (this will start the dev server as configured)
+echo "🛠️  Running Playwright E2E tests... (this may take a bit)"
+# Use npx to ensure local playwright binary is used
+npx playwright test --reporter=list
+if [ $? -ne 0 ]; then
+  echo "❌ E2E tests failed! Commit blocked."
+  echo "Run 'npx playwright test' to debug failures."
+  exit 1
+fi
+
+echo "✅ All tests (unit + e2e) passed! Proceeding with commit."

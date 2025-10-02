@@ -1,9 +1,14 @@
 
 
+interface UserOption {
+  id: string;
+  label: string;
+}
+
 interface ProfileFormProps {
-  users: Record<string, any>;
+  users: UserOption[];
   currentUserId: string | null;
-  onCreateUser: (username: string, displayName?: string) => void;
+  onCreateUser: (displayName?: string) => void;
   onSwitchUser: (userId: string) => void;
   compact?: boolean;
   // Controlled form state
@@ -24,7 +29,11 @@ export default function ProfileForm({
   showCreateForm,
   onToggleCreateForm
 }: ProfileFormProps) {
-  const userIds = Object.keys(users);
+  const hasDuplicateName = (name: string) => {
+    const normalized = name.trim().toLowerCase();
+    if (!normalized) return false;
+    return users.some(user => user.label?.toLowerCase() === normalized);
+  };
 
   return (
     <div style={{ marginBottom: compact ? 0 : 32, display: 'flex', alignItems: 'center', gap: compact ? 8 : 12, flexWrap: 'wrap' }}>
@@ -47,8 +56,8 @@ export default function ProfileForm({
         }}
       >
         <option value="">— Select or create user —</option>
-        {userIds.map(uid => (
-          <option key={uid} value={uid}>{users[uid]?.displayName || uid}</option>
+        {users.map(user => (
+          <option key={user.id} value={user.id}>{user.label}</option>
         ))}
       </select>
       
@@ -89,9 +98,8 @@ export default function ProfileForm({
               transition: 'all 0.3s ease'
             }}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && username.trim() && !users[username.trim()]) {
-                const id = `user_${Date.now()}`;
-                onCreateUser(id, username.trim());
+              if (e.key === 'Enter' && username.trim() && !hasDuplicateName(username)) {
+                onCreateUser(username.trim());
                 onUsernameChange('');
                 onToggleCreateForm(false);
               }
@@ -99,9 +107,8 @@ export default function ProfileForm({
           />
           <button
             onClick={() => {
-              if (username.trim() && !users[username.trim()]) {
-                const id = `user_${Date.now()}`;
-                onCreateUser(id, username.trim());
+              if (username.trim() && !hasDuplicateName(username)) {
+                onCreateUser(username.trim());
                 onUsernameChange('');
                 onToggleCreateForm(false);
               }
@@ -117,7 +124,7 @@ export default function ProfileForm({
               cursor: 'pointer',
               transition: 'all 0.3s ease' 
             }}
-            disabled={!username.trim() || !!users[username.trim()]}
+            disabled={!username.trim() || hasDuplicateName(username)}
           >
             ✓
           </button>

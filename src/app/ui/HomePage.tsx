@@ -8,61 +8,39 @@ import ProgressStatsDisplay from './ProgressStatsDisplay';
 import { useState } from 'react';
 // Trace export UI removed
 
-import type { UserState } from '../../infrastructure/state/gameState';
+import type { PracticeHomeViewModel } from '../presenters/practicePresenter';
 
 interface HomePageProps {
-  users: Record<string, UserState>;
-  currentUserId: string | null;
-  onCreateUser: (username: string) => void;
+  ui: PracticeHomeViewModel;
+  onCreateUser: (userId: string, displayName?: string) => void;
   onSwitchUser: (userId: string) => void;
   onSetMode: (mode: string) => void;
-  mode: string;
-  mainWord: string;
-  choices: Array<{ id: string; label: string; progress: number }>;
-  transliteration?: string;
-  transliterationHi?: string;
-  answer?: string;
-  notes?: string;
-  needsNewSession?: boolean;
   onCorrect: () => void;
   onWrong: () => void;
   onNext: () => void;
   onRevealAnswer?: (revealed: boolean) => void;
-  columns?: number;
-  isAnswerRevealed?: boolean;
-  isEnglishMode?: boolean;
-  // layout prop removed — single canonical topbar layout is used
 }
 
 export default function HomePage({
-  users,
-  currentUserId,
+  ui,
   onCreateUser,
   onSwitchUser,
   onSetMode,
-  mode,
-  mainWord,
-  choices,
-  transliteration,
-  transliterationHi,
-  answer,
-  notes,
-  needsNewSession,
   onCorrect,
   onWrong,
   onNext,
   onRevealAnswer,
-  columns = 6,
-  isAnswerRevealed,
-  isEnglishMode,
 }: HomePageProps) {
   // Form state for ProfileForm (moved from component to container)
   const [username, setUsername] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
-  
-  // Trace export UI removed
-  
-  // Top Bar Layout (single canonical layout kept)
+
+  const handleCreateUser = (displayName?: string) => {
+    const id = `user_${Date.now()}`;
+    onCreateUser(id, displayName);
+    onSwitchUser(id);
+  };
+
   return (
     <div style={{ height: '100vh', background: 'var(--bg-primary)', fontFamily: 'system-ui, sans-serif', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
       <div style={{ width: '100%', background: 'var(--gradient-rainbow)', padding: '12px 48px 12px 20px', position: 'relative' }}>
@@ -76,9 +54,9 @@ export default function HomePage({
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
             <ProfileForm 
               compact 
-              users={users} 
-              currentUserId={currentUserId} 
-              onCreateUser={onCreateUser} 
+              users={ui.users}
+              currentUserId={ui.currentUserId}
+              onCreateUser={(displayName?: string) => handleCreateUser(displayName)}
               onSwitchUser={onSwitchUser}
               username={username}
               onUsernameChange={setUsername}
@@ -87,15 +65,15 @@ export default function HomePage({
             />
           </div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
-            <ProgressStatsDisplay currentUserId={currentUserId} compact subject={mode} />
-            <ModeSelector compact mode={mode} onSetMode={onSetMode} />
+            <ProgressStatsDisplay currentUserId={ui.currentUserId} compact subject={ui.mode} />
+            <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
             <ThemeToggle />
             {/* Trace export button removed from UI */}
           </div>
         </div>
       </div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: 'var(--bg-secondary)', margin: '4px', borderRadius: 12, boxShadow: 'var(--shadow-soft)' }}>
-        {needsNewSession ? (
+        {ui.practice.needsNewSession ? (
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -122,13 +100,13 @@ export default function HomePage({
               maxWidth: '500px',
               lineHeight: 1.5
             }}>
-              🌟 You've completed all available questions in <strong>{mode}</strong> mode. 
+              🌟 You've completed all available questions in <strong>{ui.mode}</strong> mode. 
               Add more questions to continue your learning journey! 📚✨
             </p>
             
             {/* Show Growth Story */}
             <div style={{ width: '100%', maxWidth: '600px', marginBottom: '24px' }}>
-              <ProgressStatsDisplay currentUserId={currentUserId} />
+              <ProgressStatsDisplay currentUserId={ui.currentUserId} />
             </div>
             
             <button
@@ -154,22 +132,13 @@ export default function HomePage({
         ) : (
           // 🎯 DDD-Enhanced Practice Panel
           <EnhancedPracticePanel 
-            mainWord={mainWord} 
-            transliteration={transliteration} 
-            transliterationHi={transliterationHi} 
-            answer={answer} 
-            notes={notes} 
-            choices={choices} 
+            practice={ui.practice}
             onCorrect={onCorrect} 
             onWrong={onWrong} 
             onNext={onNext} 
             onRevealAnswer={onRevealAnswer} 
-            columns={columns} 
-            mode={mode} 
-            isAnswerRevealed={isAnswerRevealed} 
-            isEnglishMode={isEnglishMode}
-            currentUserId={currentUserId || 'demo-user'}
-            currentWord={mainWord || choices[0]?.id || 'unknown'}
+            mode={ui.mode} 
+            currentUserId={ui.currentUserId ?? undefined}
           />
         )}
       </div>

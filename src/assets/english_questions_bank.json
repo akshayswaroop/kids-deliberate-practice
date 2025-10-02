@@ -126,24 +126,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_019",
-    "complexity": 1,
-    "question": "Mina feels happy.",
-    "answer": "Say it like a brave lion 🦁",
-    "notes": ""
-  },
-  {
     "id": "phonics_020",
     "complexity": 1,
     "question": "Zoya feels nervous.",
     "answer": "Say it like you're yawning 🥱",
-    "notes": ""
-  },
-  {
-    "id": "phonics_021",
-    "complexity": 1,
-    "question": "We are in the park.",
-    "answer": "Say it like you're excited 🎉",
     "notes": ""
   },
   {
@@ -301,13 +287,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_044",
-    "complexity": 1,
-    "question": "Mina feels sleepy.",
-    "answer": "Say it like a friendly neighbor 🏡",
-    "notes": ""
-  },
-  {
     "id": "phonics_045",
     "complexity": 1,
     "question": "The kite is orange.",
@@ -319,13 +298,6 @@
     "complexity": 1,
     "question": "Kabir feels thirsty.",
     "answer": "Say it like thunder ⚡",
-    "notes": ""
-  },
-  {
-    "id": "phonics_047",
-    "complexity": 1,
-    "question": "I am in the garden.",
-    "answer": "Say it like you're giggling 🤭",
     "notes": ""
   },
   {
@@ -347,13 +319,6 @@
     "complexity": 1,
     "question": "She is in the room.",
     "answer": "Say it like you're underwater 🐠",
-    "notes": ""
-  },
-  {
-    "id": "phonics_051",
-    "complexity": 1,
-    "question": "Kabir feels thirsty.",
-    "answer": "Say it while tiptoeing quietly 🤫",
     "notes": ""
   },
   {
@@ -399,24 +364,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_058",
-    "complexity": 1,
-    "question": "I am in the home.",
-    "answer": "Say it like a superhero 🦸",
-    "notes": ""
-  },
-  {
     "id": "phonics_059",
     "complexity": 1,
     "question": "Mina feels sad.",
     "answer": "Say it in a high voice 🐭",
-    "notes": ""
-  },
-  {
-    "id": "phonics_060",
-    "complexity": 1,
-    "question": "Tara feels sad.",
-    "answer": "Say it like a pirate 🏴‍☠️",
     "notes": ""
   },
   {
@@ -448,20 +399,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_065",
-    "complexity": 1,
-    "question": "Zoya feels nervous.",
-    "answer": "Say it like you're telling a joke 😄",
-    "notes": ""
-  },
-  {
-    "id": "phonics_066",
-    "complexity": 1,
-    "question": "The drum is black.",
-    "answer": "Say it like a robot 🤖",
-    "notes": ""
-  },
-  {
     "id": "phonics_067",
     "complexity": 1,
     "question": "The box is orange.",
@@ -483,31 +420,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_070",
-    "complexity": 1,
-    "question": "Anya feels excited.",
-    "answer": "Say it like you're in slow motion 🐌",
-    "notes": ""
-  },
-  {
     "id": "phonics_071",
     "complexity": 1,
     "question": "Zoya feels happy.",
     "answer": "Say it like you're in a cave (echo!) 🏔️",
-    "notes": ""
-  },
-  {
-    "id": "phonics_072",
-    "complexity": 1,
-    "question": "I am in the home.",
-    "answer": "Say it like you're singing 🎵",
-    "notes": ""
-  },
-  {
-    "id": "phonics_073",
-    "complexity": 1,
-    "question": "I am in the shop.",
-    "answer": "Say it while tiptoeing quietly 🤫",
     "notes": ""
   },
   {
@@ -529,13 +445,6 @@
     "complexity": 1,
     "question": "Aarav feels tired.",
     "answer": "Say it like you're hugging someone 🤗",
-    "notes": ""
-  },
-  {
-    "id": "phonics_077",
-    "complexity": 1,
-    "question": "Tara feels excited.",
-    "answer": "Say it like a superhero 🦸",
     "notes": ""
   },
   {
@@ -567,24 +476,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_082",
-    "complexity": 1,
-    "question": "Mina feels happy.",
-    "answer": "Say it like you're yawning 🥱",
-    "notes": ""
-  },
-  {
     "id": "phonics_083",
     "complexity": 1,
     "question": "The flag is black.",
     "answer": "Say it like thunder ⚡",
-    "notes": ""
-  },
-  {
-    "id": "phonics_084",
-    "complexity": 1,
-    "question": "We are in the home.",
-    "answer": "Say it while hopping like a bunny 🐰",
     "notes": ""
   },
   {
@@ -623,13 +518,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_090",
-    "complexity": 1,
-    "question": "We are in the bus.",
-    "answer": "Say it like you're yawning 🥱",
-    "notes": ""
-  },
-  {
     "id": "phonics_091",
     "complexity": 1,
     "question": "The toy is yellow.",
@@ -662,34 +550,6 @@
     "complexity": 1,
     "question": "The flag is brown.",
     "answer": "Say it while stretching like a cat 🐱",
-    "notes": ""
-  },
-  {
-    "id": "phonics_096",
-    "complexity": 1,
-    "question": "Tara feels angry.",
-    "answer": "Say it like a friendly neighbor 🏡",
-    "notes": ""
-  },
-  {
-    "id": "phonics_097",
-    "complexity": 1,
-    "question": "He is in the home.",
-    "answer": "Say it like a brave lion 🦁",
-    "notes": ""
-  },
-  {
-    "id": "phonics_098",
-    "complexity": 1,
-    "question": "I am in the shop.",
-    "answer": "Say it like you're shivering cold 🥶",
-    "notes": ""
-  },
-  {
-    "id": "phonics_099",
-    "complexity": 1,
-    "question": "I am in the kitchen.",
-    "answer": "Say it like you're singing 🎵",
     "notes": ""
   },
   {
@@ -889,13 +749,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_128",
-    "complexity": 2,
-    "question": "The fox sat on the bed.",
-    "answer": "Say it like you're hugging someone 🤗",
-    "notes": ""
-  },
-  {
     "id": "phonics_129",
     "complexity": 2,
     "question": "The fish sat on the log.",
@@ -938,13 +791,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_135",
-    "complexity": 2,
-    "question": "The cat sat on the bed.",
-    "answer": "Say it like you're singing 🎵",
-    "notes": ""
-  },
-  {
     "id": "phonics_136",
     "complexity": 2,
     "question": "The cat is jumping in the garden.",
@@ -956,13 +802,6 @@
     "complexity": 2,
     "question": "Zoya eats juice.",
     "answer": "Say it like a news reporter 📰",
-    "notes": ""
-  },
-  {
-    "id": "phonics_138",
-    "complexity": 2,
-    "question": "The goat sat on the log.",
-    "answer": "Say it like you're waving goodbye 👋",
     "notes": ""
   },
   {
@@ -1001,13 +840,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_144",
-    "complexity": 2,
-    "question": "The cat is jumping in the garden.",
-    "answer": "Say it while stretching like a cat 🐱",
-    "notes": ""
-  },
-  {
     "id": "phonics_145",
     "complexity": 2,
     "question": "The fish sat on the bed.",
@@ -1043,13 +875,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_150",
-    "complexity": 2,
-    "question": "Anya eats cake.",
-    "answer": "Say it like a king or queen 👑",
-    "notes": ""
-  },
-  {
     "id": "phonics_151",
     "complexity": 2,
     "question": "The dog sat on the bed.",
@@ -1078,24 +903,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_155",
-    "complexity": 2,
-    "question": "The bee is running in the yard.",
-    "answer": "Say it like you're singing 🎵",
-    "notes": ""
-  },
-  {
     "id": "phonics_156",
     "complexity": 2,
     "question": "The bee is playing in the park.",
     "answer": "Say it like you're amazed ✨",
-    "notes": ""
-  },
-  {
-    "id": "phonics_157",
-    "complexity": 2,
-    "question": "The frog sat on the mat.",
-    "answer": "Say it like a king or queen 👑",
     "notes": ""
   },
   {
@@ -1138,13 +949,6 @@
     "complexity": 2,
     "question": "The fox is playing in the garden.",
     "answer": "Say it like thunder ⚡",
-    "notes": ""
-  },
-  {
-    "id": "phonics_164",
-    "complexity": 2,
-    "question": "The duck is jumping in the yard.",
-    "answer": "Say it like a pirate 🏴‍☠️",
     "notes": ""
   },
   {
@@ -1239,24 +1043,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_178",
-    "complexity": 2,
-    "question": "The fox is jumping in the yard.",
-    "answer": "Say it like thunder ⚡",
-    "notes": ""
-  },
-  {
     "id": "phonics_179",
     "complexity": 2,
     "question": "Neel eats idli.",
     "answer": "Say it while tiptoeing quietly 🤫",
-    "notes": ""
-  },
-  {
-    "id": "phonics_180",
-    "complexity": 2,
-    "question": "The hen is running in the park.",
-    "answer": "Say it while hopping like a bunny 🐰",
     "notes": ""
   },
   {
@@ -1271,13 +1061,6 @@
     "complexity": 2,
     "question": "The ant sat on the hill.",
     "answer": "Say it like you're waving goodbye 👋",
-    "notes": ""
-  },
-  {
-    "id": "phonics_183",
-    "complexity": 2,
-    "question": "The ant sat on the box.",
-    "answer": "Say it like you're amazed ✨",
     "notes": ""
   },
   {
@@ -1316,24 +1099,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_189",
-    "complexity": 2,
-    "question": "The hen is playing in the yard.",
-    "answer": "Say it while stomping like a dinosaur 🦕",
-    "notes": ""
-  },
-  {
     "id": "phonics_190",
     "complexity": 2,
     "question": "Tara eats juice.",
     "answer": "Whisper it like a secret 🤫",
-    "notes": ""
-  },
-  {
-    "id": "phonics_191",
-    "complexity": 2,
-    "question": "The duck sat on the hill.",
-    "answer": "Say it like a graceful dancer 💃",
     "notes": ""
   },
   {
@@ -1351,24 +1120,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_194",
-    "complexity": 2,
-    "question": "The cow sat on the box.",
-    "answer": "Say it like a buzzing bee 🐝",
-    "notes": ""
-  },
-  {
     "id": "phonics_195",
     "complexity": 2,
     "question": "The cow is jumping in the yard.",
     "answer": "Say it like you're telling a joke 😄",
-    "notes": ""
-  },
-  {
-    "id": "phonics_196",
-    "complexity": 2,
-    "question": "The frog sat on the hill.",
-    "answer": "Say it like you're confused 🤔",
     "notes": ""
   },
   {
@@ -1383,20 +1138,6 @@
     "complexity": 2,
     "question": "The hen sat on the hill.",
     "answer": "Say it like a king or queen 👑",
-    "notes": ""
-  },
-  {
-    "id": "phonics_199",
-    "complexity": 2,
-    "question": "The bee is running in the yard.",
-    "answer": "Say it like you're giggling 🤭",
-    "notes": ""
-  },
-  {
-    "id": "phonics_200",
-    "complexity": 2,
-    "question": "Neel eats idli.",
-    "answer": "Say it like a friendly neighbor 🏡",
     "notes": ""
   },
   {
@@ -1435,52 +1176,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_206",
-    "complexity": 2,
-    "question": "The fish sat on the box.",
-    "answer": "Say it while stretching like a cat 🐱",
-    "notes": ""
-  },
-  {
-    "id": "phonics_207",
-    "complexity": 2,
-    "question": "Anya eats rice.",
-    "answer": "Pretend you are very sleepy 😴",
-    "notes": ""
-  },
-  {
-    "id": "phonics_208",
-    "complexity": 2,
-    "question": "The bee is running in the yard.",
-    "answer": "Say it like a brave lion 🦁",
-    "notes": ""
-  },
-  {
     "id": "phonics_209",
     "complexity": 2,
     "question": "The fox sat on the hill.",
     "answer": "Say it like a buzzing bee 🐝",
-    "notes": ""
-  },
-  {
-    "id": "phonics_210",
-    "complexity": 2,
-    "question": "The fish sat on the box.",
-    "answer": "Say it like you're amazed ✨",
-    "notes": ""
-  },
-  {
-    "id": "phonics_211",
-    "complexity": 2,
-    "question": "The duck sat on the hill.",
-    "answer": "Say it like a news reporter 📰",
-    "notes": ""
-  },
-  {
-    "id": "phonics_212",
-    "complexity": 2,
-    "question": "The hen is playing in the garden.",
-    "answer": "Say it while stretching like a cat 🐱",
     "notes": ""
   },
   {
@@ -1495,13 +1194,6 @@
     "complexity": 2,
     "question": "The dog is running in the garden.",
     "answer": "Say it like a robot 🤖",
-    "notes": ""
-  },
-  {
-    "id": "phonics_215",
-    "complexity": 2,
-    "question": "Anya eats rice.",
-    "answer": "Say it like you're yawning 🥱",
     "notes": ""
   },
   {
@@ -1904,13 +1596,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_273",
-    "complexity": 3,
-    "question": "Kabir has a drum, and Kabir keeps it in the kitchen.",
-    "answer": "Pretend you are very sleepy 😴",
-    "notes": ""
-  },
-  {
     "id": "phonics_274",
     "complexity": 3,
     "question": "Neel has a book, and Neel keeps it in the garden.",
@@ -2083,13 +1768,6 @@
     "complexity": 3,
     "question": "Mina has a toy, and Mina keeps it in the park.",
     "answer": "Say it like you're rushing 🏃",
-    "notes": ""
-  },
-  {
-    "id": "phonics_299",
-    "complexity": 3,
-    "question": "Tara has a flag, and Tara keeps it in the yard.",
-    "answer": "Say it like a buzzing bee 🐝",
     "notes": ""
   },
   {
@@ -2744,13 +2422,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_393",
-    "complexity": 4,
-    "question": "Zoya has a ball. Zoya takes it to the kitchen.",
-    "answer": "Say it while hopping like a bunny 🐰",
-    "notes": ""
-  },
-  {
     "id": "phonics_394",
     "complexity": 4,
     "question": "Anya has a toy. Anya takes it to the yard.",
@@ -2769,13 +2440,6 @@
     "complexity": 4,
     "question": "Neel has a drum. Neel takes it to the bus.",
     "answer": "Say it like a pirate 🏴‍☠️",
-    "notes": ""
-  },
-  {
-    "id": "phonics_397",
-    "complexity": 4,
-    "question": "Mina has a flag. Mina takes it to the train.",
-    "answer": "Say it like you're very warm ☀️",
     "notes": ""
   },
   {
@@ -2811,13 +2475,6 @@
     "complexity": 4,
     "question": "Ira has a kite. Ira takes it to the bus.",
     "answer": "Say it like a wise owl 🦉",
-    "notes": ""
-  },
-  {
-    "id": "phonics_403",
-    "complexity": 4,
-    "question": "Anya has a toy. Anya takes it to the yard.",
-    "answer": "Say it like a news reporter 📰",
     "notes": ""
   },
   {
@@ -2874,13 +2531,6 @@
     "complexity": 4,
     "question": "Kabir has a cup. Kabir takes it to the shop.",
     "answer": "Say it like you're rushing 🏃",
-    "notes": ""
-  },
-  {
-    "id": "phonics_412",
-    "complexity": 4,
-    "question": "Tara has a book. Tara takes it to the park.",
-    "answer": "Say it like a king or queen 👑",
     "notes": ""
   },
   {
@@ -2982,31 +2632,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_427",
-    "complexity": 4,
-    "question": "Anya has a kite. Anya takes it to the room.",
-    "answer": "Say it like you're yawning 🥱",
-    "notes": ""
-  },
-  {
-    "id": "phonics_428",
-    "complexity": 4,
-    "question": "Kabir has a cup. Kabir takes it to the room.",
-    "answer": "Say it like you're giggling 🤭",
-    "notes": ""
-  },
-  {
     "id": "phonics_429",
     "complexity": 4,
     "question": "Kabir has a map. Kabir takes it to the yard.",
     "answer": "Say it in a high voice 🐭",
-    "notes": ""
-  },
-  {
-    "id": "phonics_430",
-    "complexity": 4,
-    "question": "Ira has a cup. Ira takes it to the room.",
-    "answer": "Say it like you're yawning 🥱",
     "notes": ""
   },
   {
@@ -3028,13 +2657,6 @@
     "complexity": 4,
     "question": "Ravi has a flag. Ravi takes it to the park.",
     "answer": "Say it like you're amazed ✨",
-    "notes": ""
-  },
-  {
-    "id": "phonics_434",
-    "complexity": 4,
-    "question": "Anya has a hat. Anya takes it to the home.",
-    "answer": "Say it like you're rushing 🏃",
     "notes": ""
   },
   {
@@ -3150,13 +2772,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_451",
-    "complexity": 5,
-    "question": "Ravi forgot a small thing at home. Kabir shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like a friendly neighbor 🏡",
-    "notes": ""
-  },
-  {
     "id": "phonics_452",
     "complexity": 5,
     "question": "Kabir forgot a small thing at home. Zoya shared and helped. The teacher said helping each other is good.",
@@ -3206,13 +2821,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_459",
-    "complexity": 5,
-    "question": "Zoya forgot a small thing at home. Rehan shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like you're dreaming 💭",
-    "notes": ""
-  },
-  {
     "id": "phonics_460",
     "complexity": 5,
     "question": "Anya forgot a small thing at home. Ira shared and helped. The teacher said helping each other is good.",
@@ -3241,38 +2849,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_464",
-    "complexity": 5,
-    "question": "Mina forgot a small thing at home. Neel shared and helped. The teacher said helping each other is good.",
-    "answer": "Whisper it like a secret 🤫",
-    "notes": ""
-  },
-  {
     "id": "phonics_465",
     "complexity": 5,
     "question": "Rehan forgot a small thing at home. Neel shared and helped. The teacher said helping each other is good.",
     "answer": "Say it like you're in slow motion 🐌",
-    "notes": ""
-  },
-  {
-    "id": "phonics_466",
-    "complexity": 5,
-    "question": "Rehan forgot a small thing at home. Neel shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like you're underwater 🐠",
-    "notes": ""
-  },
-  {
-    "id": "phonics_467",
-    "complexity": 5,
-    "question": "Neel forgot a small thing at home. Kabir shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like you're waving goodbye 👋",
-    "notes": ""
-  },
-  {
-    "id": "phonics_468",
-    "complexity": 5,
-    "question": "Mina forgot a small thing at home. Tara shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it while stomping like a dinosaur 🦕",
     "notes": ""
   },
   {
@@ -3297,13 +2877,6 @@
     "notes": ""
   },
   {
-    "id": "phonics_472",
-    "complexity": 5,
-    "question": "Neel forgot a small thing at home. Mina shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like you're shivering cold 🥶",
-    "notes": ""
-  },
-  {
     "id": "phonics_473",
     "complexity": 5,
     "question": "Zoya forgot a small thing at home. Tara shared and helped. The teacher said helping each other is good.",
@@ -3311,24 +2884,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_474",
-    "complexity": 5,
-    "question": "Rehan forgot a small thing at home. Neel shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like you're amazed ✨",
-    "notes": ""
-  },
-  {
     "id": "phonics_475",
     "complexity": 5,
     "question": "Anya forgot a small thing at home. Mina shared and helped. The teacher said helping each other is good.",
     "answer": "Say it like you're underwater 🐠",
-    "notes": ""
-  },
-  {
-    "id": "phonics_476",
-    "complexity": 5,
-    "question": "Neel forgot a small thing at home. Kabir shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like you're singing 🎵",
     "notes": ""
   },
   {
@@ -3350,13 +2909,6 @@
     "complexity": 5,
     "question": "Mina forgot a small thing at home. Rehan shared and helped. The teacher said helping each other is good.",
     "answer": "Say it like you're in a cave (echo!) 🏔️",
-    "notes": ""
-  },
-  {
-    "id": "phonics_480",
-    "complexity": 5,
-    "question": "Mina forgot a small thing at home. Rehan shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it while hopping like a bunny 🐰",
     "notes": ""
   },
   {
@@ -3388,38 +2940,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_485",
-    "complexity": 5,
-    "question": "Kabir forgot a small thing at home. Zoya shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it in a deep voice 🐻",
-    "notes": ""
-  },
-  {
-    "id": "phonics_486",
-    "complexity": 5,
-    "question": "Aarav forgot a small thing at home. Zoya shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like you're singing 🎵",
-    "notes": ""
-  },
-  {
-    "id": "phonics_487",
-    "complexity": 5,
-    "question": "Mina forgot a small thing at home. Zoya shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like a gentle breeze 🍃",
-    "notes": ""
-  },
-  {
     "id": "phonics_488",
     "complexity": 5,
     "question": "Tara forgot a small thing at home. Anya shared and helped. The teacher said helping each other is good.",
     "answer": "Say it like you're shivering cold 🥶",
-    "notes": ""
-  },
-  {
-    "id": "phonics_489",
-    "complexity": 5,
-    "question": "Rehan forgot a small thing at home. Tara shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it while stomping like a dinosaur 🦕",
     "notes": ""
   },
   {
@@ -3430,24 +2954,10 @@
     "notes": ""
   },
   {
-    "id": "phonics_491",
-    "complexity": 5,
-    "question": "Ira forgot a small thing at home. Aarav shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like a superhero 🦸",
-    "notes": ""
-  },
-  {
     "id": "phonics_492",
     "complexity": 5,
     "question": "Tara forgot a small thing at home. Mina shared and helped. The teacher said helping each other is good.",
     "answer": "Pretend you are very sleepy 😴",
-    "notes": ""
-  },
-  {
-    "id": "phonics_493",
-    "complexity": 5,
-    "question": "Tara forgot a small thing at home. Anya shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like you're rushing 🏃",
     "notes": ""
   },
   {
@@ -3476,13 +2986,6 @@
     "complexity": 5,
     "question": "Mina forgot a small thing at home. Ira shared and helped. The teacher said helping each other is good.",
     "answer": "Say it like a pirate 🏴‍☠️",
-    "notes": ""
-  },
-  {
-    "id": "phonics_498",
-    "complexity": 5,
-    "question": "Tara forgot a small thing at home. Anya shared and helped. The teacher said helping each other is good.",
-    "answer": "Say it like you're in slow motion 🐌",
     "notes": ""
   },
   {

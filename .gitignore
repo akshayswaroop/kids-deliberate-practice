@@ -28,3 +28,6 @@ storybook-static
 
 # Local Netlify folder
 .netlify
+
+# Test output and reports (generated)
+test-results/

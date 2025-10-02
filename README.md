@@ -89,20 +89,39 @@ Keep this minimal checklist handy before running or deploying the app:
 npm test                  # Run all tests
 npm run test:unit         # Run unit tests only (fast: ~1.7s)
 npm run test:unit:watch   # Watch mode for development
+npx playwright test       # Run thin E2E smoke tests (serves in test mode)
 ```
 
 ### High-Leverage Tests (Essential)
 - **Domain Tests** - Business logic and mastery calculations
 - **Infrastructure Tests** - Redux integration and state management  
 - **Integration Tests** - End-to-end user journeys and BDD scenarios
+  - Create the store using `createAppStore({ persist: false, preloadedState })` to avoid localStorage.
 
 **Total: 28 tests covering domain, infrastructure, and integration layers**
 
 ### Test Architecture
 - **Unit Tests**: `vitest.config.unit.ts` - Fast jsdom-based testing
-- **Component Tests**: `vite.config.ts` - Browser-based Storybook integration
+- **Integration (Redux + Domain)**: Use the store factory to run logic in-memory.
+- **E2E (Playwright, thin)**: UI smoke flows with deterministic seeding via a test bridge.
 - **Auto-run**: All tests run on every commit via pre-commit hooks
 - **Git Integration**: Tests must pass before commits are allowed
+
+### E2E with Playwright (Thin and Deterministic)
+
+- Playwright runs against a dev server started in Vite test mode so the test bridge is available.
+- The bridge exposes two helpers on `window`:
+  - `__seedState(state)` replaces the Redux `game` slice with the provided object.
+  - `__readState()` returns the current Redux state for optional assertions.
+- A basic smoke test lives at `tests/e2e/practice-flow.spec.ts:1`.
+
+Local run:
+
+```bash
+npx playwright test
+```
+
+Safety note: localStorage is cleared only inside the test browser context and origin. No real user sessions are affected.
 
 ## 🎨 Development Tools
 

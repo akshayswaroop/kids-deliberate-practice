@@ -31,6 +31,10 @@ const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
+    // Test-only: replace entire game slice state. Not exported publicly in app code.
+    __replaceAll: function (_state, action: PayloadAction<RootState>) {
+      return action.payload as any;
+    },
     selectUser: function (state, action: PayloadAction<{ userId: string }>) {
       if (state.users[action.payload.userId]) {
         state.currentUserId = action.payload.userId;

@@ -23,7 +23,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
+    // Serve in Vite test mode so the test bridge is enabled
+    command: 'npm run dev -- --mode test',
     url: 'http://localhost:5174',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,

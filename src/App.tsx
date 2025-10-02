@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import useAppDispatch from './infrastructure/hooks/reduxHooks';
+import useAppDispatch, { useAppSelector } from './infrastructure/hooks/reduxHooks';
 import { ThemeProvider } from './app/ui/ThemeContext';
 import { PracticeServiceProvider } from './app/providers/PracticeServiceProvider';
 // Removed attempt import - now handled by domain actions
@@ -8,22 +7,14 @@ import { handleNextPressed, ensureActiveSession, markCurrentWordCorrect, markCur
 import { revealAnswer } from './infrastructure/state/gameSlice';
 import HomePage from './app/ui/HomePage';
 import Onboarding from './app/ui/Onboarding';
-import {
-  selectShouldShowOnboarding,
-  selectCurrentPracticeData,
-  selectResponsiveColumns,
-} from './infrastructure/state/gameSelectors';
+import { buildPracticeAppViewModel } from './app/presenters/practicePresenter';
+import type { RootState as GameState } from './infrastructure/state/gameState';
 
 // Single, clean App implementation
 function App() {
   const dispatch = useAppDispatch();
-  const rootState = useSelector((state: { game: any }) => state.game);
-  const users = rootState.users || {};
-  const currentUserId = rootState.currentUserId as string | null;
-  const userState = currentUserId && users[currentUserId]
-    ? users[currentUserId]
-    : { words: {}, sessions: {}, settings: { languages: ['english'], sessionSizes: { english: 6, kannada: 6, mixed: 6 }, complexityLevels: { english: 1, kannada: 1, hindi: 1 } } };
-  const [mode, setMode] = useState(userState.settings.languages[0] || 'english');
+  const gameState = useAppSelector(state => state.game as GameState);
+  const [mode, setMode] = useState<string>('english');
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
   useEffect(() => {
@@ -32,23 +23,35 @@ function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleCreateUser = (username: string, displayName?: string) => {
-    dispatch({ type: 'game/addUser', payload: { userId: username, displayName } });
+  useEffect(() => {
+    const currentUserId = gameState.currentUserId;
+    if (currentUserId) {
+      const user = gameState.users[currentUserId];
+      const defaultMode = user?.settings?.languages?.[0];
+      if (defaultMode && mode !== defaultMode) {
+        setMode(defaultMode);
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState.currentUserId]);
+
+  const handleCreateUser = (userId: string, displayName?: string) => {
+    dispatch({ type: 'game/addUser', payload: { userId, displayName } });
   };
   const handleSwitchUser = (userId: string) => {
     dispatch({ type: 'game/selectUser', payload: { userId } });
   };
   const handleSetMode = (newMode: string) => setMode(newMode);
 
-  const shouldShowOnboarding = selectShouldShowOnboarding(rootState as any);
-  const practiceData = selectCurrentPracticeData(rootState as any, mode);
-  const columns = selectResponsiveColumns(windowWidth);
+  const viewModel = buildPracticeAppViewModel({ state: gameState, mode, windowWidth });
+  const homeVM = viewModel.home;
 
   // ensure there's an active session for the current mode when the app mounts or mode changes
   useEffect(() => {
+    const currentUserId = gameState.currentUserId;
     if (!currentUserId) return;
     dispatch(ensureActiveSession({ mode } as any) as any);
-  }, [currentUserId, mode]);
+  }, [gameState.currentUserId, mode]);
 
   // Clean UI actions - no session knowledge required
   const onCorrect = () => {
@@ -64,21 +67,14 @@ function App() {
   };
 
   const onRevealAnswer = (revealed: boolean) => {
-    if (practiceData.sessionId) {
-      const currentWord = Object.values(userState.words).find((word: any) => 
-        word.wordKannada === practiceData.mainWord || word.text === practiceData.mainWord
-      ) as any;
-      if (currentWord) {
-        dispatch(revealAnswer({ 
-          sessionId: practiceData.sessionId, 
-          wordId: currentWord.id, 
-          revealed 
-        }));
-      }
+    const sessionId = homeVM?.practice.sessionId;
+    const wordId = homeVM?.practice.currentWordId;
+    if (sessionId && wordId) {
+      dispatch(revealAnswer({ sessionId, wordId, revealed }));
     }
   };
 
-  if (shouldShowOnboarding) {
+  if (viewModel.showOnboarding) {
     return (
       <ThemeProvider>
         <PracticeServiceProvider>
@@ -91,28 +87,18 @@ function App() {
   return (
     <ThemeProvider>
       <PracticeServiceProvider>
-        <HomePage
-          users={users}
-          currentUserId={currentUserId}
-          onCreateUser={handleCreateUser}
-          onSwitchUser={handleSwitchUser}
-          onSetMode={handleSetMode}
-          mode={mode}
-          mainWord={practiceData.mainWord}
-          transliteration={practiceData.transliteration}
-          transliterationHi={practiceData.transliterationHi}
-          answer={practiceData.answer}
-          notes={practiceData.notes}
-          choices={practiceData.choices}
-          needsNewSession={practiceData.needsNewSession}
-          onCorrect={onCorrect}
-          onWrong={onWrong}
-          onNext={onNext}
-          onRevealAnswer={onRevealAnswer}
-          columns={columns}
-          isAnswerRevealed={practiceData.isAnswerRevealed}
-          isEnglishMode={practiceData.isEnglishMode}
-        />
+        {homeVM && (
+          <HomePage
+            ui={homeVM}
+            onCreateUser={handleCreateUser}
+            onSwitchUser={handleSwitchUser}
+            onSetMode={handleSetMode}
+            onCorrect={onCorrect}
+            onWrong={onWrong}
+            onNext={onNext}
+            onRevealAnswer={onRevealAnswer}
+          />
+        )}
       </PracticeServiceProvider>
     </ThemeProvider>
   );

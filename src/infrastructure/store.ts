@@ -13,7 +13,7 @@ function loadGameState(): GameState | undefined {
 }
 
 // Middleware to persist state on any game action
-const persistMiddleware = (storeAPI: any) => (next: any) => (action: any) => {
+const makePersistMiddleware = () => (storeAPI: any) => (next: any) => (action: any) => {
   const result = next(action);
   if (action.type.startsWith('game/')) {
     const state = storeAPI.getState();
@@ -30,56 +30,57 @@ const persistMiddleware = (storeAPI: any) => (next: any) => (action: any) => {
 
 
 
-const loaded = loadGameState();
+// Factory to create app store with optional persistence and preloaded state
+export function createAppStore(opts?: { persist?: boolean; preloadedState?: { game: GameState } | undefined }) {
+  const { persist = true } = opts ?? {};
+  let preloadedState = opts?.preloadedState;
 
-// Merge new words/subjects into existing users so they automatically 
-// pick up newly added content without losing their progress
-let gameState = loaded;
-if (loaded) {
-  try {
-    const initialWords = loadAllWords();
-    Object.values(loaded.users || {}).forEach((user: any) => {
-      user.words = user.words || {};
-      // Add any missing words from initial set (new words/subjects)
-      Object.entries(initialWords).forEach(([wordId, wordObj]) => {
-        if (!user.words[wordId]) {
-          user.words[wordId] = { ...wordObj };
-        } else {
-          // 🧠 Smart auto-refresh: Update content if it has changed
-          const existingWord = user.words[wordId];
-          const contentChanged = 
-            existingWord.answer !== wordObj.answer || 
-            existingWord.notes !== wordObj.notes;
-          
-          if (contentChanged) {
-            // Preserve all progress data, only update content
-            user.words[wordId] = {
-              ...existingWord,
-              answer: wordObj.answer,
-              notes: wordObj.notes
-            };
-            console.log(`🔄 [AUTO-REFRESH] Updated content for word: ${wordId}`);
-          }
-        }
-      });
-    });
-    console.log('🔄 [MERGE] Added new words/subjects and auto-refreshed content for existing users');
-  } catch (e) {
-    console.error('❌ [MERGE] Failed to merge new words:', e);
+  if (persist && !preloadedState) {
+    const loaded = loadGameState();
+    preloadedState = loaded ? { game: loaded } : undefined;
   }
+
+  // Merge new words into existing users when persistence is on and we have preloaded state
+  if (preloadedState?.game) {
+    try {
+      const initialWords = loadAllWords();
+      Object.values((preloadedState.game as any).users || {}).forEach((user: any) => {
+        user.words = user.words || {};
+        Object.entries(initialWords).forEach(([wordId, wordObj]) => {
+          if (!user.words[wordId]) {
+            user.words[wordId] = { ...wordObj };
+          } else {
+            const existingWord = user.words[wordId];
+            const contentChanged = existingWord.answer !== wordObj.answer || existingWord.notes !== wordObj.notes;
+            if (contentChanged) {
+              user.words[wordId] = { ...existingWord, answer: wordObj.answer, notes: wordObj.notes };
+              console.log(`🔄 [AUTO-REFRESH] Updated content for word: ${wordId}`);
+            }
+          }
+        });
+      });
+      console.log('🔄 [MERGE] Added new words/subjects and auto-refreshed content for existing users');
+    } catch (e) {
+      console.error('❌ [MERGE] Failed to merge new words:', e);
+    }
+  }
+
+  const middlewareBuilder = (getDefaultMiddleware: any) => {
+    const base = getDefaultMiddleware().prepend(traceMiddleware.middleware);
+    return persist ? base.concat(makePersistMiddleware()) : base;
+  };
+
+  const store = configureStore({
+    reducer: { game: gameReducer },
+    middleware: middlewareBuilder,
+    preloadedState,
+  });
+
+  return store;
 }
 
-const preloadedState = gameState ? { game: gameState } : undefined;
-
-export const store = configureStore({
-  reducer: {
-    game: gameReducer,
-  },
-  middleware: getDefaultMiddleware => getDefaultMiddleware()
-    .prepend(traceMiddleware.middleware)  // Add trace middleware first
-    .concat(persistMiddleware),
-  preloadedState,
-});
+// Default app store (production/dev usage) keeps current behavior
+export const store = createAppStore();
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
