@@ -8,6 +8,7 @@ import {
   selectGuidanceExperience,
 } from '../../infrastructure/state/gameSelectors';
 import type { RootState as GameState, UserState } from '../../infrastructure/state/gameState';
+import { INTRO_TOUR_VERSION } from '../../infrastructure/config/guidance';
 
 export interface PracticeCardViewModel {
   mainWord: string;
@@ -179,6 +180,7 @@ export function buildPracticeAppViewModel(params: {
     },
   };
 
+  const needsVersionedIntro = !!experience && experience.seenIntroVersion !== INTRO_TOUR_VERSION;
   const home: PracticeHomeViewModel = {
     currentUserId: state.currentUserId,
     users: mapUsersToOptions(state.users),
@@ -188,7 +190,8 @@ export function buildPracticeAppViewModel(params: {
     practice: practiceView,
     revisionPanel: buildRevisionPanel(state, mode),
     guidance: {
-      showIntro: !!experience && !experience.hasSeenIntro,
+      // Show intro if either the legacy flag says not seen OR we bumped the version
+      showIntro: !!experience && (!experience.hasSeenIntro || needsVersionedIntro),
       showStreakCoachmark: !!experience && !experience.coachmarks.streak,
       showProfilesCoachmark: !!experience && !experience.coachmarks.profiles,
       showParentGuideHint: !!experience && !experience.hasSeenParentGuide,

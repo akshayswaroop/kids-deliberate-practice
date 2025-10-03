@@ -54,6 +54,8 @@ export type GuidanceExperience = {
   coachmarks: CoachmarkFlags;
   hasSeenParentGuide: boolean;
   hasSeenWhyRepeat: boolean;
+  // Version string of the last intro tour shown (if any). When INTRO_TOUR_VERSION changes, show tour again once.
+  seenIntroVersion?: string;
 };
 
 export type Session = {

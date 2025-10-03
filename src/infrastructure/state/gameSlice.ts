@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './gameState';
 import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
 import { loadAllWords } from '../repositories/subjectLoader';
+import { INTRO_TOUR_VERSION } from '../config/guidance';
 // Thunks moved to gameActions.ts
 
 // Use semantic/opaque user ids in core state instead of real names.
@@ -16,6 +17,7 @@ const createDefaultExperience = (): import('./gameState').GuidanceExperience => 
   },
   hasSeenParentGuide: false,
   hasSeenWhyRepeat: false,
+  seenIntroVersion: undefined,
 });
 
 export const makeUser = (displayName?: string) => ({
@@ -228,6 +230,7 @@ const gameSlice = createSlice({
       if (!user) return;
       user.experience = user.experience || createDefaultExperience();
       user.experience.hasSeenIntro = true;
+      user.experience.seenIntroVersion = INTRO_TOUR_VERSION;
     },
     markCoachmarkSeen: function (state, action: PayloadAction<{ coachmark: keyof import('./gameState').CoachmarkFlags }>) {
       const uid = state.currentUserId;
