@@ -12,6 +12,7 @@ import gramPanchayatBank from '../../assets/gram_panchayat_questions.json';
 import hanumanBank from '../../assets/hanuman_chalisa_kids.json';
 import storyComprehensionBank from '../../assets/story_comprehension_100.json';
 import numberSpellingsBank from '../../assets/number_spellings_1_20.json';
+import nationalSymbolsBank from '../../assets/national_symbols.json';
 
 // Map bank paths to imported data
 const BANK_DATA_MAP: Record<string, any> = {
@@ -26,6 +27,7 @@ const BANK_DATA_MAP: Record<string, any> = {
   'hanuman_chalisa_kids.json': hanumanBank,
   'story_comprehension_100.json': storyComprehensionBank,
   'number_spellings_1_20.json': numberSpellingsBank,
+  'national_symbols.json': nationalSymbolsBank,
 };
 
 // Unified question bank item interface
@@ -127,6 +129,20 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     revisionPanel: {
       title: 'Number Spelling Revision',
       buttonLabel: 'Number Spellings',
+      primaryField: 'text',
+      secondaryField: 'answer',
+      notesField: 'notes',
+    },
+  },
+  {
+    name: 'nationalsymbols',
+    bankPath: 'national_symbols.json',
+    language: 'nationalsymbols',
+    displayIcon: '🇮🇳',
+    displayLabel: 'National Symbols',
+    revisionPanel: {
+      title: 'National Symbols Revision',
+      buttonLabel: 'National Symbols',
       primaryField: 'text',
       secondaryField: 'answer',
       notesField: 'notes',
