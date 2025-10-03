@@ -1,4 +1,4 @@
-import { SUBJECT_CONFIGS } from '../../infrastructure/repositories/subjectLoader';
+import { SUBJECT_CONFIGS, getSubjectSupportsRevision } from '../../infrastructure/repositories/subjectLoader';
 import {
   selectActiveSessionForMode,
   selectCurrentPracticeData,
@@ -99,7 +99,7 @@ function buildModeOptions(): ModeOptionViewModel[] {
 
 function buildRevisionPanel(state: GameState, mode: string): RevisionPanelViewModel | undefined {
   const subjectConfig = SUBJECT_CONFIGS.find(config => config.name === mode);
-  if (!subjectConfig || !subjectConfig.revisionPanel) {
+  if (!subjectConfig || !subjectConfig.revisionPanel || !getSubjectSupportsRevision(mode)) {
     return undefined;
   }
 

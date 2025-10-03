@@ -50,6 +50,7 @@ export interface SubjectConfig {
   language: string;       // e.g., 'english', 'kannada', 'mathtables'
   displayIcon: string;    // e.g., '🇺🇸', '🇮🇳', '🔢'
   displayLabel: string;   // e.g., 'English', 'Kannada', 'Math Tables'
+  supportsRevision?: boolean; // Whether this subject should include revision sessions (default: false for long questions)
   revisionPanel?: {
     title: string;
     buttonLabel?: string;
@@ -93,6 +94,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'kannada',
     displayIcon: '🇮🇳',
     displayLabel: 'Kannada',
+    supportsRevision: true,
     revisionPanel: {
       title: 'Kannada Revision',
       buttonLabel: 'Kannada Revision',
@@ -107,6 +109,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'kannadaalphabets',
     displayIcon: '🔤',
     displayLabel: 'Kannada Alphabets',
+    supportsRevision: true,
     revisionPanel: {
       title: 'Kannada Alphabet Revision',
       buttonLabel: 'Alphabet Revision',
@@ -115,8 +118,36 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
       notesField: 'notes',
     },
   },
-  { name: 'hindialphabets', bankPath: 'hindi_full_barakhadi_bank.json', language: 'hindialphabets', displayIcon: '🇮🇳', displayLabel: 'Hindi Alphabets' },
-  { name: 'mathtables', bankPath: 'math_tables_bank.json', language: 'mathtables', displayIcon: '🔢', displayLabel: 'Math Tables' },
+  { 
+    name: 'hindialphabets', 
+    bankPath: 'hindi_full_barakhadi_bank.json', 
+    language: 'hindialphabets', 
+    displayIcon: '🇮🇳', 
+    displayLabel: 'Hindi Alphabets', 
+    supportsRevision: true,
+    revisionPanel: {
+      title: 'Hindi Alphabet Revision',
+      buttonLabel: 'Hindi Revision',
+      primaryField: 'text',
+      secondaryField: 'answer',
+      notesField: 'notes',
+    },
+  },
+  { 
+    name: 'mathtables', 
+    bankPath: 'math_tables_bank.json', 
+    language: 'mathtables', 
+    displayIcon: '🔢', 
+    displayLabel: 'Math Tables', 
+    supportsRevision: true,
+    revisionPanel: {
+      title: 'Math Tables Revision',
+      buttonLabel: 'Math Revision',
+      primaryField: 'text',
+      secondaryField: 'answer',
+      notesField: 'notes',
+    },
+  },
   { name: 'humanbody', bankPath: 'human_body_grade3_full.json', language: 'humanbody', displayIcon: '🧠', displayLabel: 'Human Body' },
   { name: 'indiageography', bankPath: 'india_geography_questions.json', language: 'indiageography', displayIcon: '🗺️', displayLabel: 'India Geography' },
   { name: 'grampanchayat', bankPath: 'gram_panchayat_questions.json', language: 'grampanchayat', displayIcon: '🏛️', displayLabel: 'Gram Panchayat' },
@@ -128,6 +159,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'numberspellings',
     displayIcon: '🔤',
     displayLabel: 'Number Spellings (1–20)',
+    supportsRevision: true,
     revisionPanel: {
       title: 'Number Spelling Revision',
       buttonLabel: 'Number Spellings',
@@ -142,13 +174,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'nationalsymbols',
     displayIcon: '🇮🇳',
     displayLabel: 'National Symbols',
-    revisionPanel: {
-      title: 'National Symbols Revision',
-      buttonLabel: 'National Symbols',
-      primaryField: 'text',
-      secondaryField: 'answer',
-      notesField: 'notes',
-    },
+    supportsRevision: false,
   },
   {
     name: 'beforeafternumbers',
@@ -156,13 +182,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'beforeafternumbers',
     displayIcon: '🔢',
     displayLabel: 'Before & After Numbers',
-    revisionPanel: {
-      title: 'Number Sequence Revision',
-      buttonLabel: 'Before & After',
-      primaryField: 'text',
-      secondaryField: 'answer',
-      notesField: 'notes',
-    },
+    supportsRevision: false,
   },
   // ADD NEW SUBJECTS HERE - no code changes needed elsewhere!
 ];
@@ -181,6 +201,19 @@ export function getSubjectDisplayLabel(subjectName: string): string {
   }
   // Fallback: capitalize first letter
   return subjectName.charAt(0).toUpperCase() + subjectName.slice(1);
+}
+
+/**
+ * Check if a subject supports revision sessions.
+ * Subjects with long questions (like National Symbols, Before & After Numbers) 
+ * should not have revision as it doesn't make pedagogical sense.
+ * 
+ * @param subjectName - Internal subject name (e.g., 'mathtables', 'nationalsymbols')
+ * @returns Whether the subject supports revision sessions
+ */
+export function getSubjectSupportsRevision(subjectName: string): boolean {
+  const config = SUBJECT_CONFIGS.find(s => s.name === subjectName || s.language === subjectName);
+  return config?.supportsRevision ?? false; // Default to false for safety
 }
 
 /**

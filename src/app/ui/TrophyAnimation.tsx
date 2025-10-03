@@ -23,7 +23,8 @@ interface TrophyAnimationProps {
 const TROPHY_ANIMATION_DURATION_MS = 3200;
 const TROPHY_COMPLETE_DELAY_MS = 500;
 const CONFETTI_PARTICLE_COUNT = 60;
-const SPARKLE_COUNT = 18;
+const SPARKLE_COUNT = 36;
+const STARBURST_COUNT = 12;
 
 export default function TrophyAnimation({ 
   visible, 
@@ -35,6 +36,7 @@ export default function TrophyAnimation({
   const [reducedMotion, setReducedMotion] = useState(false);
   const confettiRef = useRef<HTMLDivElement>(null);
   const sparklesRef = useRef<HTMLDivElement>(null);
+  const starburstRef = useRef<HTMLDivElement>(null);
 
   // Check reduced motion preference
   useEffect(() => {
@@ -120,7 +122,12 @@ export default function TrophyAnimation({
 
   // Create confetti particles
   useEffect(() => {
-    if (!show || reducedMotion || !confettiRef.current) return;
+    if (!show || reducedMotion || !confettiRef.current) {
+      if (confettiRef.current) {
+        confettiRef.current.innerHTML = '';
+      }
+      return;
+    }
     
     const container = confettiRef.current;
     const colors = ['#FFD700', '#FFA500', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4'];
@@ -167,30 +174,36 @@ export default function TrophyAnimation({
 
   // Create sparkle particles that orbit the trophy
   useEffect(() => {
-    if (!show || reducedMotion || !sparklesRef.current) return;
-
     const container = sparklesRef.current;
+    if (!container) return;
+
+    if (!show || reducedMotion) {
+      container.innerHTML = '';
+      return;
+    }
+
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     const maxTrophyWidth = viewportWidth * 0.8;
     const trophySize = Math.min(viewportHeight * 0.75, maxTrophyWidth);
-    const orbitRadius = Math.max(trophySize * 0.45, 140);
+    const orbitRadius = Math.max(trophySize * 0.45, 150);
+
     for (let i = 0; i < SPARKLE_COUNT; i++) {
       const sparkle = document.createElement('div');
       sparkle.className = 'trophy-sparkle';
-      const delay = (i / SPARKLE_COUNT) * 1.2;
-      const scale = 0.6 + Math.random() * 0.9;
+      const delay = (i / SPARKLE_COUNT) * 0.9;
+      const scale = 0.7 + Math.random() * 0.8;
       const rotation = (360 / SPARKLE_COUNT) * i;
       sparkle.style.cssText = `
         position: absolute;
         left: 50%;
         top: 50%;
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         transform-origin: center;
         pointer-events: none;
         opacity: 0;
-        animation: sparkle-orbit ${(TROPHY_ANIMATION_DURATION_MS / 1000).toFixed(2)}s ease-in-out ${delay}s infinite;
+        animation: sparkle-orbit ${(TROPHY_ANIMATION_DURATION_MS / 1000).toFixed(2)}s ease-in-out ${delay}s forwards;
       `;
       sparkle.style.setProperty('--sparkle-scale', scale.toString());
       sparkle.style.setProperty('--sparkle-rotation', `${rotation}deg`);
@@ -200,11 +213,34 @@ export default function TrophyAnimation({
       container.appendChild(sparkle);
     }
 
-    const cleanup = () => {
-      if (container) container.innerHTML = '';
+    return () => {
+      container.innerHTML = '';
     };
+  }, [show, reducedMotion]);
 
-    return cleanup;
+  // Create starburst rays that explode outward with the trophy
+  useEffect(() => {
+    const container = starburstRef.current;
+    if (!container) return;
+
+    if (!show || reducedMotion) {
+      container.innerHTML = '';
+      return;
+    }
+
+    for (let i = 0; i < STARBURST_COUNT; i++) {
+      const ray = document.createElement('div');
+      ray.className = 'trophy-starburst';
+      const rotation = (360 / STARBURST_COUNT) * i;
+      const delay = (i % 4) * 0.05;
+      ray.style.setProperty('--star-rotation', `${rotation}deg`);
+      ray.style.setProperty('--star-delay', `${delay}s`);
+      container.appendChild(ray);
+    }
+
+    return () => {
+      container.innerHTML = '';
+    };
   }, [show, reducedMotion]);
 
   if (!show) return null;
@@ -277,6 +313,20 @@ export default function TrophyAnimation({
       animation: sparkle-twinkle 1.4s ease-in-out infinite;
     }
 
+    .trophy-starburst {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 8px;
+      height: 70px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,220,92,0.0) 75%);
+      transform-origin: center 80%;
+      opacity: 0;
+      animation: starburst-flare ${(TROPHY_ANIMATION_DURATION_MS / 1000).toFixed(2)}s ease-out var(--star-delay) forwards;
+      transform: rotate(var(--star-rotation)) scaleY(0.4);
+    }
+
     @keyframes sparkle-twinkle {
       0%, 100% { transform: scale(0.6); opacity: 0; }
       40% { transform: scale(1); opacity: 1; }
@@ -288,7 +338,7 @@ export default function TrophyAnimation({
       15% { opacity: 1; }
       55% { transform: rotate(calc(var(--sparkle-rotation) + 150deg)) translate(calc(var(--sparkle-radius) * 0.8)) scale(calc(var(--sparkle-scale) * 0.9)); }
       85% { opacity: 1; }
-      100% { transform: rotate(calc(var(--sparkle-rotation) + 280deg)) translate(calc(var(--sparkle-radius) * 0.6)) scale(calc(var(--sparkle-scale) * 0.5)); opacity: 0; }
+      100% { transform: rotate(calc(var(--sparkle-rotation) + 320deg)) translate(calc(var(--sparkle-radius) * 0.45)) scale(calc(var(--sparkle-scale) * 0.45)); opacity: 0; }
     }
 
     @keyframes trophy-sequence {
@@ -312,6 +362,13 @@ export default function TrophyAnimation({
         transform: translate(calc(${targetX}px - ${centerX}px), calc(${targetY}px - ${centerY}px)) scale(0.2);
         opacity: 0;
       }
+    }
+
+    @keyframes starburst-flare {
+      0% { opacity: 0; transform: rotate(var(--star-rotation)) scaleY(0.2); }
+      10% { opacity: 1; transform: rotate(var(--star-rotation)) scaleY(1.1); }
+      60% { opacity: 0.8; transform: rotate(var(--star-rotation)) scaleY(0.9); }
+      100% { opacity: 0; transform: rotate(var(--star-rotation)) scaleY(0.1); }
     }
     
     @keyframes confetti-burst {
@@ -359,6 +416,19 @@ export default function TrophyAnimation({
           transform: 'translate(-50%, -50%)',
           width: '1px',
           height: '1px',
+        }}
+      />
+
+      {/* Starburst rays */}
+      <div
+        ref={starburstRef}
+        style={{
+          position: 'absolute',
+          left: `${centerX}px`,
+          top: `${centerY}px`,
+          transform: 'translate(-50%, -50%)',
+          width: 0,
+          height: 0,
         }}
       />
 

@@ -6,7 +6,6 @@ import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetec
 import FlyingUnicorn from './FlyingUnicorn.jsx';
 import SadBalloonAnimation from './SadBalloonAnimation.jsx';
 
-const SAD_EFFECT_BACKUP_TIMEOUT_MS = 6500;
 const PROGRESSION_DELAY_MS = 120;
 
 const rawBaseUrl = typeof import.meta !== 'undefined' && import.meta.env?.BASE_URL
@@ -200,20 +199,12 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     setTimeout(() => handleProgression(), PROGRESSION_DELAY_MS);
   }, [handleProgression]);
 
-  // Handler for sad balloon animation end
-  const [wrongSoundPromise, setWrongSoundPromise] = React.useState(null);
+  // Handler for encouragement overlay end
   const handleSadBalloonEnd = React.useCallback(() => {
     setShowSadBalloon(false);
-    if (wrongSoundPromise) {
-      wrongSoundPromise.then(() => {
-        setStatus('waiting');
-        setTimeout(() => handleProgression(), PROGRESSION_DELAY_MS);
-      });
-    } else {
-      setStatus('waiting');
-      setTimeout(() => handleProgression(), PROGRESSION_DELAY_MS);
-    }
-  }, [wrongSoundPromise, handleProgression]);
+    setStatus('waiting');
+    setTimeout(() => handleProgression(), PROGRESSION_DELAY_MS);
+  }, [handleProgression]);
   // Determine current active choice progress to render rainbow fill for the main question
   const activeChoice = (choices || []).find(c => String(c.label) === String(mainWord));
   const activeProgress = Math.min(100, Math.max(0, (activeChoice && (typeof activeChoice.progress === 'number' ? activeChoice.progress : Number(activeChoice && activeChoice.progress))) || 0));
@@ -254,7 +245,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           zIndex: 2000
         }}
       />
-      {/* Sad balloon animation overlay for wrong answers */}
+      {/* Encouragement overlay for wrong answers */}
       <SadBalloonAnimation
         visible={showSadBalloon}
         onAnimationEnd={handleSadBalloonEnd}
@@ -655,51 +646,8 @@ onWrong && onWrong();
             setStatus('animating');
 triggerBounceAnimation();
             setShowSadBalloon(true);
-            // Start audio and store promise
-            let soundPromise;
-            try {
-              const audio = new window.Audio(buildSoundUrl('you-can-do-better.m4a'));
-              audio.volume = 0.7;
-              soundPromise = new Promise(resolve => {
-                let resolved = false;
-                let fallbackTimeoutId = 0;
-
-                const cleanup = () => {
-                  if (resolved) return;
-                  resolved = true;
-                  window.clearTimeout(fallbackTimeoutId);
-                  audio.onended = null;
-                  audio.onerror = null;
-                  try {
-                    audio.pause?.();
-                    audio.currentTime = 0;
-                  } catch {}
-                  resolve();
-                };
-
-                fallbackTimeoutId = window.setTimeout(() => {
-                  cleanup();
-                }, SAD_EFFECT_BACKUP_TIMEOUT_MS);
-
-                audio.onended = () => {
-                  cleanup();
-                };
-
-                audio.onerror = () => {
-                  cleanup();
-                };
-
-                const playPromise = audio.play?.();
-                playPromise?.catch(() => {
-                  cleanup();
-                });
-              });
-            } catch (e) {
-              soundPromise = Promise.resolve();
-            }
-            setWrongSoundPromise(soundPromise);
             onWrong && onWrong();
-            // Progression will be handled by sad balloon animation end
+            // Progression will be handled by encouragement overlay end
           }}
           disabled={interactionLocked}
           aria-label="Try later — would you like to repeat this?"
