@@ -200,7 +200,7 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
           {/* Turnarounds counter */}
           {displayedTurnaroundCount > 0 && (
             <div 
-              className={`stat-badge trophy-badge ${displayedTurnaroundCount !== turnaroundCount ? 'animated' : ''}`}
+              className={`stat-badge trophy-badge ${displayedTurnaroundCount < turnaroundCount ? 'animated' : ''}`}
               data-tooltip={`${displayedTurnaroundCount} item${displayedTurnaroundCount === 1 ? '' : 's'} conquered from wrong to mastered!`}
               key={`turnaround-${displayedTurnaroundCount}`}
             >

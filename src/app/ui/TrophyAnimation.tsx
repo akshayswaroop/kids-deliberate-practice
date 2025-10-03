@@ -84,16 +84,34 @@ export default function TrophyAnimation({
         return () => clearTimeout(timer);
       }
       
-      // Normal animation: ~1000ms total
-      const duration = 1100; // Slightly over 1s to ensure completion
-      const timer = setTimeout(() => {
+      // Normal animation: exactly 1000ms total
+      // Trophy animation ends at 1000ms, then badge bounces
+      const duration = 1000;
+      
+      // Trigger badge bounce when trophy lands (at 1000ms)
+      const badgeBounceTimer = setTimeout(() => {
+        const badge = document.querySelector(targetBadgeSelector);
+        if (badge) {
+          badge.classList.add('animated');
+          setTimeout(() => {
+            badge.classList.remove('animated');
+          }, 600); // Badge bounce duration from ProgressStatsDisplay
+        }
+      }, duration);
+      
+      // Complete animation after badge bounce
+      const completeTimer = setTimeout(() => {
         setShow(false);
         if (onAnimationEnd) onAnimationEnd();
-      }, duration);
-      return () => clearTimeout(timer);
+      }, duration + 100); // Small delay to ensure badge bounce starts
+      
+      return () => {
+        clearTimeout(badgeBounceTimer);
+        clearTimeout(completeTimer);
+      };
     }
     setShow(false);
-  }, [visible, onAnimationEnd, reducedMotion]);
+  }, [visible, onAnimationEnd, reducedMotion, targetBadgeSelector]);
 
   // Create confetti particles
   useEffect(() => {
