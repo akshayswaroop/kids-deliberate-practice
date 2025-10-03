@@ -1,0 +1,275 @@
+[
+  {
+    "id": "before_2",
+    "complexity": 1,
+    "question": "What comes BEFORE 2?",
+    "answer": "1",
+    "notes": ""
+  },
+  {
+    "id": "before_3",
+    "complexity": 1,
+    "question": "What comes BEFORE 3?",
+    "answer": "2",
+    "notes": ""
+  },
+  {
+    "id": "before_4",
+    "complexity": 1,
+    "question": "What comes BEFORE 4?",
+    "answer": "3",
+    "notes": ""
+  },
+  {
+    "id": "before_5",
+    "complexity": 1,
+    "question": "What comes BEFORE 5?",
+    "answer": "4",
+    "notes": ""
+  },
+  {
+    "id": "before_6",
+    "complexity": 1,
+    "question": "What comes BEFORE 6?",
+    "answer": "5",
+    "notes": ""
+  },
+  {
+    "id": "before_7",
+    "complexity": 1,
+    "question": "What comes BEFORE 7?",
+    "answer": "6",
+    "notes": ""
+  },
+  {
+    "id": "before_8",
+    "complexity": 1,
+    "question": "What comes BEFORE 8?",
+    "answer": "7",
+    "notes": ""
+  },
+  {
+    "id": "before_9",
+    "complexity": 1,
+    "question": "What comes BEFORE 9?",
+    "answer": "8",
+    "notes": ""
+  },
+  {
+    "id": "before_10",
+    "complexity": 1,
+    "question": "What comes BEFORE 10?",
+    "answer": "9",
+    "notes": ""
+  },
+  {
+    "id": "after_1",
+    "complexity": 2,
+    "question": "What comes AFTER 1?",
+    "answer": "2",
+    "notes": ""
+  },
+  {
+    "id": "after_2",
+    "complexity": 2,
+    "question": "What comes AFTER 2?",
+    "answer": "3",
+    "notes": ""
+  },
+  {
+    "id": "after_3",
+    "complexity": 2,
+    "question": "What comes AFTER 3?",
+    "answer": "4",
+    "notes": ""
+  },
+  {
+    "id": "after_4",
+    "complexity": 2,
+    "question": "What comes AFTER 4?",
+    "answer": "5",
+    "notes": ""
+  },
+  {
+    "id": "after_5",
+    "complexity": 2,
+    "question": "What comes AFTER 5?",
+    "answer": "6",
+    "notes": ""
+  },
+  {
+    "id": "after_6",
+    "complexity": 2,
+    "question": "What comes AFTER 6?",
+    "answer": "7",
+    "notes": ""
+  },
+  {
+    "id": "after_7",
+    "complexity": 2,
+    "question": "What comes AFTER 7?",
+    "answer": "8",
+    "notes": ""
+  },
+  {
+    "id": "after_8",
+    "complexity": 2,
+    "question": "What comes AFTER 8?",
+    "answer": "9",
+    "notes": ""
+  },
+  {
+    "id": "after_9",
+    "complexity": 2,
+    "question": "What comes AFTER 9?",
+    "answer": "10",
+    "notes": ""
+  },
+  {
+    "id": "before_12",
+    "complexity": 3,
+    "question": "What comes BEFORE 12?",
+    "answer": "11",
+    "notes": ""
+  },
+  {
+    "id": "before_13",
+    "complexity": 3,
+    "question": "What comes BEFORE 13?",
+    "answer": "12",
+    "notes": ""
+  },
+  {
+    "id": "before_14",
+    "complexity": 3,
+    "question": "What comes BEFORE 14?",
+    "answer": "13",
+    "notes": ""
+  },
+  {
+    "id": "before_15",
+    "complexity": 3,
+    "question": "What comes BEFORE 15?",
+    "answer": "14",
+    "notes": ""
+  },
+  {
+    "id": "before_16",
+    "complexity": 3,
+    "question": "What comes BEFORE 16?",
+    "answer": "15",
+    "notes": ""
+  },
+  {
+    "id": "before_17",
+    "complexity": 3,
+    "question": "What comes BEFORE 17?",
+    "answer": "16",
+    "notes": ""
+  },
+  {
+    "id": "before_18",
+    "complexity": 3,
+    "question": "What comes BEFORE 18?",
+    "answer": "17",
+    "notes": ""
+  },
+  {
+    "id": "before_19",
+    "complexity": 3,
+    "question": "What comes BEFORE 19?",
+    "answer": "18",
+    "notes": ""
+  },
+  {
+    "id": "before_20",
+    "complexity": 3,
+    "question": "What comes BEFORE 20?",
+    "answer": "19",
+    "notes": ""
+  },
+  {
+    "id": "after_11",
+    "complexity": 4,
+    "question": "What comes AFTER 11?",
+    "answer": "12",
+    "notes": ""
+  },
+  {
+    "id": "after_12",
+    "complexity": 4,
+    "question": "What comes AFTER 12?",
+    "answer": "13",
+    "notes": ""
+  },
+  {
+    "id": "after_13",
+    "complexity": 4,
+    "question": "What comes AFTER 13?",
+    "answer": "14",
+    "notes": ""
+  },
+  {
+    "id": "after_14",
+    "complexity": 4,
+    "question": "What comes AFTER 14?",
+    "answer": "15",
+    "notes": ""
+  },
+  {
+    "id": "after_15",
+    "complexity": 4,
+    "question": "What comes AFTER 15?",
+    "answer": "16",
+    "notes": ""
+  },
+  {
+    "id": "after_16",
+    "complexity": 4,
+    "question": "What comes AFTER 16?",
+    "answer": "17",
+    "notes": ""
+  },
+  {
+    "id": "after_17",
+    "complexity": 4,
+    "question": "What comes AFTER 17?",
+    "answer": "18",
+    "notes": ""
+  },
+  {
+    "id": "after_18",
+    "complexity": 4,
+    "question": "What comes AFTER 18?",
+    "answer": "19",
+    "notes": ""
+  },
+  {
+    "id": "after_19",
+    "complexity": 4,
+    "question": "What comes AFTER 19?",
+    "answer": "20",
+    "notes": ""
+  },
+  {
+    "id": "mixed_before_11",
+    "complexity": 5,
+    "question": "What comes BEFORE 11?",
+    "answer": "10",
+    "notes": "Transitional: teen numbers"
+  },
+  {
+    "id": "mixed_after_10",
+    "complexity": 5,
+    "question": "What comes AFTER 10?",
+    "answer": "11",
+    "notes": "Transitional: teen numbers"
+  },
+  {
+    "id": "mixed_after_20",
+    "complexity": 5,
+    "question": "What comes AFTER 20?",
+    "answer": "21",
+    "notes": "Bonus: extending beyond 20"
+  }
+]

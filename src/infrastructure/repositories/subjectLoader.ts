@@ -13,6 +13,7 @@ import hanumanBank from '../../assets/hanuman_chalisa_kids.json';
 import storyComprehensionBank from '../../assets/story_comprehension_100.json';
 import numberSpellingsBank from '../../assets/number_spellings_1_20.json';
 import nationalSymbolsBank from '../../assets/national_symbols.json';
+import beforeAfterNumbersBank from '../../assets/before_after_numbers_bank.json';
 
 // Map bank paths to imported data
 const BANK_DATA_MAP: Record<string, any> = {
@@ -28,6 +29,7 @@ const BANK_DATA_MAP: Record<string, any> = {
   'story_comprehension_100.json': storyComprehensionBank,
   'number_spellings_1_20.json': numberSpellingsBank,
   'national_symbols.json': nationalSymbolsBank,
+  'before_after_numbers_bank.json': beforeAfterNumbersBank,
 };
 
 // Unified question bank item interface
@@ -143,6 +145,20 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     revisionPanel: {
       title: 'National Symbols Revision',
       buttonLabel: 'National Symbols',
+      primaryField: 'text',
+      secondaryField: 'answer',
+      notesField: 'notes',
+    },
+  },
+  {
+    name: 'beforeafternumbers',
+    bankPath: 'before_after_numbers_bank.json',
+    language: 'beforeafternumbers',
+    displayIcon: '🔢',
+    displayLabel: 'Before & After Numbers',
+    revisionPanel: {
+      title: 'Number Sequence Revision',
+      buttonLabel: 'Before & After',
       primaryField: 'text',
       secondaryField: 'answer',
       notesField: 'notes',
