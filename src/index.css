@@ -129,6 +129,8 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  /* AUDIT: very tight line-height (1.1) for h1 can cause collisions on wrapping or localized text.
+     Suggestion: use line-height: 1.2 or larger for headings, or apply the tighter line-height only for single-line large headings and fallback to 1.2+ on smaller screens. */
   color: var(--text-primary);
 }
 

@@ -11,6 +11,7 @@ import { traceAPI } from '../tracing/traceMiddleware';
 import PracticeIntro from './PracticeIntro';
 import Coachmark from './Coachmark';
 import ParentGuideSheet from './ParentGuideSheet';
+import SubjectPickerModal from './SubjectPickerModal';
 // Trace export UI removed
 
 import type { PracticeHomeViewModel } from '../presenters/practicePresenter';
@@ -51,6 +52,11 @@ export default function HomePage({
   const [showIntroOverlay, setShowIntroOverlay] = useState(ui.guidance.showIntro);
   const [isParentGuideOpen, setParentGuideOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
+  const [subjectPickerSeen, setSubjectPickerSeen] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.localStorage.getItem('kdp:subject-picker-v1') === 'true';
+  });
+  const [subjectPickerOpen, setSubjectPickerOpen] = useState(false);
   const hasRevisionPanel = !!ui.revisionPanel;
 
   const handleShareFeedback = useCallback(async () => {
@@ -127,6 +133,18 @@ export default function HomePage({
     }
   }, [ui.guidance.showIntro]);
 
+  useEffect(() => {
+    if (showIntroOverlay) {
+      return;
+    }
+    // Don't auto-open the subject picker during automated tests (Playwright/Vitest)
+    const isTestEnv = (typeof import.meta !== 'undefined' && import.meta.env?.MODE === 'test') || (typeof process !== 'undefined' && process.env?.NODE_ENV === 'test');
+    if (isTestEnv) return;
+    if (!subjectPickerSeen) {
+      setSubjectPickerOpen(true);
+    }
+  }, [showIntroOverlay, subjectPickerSeen]);
+
   const handleIntroDismiss = () => {
     setShowIntroOverlay(false);
     onDismissIntro();
@@ -148,6 +166,24 @@ export default function HomePage({
   const closeParentGuide = () => {
     setParentGuideOpen(false);
   };
+
+  const rememberSubjectPicker = useCallback(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('kdp:subject-picker-v1', 'true');
+    }
+    setSubjectPickerSeen(true);
+  }, []);
+
+  const handleSubjectSelect = useCallback((modeValue: string) => {
+    onSetMode(modeValue);
+    rememberSubjectPicker();
+    setSubjectPickerOpen(false);
+  }, [onSetMode, rememberSubjectPicker]);
+
+  const handleSubjectPickerDismiss = useCallback(() => {
+    rememberSubjectPicker();
+    setSubjectPickerOpen(false);
+  }, [rememberSubjectPicker]);
 
   return (
     <div style={{ height: '100vh', background: 'var(--bg-primary)', fontFamily: 'system-ui, sans-serif', overflow: 'hidden', display: 'flex' }}>
@@ -305,23 +341,57 @@ export default function HomePage({
             <h1 style={{ fontSize: '1.8rem', fontWeight: 900, margin: 0, whiteSpace: 'nowrap' }}>Kids Deliberate Practice</h1>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', minWidth: 0 }}>
             <div style={{
               position: 'relative',
               borderRadius: 999,
               background: 'linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.12))',
-              padding: '4px 4px 4px 16px',
+              padding: '4px 16px',
               display: 'flex',
               alignItems: 'center',
               gap: 10,
-              minWidth: 220
+              minWidth: 180,
+              maxWidth: 'min(340px, 100%)'
             }}>
-              <span style={{ fontSize: '1rem', color: 'var(--text-inverse)', fontWeight: 600, opacity: 0.9 }}>Mode</span>
-              <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
+              </div>
+              <button
+                type="button"
+                onClick={() => setSubjectPickerOpen(true)}
+                style={{
+                  border: 'none',
+                  background: 'rgba(15,23,42,0.32)',
+                  color: 'var(--text-inverse)',
+                  borderRadius: 999,
+                  padding: '6px 12px',
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  cursor: 'pointer'
+                }}
+              >
+                Browse all
+              </button>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '6px 12px',
+                borderRadius: 999,
+                background: 'rgba(15, 23, 42, 0.25)',
+                color: 'var(--text-inverse)',
+                fontSize: '0.8rem',
+                fontWeight: 600
+              }}
+            >
+              <span aria-hidden style={{ fontSize: '1rem' }}>🤝</span>
+              <span>Parent guides practice</span>
+            </div>
             <div style={{ position: 'relative' }}>
               <ProgressStatsDisplay currentUserId={ui.currentUserId} compact subject={ui.mode} />
               {ui.guidance.showStreakCoachmark && !showIntroOverlay && (
@@ -481,6 +551,12 @@ export default function HomePage({
       <ParentGuideSheet open={isParentGuideOpen} onClose={closeParentGuide} onAcknowledge={() => {
         onParentGuideAcknowledged();
       }} />
+      <SubjectPickerModal
+        open={subjectPickerOpen && !showIntroOverlay}
+        selectedMode={ui.mode}
+        onSelect={handleSubjectSelect}
+        onClose={handleSubjectPickerDismiss}
+      />
       {showIntroOverlay && <PracticeIntro onDismiss={handleIntroDismiss} />}
   {/* TraceExport component removed */}
     </div>

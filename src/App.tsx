@@ -10,6 +10,7 @@ import Onboarding from './app/ui/Onboarding';
 import { buildPracticeAppViewModel } from './app/presenters/practicePresenter';
 import type { RootState as GameState } from './infrastructure/state/gameState';
 import TraceDiagnosticsApp from './app/diagnostics/TraceDiagnosticsApp';
+import { SUBJECT_CONFIGS } from './infrastructure/repositories/subjectLoader';
 
 // Single, clean App implementation
 function App() {
@@ -31,11 +32,12 @@ function App() {
     }
     return null;
   });
+  const fallbackMode = SUBJECT_CONFIGS[0]?.name ?? 'english';
   const derivedMode =
     modeOverride ??
     currentUser?.currentMode ??
     currentUser?.settings?.languages?.[0] ??
-    'kannadaalphabets';
+    fallbackMode;
   const mode = derivedMode;
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 

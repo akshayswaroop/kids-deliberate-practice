@@ -1,42 +1,48 @@
 # Deployment Guide
 
-## Production Deployment to Netlify
+## Production Deployment to GitHub Pages
 
-**Site URL**: https://kids-deliberate-practice.netlify.app
+This project now uses GitHub Pages for hosting the production build.
 
-### Standard Deployment Process
+**Live Site (example)**: https://<your-github-username>.github.io/kids-deliberate-practice/
+
+### Standard Deployment Process (GitHub Pages)
 
 1. **Build the project**:
    ```bash
    npm run build
    ```
 
-2. **Deploy to production**:
+2. **Deploy to GitHub Pages** (uses `gh-pages`):
    ```bash
-   netlify deploy --prod --dir=dist
+   npm run deploy:gh
    ```
 
 ### Quick Deploy (One Command)
 
 ```bash
-npm run build && netlify deploy --prod --dir=dist
+npm run deploy
 ```
 
 ### Notes
 
-- **Auto-deploy from GitHub**: Currently configured but may have webhook issues
-- **Manual deploy**: Use the commands above for reliable deployment
-- **Build directory**: Always `dist` (configured in `netlify.toml`)
-- **Site ID**: `af361b70-0d1f-4462-a62e-805efaac9009` (stored in `.netlify/state.json`)
+- **Build directory**: `dist`
+- `deploy:gh` will copy `dist/index.html` to `dist/404.html` (so SPA routing works on GitHub Pages) and publish the `dist` folder using `gh-pages`.
 
 ### Troubleshooting
 
-If GitHub auto-deploy isn't working:
-1. Check Netlify dashboard: https://app.netlify.com/sites/kids-deliberate-practice/deploys
-2. Verify GitHub webhook is configured in Netlify settings
-3. Use manual deploy as backup: `netlify deploy --prod --dir=dist`
+If deployment fails:
+1. Ensure `gh-pages` is installed (`npm install --save-dev gh-pages`) and you have push rights to the repository.
+2. Confirm the `homepage` field in `package.json` points to the correct GitHub Pages URL. Example:
+   ```json
+   "homepage": "https://<your-github-username>.github.io/kids-deliberate-practice/"
+   ```
+3. For manual publish you can run:
+   ```bash
+   npx gh-pages -d dist
+   ```
 
 ### Prerequisites
 
-- Netlify CLI installed: `npm install -g netlify-cli`
-- Authenticated with Netlify: `netlify login` (if needed)
+- Ensure the `homepage` field in `package.json` is correct.
+- If you prefer CI-based deploys, configure GitHub Actions to run `npm run deploy:gh` on push to `main`.

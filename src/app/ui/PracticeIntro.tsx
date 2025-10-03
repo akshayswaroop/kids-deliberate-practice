@@ -7,7 +7,7 @@ interface PracticeIntroProps {
 const CARDS = [
   {
     title: 'Every attempt counts',
-    body: 'Kids see streaks and attempt tallies grow even before answers are perfect. It keeps practice playful and rewarding.',
+    body: 'Kids see streaks and attempt tallies grow even before answers are perfect. No typing—just say the answer aloud—so practice stays playful and fast.',
     icon: '🎯',
   },
   {

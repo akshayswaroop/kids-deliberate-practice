@@ -268,6 +268,8 @@ export default function TrophyAnimation({
     pointerEvents: 'none',
     zIndex: 2500,
   };
+  // AUDIT: Using full-viewport fixed overlay may overlap system UI (notches) and ignore safe-area insets on small devices.
+  // Suggestion: constrain overlay with padding/safe-area: e.g. add paddingBottom: 'env(safe-area-inset-bottom)' or use inset:0 and box-sizing so content shrinks within safe area.
 
   const trophyFontSize = Math.max(trophySizePx, 200);
 
@@ -284,6 +286,8 @@ export default function TrophyAnimation({
     animation: `trophy-sequence ${(TROPHY_ANIMATION_DURATION_MS / 1000).toFixed(2)}s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards`,
     filter: 'drop-shadow(0 22px 46px rgba(255, 200, 0, 0.55))',
   };
+  // AUDIT: positioning the trophy using explicit pixel left/top (centerX/centerY) can cause overlap when viewport resizes or when container is offset (e.g., on keyboard open).
+  // Minimal fix: compute positions using percentages or keep transform-based centering on a container element (use left:50%;top:50% with translate(-50%,-50%)) or clamp trophyFontSize via clamp() to avoid huge sizes.
 
   const trophyGlyphStyle: React.CSSProperties = {
     fontSize: `${trophyFontSize}px`,
@@ -293,6 +297,7 @@ export default function TrophyAnimation({
     filter: 'saturate(115%)',
     textShadow: '0 12px 24px rgba(0,0,0,0.25)',
   };
+  // AUDIT: lineHeight of 1 is tight; consider >=1.2 for multi-line or scaled fonts. If glyph is single char, keep as-is but cap fontSize with clamp.
 
   // CSS animations
   const animationStyles = `

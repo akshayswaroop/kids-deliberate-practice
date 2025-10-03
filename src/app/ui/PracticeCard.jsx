@@ -2,7 +2,7 @@ import React from 'react';
 import './PracticeCard.css';
 import GradientText from './GradientText.jsx';
 import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetector';
-import { getSubjectPromptLabel } from '../../infrastructure/repositories/subjectLoader.ts';
+import { getSubjectPromptLabel, getSubjectParentInstruction } from '../../infrastructure/repositories/subjectLoader.ts';
 
 import FlyingUnicorn from './FlyingUnicorn.jsx';
 import SadBalloonAnimation from './SadBalloonAnimation.jsx';
@@ -80,6 +80,7 @@ function AttemptBadge({ label, value, accentRGB, info }) {
               <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="white" />
               <text x="8" y="11" textAnchor="middle" fontSize="8" fontWeight="700" fill="currentColor">i</text>
             </svg>
+            {/* AUDIT: Inline SVG uses hard-coded width/height (14px). Suggestion: use CSS-controlled size or set width/height to 1em and control via font-size so the icon scales with surrounding text, e.g., width="1em" height="1em" or style={{width: '14px', height: '14px', maxWidth: '1.2em'}}. */}
           </button>
         )}
       </span>
@@ -114,6 +115,9 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
   const isTestMode = env?.MODE === 'test';
   const normalizedAttemptStats = attemptStats || { total: 0, correct: 0, incorrect: 0 };
+  const promptLabel = getSubjectPromptLabel(mode);
+  const parentInstruction = getSubjectParentInstruction(mode);
+  const showAnswerPanel = isAnswerRevealed;
 
   // Animation helper functions
   const createConfettiBurst = () => {
@@ -128,8 +132,10 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     container.style.left = `${rect.left + rect.width / 2}px`;
     container.style.top = `${rect.top + rect.height / 2}px`;
     container.style.transform = 'translate(-50%, -50%)';
-    container.style.width = '300px';
-    container.style.height = '300px';
+  // AUDIT: confetti container uses fixed 300px size which can overflow or clip on narrow screens.
+  // Suggestion: use responsive sizing like: container.style.width = `${Math.min(300, window.innerWidth * 0.9)}px`; container.style.height likewise or use clamp() equivalent in JS.
+  container.style.width = '300px';
+  container.style.height = '300px';
     document.body.appendChild(container);
 
     // Increased quantity from 20 to 40 particles
@@ -214,6 +220,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
 
 
   const interactionLocked = status !== 'idle';
+  const hasDetails = Boolean(answer || notes || (whyRepeat && !whyRepeatDismissed));
 
   return (
     <div data-testid="practice-root" style={{
@@ -225,11 +232,11 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
       justifyContent: 'stretch',
       gap: 0,
       width: '100%',
-      minHeight: '100vh', // Minimum full viewport height
+      minHeight: 'auto',
       maxWidth: '100vw',
       margin: '0 auto',
       boxSizing: 'border-box',
-      overflow: 'hidden', // Prevent scroll, sections should fit within viewport
+      overflow: 'visible', // allow natural page flow and scrolling
       position: 'relative'
     }}>
       {/* Flying unicorn animation overlay */}
@@ -251,234 +258,224 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         visible={showSadBalloon}
         onAnimationEnd={handleSadBalloonEnd}
       />
-      {/* Stats overlay removed - badges in header animate instead */}
+
       {/* Question Area - Flexible space for readability */}
       <div style={{
         textAlign: 'center',
         color: 'var(--text-primary)',
         width: '100%',
         boxSizing: 'border-box',
-        flex: '0 0 auto', // Size to content, not fixed percentage
-        minHeight: '20%', // Minimum 20% of container height
-        maxHeight: '40%', // Maximum 40% for very long text
+        flex: '0 0 auto',
+        minHeight: '6rem',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: '16px 12px 16px 12px', // uniform horizontal padding
-        overflow: 'visible', // Allow text to be visible
-        borderBottomLeftRadius: '0px', // visually connect to answer panel
+        padding: '12px 12px 0',
+        overflow: 'visible',
+        borderBottomLeftRadius: '0px',
         borderBottomRightRadius: '0px',
-        borderTopLeftRadius: '16px', // match other panels
+        borderTopLeftRadius: '16px',
         borderTopRightRadius: '16px',
-        marginBottom: '-4px' // reduce gap between panels
+        gap: 8
       }}>
         {/* Subtle prompt label to clarify expected action */}
         {mode && (
           <div style={{
-            fontSize: '0.8rem',
-            fontWeight: '500',
-            color: 'var(--text-secondary)',
-            letterSpacing: '0.02em',
-            marginBottom: '8px',
-            opacity: 0.75,
-            fontStyle: 'italic'
+            fontSize: '0.75rem',
+            fontWeight: '600',
+            color: 'rgba(15,23,42,0.6)',
+            letterSpacing: '0.05em',
+            textTransform: 'uppercase'
           }}>
-            {getSubjectPromptLabel(mode)}
+            {promptLabel}
           </div>
         )}
-          {(() => {
-            const text = String(mainWord || '');
-            const len = text.length;
-            // Responsive typography within the 30vh Question Area
-            // Enhanced readability for long text (especially story comprehension)
-            let fontSize = 'clamp(24px, min(6vw, 8vh), 72px)';
-            let lineHeight = getScriptLineHeight(text); // Use script-aware line height
-            let padding = '8px 16px';
-            
-            // Better scaling for long text comprehension questions
-            if (len > 100) {
-              // Very long text (story comprehension questions)
-              fontSize = 'clamp(16px, min(3vw, 3.5vh), 24px)';
-              lineHeight = Math.max(getScriptLineHeight(text), 1.5); // Ensure minimum 1.5 for very long text
-              padding = '12px 20px';
-            } else if (len > 80) {
-              // Long story questions
-              fontSize = 'clamp(17px, min(3.2vw, 4vh), 28px)';
-              lineHeight = Math.max(getScriptLineHeight(text), 1.4);
-              padding = '10px 18px';
-            } else if (len > 60) {
-              fontSize = 'clamp(18px, min(4vw, 5vh), 48px)';
-              lineHeight = Math.max(getScriptLineHeight(text), 1.2);
-              padding = '6px 12px';
-            } else if (len > 40) {
-              fontSize = 'clamp(20px, min(5vw, 6vh), 56px)';
-              lineHeight = Math.max(getScriptLineHeight(text), 1.15);
-              padding = '6px 14px';
-            } else if (len > 28) {
-              fontSize = 'clamp(22px, min(5.5vw, 7vh), 64px)';
-              lineHeight = getScriptLineHeight(text);
-              padding = '8px 16px';
-            }
 
-              return (
-              <div className="target-word-glow" data-testid="target-word" style={{ 
-                  fontSize,
-                  fontWeight: 900,
-                  marginTop: 0,
-                  marginBottom: transliteration ? '6px' : '0px',
-                  lineHeight,
-                  letterSpacing: '-0.02em',
-                  maxWidth: '100%',
-                  background: 'linear-gradient(135deg, rgba(79,70,229,0.04), rgba(139,92,246,0.02))',
-                  borderRadius: '20px',
-                  padding,
-                  border: '2px solid rgba(79,70,229,0.08)',
-                  boxShadow: '0 6px 30px rgba(79,70,229,0.08)',
-                  whiteSpace: 'normal',
-                  wordBreak: 'break-word',
-                  overflowWrap: 'break-word',
-                  overflow: 'visible',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  position: 'relative',
-                  zIndex: 2,
-                  minHeight: 0,
-                  flex: '1 1 auto',
-                  textAlign: 'center' // Ensure centered text alignment
-                }}>
-                  {/* Use GradientText component for rainbow progress fill */}
-                  <GradientText 
-                    progress={activeProgress}
-                    gradientColors="red, orange, yellow, green, blue, indigo, violet"
-                    neutralColor="var(--text-tertiary)"
-                    style={{ textAlign: 'center', width: '100%' }}
-                    className={getScriptFontClass(mainWord || '')}
-                  >
-                    {mainWord}
-                  </GradientText>
+        {(() => {
+          const text = String(mainWord || '');
+          const len = text.length;
+          // Responsive typography within the 30vh Question Area
+          // Enhanced readability for long text (especially story comprehension)
+          let fontSize = 'clamp(20px, min(5.2vw, 7vh), 56px)';
+          let lineHeight = getScriptLineHeight(text); // Use script-aware line height
+          let padding = '8px 16px';
 
-                  {/* percent indicator and mastered badge */}
-                  <div style={{ position: 'absolute', right: 8, top: 8, zIndex: 3, display: 'flex', gap: 8, alignItems: 'center' }}>
-                    {/* Progress number badge removed as requested */}
-                    {isMastered && (
-                      <div aria-hidden style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: 6,
-                        background: 'linear-gradient(90deg,#10b981,#34d399)',
-                        color: 'white',
-                        padding: '6px 10px',
-                        borderRadius: 999,
-                        fontWeight: 900,
-                        fontSize: 12,
-                        boxShadow: '0 8px 20px rgba(16,185,129,0.12)'
-                      }}>
-                        ✅ Mastered
-                      </div>
-                    )}
+          // Better scaling for long text comprehension questions
+          if (len > 100) {
+            // Very long text (story comprehension questions)
+            fontSize = 'clamp(16px, min(3vw, 3.5vh), 24px)';
+            lineHeight = Math.max(getScriptLineHeight(text), 1.5); // Ensure minimum 1.5 for very long text
+            padding = '12px 20px';
+          } else if (len > 80) {
+            // Long story questions
+            fontSize = 'clamp(17px, min(3.2vw, 4vh), 28px)';
+            lineHeight = Math.max(getScriptLineHeight(text), 1.4);
+            padding = '10px 18px';
+          } else if (len > 60) {
+            fontSize = 'clamp(18px, min(4vw, 5vh), 48px)';
+            lineHeight = Math.max(getScriptLineHeight(text), 1.2);
+            padding = '6px 12px';
+          } else if (len > 40) {
+            fontSize = 'clamp(20px, min(5vw, 6vh), 56px)';
+            lineHeight = Math.max(getScriptLineHeight(text), 1.15);
+            padding = '6px 14px';
+          } else if (len > 28) {
+            fontSize = 'clamp(22px, min(5.5vw, 7vh), 64px)';
+            lineHeight = getScriptLineHeight(text);
+            padding = '8px 16px';
+          }
+
+          return (
+            <div className="target-word-glow" data-testid="target-word" style={{
+              fontSize,
+              fontWeight: 900,
+              marginTop: 0,
+              marginBottom: transliteration ? '6px' : '0px',
+              lineHeight,
+              letterSpacing: '-0.02em',
+              maxWidth: '100%',
+              background: 'linear-gradient(135deg, rgba(79,70,229,0.035), rgba(139,92,246,0.015))',
+              borderRadius: '20px',
+              padding,
+              border: '2px solid rgba(79,70,229,0.08)',
+              boxShadow: '0 6px 30px rgba(79,70,229,0.08)',
+              whiteSpace: 'normal',
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word',
+              overflow: 'visible',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative',
+              zIndex: 2,
+              minHeight: 0,
+              flex: '0 0 auto',
+              textAlign: 'center' // Ensure centered text alignment
+            }}>
+              <GradientText
+                progress={activeProgress}
+                gradientColors="red, orange, yellow, green, blue, indigo, violet"
+                neutralColor="var(--text-tertiary)"
+                style={{ textAlign: 'center', width: '100%' }}
+                className={getScriptFontClass(mainWord || '')}
+              >
+                {mainWord}
+              </GradientText>
+
+              <div style={{ position: 'absolute', right: 8, top: 8, zIndex: 3, display: 'flex', gap: 8, alignItems: 'center' }}>
+                {isMastered && (
+                  <div aria-hidden style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    background: 'linear-gradient(90deg,#10b981,#34d399)',
+                    color: 'white',
+                    padding: '6px 10px',
+                    borderRadius: 999,
+                    fontWeight: 900,
+                    fontSize: 12,
+                    boxShadow: '0 8px 20px rgba(16,185,129,0.12)'
+                  }}>
+                    ✅ Mastered
                   </div>
-
-                  {/* aria-live region for assistive tech */}
-                  <div aria-live="polite" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>{isMastered ? 'Mastered' : ``}</div>
-
+                )}
               </div>
-            );
-          })()}
-          <div style={{
-            marginTop: 16,
-            display: 'flex',
-            gap: 12,
-            flexWrap: 'nowrap',
-            justifyContent: 'center',
-            width: '100%',
-            alignItems: 'center'
-          }}>
-            <AttemptBadge label="Correct" value={normalizedAttemptStats.correct} accentRGB="16, 185, 129" />
-            <AttemptBadge
-              label="Try again"
-              value={normalizedAttemptStats.incorrect}
-              accentRGB="239, 68, 68"
-              info="We use spaced repetition so tricky cards resurface at the right time—every retry helps the app schedule the next gentle reminder."
-            />
-            <AttemptBadge label="Total tries" value={normalizedAttemptStats.total} accentRGB="37, 99, 235" />
-          </div>
-        {/* Inline transliteration/answer banner removed — answers are shown only in the details panel now */}
-        {/* Answer modes: removed here to avoid duplication — answers are shown in the details panel below */}
-      </div>
 
-      {/* Answer Area - 35% of vertical space */}
-      <div key={mainWord} className="details-panel" data-testid="details-panel" style={{
-        width: '100%',
-        flex: '1 1 auto', // Take remaining space
-        minHeight: '160px',
-        maxHeight: '30vh',
-        padding: '12px',
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        borderTopLeftRadius: '0px', // visually connect to question panel
-        borderTopRightRadius: '0px',
-        borderRadius: '16px',
-        background: 'var(--bg-secondary)',
-        boxShadow: '0 2px 18px rgba(79,70,229,0.04)',
-        overflow: 'auto', // Allow scrolling if content is too long
-        marginTop: '-4px', // reduce gap between panels
-        marginBottom: '-4px' // reduce gap to button panel
-      }}>
-        {/* Main answer/notes area - fills available Answer Area space */}
-        <div className="answer-panel" data-testid="answer-panel" style={{ 
-          width: '100%', 
-          maxWidth: '100%',
-          flex: '1 1 auto', // Expand to fill available space
-          borderRadius: 12, 
-          padding: '8px', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: '12px',
-          overflow: 'auto', // Handle long content
-          boxSizing: 'border-box'
+              <div aria-live="polite" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>{isMastered ? 'Mastered' : ``}</div>
+            </div>
+          );
+        })()}
+
+        <div style={{
+          marginTop: 10,
+          display: 'flex',
+          gap: 10,
+          flexWrap: 'nowrap',
+          justifyContent: 'center',
+          width: '100%',
+          alignItems: 'center'
         }}>
-          {/* Title removed - showing answer/notes directly */}
-          {isAnswerRevealed || isEnglishMode ? (
-            <div style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              gap: '8px', 
-              flex: '1 1 auto', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              textAlign: 'center',
-              overflow: 'auto',
+          <AttemptBadge label="Correct" value={normalizedAttemptStats.correct} accentRGB="16, 185, 129" />
+          <AttemptBadge
+            label="Try again"
+            value={normalizedAttemptStats.incorrect}
+            accentRGB="239, 68, 68"
+            info="We use spaced repetition so tricky cards resurface at the right time—every retry helps the app schedule the next gentle reminder."
+          />
+          <AttemptBadge label="Total tries" value={normalizedAttemptStats.total} accentRGB="37, 99, 235" />
+        </div>
+
+        <div className="parent-instruction-card" role="note" style={{
+          marginTop: 6,
+          marginBottom: 8,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 6,
+          padding: '6px 10px',
+          borderRadius: 12,
+          background: 'rgba(148, 163, 184, 0.12)',
+          border: '1px solid rgba(148, 163, 184, 0.22)',
+          maxWidth: 'min(360px, 100%)',
+          textAlign: 'left'
+        }}>
+          <span aria-hidden style={{ fontSize: '1.1rem', lineHeight: 1 }}>🤝</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <span style={{ fontSize: '0.72rem', letterSpacing: '0.05em', fontWeight: 700, textTransform: 'uppercase', color: 'rgba(15,23,42,0.58)' }}>Parent cue</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.35 }}>{parentInstruction}</span>
+          </div>
+        </div>
+
+        {/* Only render the details panel when there is content to show */}
+        {showAnswerPanel && hasDetails && (
+          <div key={mainWord} className="details-panel" data-testid="details-panel" style={{
+            width: '100%',
+            flex: '0 0 auto',
+            minHeight: 0,
+            maxHeight: '40vh',
+            padding: '8px',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            borderTopLeftRadius: '0px',
+            borderTopRightRadius: '0px',
+            borderRadius: '16px',
+            background: 'var(--bg-secondary)',
+            boxShadow: '0 2px 18px rgba(79,70,229,0.04)',
+            overflow: 'auto',
+            marginTop: '8px',
+            marginBottom: '8px'
+          }}>
+            <div className="answer-panel" data-testid="answer-panel" style={{
               width: '100%',
               maxWidth: '100%',
+              flex: '1 1 auto',
+              borderRadius: 12,
+              padding: '10px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px',
+              overflow: 'auto',
               boxSizing: 'border-box'
             }}>
               {answer && (
-                <div className={`answer-panel__headline ${getScriptFontClass(answer || '')}`} style={{ 
+                <div className={`answer-panel__headline ${getScriptFontClass(answer || '')}`} style={{
                   maxWidth: '100%',
-                  fontSize: 'clamp(16px, 3vw, 28px)', // Responsive typography
+                  fontSize: 'clamp(16px, 3vw, 28px)',
                   lineHeight: 1.4,
                   wordBreak: 'break-word',
                   overflowWrap: 'break-word'
                 }}>{answer}</div>
               )}
               {notes && (
-                <div className={`answer-panel__notes ${getScriptFontClass(notes || '')}`} style={{ 
+                <div className={`answer-panel__notes ${getScriptFontClass(notes || '')}`} style={{
                   maxWidth: '100%',
-                  fontSize: 'clamp(14px, 2.5vw, 22px)', // Responsive typography
+                  fontSize: 'clamp(14px, 2.5vw, 22px)',
                   lineHeight: 1.5,
                   wordBreak: 'break-word',
                   overflowWrap: 'break-word'
                 }}>{notes}</div>
-              )}
-              {!answer && !notes && (
-                <div className="answer-panel__empty" style={{
-                  fontSize: 'clamp(14px, 2.5vw, 20px)',
-                  color: 'var(--text-secondary)'
-                }}>No answer or notes available for this item.</div>
               )}
               {whyRepeat && !whyRepeatDismissed && (
                 <div style={{
@@ -517,45 +514,21 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                 </div>
               )}
             </div>
-          ) : (
-            <div style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              gap: '6px', 
-              flex: '1 1 auto', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              textAlign: 'center' 
-            }}>
-              <div style={{ 
-                color: 'var(--text-secondary)', 
-                maxWidth: '100%',
-                fontSize: 'clamp(14px, 2.5vw, 20px)',
-                lineHeight: 1.4
-              }}>Use the Reveal button to show answer.</div>
-              {answer && (
-                <div style={{ 
-                  fontSize: 'clamp(12px, 2vw, 16px)', 
-                  color: 'var(--text-tertiary)',
-                  lineHeight: 1.3
-                }}>Hint: {String(answer).slice(0, Math.max(3, Math.floor(String(answer).length * 0.25))) }…</div>
-              )}
-            </div>
-          )}
-        </div>
+          </div>
+        )}
 
       </div>
 
       {/* Action Buttons Area */}
-      <div style={{
+      <div className="practice-action-bar" style={{
         flex: '0 0 auto',
         width: 'auto',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'stretch',
-        gap: '22px',
-        padding: '10px 12px 12px',
-        margin: '0 12px 6px',
+        gap: '16px',
+        padding: '12px 12px 14px',
+        margin: '0 12px 8px',
         background: 'var(--bg-accent)',
         borderRadius: 16,
         boxShadow: 'var(--shadow-strong)',
@@ -563,7 +536,9 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         backdropFilter: 'blur(10px)',
         border: '1px solid var(--border-secondary)',
         boxSizing: 'border-box',
-        flexShrink: 0
+        flexShrink: 0,
+        position: 'sticky',
+        bottom: '16px'
       }}>
         {!isEnglishMode && (
           <button
@@ -573,7 +548,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
             }}
             disabled={interactionLocked}
-            aria-label={isAnswerRevealed ? "Hide Answer" : "Reveal Answer"}
+            aria-label={isAnswerRevealed ? 'Hide coaching hint' : 'Show coaching hint'}
             className="mastery-footer-button reveal"
             style={{
               backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'transparent',
@@ -596,34 +571,35 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               opacity: interactionLocked ? 0.6 : 1
             }}
           >
-            <span style={{fontSize: 'clamp(14px, 3vw, 18px)'}}>{isAnswerRevealed ? '🙈' : '👁️'}</span>
-            <span>{isAnswerRevealed ? 'Hide ' : 'Reveal '}</span>
+            <span style={{fontSize: 'clamp(14px, 3vw, 18px)'}}>{isAnswerRevealed ? '🙈' : '🔍'}</span>
+            <span>{isAnswerRevealed ? 'Hide coach hint' : 'Show coach hint'}</span>
           </button>
         )}
+
         <button
           data-testid="btn-correct"
           onClick={() => {
             if (status !== 'idle') return;
             if (isTestMode) {
-onCorrect && onCorrect();
+              onCorrect && onCorrect();
               handleProgression();
               return;
             }
             setStatus('animating');
-createConfettiBurst();
+            createConfettiBurst();
             setShowUnicorn(true);
             try {
               const audio = new window.Audio(buildSoundUrl('happy-logo-167474.mp3'));
               audio.volume = 0.7;
               audio.play()?.catch(() => {});
             } catch (e) {
-              // Ignore playback errors (e.g., autoplay restrictions)
+              // Ignore playback errors
             }
             onCorrect && onCorrect();
             // Progression will be handled by unicorn animation end
           }}
           disabled={interactionLocked}
-          aria-label="Mark as read — great job"
+          aria-label="Kid answered correctly"
           className="mastery-footer-button primary"
           style={{
             backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-primary-bg, #2563eb)',
@@ -646,26 +622,27 @@ createConfettiBurst();
             opacity: interactionLocked ? 0.6 : 1
           }}
         >
-          <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🎉</span>
-          <span>Correct</span>
+          <span style={{fontSize: 'clamp(18px, 4vw, 24px)'}}>👍</span>
+          <span>Kid got it</span>
         </button>
+
         <button
           data-testid="btn-wrong"
           onClick={() => {
             if (status !== 'idle') return;
             if (isTestMode) {
-onWrong && onWrong();
+              onWrong && onWrong();
               handleProgression();
               return;
             }
             setStatus('animating');
-triggerBounceAnimation();
+            triggerBounceAnimation();
             setShowSadBalloon(true);
             onWrong && onWrong();
             // Progression will be handled by encouragement overlay end
           }}
           disabled={interactionLocked}
-          aria-label="Try later — would you like to repeat this?"
+          aria-label="Kid needs another try"
           className="mastery-footer-button secondary"
           style={{
             backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-secondary-bg, #64748b)',
@@ -688,8 +665,8 @@ triggerBounceAnimation();
             opacity: interactionLocked ? 0.6 : 1
           }}
         >
-          <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🔁</span>
-          <span>Try later</span>
+          <span style={{fontSize: 'clamp(18px, 4vw, 24px)'}}>↺</span>
+          <span>Needs another try</span>
         </button>
         {/* Next button removed: progression will auto-trigger after actions */}
       </div>

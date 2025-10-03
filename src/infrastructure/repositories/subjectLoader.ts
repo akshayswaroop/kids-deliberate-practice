@@ -51,6 +51,7 @@ export interface SubjectConfig {
   displayIcon: string;    // e.g., '🇺🇸', '🇮🇳', '🔢'
   displayLabel: string;   // e.g., 'English', 'Kannada', 'Math Tables'
   promptLabel?: string;   // e.g., 'Say the letter', 'Spell this number', 'Answer the question'
+  parentInstruction?: string; // Guidance text for the accompanying adult
   supportsRevision?: boolean; // Whether this subject should include revision sessions (default: false for long questions)
   revisionPanel?: {
     title: string;
@@ -88,7 +89,15 @@ export function loadSubjectWords(bankData: QuestionBankItem[], language: string)
  * This is the only place that needs updates when adding new subjects
  */
 export const SUBJECT_CONFIGS: SubjectConfig[] = [
-  { name: 'english', bankPath: 'english_questions_bank.json', language: 'english', displayIcon: '🇺🇸', displayLabel: 'English', promptLabel: 'Answer the question' },
+  {
+    name: 'english',
+    bankPath: 'english_questions_bank.json',
+    language: 'english',
+    displayIcon: '🇺🇸',
+    displayLabel: 'English',
+    promptLabel: 'Read this sentence aloud',
+    parentInstruction: 'Read the question aloud and let your child reply. You tap the matching button afterwards.',
+  },
   {
     name: 'kannada',
     bankPath: 'kannada_words_bank.json',
@@ -96,6 +105,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🇮🇳',
     displayLabel: 'Kannada',
     promptLabel: 'Read this word',
+    parentInstruction: 'Point to the word, invite your child to read it aloud, then log how it went.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Kannada Revision',
@@ -112,6 +122,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🔤',
     displayLabel: 'Kannada Alphabets',
     promptLabel: 'Say the letter',
+    parentInstruction: 'Show the letter and ask for the sound. If it is tricky, say it together before tapping.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Kannada Alphabet Revision',
@@ -128,6 +139,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🇮🇳', 
     displayLabel: 'Hindi Alphabets', 
     promptLabel: 'Say the letter',
+    parentInstruction: 'Have your child speak the Hindi sound aloud. Model it gently, then record the attempt.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Hindi Alphabet Revision',
@@ -144,6 +156,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🔢', 
     displayLabel: 'Math Tables', 
     promptLabel: 'Solve this problem',
+    parentInstruction: 'Ask for the answer out loud. Encourage quick mental recall before you tap the response.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Math Tables Revision',
@@ -153,11 +166,51 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
       notesField: 'notes',
     },
   },
-  { name: 'humanbody', bankPath: 'human_body_grade3_full.json', language: 'humanbody', displayIcon: '🧠', displayLabel: 'Human Body', promptLabel: 'Answer the question' },
-  { name: 'indiageography', bankPath: 'india_geography_questions.json', language: 'indiageography', displayIcon: '🗺️', displayLabel: 'India Geography', promptLabel: 'Answer the question' },
-  { name: 'grampanchayat', bankPath: 'gram_panchayat_questions.json', language: 'grampanchayat', displayIcon: '🏛️', displayLabel: 'Gram Panchayat', promptLabel: 'Answer the question' },
-  { name: 'hanuman', bankPath: 'hanuman_chalisa_kids.json', language: 'hanuman', displayIcon: '🕉️', displayLabel: 'Hanuman Chalisa', promptLabel: 'Read and answer' },
-  { name: 'comprehension', bankPath: 'story_comprehension_100.json', language: 'comprehension', displayIcon: '📚', displayLabel: 'Story Comprehension', promptLabel: 'Read and answer' },
+  {
+    name: 'humanbody',
+    bankPath: 'human_body_grade3_full.json',
+    language: 'humanbody',
+    displayIcon: '🧠',
+    displayLabel: 'Human Body',
+    promptLabel: 'Answer the question',
+    parentInstruction: 'Read the fact aloud, hear their answer, then tap the button that matches how confident it was.',
+  },
+  {
+    name: 'indiageography',
+    bankPath: 'india_geography_questions.json',
+    language: 'indiageography',
+    displayIcon: '🗺️',
+    displayLabel: 'India Geography',
+    promptLabel: 'Answer the question',
+    parentInstruction: 'Ask the question out loud, listen to the response, and record it with the buttons.',
+  },
+  {
+    name: 'grampanchayat',
+    bankPath: 'gram_panchayat_questions.json',
+    language: 'grampanchayat',
+    displayIcon: '🏛️',
+    displayLabel: 'Gram Panchayat',
+    promptLabel: 'Answer the question',
+    parentInstruction: 'Talk through the civics prompt together, then log whether they remembered it.',
+  },
+  {
+    name: 'hanuman',
+    bankPath: 'hanuman_chalisa_kids.json',
+    language: 'hanuman',
+    displayIcon: '🕉️',
+    displayLabel: 'Hanuman Chalisa',
+    promptLabel: 'Read and answer',
+    parentInstruction: 'Chant or read together, then ask what comes next or what it means before tapping.',
+  },
+  {
+    name: 'comprehension',
+    bankPath: 'story_comprehension_100.json',
+    language: 'comprehension',
+    displayIcon: '📚',
+    displayLabel: 'Story Comprehension',
+    promptLabel: 'Read and answer',
+    parentInstruction: 'Read the passage with your child, discuss briefly, then record how completely they answered.',
+  },
   {
     name: 'numberspellings',
     bankPath: 'number_spellings_1_20.json',
@@ -165,6 +218,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🔤',
     displayLabel: 'Number Spellings (1–20)',
     promptLabel: 'Spell this number',
+    parentInstruction: 'Show the number and ask your child to spell it letter by letter aloud before you tap.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Number Spelling Revision',
@@ -181,6 +235,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🇮🇳',
     displayLabel: 'National Symbols',
     promptLabel: 'Answer the question',
+    parentInstruction: 'Quiz them on what each symbol stands for, then choose the button that matches how sure they were.',
     supportsRevision: false,
   },
   {
@@ -190,6 +245,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🔢',
     displayLabel: 'Before & After Numbers',
     promptLabel: 'Complete the sequence',
+    parentInstruction: 'Point to the number and ask what comes before or after. Let them think aloud before you tap.',
     supportsRevision: false,
   },
   // ADD NEW SUBJECTS HERE - no code changes needed elsewhere!
@@ -234,6 +290,11 @@ export function getSubjectSupportsRevision(subjectName: string): boolean {
 export function getSubjectPromptLabel(subjectName: string): string {
   const config = SUBJECT_CONFIGS.find(s => s.name === subjectName || s.language === subjectName);
   return config?.promptLabel ?? 'Answer the question'; // Default fallback
+}
+
+export function getSubjectParentInstruction(subjectName: string): string {
+  const config = SUBJECT_CONFIGS.find(s => s.name === subjectName || s.language === subjectName);
+  return config?.parentInstruction ?? 'Ask your child to answer out loud while you tap the button that matches.';
 }
 
 /**

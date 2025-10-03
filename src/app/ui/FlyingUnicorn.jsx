@@ -10,6 +10,8 @@ export default function FlyingUnicorn({ visible, onAnimationEnd }) {
         top: "30vh",
         width: "560px",
         height: "360px",
+        /* AUDIT: fixed pixel width/height and fixed top can cause overlap on small screens and with different viewports.
+           Suggestion: use responsive sizing like width: 'min(560px, 90vw)' and height: 'auto' or use aspect-ratio to preserve shape; prefer left:50%/transform centering for predictable placement. */
         pointerEvents: "none",
         zIndex: 2000,
         transition: "opacity 0.3s",
@@ -48,11 +50,12 @@ export default function FlyingUnicorn({ visible, onAnimationEnd }) {
             @keyframes flap{ 0%,100%{transform:rotate(8deg)} 50%{transform:rotate(-14deg)} }
             .line { stroke:#d6dcff; stroke-width:2; }
             @keyframes fly-unicorn {
-              0%   { left: -560px; opacity: 1; }
+              0%   { transform: translateX(-120%); opacity: 1; }
               10%  { opacity: 1; }
               90%  { opacity: 1; }
-              100% { left: 100vw; opacity: 0; }
+              100% { transform: translateX(120%); opacity: 0; }
             }
+            /* AUDIT: animation used left:-560px and left:100vw which hard-codes distances. Replacing with translateX percentages avoids pixel-based movement and respects responsive container width. */
           `}</style>
         </defs>
 

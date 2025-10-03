@@ -86,6 +86,8 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
     pointerEvents: 'none',
     zIndex: 2400,
   };
+  // AUDIT: full-screen fixed overlay may overlap system UI (notches) and keyboard on small devices.
+  // Suggestion: include safe-area padding (e.g., paddingBottom: 'env(safe-area-inset-bottom)') or constrain overlay to inset: env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0.
 
   const effectiveDurationMs = reducedMotion ? 700 : ENCOURAGEMENT_ANIMATION_DURATION_MS;
   const baseSeconds = effectiveDurationMs / 1000;
@@ -112,7 +114,7 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
         .encourage-card {
           position: absolute;
           transform: translate(-50%, -50%);
-          width: ${cardWidth}px;
+          width: ${cardWidth}px; /* AUDIT: hard-coded pixel width may overflow on small screens or with large fonts. Suggestion: replace with clamp() or max-width: min(90vw, ${cardWidth}px) to keep responsive. */
           padding: 18px 22px;
           border-radius: 20px;
           background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(224,246,255,0.98));
@@ -206,6 +208,7 @@ export default function SadBalloonAnimation({ visible, onAnimationEnd }) {
           height: glowSize,
         }}
       />
+      {/* AUDIT: These absolutely positioned elements use numeric left/top (px) which can be problematic when ancestor containers are scrolled or when visual viewport changes (keyboard). Suggestion: prefer positioning relative to a centered container (left:50% top:50% with translate) or clamp anchor values to viewport bounds. */}
 
       <div
         className={`encourage-card ${reducedMotion ? '' : 'animate'}`}

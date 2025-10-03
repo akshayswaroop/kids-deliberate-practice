@@ -251,6 +251,8 @@ export const practiceStyles = `
   margin: 0 auto;
   padding: 2rem;
 }
+/* AUDIT: max-width:600px is reasonable but may be too wide/narrow on some devices.
+   Suggestion: use max-width: min(600px, 96vw) or clamp() to provide responsive fallback. */
 
 .session-options {
   display: grid;
@@ -285,6 +287,7 @@ export const practiceStyles = `
   margin: 0 auto;
   padding: 2rem;
 }
+/* AUDIT: same note as above, prefer responsive cap to avoid forced large containers on small screens. */
 
 .session-header {
   display: flex;
@@ -383,4 +386,5 @@ export const practiceStyles = `
   border-radius: 8px;
   z-index: 1000;
 }
+/* AUDIT: fixed loading overlay ignores safe-area insets and virtual keyboard. Minimal fix: add padding-bottom: env(safe-area-inset-bottom) and use max-width: 90vw to avoid overflow on small screens. */
 `;

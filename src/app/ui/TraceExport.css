@@ -12,6 +12,8 @@
   z-index: 1000;
   animation: fadeIn 0.2s ease-out;
 }
+/* AUDIT: fixed fullscreen overlay may overlap system UI (notches) and virtual keyboards on mobile.
+   Suggestion: add padding-bottom: env(safe-area-inset-bottom) and consider using inset: 0; padding: constant(safe-area-inset-bottom) fallback. */
 
 .trace-export-modal {
   background: white;
@@ -23,6 +25,8 @@
   overflow-y: auto;
   animation: slideUp 0.3s ease-out;
 }
+/* AUDIT: hard-coded max-width:500px is OK for desktop but may make modal too narrow/wide on some devices.
+   Suggestion: use max-width: min(500px, 96vw) or add clamp() for responsive fallback. */
 
 .trace-export-header {
   display: flex;
@@ -129,6 +133,8 @@
   flex: 1;
   min-width: 140px;
 }
+/* AUDIT: min-width:140px can push layout on small screens.
+   Suggestion: on small breakpoints set min-width: 0 or use clamp() / use percentage-based flex-basis to avoid overflow. */
 
 .export-button.primary {
   background-color: #3b82f6;

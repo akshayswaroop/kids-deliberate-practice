@@ -17,7 +17,11 @@
 
 /* Enhanced confetti burst animation */
 .confetti-burst{position:fixed;pointer-events:none;z-index:9999;}
+/* AUDIT: fixed positioning for confetti can overlap/fix on small screens and ignore safe-area insets.
+  Suggestion: keep fixed but constrain via inset and add safe-area padding: e.g. add padding-bottom: env(safe-area-inset-bottom) or limit size with max-width. */
 .confetti-particle{position:absolute;width:10px;height:10px;background:#ff6b6b;border-radius:50%;animation:confettiFall 2000ms ease-out forwards;}
+/* AUDIT: absolute particles use fixed pixel sizes which may overlap on small screens.
+  Suggestion: use responsive units or max() clamp: width:clamp(6px,0.9vw,10px);height:clamp(6px,0.9vw,10px); to avoid overflow. */
 @keyframes confettiFall{
   0%{transform:translateY(0) translateX(0) rotateZ(0deg) scale(1);opacity:1}
   25%{transform:translateY(-30px) translateX(var(--random-x, 0px)) rotateZ(90deg) scale(1.2);opacity:1}
@@ -54,7 +58,7 @@
   border-radius: 16px;
   padding: 28px;
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* AUDIT: overflow:hidden may clip animated/content children (confetti/toasts). If used for visual clipping, consider adding a dedicated clipping wrapper and avoid hiding global overflow. */
   display: flex;
   flex-direction: column;
   align-items: center; /* center inner content (headline & notes) */
@@ -65,7 +69,7 @@
   font-size:clamp(28px,6.5vw,56px);
   font-weight:900;
   color:transparent;
-  line-height:1.02;
+  line-height:1.02; /* AUDIT: very tight line-height (<1.2) can cause overlap on multiline or scaled fonts; prefer >=1.2 for accessibility. Suggestion: use line-height:1.2 and test with large font-sizes or clamp to reduce risk. */
   letter-spacing:-0.02em;
   /* vibrant gradient text */
   background: var(--gradient-answer-text);
@@ -103,6 +107,8 @@
 .details-side__transliteration{margin-top:6px;font-size:13px;color:var(--color-secondary);font-style:italic;font-weight:700}
 
 .progress-bar-outer{height:12px;width:100%;background:var(--bg-tertiary);border-radius:999px;overflow:hidden;box-shadow:var(--shadow-soft);transition:background 0.3s ease;}
+/* AUDIT: fixed height progress bars may clip in high-DPI or when fonts scale.
+  Suggestion: prefer min-height or use clamp() for accessibility: height:clamp(8px,0.8vh,12px); */
 .progress-bar-inner{height:100%;background:var(--gradient-rainbow);transition:width 420ms cubic-bezier(.2,.9,.2,1);border-radius:999px}
 .progress-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
 .percent-chip{background:var(--bg-secondary);padding:6px 10px;border-radius:999px;font-weight:900;color:var(--text-primary);box-shadow:var(--shadow-soft);transition:background 0.3s ease, color 0.3s ease;}
@@ -114,3 +120,11 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
 /* Mastered badge style — kept compact in the top-right of the question */
 .mastered-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,var(--color-success),var(--color-success-light));color:var(--text-inverse);padding:6px 10px;border-radius:999px;font-weight:900;font-size:12px;box-shadow:var(--shadow-medium)}
 
+.practice-action-bar{display:flex;}
+.parent-instruction-card{transition:background 0.2s ease, border-color 0.2s ease;}
+
+@media (max-width: 768px){
+  .practice-action-bar{flex-direction:column !important; gap:12px !important; align-items:stretch !important; position:sticky; bottom:8px;}
+  .practice-action-bar .mastery-footer-button{width:100%;}
+  .parent-instruction-card{flex-direction:column !important; align-items:flex-start !important;}
+}

@@ -34,7 +34,7 @@ npm run deploy
 
 ## 🌐 Deployment
 
-**Live Site**: https://kids-deliberate-practice.netlify.app
+**Live Site**: https://<your-github-username>.github.io/kids-deliberate-practice/
 
 ### Deploy to Production
 
@@ -44,7 +44,7 @@ npm run deploy
 
 This will:
 1. Build the project (`npm run build`)
-2. Deploy to Netlify production (`netlify deploy --prod --dir=dist`)
+2. Publish `dist` to GitHub Pages using `gh-pages` (`npm run deploy:gh`)
 
 For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
