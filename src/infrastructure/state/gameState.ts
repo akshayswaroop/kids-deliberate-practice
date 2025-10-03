@@ -44,6 +44,18 @@ export type SessionSettings = {
   complexityLevels: Record<string, number>; // e.g., { "english": 2, "kannada": 3, "hindi": 1 }
 };
 
+export type CoachmarkFlags = {
+  streak: boolean;
+  profiles: boolean;
+};
+
+export type GuidanceExperience = {
+  hasSeenIntro: boolean;
+  coachmarks: CoachmarkFlags;
+  hasSeenParentGuide: boolean;
+  hasSeenWhyRepeat: boolean;
+};
+
 export type Session = {
   wordIds: string[];
   currentIndex: number;
@@ -64,6 +76,7 @@ export type UserState = {
   activeSessions: Record<string, string>;
   currentMode?: string; // Track the currently active mode for proper UI state
   settings: SessionSettings;
+  experience: GuidanceExperience;
 };
 
 export type RootState = {

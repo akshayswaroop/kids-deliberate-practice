@@ -5,6 +5,11 @@ type RevisionItem = {
   primary: string;
   secondary?: string;
   notes?: string;
+  attempts?: {
+    total: number;
+    correct: number;
+    incorrect: number;
+  };
 };
 
 interface RevisionPanelProps {
@@ -33,6 +38,13 @@ export default function RevisionPanel({ title, items, onClose }: RevisionPanelPr
             <div className="revision-primary">{item.primary}</div>
             {item.secondary ? <div className="revision-secondary">{item.secondary}</div> : null}
             {item.notes ? <div className="revision-notes">{item.notes}</div> : null}
+            {item.attempts ? (
+              <div className="revision-attempts">
+                <span title="Correct answers">✅ {item.attempts.correct}</span>
+                <span title="Needs retry">🔁 {item.attempts.incorrect}</span>
+                <span title="Total tries">🧮 {item.attempts.total}</span>
+              </div>
+            ) : null}
           </div>
         ))}
       </div>

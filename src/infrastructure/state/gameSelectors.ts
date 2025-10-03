@@ -163,6 +163,13 @@ export function selectActiveSessionForMode(state: RootState, mode: string): stri
   return activeSessions[mode] || null;
 }
 
+export function selectGuidanceExperience(state: RootState): import('./gameState').GuidanceExperience | null {
+  if (!state.currentUserId) return null;
+  const user = state.users[state.currentUserId];
+  if (!user) return null;
+  return user.experience ?? null;
+}
+
 export function selectPracticeChoices(state: RootState, sessionId: string): Array<{ id: string; label: string; progress: number }> {
   if (!state.currentUserId) return [];
   const user = state.users[state.currentUserId];
@@ -194,6 +201,12 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   needsNewSession?: boolean;
   isAnswerRevealed?: boolean;
   isEnglishMode?: boolean;
+  whyRepeatInfo?: { revealCount: number } | null;
+  attemptSummary?: {
+    total: number;
+    correct: number;
+    incorrect: number;
+  };
 } {
   if (!state.currentUserId) {
     return {
@@ -255,6 +268,23 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
     }
   }
   
+  const revealCount = currentWord?.revealCount ?? 0;
+  const whyRepeatInfo =
+    session?.revealed && currentWord && revealCount >= 3
+      ? { revealCount }
+      : null;
+
+  const attempts = Array.isArray(currentWord?.attempts) ? (currentWord?.attempts as Array<{ result?: string }>) : [];
+  const totalAttempts = attempts.length;
+  const correctAttempts = attempts.filter(attempt => attempt.result === 'correct').length;
+  const incorrectAttempts = totalAttempts - correctAttempts;
+
+  const attemptSummary = {
+    total: totalAttempts,
+    correct: correctAttempts,
+    incorrect: incorrectAttempts,
+  };
+
   return {
     sessionId,
     mainWord: currentWord ? (currentWord.wordKannada || currentWord.text || '...') : '...',
@@ -265,7 +295,9 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   notes: computedNotes || (shouldShowAnswer || alwaysShowAnswer ? currentWord?.notes : undefined),
     choices,
     isAnswerRevealed: session?.revealed || false,
-    isEnglishMode: mode === 'english'
+    isEnglishMode: mode === 'english',
+    whyRepeatInfo,
+    attemptSummary,
   };
 }
 

@@ -14,6 +14,13 @@ export interface PracticeCardProps {
   isAnswerRevealed?: boolean;
   isEnglishMode?: boolean;
   currentUserId?: string;
+  whyRepeat?: { revealCount: number } | null;
+  onWhyRepeatAcknowledged?: () => void;
+  attemptStats?: {
+    total: number;
+    correct: number;
+    incorrect: number;
+  } | null;
 }
 
 export default function PracticeCard(props: PracticeCardProps): JSX.Element;

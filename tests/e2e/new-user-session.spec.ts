@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
+import { dismissPracticeIntroIfPresent, gotoAppWithFreshStorage, clickWhenEnabled } from './utils/app-helpers';
 
 const MODE = 'kannadaalphabets';
 
@@ -90,8 +91,7 @@ async function forceSessionComplete(page: Page, mode: string) {
 test.describe('Story: First-time learner journey', () => {
   test('Scenario: New learner completes the initial Kannada Alphabets session', async ({ page }) => {
     await test.step('Given I arrive as a brand-new visitor', async () => {
-      await page.context().addInitScript(() => localStorage.clear());
-      await page.goto('/');
+      await gotoAppWithFreshStorage(page);
       await expect(page.getByTestId('onboarding-container')).toBeVisible();
     });
 
@@ -99,6 +99,7 @@ test.describe('Story: First-time learner journey', () => {
       await page.getByTestId('onboarding-name-input').fill('Playwright Kid');
       await page.getByTestId('onboarding-create-button').click();
       await waitForPracticeUI(page);
+      await dismissPracticeIntroIfPresent(page);
     });
 
     await test.step('And I choose Kannada Alphabets practice mode', async () => {
@@ -146,7 +147,7 @@ test.describe('Story: First-time learner journey', () => {
 
         const useWrong = attempt % 5 === 0;
         const button = useWrong ? page.getByTestId('btn-wrong') : page.getByTestId('btn-correct');
-        await button.click();
+        await clickWhenEnabled(button);
 
         await markMastered(page, MODE, snapshot.wordId);
       }

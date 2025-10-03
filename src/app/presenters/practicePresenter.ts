@@ -5,6 +5,7 @@ import {
   selectCurrentWord,
   selectResponsiveColumns,
   selectShouldShowOnboarding,
+  selectGuidanceExperience,
 } from '../../infrastructure/state/gameSelectors';
 import type { RootState as GameState, UserState } from '../../infrastructure/state/gameState';
 
@@ -18,6 +19,12 @@ export interface PracticeCardViewModel {
   isAnswerRevealed: boolean;
   isEnglishMode: boolean;
   columns: number;
+  whyRepeat?: { revealCount: number } | null;
+  attempts?: {
+    total: number;
+    correct: number;
+    incorrect: number;
+  };
 }
 
 export interface PracticePanelViewModel {
@@ -60,11 +67,19 @@ export interface PracticeHomeViewModel {
   columns: number;
   practice: PracticePanelViewModel;
   revisionPanel?: RevisionPanelViewModel;
+  guidance: GuidanceViewModel;
 }
 
 export interface PracticeAppViewModel {
   showOnboarding: boolean;
   home?: PracticeHomeViewModel;
+}
+
+export interface GuidanceViewModel {
+  showIntro: boolean;
+  showStreakCoachmark: boolean;
+  showProfilesCoachmark: boolean;
+  showParentGuideHint: boolean;
 }
 
 function mapUsersToOptions(users: Record<string, UserState>): UserOptionViewModel[] {
@@ -100,11 +115,19 @@ function buildRevisionPanel(state: GameState, mode: string): RevisionPanelViewMo
       const primary = (word as any)[primaryField];
       const secondary = secondaryField ? (word as any)[secondaryField] : undefined;
       const notes = notesField ? (word as any)[notesField] : undefined;
+      const attempts = Array.isArray((word as any).attempts) ? (word as any).attempts : [];
+      const correctAttempts = attempts.filter((attempt: any) => attempt?.result === 'correct').length;
+      const totalAttempts = attempts.length;
       return {
         id: word.id,
         primary: typeof primary === 'string' ? primary : '',
         secondary: typeof secondary === 'string' ? secondary : undefined,
         notes: typeof notes === 'string' ? notes : undefined,
+        attempts: totalAttempts > 0 ? {
+          total: totalAttempts,
+          correct: correctAttempts,
+          incorrect: totalAttempts - correctAttempts,
+        } : undefined,
       } as RevisionPanelItemViewModel;
     })
     .filter(item => !!item.primary);
@@ -133,6 +156,8 @@ export function buildPracticeAppViewModel(params: {
   const sessionId = selectActiveSessionForMode(state, mode);
   const currentWord = sessionId ? selectCurrentWord(state, sessionId) : undefined;
   const currentWordId = currentWord?.id ?? null;
+  const experience = selectGuidanceExperience(state);
+  const shouldExplainRepeat = !!experience && !experience.hasSeenWhyRepeat && !!practiceData.whyRepeatInfo;
 
   const practiceView: PracticePanelViewModel = {
     sessionId,
@@ -149,6 +174,8 @@ export function buildPracticeAppViewModel(params: {
       isAnswerRevealed: practiceData.isAnswerRevealed ?? false,
       isEnglishMode: practiceData.isEnglishMode ?? false,
       columns,
+      whyRepeat: shouldExplainRepeat && practiceData.whyRepeatInfo ? practiceData.whyRepeatInfo : null,
+      attempts: practiceData.attemptSummary,
     },
   };
 
@@ -160,6 +187,12 @@ export function buildPracticeAppViewModel(params: {
     columns,
     practice: practiceView,
     revisionPanel: buildRevisionPanel(state, mode),
+    guidance: {
+      showIntro: !!experience && !experience.hasSeenIntro,
+      showStreakCoachmark: !!experience && !experience.coachmarks.streak,
+      showProfilesCoachmark: !!experience && !experience.coachmarks.profiles,
+      showParentGuideHint: !!experience && !experience.hasSeenParentGuide,
+    },
   };
 
   return {

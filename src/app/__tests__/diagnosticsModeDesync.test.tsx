@@ -49,6 +49,15 @@ function buildPreloadedState(): { game: RootState } {
             languages: ['kannadaalphabets', 'english'],
             complexityLevels: {},
           },
+          experience: {
+            hasSeenIntro: false,
+            hasSeenParentGuide: false,
+            hasSeenWhyRepeat: false,
+            coachmarks: {
+              streak: false,
+              profiles: false,
+            },
+          },
         },
       },
     },

@@ -1,25 +1,23 @@
 import { test, expect } from '@playwright/test';
+import { dismissPracticeIntroIfPresent, gotoAppWithFreshStorage } from './utils/app-helpers';
 
 test.describe('Story: Kannada Revision Library', () => {
   test('Scenario: Learner opens revision view and can scroll tiles', async ({ page }) => {
-    await page.context().addInitScript(() => localStorage.clear());
-
     await page.setViewportSize({ width: 1280, height: 560 });
-
-    await page.goto('/');
+    await gotoAppWithFreshStorage(page);
 
     await expect(page.getByTestId('onboarding-container')).toBeVisible();
     await page.getByTestId('onboarding-name-input').fill('Scroll Tester');
     await page.getByTestId('onboarding-create-button').click();
 
     await page.getByTestId('practice-root').waitFor();
+    await dismissPracticeIntroIfPresent(page);
 
   // The revision button's initial visibility can vary between environments.
   // Don't enforce a strict initial state; the test will verify visibility after selecting a mode.
 
     await page.selectOption('#mode-select', 'kannadaalphabets');
-    await expect(page.getByTestId('btn-revision-panel')).toBeVisible();
-    await page.waitForTimeout(50);
+    await page.waitForTimeout(100);
     await page.getByTestId('btn-revision-panel').click();
 
     await page.waitForFunction(() => !!document.querySelector('.revision-grid'), { timeout: 5000 });

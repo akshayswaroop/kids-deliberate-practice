@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { gotoAppWithFreshStorage } from './utils/app-helpers';
 
 test.describe('Story: Practicing a seeded word', () => {
   test('Scenario: Learner answers the current card correctly', async ({ page }) => {
     await test.step('Given a fresh browser context', async () => {
-      await page.context().addInitScript(() => localStorage.clear());
-      await page.goto('/');
+      await gotoAppWithFreshStorage(page);
       await page.waitForFunction(() => typeof (window as any).__seedState === 'function');
     });
 

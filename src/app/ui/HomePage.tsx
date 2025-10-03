@@ -8,6 +8,9 @@ import ProgressStatsDisplay from './ProgressStatsDisplay';
 import RevisionPanel from './RevisionPanel';
 import { useState, useEffect, useCallback } from 'react';
 import { traceAPI } from '../tracing/traceMiddleware';
+import PracticeIntro from './PracticeIntro';
+import Coachmark from './Coachmark';
+import ParentGuideSheet from './ParentGuideSheet';
 // Trace export UI removed
 
 import type { PracticeHomeViewModel } from '../presenters/practicePresenter';
@@ -21,6 +24,10 @@ interface HomePageProps {
   onWrong: () => void;
   onNext: () => void;
   onRevealAnswer?: (revealed: boolean) => void;
+  onDismissIntro: () => void;
+  onCoachmarkSeen: (coachmark: 'streak' | 'profiles') => void;
+  onParentGuideAcknowledged: () => void;
+  onWhyRepeatAcknowledged?: () => void;
 }
 
 export default function HomePage({
@@ -32,11 +39,18 @@ export default function HomePage({
   onWrong,
   onNext,
   onRevealAnswer,
+  onDismissIntro,
+  onCoachmarkSeen,
+  onParentGuideAcknowledged,
+  onWhyRepeatAcknowledged,
 }: HomePageProps) {
   // Form state for ProfileForm (moved from component to container)
   const [username, setUsername] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showRevisionPanel, setShowRevisionPanel] = useState(false);
+  const [showIntroOverlay, setShowIntroOverlay] = useState(ui.guidance.showIntro);
+  const [isParentGuideOpen, setParentGuideOpen] = useState(false);
+  const [controlsOpen, setControlsOpen] = useState(false);
   const hasRevisionPanel = !!ui.revisionPanel;
 
   const handleShareFeedback = useCallback(async () => {
@@ -107,62 +121,271 @@ export default function HomePage({
     }
   }, [hasRevisionPanel, showRevisionPanel]);
 
+  useEffect(() => {
+    if (ui.guidance.showIntro) {
+      setShowIntroOverlay(true);
+    }
+  }, [ui.guidance.showIntro]);
+
+  const handleIntroDismiss = () => {
+    setShowIntroOverlay(false);
+    onDismissIntro();
+    handleCoachmarkDismiss('profiles');
+    handleCoachmarkDismiss('streak');
+  };
+
+  const handleCoachmarkDismiss = (coachmark: 'streak' | 'profiles') => {
+    onCoachmarkSeen(coachmark);
+  };
+
+  const openParentGuide = () => {
+    setParentGuideOpen(true);
+    if (ui.guidance.showParentGuideHint) {
+      onParentGuideAcknowledged();
+    }
+  };
+
+  const closeParentGuide = () => {
+    setParentGuideOpen(false);
+  };
+
   return (
-    <div style={{ height: '100vh', background: 'var(--bg-primary)', fontFamily: 'system-ui, sans-serif', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ width: '100%', background: 'var(--gradient-rainbow)', padding: '12px 48px 12px 20px', position: 'relative' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 12, maxWidth: '100%', overflow: 'hidden', paddingRight: '48px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'center' }}>
-            <span role="img" aria-label="sparkle" style={{ fontSize: 22 }}>✨</span>
-            <h1 style={{ fontSize: '1.9rem', fontWeight: 900, color: 'var(--text-inverse)', margin: 0, textAlign: 'center', whiteSpace: 'nowrap' }}>Kids Deliberate Practice</h1>
-          </div>
-        </div>
-        <div style={{ background: 'var(--bg-accent)', borderRadius: 12, padding: '10px 48px 10px 16px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', maxWidth: '100%', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
-            <ProfileForm 
-              compact 
-              users={ui.users}
-              currentUserId={ui.currentUserId}
-              onCreateUser={(displayName?: string) => handleCreateUser(displayName)}
-              onSwitchUser={onSwitchUser}
-              username={username}
-              onUsernameChange={setUsername}
-              showCreateForm={showCreateForm}
-              onToggleCreateForm={setShowCreateForm}
-            />
-          </div>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
-            <ProgressStatsDisplay currentUserId={ui.currentUserId} compact subject={ui.mode} />
-            <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
-            <ThemeToggle />
+    <div style={{ height: '100vh', background: 'var(--bg-primary)', fontFamily: 'system-ui, sans-serif', overflow: 'hidden', display: 'flex' }}>
+      {controlsOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(15, 23, 42, 0.5)',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            zIndex: 5000
+          }}
+          onClick={() => setControlsOpen(false)}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              width: 'min(320px, 90vw)',
+              background: 'rgba(15,23,42,0.92)',
+              borderRadius: '16px 0 0 16px',
+              boxShadow: '-8px 0 24px rgba(15, 23, 42, 0.18)',
+              padding: '20px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 20,
+              overflowY: 'auto'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#e2e8f0' }}>Practice settings</h2>
+              <button
+                type="button"
+                onClick={() => setControlsOpen(false)}
+                aria-label="Close controls"
+                style={{ border: 'none', background: 'transparent', fontSize: '1.2rem', cursor: 'pointer', color: '#cbd5f5' }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div style={{ position: 'relative' }}>
+              <ProfileForm 
+                compact 
+                users={ui.users}
+                currentUserId={ui.currentUserId}
+                onCreateUser={(displayName?: string) => handleCreateUser(displayName)}
+                onSwitchUser={onSwitchUser}
+                username={username}
+                onUsernameChange={setUsername}
+                showCreateForm={showCreateForm}
+                onToggleCreateForm={setShowCreateForm}
+              />
+              {ui.guidance.showProfilesCoachmark && !showIntroOverlay && (
+                <div style={{ position: 'absolute', top: '-130%', left: 0 }}>
+                  <Coachmark
+                    message="Add each child here so everyone keeps their own streaks."
+                    onDismiss={() => handleCoachmarkDismiss('profiles')}
+                    testId="coachmark-profiles"
+                  />
+                </div>
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={openParentGuide}
+              style={{
+                position: 'relative',
+                padding: '12px 14px',
+                borderRadius: 12,
+                border: 'none',
+                background: 'linear-gradient(90deg,#60a5fa,#38bdf8)',
+                color: '#0f172a',
+                fontWeight: 600,
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              ℹ️ Parent Guide
+              {ui.guidance.showParentGuideHint && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: '-6px',
+                    right: '-6px',
+                    width: 14,
+                    height: 14,
+                    borderRadius: '50%',
+                    background: '#f97316',
+                    boxShadow: '0 0 0 8px rgba(249, 115, 22, 0.25)',
+                  }}
+                />
+              )}
+            </button>
+
             {hasRevisionPanel && ui.revisionPanel && (
               <button
                 data-testid="btn-revision-panel"
                 onClick={() => setShowRevisionPanel(true)}
-                style={{ padding: '8px 12px', borderRadius: 8, border: 'none', background: 'linear-gradient(90deg,#ffd29b,#ff8a8a)', cursor: 'pointer' }}
+                style={{
+                  padding: '12px 14px',
+                  borderRadius: 12,
+                  border: 'none',
+                  background: 'linear-gradient(90deg,#ffd29b,#ff8a8a)',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  textAlign: 'left',
+                  color: '#7c2d12'
+                }}
               >
                 {ui.revisionPanel.buttonLabel}
               </button>
             )}
+
             <button
               type="button"
               onClick={handleShareFeedback}
               style={{
-                padding: '8px 12px',
-                borderRadius: 8,
+                padding: '12px 14px',
+                borderRadius: 12,
                 border: 'none',
                 background: 'linear-gradient(90deg,#8ce0ff,#3b82f6)',
                 cursor: 'pointer',
                 color: 'var(--text-inverse)',
                 fontWeight: 600,
+                textAlign: 'left'
               }}
             >
               Share Diagnostics
             </button>
-            {/* Trace export button removed from UI */}
+
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px', borderRadius: 12, background: 'rgba(15,23,42,0.65)' }}>
+              <span style={{ fontWeight: 600, color: '#e2e8f0' }}>Dark mode</span>
+              <ThemeToggle />
+            </div>
           </div>
         </div>
-      </div>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: 'var(--bg-secondary)', margin: '4px', borderRadius: 12, boxShadow: 'var(--shadow-soft)', position: 'relative', overflow: 'hidden' }}>
+      )}
+
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        <header style={{
+          background: 'var(--gradient-rainbow)',
+          padding: '14px 24px',
+          display: 'grid',
+          gridTemplateColumns: 'minmax(220px, 1fr) minmax(220px, auto) minmax(200px, auto)',
+          gap: 16,
+          alignItems: 'center',
+          boxShadow: '0 6px 18px rgba(15, 23, 42, 0.15)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-inverse)', minWidth: 180 }}>
+            <span role="img" aria-label="sparkle" style={{ fontSize: 22 }}>✨</span>
+            <h1 style={{ fontSize: '1.8rem', fontWeight: 900, margin: 0, whiteSpace: 'nowrap' }}>Kids Deliberate Practice</h1>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{
+              position: 'relative',
+              borderRadius: 999,
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.12))',
+              padding: '4px 4px 4px 16px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              minWidth: 220
+            }}>
+              <span style={{ fontSize: '1rem', color: 'var(--text-inverse)', fontWeight: 600, opacity: 0.9 }}>Mode</span>
+              <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end' }}>
+            <div style={{ position: 'relative' }}>
+              <ProgressStatsDisplay currentUserId={ui.currentUserId} compact subject={ui.mode} />
+              {ui.guidance.showStreakCoachmark && !showIntroOverlay && (
+                <div style={{ position: 'absolute', top: '110%', right: 0 }}>
+                  <Coachmark
+                    message="Daily streaks and attempts climb with every try—show this to keep them motivated."
+                    onDismiss={() => handleCoachmarkDismiss('streak')}
+                    ctaLabel={ui.guidance.showParentGuideHint ? 'See Parent Guide' : undefined}
+                    onCta={openParentGuide}
+                    testId="coachmark-streak"
+                  />
+                </div>
+              )}
+            </div>
+            {hasRevisionPanel && ui.revisionPanel && (
+              <button
+                type="button"
+                data-testid="btn-revision-panel"
+                onClick={() => setShowRevisionPanel(true)}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: 999,
+                  border: 'none',
+                  background: 'rgba(15,23,42,0.18)',
+                  color: 'var(--text-inverse)',
+                  fontWeight: 600,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6
+                }}
+              >
+                📚 Revision
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setControlsOpen(true)}
+              aria-label="Open practice settings"
+              style={{
+                border: 'none',
+                background: 'rgba(15,23,42,0.18)',
+                borderRadius: 14,
+                padding: '8px 16px',
+                color: 'var(--text-inverse)',
+                fontWeight: 600,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8
+              }}
+            >
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 18, height: 18 }}>
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="4.5" width="14" height="2" rx="1" fill="currentColor" />
+                  <rect x="3" y="9" width="14" height="2" rx="1" fill="currentColor" />
+                  <rect x="3" y="13.5" width="14" height="2" rx="1" fill="currentColor" />
+                </svg>
+              </span>
+              Settings
+            </button>
+          </div>
+        </header>
+
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '24px' }}>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: 'var(--bg-secondary)', borderRadius: 16, boxShadow: 'var(--shadow-soft)', position: 'relative', overflow: 'hidden' }}>
         {showRevisionPanel && ui.revisionPanel ? (
           <div
             style={{
@@ -248,9 +471,17 @@ export default function HomePage({
             onRevealAnswer={onRevealAnswer} 
             mode={ui.mode} 
             currentUserId={ui.currentUserId ?? undefined}
+            onWhyRepeatAcknowledged={onWhyRepeatAcknowledged}
           />
         )}
+          </div>
+        </div>
       </div>
+
+      <ParentGuideSheet open={isParentGuideOpen} onClose={closeParentGuide} onAcknowledge={() => {
+        onParentGuideAcknowledged();
+      }} />
+      {showIntroOverlay && <PracticeIntro onDismiss={handleIntroDismiss} />}
   {/* TraceExport component removed */}
     </div>
   );

@@ -8,6 +8,16 @@ import { loadAllWords } from '../repositories/subjectLoader';
 // Use semantic/opaque user ids in core state instead of real names.
 export const DEFAULT_USER_ID = 'user_default';
 
+const createDefaultExperience = (): import('./gameState').GuidanceExperience => ({
+  hasSeenIntro: false,
+  coachmarks: {
+    streak: false,
+    profiles: false,
+  },
+  hasSeenParentGuide: false,
+  hasSeenWhyRepeat: false,
+});
+
 export const makeUser = (displayName?: string) => ({
   displayName,
   words: loadAllWords(),
@@ -19,6 +29,7 @@ export const makeUser = (displayName?: string) => ({
     languages: [], // Will be populated from available subjects
     complexityLevels: {} // Will be populated as subjects are used
   },
+  experience: createDefaultExperience(),
 });
 
 const initialState: RootState = {
@@ -210,8 +221,42 @@ const gameSlice = createSlice({
         }
       });
     },
+    markIntroSeen: function (state) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      if (!user) return;
+      user.experience = user.experience || createDefaultExperience();
+      user.experience.hasSeenIntro = true;
+    },
+    markCoachmarkSeen: function (state, action: PayloadAction<{ coachmark: keyof import('./gameState').CoachmarkFlags }>) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      if (!user) return;
+      user.experience = user.experience || createDefaultExperience();
+      if (user.experience.coachmarks[action.payload.coachmark] !== undefined) {
+        user.experience.coachmarks[action.payload.coachmark] = true;
+      }
+    },
+    markParentGuideSeen: function (state) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      if (!user) return;
+      user.experience = user.experience || createDefaultExperience();
+      user.experience.hasSeenParentGuide = true;
+    },
+    markWhyRepeatSeen: function (state) {
+      const uid = state.currentUserId;
+      if (!uid) return;
+      const user = state.users[uid];
+      if (!user) return;
+      user.experience = user.experience || createDefaultExperience();
+      user.experience.hasSeenWhyRepeat = true;
+    },
   },
 });
 
-export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences, setSessionSize, progressComplexityLevel, setComplexityLevel, decrementCooldowns, revealAnswer } = gameSlice.actions;
+export const { selectUser, setMode, attempt, nextCard, addSession, addUser, setLanguagePreferences, setSessionSize, progressComplexityLevel, setComplexityLevel, decrementCooldowns, revealAnswer, markIntroSeen, markCoachmarkSeen, markParentGuideSeen, markWhyRepeatSeen } = gameSlice.actions;
 export default gameSlice.reducer;

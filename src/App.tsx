@@ -4,7 +4,7 @@ import { ThemeProvider } from './app/ui/ThemeContext';
 import { PracticeServiceProvider } from './app/providers/PracticeServiceProvider';
 // Removed attempt import - now handled by domain actions
 import { handleNextPressed, ensureActiveSession, markCurrentWordCorrect, markCurrentWordWrong } from './infrastructure/state/gameActions';
-import { revealAnswer, setMode as setModeAction } from './infrastructure/state/gameSlice';
+import { revealAnswer, setMode as setModeAction, markIntroSeen, markCoachmarkSeen, markParentGuideSeen, markWhyRepeatSeen } from './infrastructure/state/gameSlice';
 import HomePage from './app/ui/HomePage';
 import Onboarding from './app/ui/Onboarding';
 import { buildPracticeAppViewModel } from './app/presenters/practicePresenter';
@@ -112,6 +112,22 @@ function App() {
     }
   };
 
+  const dismissIntro = () => {
+    dispatch(markIntroSeen());
+  };
+
+  const handleCoachmarkSeen = (coachmark: 'streak' | 'profiles') => {
+    dispatch(markCoachmarkSeen({ coachmark }));
+  };
+
+  const acknowledgeParentGuide = () => {
+    dispatch(markParentGuideSeen());
+  };
+
+  const acknowledgeWhyRepeat = () => {
+    dispatch(markWhyRepeatSeen());
+  };
+
   if (isDiagnostics) {
     return (
       <ThemeProvider>
@@ -143,6 +159,10 @@ function App() {
             onWrong={onWrong}
             onNext={onNext}
             onRevealAnswer={onRevealAnswer}
+            onDismissIntro={dismissIntro}
+            onCoachmarkSeen={handleCoachmarkSeen}
+            onParentGuideAcknowledged={acknowledgeParentGuide}
+            onWhyRepeatAcknowledged={acknowledgeWhyRepeat}
           />
         )}
       </PracticeServiceProvider>

@@ -19,6 +19,7 @@ interface EnhancedPracticePanelProps {
   onNext: () => void;
   onRevealAnswer?: (revealed: boolean) => void;
   currentUserId?: string | null;
+  onWhyRepeatAcknowledged?: () => void;
 }
 
 export default function EnhancedPracticePanel({
@@ -29,6 +30,7 @@ export default function EnhancedPracticePanel({
   onNext,
   onRevealAnswer,
   currentUserId,
+  onWhyRepeatAcknowledged,
 }: EnhancedPracticePanelProps) {
   const { card, currentWordId } = practice;
   
@@ -122,6 +124,9 @@ export default function EnhancedPracticePanel({
         isAnswerRevealed={card.isAnswerRevealed}
         isEnglishMode={card.isEnglishMode}
         currentUserId={currentUserId ?? undefined}
+        whyRepeat={card.whyRepeat}
+        onWhyRepeatAcknowledged={onWhyRepeatAcknowledged}
+        attemptStats={card.attempts}
       />
     </div>
   );

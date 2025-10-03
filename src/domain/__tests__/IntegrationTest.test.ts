@@ -6,10 +6,11 @@
 
 import { describe, it, expect } from 'vitest';
 import { PracticeApplicationService } from '../../infrastructure/services/PracticeApplicationService2';
+import type { RootState } from '../../infrastructure/state/gameState';
 
 describe('DDD Integration Test', () => {
   it('should create application service', () => {
-    const mockGetState = () => ({
+    const mockGetState = (): RootState => ({
       users: {},
       currentUserId: 'test-user'
     });
@@ -24,7 +25,7 @@ describe('DDD Integration Test', () => {
   });
 
   it('should handle practice attempt recording', async () => {
-    const mockGetState = () => ({
+    const mockGetState = (): RootState => ({
       users: {
         'test-user': {
           words: {
@@ -45,7 +46,17 @@ describe('DDD Integration Test', () => {
             sessionSizes: { english: 6 },
             languages: ['english'],
             complexityLevels: { english: 1 }
-          }
+          },
+          experience: {
+            hasSeenIntro: false,
+            hasSeenParentGuide: false,
+            hasSeenWhyRepeat: false,
+            coachmarks: {
+              streak: false,
+              profiles: false
+            }
+          },
+          currentMode: 'english'
         }
       },
       currentUserId: 'test-user'
