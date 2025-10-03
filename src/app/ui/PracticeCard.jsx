@@ -6,12 +6,114 @@ import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetec
 import FlyingUnicorn from './FlyingUnicorn.jsx';
 import SadBalloonAnimation from './SadBalloonAnimation.jsx';
 
-const SAD_EFFECT_BACKUP_TIMEOUT_MS = 3600;
+const SAD_EFFECT_BACKUP_TIMEOUT_MS = 6500;
 const PROGRESSION_DELAY_MS = 120;
 
-export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode, currentUserId }) {
+const rawBaseUrl = typeof import.meta !== 'undefined' && import.meta.env?.BASE_URL
+  ? import.meta.env.BASE_URL
+  : '/';
+const ensureTrailingSlash = value => (value.endsWith('/') ? value : `${value}/`);
+const ensureLeadingSlash = value => (value.startsWith('/') ? value : `/${value}`);
+const normalizedBaseUrl = ensureLeadingSlash(ensureTrailingSlash(rawBaseUrl));
+const buildSoundUrl = filename => `${normalizedBaseUrl}${filename.replace(/^\/+/, '')}`;
+
+function AttemptBadge({ label, value, accentRGB, info }) {
+  const accentColor = `rgb(${accentRGB})`;
+  const accentBackground = `rgba(${accentRGB}, ${value > 0 ? 0.18 : 0.12})`;
+  const accentBorder = `1px solid rgba(${accentRGB}, 0.3)`;
+  const tooltipId = React.useId();
+  const [showTooltip, setShowTooltip] = React.useState(false);
+  const hasInfo = typeof info === 'string' && info.trim().length > 0;
+
+  const handleEnter = () => {
+    if (hasInfo) setShowTooltip(true);
+  };
+
+  const handleLeave = () => setShowTooltip(false);
+
+  const handleClick = () => {
+    if (hasInfo) setShowTooltip(prev => !prev);
+  };
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '6px 10px',
+        borderRadius: 10,
+        background: accentBackground,
+        border: accentBorder,
+        minWidth: 72,
+        minHeight: 48,
+        boxShadow: '0 8px 18px rgba(15, 23, 42, 0.08)',
+        position: 'relative',
+      }}
+      onMouseLeave={handleLeave}
+    >
+      <span style={{ fontSize: '1.05rem', fontWeight: 700, color: accentColor }}>{value}</span>
+      <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 4 }}>
+        {label}
+        {hasInfo && (
+          <button
+            type="button"
+            aria-label={`About ${label}`}
+            aria-describedby={showTooltip ? tooltipId : undefined}
+            onMouseEnter={handleEnter}
+            onBlur={handleLeave}
+            onClick={handleClick}
+            style={{
+              border: 'none',
+              background: 'transparent',
+              padding: 0,
+              margin: 0,
+              cursor: 'pointer',
+              color: accentColor,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden focusable="false" style={{ display: 'block' }}>
+              <circle cx="8" cy="8" r="7" fill="currentColor" opacity="0.18" />
+              <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="white" />
+              <text x="8" y="11" textAnchor="middle" fontSize="8" fontWeight="700" fill="currentColor">i</text>
+            </svg>
+          </button>
+        )}
+      </span>
+      {hasInfo && showTooltip && (
+        <div
+          id={tooltipId}
+          role="tooltip"
+          style={{
+            position: 'absolute',
+            top: 'calc(100% + 8px)',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: 'rgba(15,23,42,0.95)',
+            color: '#e2e8f0',
+            padding: '10px 12px',
+            borderRadius: 10,
+            boxShadow: '0 18px 36px rgba(15, 23, 42, 0.18)',
+            width: 220,
+            fontSize: '0.75rem',
+            lineHeight: 1.4,
+            zIndex: 50,
+          }}
+        >
+          {info}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode, currentUserId, whyRepeat = null, onWhyRepeatAcknowledged, attemptStats = null }) {
   const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
   const isTestMode = env?.MODE === 'test';
+  const normalizedAttemptStats = attemptStats || { total: 0, correct: 0, incorrect: 0 };
 
   // Animation helper functions
   const createConfettiBurst = () => {
@@ -68,6 +170,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   // Animation states
   const [showUnicorn, setShowUnicorn] = React.useState(false);
   const [showSadBalloon, setShowSadBalloon] = React.useState(false);
+  const [whyRepeatDismissed, setWhyRepeatDismissed] = React.useState(false);
 
 
   // --- Centralized progression logic ---
@@ -83,6 +186,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     setShowUnicorn(false);
     setShowSadBalloon(false);
     setStatus('idle');
+    setWhyRepeatDismissed(false);
   }, [mainWord, answer]);
 
 
@@ -277,6 +381,24 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               </div>
             );
           })()}
+          <div style={{
+            marginTop: 16,
+            display: 'flex',
+            gap: 12,
+            flexWrap: 'nowrap',
+            justifyContent: 'center',
+            width: '100%',
+            alignItems: 'center'
+          }}>
+            <AttemptBadge label="Correct" value={normalizedAttemptStats.correct} accentRGB="16, 185, 129" />
+            <AttemptBadge
+              label="Try again"
+              value={normalizedAttemptStats.incorrect}
+              accentRGB="239, 68, 68"
+              info="We use spaced repetition so tricky cards resurface at the right time—every retry helps the app schedule the next gentle reminder."
+            />
+            <AttemptBadge label="Total tries" value={normalizedAttemptStats.total} accentRGB="37, 99, 235" />
+          </div>
         {/* Inline transliteration/answer banner removed — answers are shown only in the details panel now */}
         {/* Answer modes: removed here to avoid duplication — answers are shown in the details panel below */}
       </div>
@@ -352,6 +474,42 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                   color: 'var(--text-secondary)'
                 }}>No answer or notes available for this item.</div>
               )}
+              {whyRepeat && !whyRepeatDismissed && (
+                <div style={{
+                  width: '100%',
+                  background: 'rgba(37,99,235,0.08)',
+                  border: '1px solid rgba(37,99,235,0.2)',
+                  borderRadius: 14,
+                  padding: '12px 14px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 6,
+                  textAlign: 'left',
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontWeight: 700, color: '#1d4ed8', fontSize: '0.95rem' }}>Why repeat this card?</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setWhyRepeatDismissed(true);
+                        onWhyRepeatAcknowledged && onWhyRepeatAcknowledged();
+                      }}
+                      style={{
+                        background: 'transparent',
+                        border: 'none',
+                        color: '#1d4ed8',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Got it
+                    </button>
+                  </div>
+                  <p style={{ margin: 0, color: '#1e3a8a', fontSize: '0.9rem', lineHeight: 1.5 }}>
+                    We have revealed this answer {whyRepeat.revealCount} times. Repeating it right now helps the memory stick—ask your child to say the answer aloud before moving on.
+                  </p>
+                </div>
+              )}
             </div>
           ) : (
             <div style={{ 
@@ -382,30 +540,60 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
 
       </div>
 
-      {/* Action Buttons Area - 25% of vertical space, docked at bottom */}
+      {/* Action Buttons Area */}
       <div style={{
-        flex: '0 0 auto', // Size to content
-  minHeight: '140px',
-  width: 'auto',
+        flex: '0 0 auto',
+        width: 'auto',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'stretch', // stretch buttons vertically for balance
-  gap: '28px', // slightly increased for optical balance
-        padding: '10px 12px', // match answer panel horizontal padding
-        marginLeft: '12px', // match answer panel inset
-        marginRight: '12px',
+        alignItems: 'stretch',
+        gap: '22px',
+        padding: '10px 12px 12px',
+        margin: '0 12px 6px',
         background: 'var(--bg-accent)',
-        borderRadius: '16px 16px 0 0',
+        borderRadius: 16,
         boxShadow: 'var(--shadow-strong)',
         zIndex: 10,
         backdropFilter: 'blur(10px)',
         border: '1px solid var(--border-secondary)',
-        borderBottom: 'none',
         boxSizing: 'border-box',
-        flexShrink: 0 // Prevent shrinking
+        flexShrink: 0
       }}>
-        {/* Reveal button - only for non-English modes */}
-        {/* Button order: Correct! (primary), Try later (primary), Reveal (secondary) */}
+        {!isEnglishMode && (
+          <button
+            data-testid="btn-reveal"
+            onClick={() => { 
+              if (interactionLocked) return;
+              onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
+            }}
+            disabled={interactionLocked}
+            aria-label={isAnswerRevealed ? "Hide Answer" : "Reveal Answer"}
+            className="mastery-footer-button reveal"
+            style={{
+              backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'transparent',
+              color: interactionLocked ? 'var(--text-tertiary, #94a3b8)' : 'var(--button-primary-bg, #2563eb)',
+              border: interactionLocked ? '2px solid var(--bg-tertiary, #cbd5e1)' : '2px solid var(--button-primary-bg, #2563eb)',
+              borderRadius: 10,
+              padding: 'clamp(3px, 0.6vh, 6px) clamp(12px, 2vw, 16px)',
+              fontSize: 'clamp(13px, 2.2vw, 16px)',
+              fontWeight: 700,
+              cursor: interactionLocked ? 'not-allowed' : 'pointer',
+              display: 'flex',
+              gap: '6px',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'transform 180ms ease, box-shadow 180ms ease',
+              boxShadow: interactionLocked ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
+              minHeight: 'clamp(28px, 4.5vh, 36px)',
+              flex: '1 1 auto',
+              maxWidth: '130px',
+              opacity: interactionLocked ? 0.6 : 1
+            }}
+          >
+            <span style={{fontSize: 'clamp(14px, 3vw, 18px)'}}>{isAnswerRevealed ? '🙈' : '👁️'}</span>
+            <span>{isAnswerRevealed ? 'Hide ' : 'Reveal '}</span>
+          </button>
+        )}
         <button
           data-testid="btn-correct"
           onClick={() => {
@@ -419,11 +607,12 @@ onCorrect && onCorrect();
 createConfettiBurst();
             setShowUnicorn(true);
             try {
-              const audio = new window.Audio('/happy-logo-167474.mp3');
+              const audio = new window.Audio(buildSoundUrl('happy-logo-167474.mp3'));
               audio.volume = 0.7;
-              audio.play();
+              audio.play()?.catch(() => {});
             } catch (e) {
-}
+              // Ignore playback errors (e.g., autoplay restrictions)
+            }
             onCorrect && onCorrect();
             // Progression will be handled by unicorn animation end
           }}
@@ -469,14 +658,16 @@ triggerBounceAnimation();
             // Start audio and store promise
             let soundPromise;
             try {
-              const audio = new window.Audio('/brass-fail-1-a-185074.mp3');
+              const audio = new window.Audio(buildSoundUrl('you-can-do-better.m4a'));
               audio.volume = 0.7;
               soundPromise = new Promise(resolve => {
                 let resolved = false;
+                let fallbackTimeoutId = 0;
 
                 const cleanup = () => {
                   if (resolved) return;
                   resolved = true;
+                  window.clearTimeout(fallbackTimeoutId);
                   audio.onended = null;
                   audio.onerror = null;
                   try {
@@ -486,23 +677,25 @@ triggerBounceAnimation();
                   resolve();
                 };
 
-                const fallback = window.setTimeout(() => {
+                fallbackTimeoutId = window.setTimeout(() => {
                   cleanup();
                 }, SAD_EFFECT_BACKUP_TIMEOUT_MS);
 
                 audio.onended = () => {
-                  window.clearTimeout(fallback);
                   cleanup();
                 };
 
                 audio.onerror = () => {
-                  window.clearTimeout(fallback);
                   cleanup();
                 };
+
+                const playPromise = audio.play?.();
+                playPromise?.catch(() => {
+                  cleanup();
+                });
               });
-              audio.play();
             } catch (e) {
-soundPromise = Promise.resolve();
+              soundPromise = Promise.resolve();
             }
             setWrongSoundPromise(soundPromise);
             onWrong && onWrong();
@@ -535,41 +728,6 @@ soundPromise = Promise.resolve();
           <span style={{fontSize: 'clamp(16px, 4vw, 22px)'}}>🔁</span>
           <span>Try later</span>
         </button>
-        {!isEnglishMode && (
-          <button
-            data-testid="btn-reveal"
-            onClick={() => { 
-              if (interactionLocked) return;
-onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
-            }}
-            disabled={interactionLocked}
-            aria-label={isAnswerRevealed ? "Hide Answer" : "Reveal Answer"}
-            className="mastery-footer-button reveal"
-            style={{
-              backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'transparent', // outlined secondary
-              color: interactionLocked ? 'var(--text-tertiary, #94a3b8)' : 'var(--button-primary-bg, #2563eb)',
-              border: interactionLocked ? '2px solid var(--bg-tertiary, #cbd5e1)' : '2px solid var(--button-primary-bg, #2563eb)',
-              borderRadius: 10,
-              padding: 'clamp(3px, 0.6vh, 6px) clamp(12px, 2vw, 16px)',
-              fontSize: 'clamp(13px, 2.2vw, 16px)',
-              fontWeight: 700,
-              cursor: interactionLocked ? 'not-allowed' : 'pointer',
-              display: 'flex',
-              gap: '6px',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'transform 180ms ease, box-shadow 180ms ease',
-              boxShadow: interactionLocked ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
-              minHeight: 'clamp(28px, 4.5vh, 36px)',
-              flex: '1 1 auto',
-              maxWidth: '130px',
-              opacity: interactionLocked ? 0.6 : 1
-            }}
-          >
-            <span style={{fontSize: 'clamp(14px, 3vw, 18px)'}}>{isAnswerRevealed ? '🙈' : '👁️'}</span>
-            <span>{isAnswerRevealed ? 'Hide ' : 'Reveal '}</span>
-          </button>
-        )}
         {/* Next button removed: progression will auto-trigger after actions */}
       </div>
     </div>
