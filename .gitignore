@@ -26,8 +26,8 @@ dist-ssr
 *storybook.log
 storybook-static
 
-# Local Netlify folder
-# .netlify (removed - Netlify integration deprecated in favor of GitHub Pages)
+# Local Netlify folder (no longer tracked; ignore any local Netlify state)
+.netlify/
 
 # Test output and reports (generated)
 test-results/
