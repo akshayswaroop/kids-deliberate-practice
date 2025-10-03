@@ -50,6 +50,7 @@ export interface SubjectConfig {
   language: string;       // e.g., 'english', 'kannada', 'mathtables'
   displayIcon: string;    // e.g., '🇺🇸', '🇮🇳', '🔢'
   displayLabel: string;   // e.g., 'English', 'Kannada', 'Math Tables'
+  promptLabel?: string;   // e.g., 'Say the letter', 'Spell this number', 'Answer the question'
   supportsRevision?: boolean; // Whether this subject should include revision sessions (default: false for long questions)
   revisionPanel?: {
     title: string;
@@ -87,13 +88,14 @@ export function loadSubjectWords(bankData: QuestionBankItem[], language: string)
  * This is the only place that needs updates when adding new subjects
  */
 export const SUBJECT_CONFIGS: SubjectConfig[] = [
-  { name: 'english', bankPath: 'english_questions_bank.json', language: 'english', displayIcon: '🇺🇸', displayLabel: 'English' },
+  { name: 'english', bankPath: 'english_questions_bank.json', language: 'english', displayIcon: '🇺🇸', displayLabel: 'English', promptLabel: 'Answer the question' },
   {
     name: 'kannada',
     bankPath: 'kannada_words_bank.json',
     language: 'kannada',
     displayIcon: '🇮🇳',
     displayLabel: 'Kannada',
+    promptLabel: 'Read this word',
     supportsRevision: true,
     revisionPanel: {
       title: 'Kannada Revision',
@@ -109,6 +111,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'kannadaalphabets',
     displayIcon: '🔤',
     displayLabel: 'Kannada Alphabets',
+    promptLabel: 'Say the letter',
     supportsRevision: true,
     revisionPanel: {
       title: 'Kannada Alphabet Revision',
@@ -124,6 +127,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'hindialphabets', 
     displayIcon: '🇮🇳', 
     displayLabel: 'Hindi Alphabets', 
+    promptLabel: 'Say the letter',
     supportsRevision: true,
     revisionPanel: {
       title: 'Hindi Alphabet Revision',
@@ -139,6 +143,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'mathtables', 
     displayIcon: '🔢', 
     displayLabel: 'Math Tables', 
+    promptLabel: 'Solve this problem',
     supportsRevision: true,
     revisionPanel: {
       title: 'Math Tables Revision',
@@ -148,17 +153,18 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
       notesField: 'notes',
     },
   },
-  { name: 'humanbody', bankPath: 'human_body_grade3_full.json', language: 'humanbody', displayIcon: '🧠', displayLabel: 'Human Body' },
-  { name: 'indiageography', bankPath: 'india_geography_questions.json', language: 'indiageography', displayIcon: '🗺️', displayLabel: 'India Geography' },
-  { name: 'grampanchayat', bankPath: 'gram_panchayat_questions.json', language: 'grampanchayat', displayIcon: '🏛️', displayLabel: 'Gram Panchayat' },
-  { name: 'hanuman', bankPath: 'hanuman_chalisa_kids.json', language: 'hanuman', displayIcon: '🕉️', displayLabel: 'Hanuman Chalisa' },
-  { name: 'comprehension', bankPath: 'story_comprehension_100.json', language: 'comprehension', displayIcon: '📚', displayLabel: 'Story Comprehension' },
+  { name: 'humanbody', bankPath: 'human_body_grade3_full.json', language: 'humanbody', displayIcon: '🧠', displayLabel: 'Human Body', promptLabel: 'Answer the question' },
+  { name: 'indiageography', bankPath: 'india_geography_questions.json', language: 'indiageography', displayIcon: '🗺️', displayLabel: 'India Geography', promptLabel: 'Answer the question' },
+  { name: 'grampanchayat', bankPath: 'gram_panchayat_questions.json', language: 'grampanchayat', displayIcon: '🏛️', displayLabel: 'Gram Panchayat', promptLabel: 'Answer the question' },
+  { name: 'hanuman', bankPath: 'hanuman_chalisa_kids.json', language: 'hanuman', displayIcon: '🕉️', displayLabel: 'Hanuman Chalisa', promptLabel: 'Read and answer' },
+  { name: 'comprehension', bankPath: 'story_comprehension_100.json', language: 'comprehension', displayIcon: '📚', displayLabel: 'Story Comprehension', promptLabel: 'Read and answer' },
   {
     name: 'numberspellings',
     bankPath: 'number_spellings_1_20.json',
     language: 'numberspellings',
     displayIcon: '🔤',
     displayLabel: 'Number Spellings (1–20)',
+    promptLabel: 'Spell this number',
     supportsRevision: true,
     revisionPanel: {
       title: 'Number Spelling Revision',
@@ -174,6 +180,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'nationalsymbols',
     displayIcon: '🇮🇳',
     displayLabel: 'National Symbols',
+    promptLabel: 'Answer the question',
     supportsRevision: false,
   },
   {
@@ -182,6 +189,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'beforeafternumbers',
     displayIcon: '🔢',
     displayLabel: 'Before & After Numbers',
+    promptLabel: 'Complete the sequence',
     supportsRevision: false,
   },
   // ADD NEW SUBJECTS HERE - no code changes needed elsewhere!
@@ -214,6 +222,18 @@ export function getSubjectDisplayLabel(subjectName: string): string {
 export function getSubjectSupportsRevision(subjectName: string): boolean {
   const config = SUBJECT_CONFIGS.find(s => s.name === subjectName || s.language === subjectName);
   return config?.supportsRevision ?? false; // Default to false for safety
+}
+
+/**
+ * Get the prompt label for a subject to clarify what action is expected.
+ * This helps learners understand what to do when they see a letter, number, or question.
+ * 
+ * @param subjectName - Internal subject name (e.g., 'mathtables', 'kannadaalphabets')
+ * @returns Prompt label (e.g., 'Say the letter', 'Spell this number', 'Answer the question')
+ */
+export function getSubjectPromptLabel(subjectName: string): string {
+  const config = SUBJECT_CONFIGS.find(s => s.name === subjectName || s.language === subjectName);
+  return config?.promptLabel ?? 'Answer the question'; // Default fallback
 }
 
 /**

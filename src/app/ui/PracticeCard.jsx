@@ -2,6 +2,7 @@ import React from 'react';
 import './PracticeCard.css';
 import GradientText from './GradientText.jsx';
 import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetector';
+import { getSubjectPromptLabel } from '../../infrastructure/repositories/subjectLoader.ts';
 
 import FlyingUnicorn from './FlyingUnicorn.jsx';
 import SadBalloonAnimation from './SadBalloonAnimation.jsx';
@@ -272,6 +273,20 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         borderTopRightRadius: '16px',
         marginBottom: '-4px' // reduce gap between panels
       }}>
+        {/* Subtle prompt label to clarify expected action */}
+        {mode && (
+          <div style={{
+            fontSize: '0.8rem',
+            fontWeight: '500',
+            color: 'var(--text-secondary)',
+            letterSpacing: '0.02em',
+            marginBottom: '8px',
+            opacity: 0.75,
+            fontStyle: 'italic'
+          }}>
+            {getSubjectPromptLabel(mode)}
+          </div>
+        )}
           {(() => {
             const text = String(mainWord || '');
             const len = text.length;
