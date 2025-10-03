@@ -7,9 +7,10 @@
  * Architecture: UI layer component using application service hook
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useProgressStats } from '../hooks/useProgressStats';
 import { getSubjectDisplayLabel } from '../../infrastructure/repositories/subjectLoader';
+import TrophyAnimation from './TrophyAnimation';
 
 interface ProgressStatsProps {
   currentUserId: string | null;
@@ -27,15 +28,52 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
   const [prevStats, setPrevStats] = useState(stats);
   const [prevTodayAttempts, setPrevTodayAttempts] = useState(todayAttempts);
   
+  // Trophy animation state
+  const [displayedTurnaroundCount, setDisplayedTurnaroundCount] = useState(0);
+  const [animationQueue, setAnimationQueue] = useState<number[]>([]);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const isFirstRender = useRef(true);
+  
+  // Initialize displayed count on first render
+  useEffect(() => {
+    if (isFirstRender.current && stats) {
+      setDisplayedTurnaroundCount(stats.turnaroundCount);
+      isFirstRender.current = false;
+    }
+  }, [stats]);
+  
   // Track previous stats for animation detection
   useEffect(() => {
     if (stats && stats !== prevStats) {
+      // Detect new trophies and add to queue
+      if (prevStats && stats.turnaroundCount > prevStats.turnaroundCount && !isFirstRender.current) {
+        const newTrophies = stats.turnaroundCount - prevStats.turnaroundCount;
+        const newQueue: number[] = [];
+        for (let i = 0; i < newTrophies; i++) {
+          newQueue.push(prevStats.turnaroundCount + i + 1);
+        }
+        setAnimationQueue(prev => [...prev, ...newQueue]);
+      }
       setPrevStats(stats);
     }
     if (todayAttempts !== prevTodayAttempts) {
       setPrevTodayAttempts(todayAttempts);
     }
   }, [stats, prevStats, todayAttempts, prevTodayAttempts]);
+  
+  // Process animation queue
+  useEffect(() => {
+    if (animationQueue.length > 0 && !isAnimating) {
+      setIsAnimating(true);
+    }
+  }, [animationQueue, isAnimating]);
+  
+  // Handle animation completion
+  const handleAnimationEnd = () => {
+    setAnimationQueue(prev => prev.slice(1));
+    setDisplayedTurnaroundCount(prev => prev + 1);
+    setIsAnimating(false);
+  };
   
   if (loading || !stats) {
     return null;
@@ -44,14 +82,13 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
   const { turnaroundCount, currentStreak } = stats;
   
   // Detect which counters changed for animations
-  const turnaroundsChanged = !!(prevStats && prevStats.turnaroundCount !== turnaroundCount);
   const streakChanged = !!(prevStats && prevStats.currentStreak !== currentStreak);
   const attemptsChanged = !!(prevTodayAttempts !== undefined && prevTodayAttempts !== todayAttempts);
   
-  // Edge cases from spec
-  const turnaroundMessage = turnaroundCount === 0 
+  // Edge cases from spec - use displayedTurnaroundCount for compact view
+  const turnaroundMessage = displayedTurnaroundCount === 0 
     ? "Keep going, you'll conquer tricky items soon!" 
-    : `${turnaroundCount} tricky item${turnaroundCount === 1 ? '' : 's'} you conquered!`;
+    : `${displayedTurnaroundCount} tricky item${displayedTurnaroundCount === 1 ? '' : 's'} you conquered!`;
   
   const streakMessage = currentStreak === 0
     ? "Don't worry, start a new streak today!"
@@ -146,6 +183,14 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
     return (
       <>
         <style>{counterAnimations}</style>
+        
+        {/* Trophy animation */}
+        <TrophyAnimation 
+          visible={isAnimating}
+          onAnimationEnd={handleAnimationEnd}
+          targetBadgeSelector=".trophy-badge"
+        />
+        
         <div style={{
           display: 'flex',
           gap: 12,
@@ -153,14 +198,14 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
           fontSize: '0.85rem'
         }}>
           {/* Turnarounds counter */}
-          {turnaroundCount > 0 && (
+          {displayedTurnaroundCount > 0 && (
             <div 
-              className={`stat-badge ${turnaroundsChanged ? 'animated' : ''}`}
-              data-tooltip={`${turnaroundCount} item${turnaroundCount === 1 ? '' : 's'} conquered from wrong to mastered!`}
-              key={`turnaround-${turnaroundCount}`}
+              className={`stat-badge trophy-badge ${displayedTurnaroundCount !== turnaroundCount ? 'animated' : ''}`}
+              data-tooltip={`${displayedTurnaroundCount} item${displayedTurnaroundCount === 1 ? '' : 's'} conquered from wrong to mastered!`}
+              key={`turnaround-${displayedTurnaroundCount}`}
             >
               <span className="emoji">🏆</span>
-              <span>{turnaroundCount}</span>
+              <span>{displayedTurnaroundCount}</span>
             </div>
           )}
           {/* Streak counter */}
@@ -213,12 +258,12 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
         alignItems: 'flex-start',
         gap: 12,
         padding: 16,
-        background: turnaroundCount > 0 
+        background: displayedTurnaroundCount > 0 
           ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1))'
           : 'var(--bg-primary)',
         borderRadius: 8,
         border: '2px solid',
-        borderColor: turnaroundCount > 0 ? 'var(--color-success)' : 'var(--border-color)'
+        borderColor: displayedTurnaroundCount > 0 ? 'var(--color-success)' : 'var(--border-color)'
       }}>
         <div style={{ fontSize: '2rem' }}>🌱</div>
         <div style={{ flex: 1 }}>
@@ -236,7 +281,7 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
           }}>
             {turnaroundMessage}
           </div>
-          {turnaroundCount > 0 && (
+          {displayedTurnaroundCount > 0 && (
             <div style={{
               marginTop: 8,
               fontSize: '0.85rem',
