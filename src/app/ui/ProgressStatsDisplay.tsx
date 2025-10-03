@@ -8,6 +8,8 @@
  */
 
 import { useState, useEffect, useRef } from 'react';
+import type { MouseEvent as ReactMouseEvent, FocusEvent as ReactFocusEvent } from 'react';
+import { createPortal } from 'react-dom';
 import { useProgressStats } from '../hooks/useProgressStats';
 import { getSubjectDisplayLabel } from '../../infrastructure/repositories/subjectLoader';
 import TrophyAnimation from './TrophyAnimation';
@@ -17,6 +19,15 @@ interface ProgressStatsProps {
   compact?: boolean;
   subject?: string; // Filter stats by subject/language
 }
+
+type TooltipPlacement = 'above' | 'below';
+
+type TooltipState = {
+  message: string;
+  x: number;
+  y: number;
+  placement: TooltipPlacement;
+};
 
 /**
  * Component to display Turnarounds and Streak metrics.
@@ -28,7 +39,85 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
   const [prevStats, setPrevStats] = useState(stats);
   const [prevTodayAttempts, setPrevTodayAttempts] = useState(todayAttempts);
   
-  // Trophy animation state
+  // Tooltip state (from main branch)
+  const [tooltip, setTooltip] = useState<TooltipState | null>(null);
+
+  const tooltipMaxWidth = 220;
+  const tooltipMargin = 12;
+
+  const showTooltip = (
+    event: ReactMouseEvent<HTMLDivElement> | ReactFocusEvent<HTMLDivElement>,
+    message: string,
+    placement: TooltipPlacement
+  ) => {
+    if (typeof window === 'undefined') return;
+    const target = event.currentTarget;
+    const rect = target.getBoundingClientRect();
+    const viewportWidth = window.innerWidth || (tooltipMaxWidth + tooltipMargin * 2);
+    const halfWidth = tooltipMaxWidth / 2;
+    const desiredCenter = rect.left + rect.width / 2;
+    const minCenter = tooltipMargin + halfWidth;
+    const maxCenter = viewportWidth - tooltipMargin - halfWidth;
+    const clampedCenter = Math.min(Math.max(desiredCenter, minCenter), maxCenter);
+    const y = placement === 'below'
+      ? rect.bottom + tooltipMargin
+      : rect.top - tooltipMargin;
+
+    setTooltip({
+      message,
+      x: clampedCenter,
+      y,
+      placement,
+    });
+  };
+
+  const hideTooltip = () => setTooltip(null);
+
+  const tooltipNode = tooltip && typeof document !== 'undefined'
+    ? createPortal(
+        <div
+          style={{
+            position: 'fixed',
+            left: tooltip.x,
+            top: tooltip.y,
+            transform: tooltip.placement === 'below' ? 'translate(-50%, 0)' : 'translate(-50%, -100%)',
+            padding: '10px 12px',
+            background: 'rgba(15, 23, 42, 0.95)',
+            color: '#e2e8f0',
+            borderRadius: 10,
+            fontSize: '0.75rem',
+            fontWeight: 500,
+            lineHeight: 1.4,
+            maxWidth: tooltipMaxWidth,
+            width: 'max-content',
+            textAlign: 'center',
+            zIndex: 10000,
+            pointerEvents: 'none',
+            boxShadow: '0 18px 36px rgba(15, 23, 42, 0.18)',
+            whiteSpace: 'normal',
+          }}
+        >
+          {tooltip.message}
+        </div>,
+        document.body
+      )
+    : null;
+
+  useEffect(() => {
+    if (!tooltip || typeof window === 'undefined') return;
+
+    const handleViewportChange = () => setTooltip(null);
+
+    window.addEventListener('scroll', handleViewportChange, true);
+    window.addEventListener('resize', handleViewportChange);
+
+    return () => {
+      window.removeEventListener('scroll', handleViewportChange, true);
+      window.removeEventListener('resize', handleViewportChange);
+    };
+  }, [tooltip]);
+  
+  // Trophy animation state (from my changes)
   const [displayedTurnaroundCount, setDisplayedTurnaroundCount] = useState(0);
   const [animationQueue, setAnimationQueue] = useState<number[]>([]);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -76,7 +165,7 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
   };
   
   if (loading || !stats) {
-    return null;
+    return tooltipNode;
   }
   
   const { turnaroundCount, currentStreak } = stats;
@@ -122,6 +211,7 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
         transition: all 0.2s ease;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         position: relative;
+        cursor: pointer;
       }
       
       .stat-badge:hover {
@@ -143,41 +233,6 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
         animation: counterBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.1s;
       }
       
-      /* Custom tooltip styling */
-      .stat-badge[data-tooltip] {
-        position: relative;
-        cursor: pointer;
-      }
-      
-      .stat-badge[data-tooltip]:hover::before {
-        content: attr(data-tooltip);
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-8px);
-        padding: 8px 12px;
-        background: rgba(0, 0, 0, 0.9);
-        color: white;
-        border-radius: 8px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        white-space: nowrap;
-        z-index: 1000;
-        pointer-events: none;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      }
-      
-      .stat-badge[data-tooltip]:hover::after {
-        content: '';
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-2px);
-        border: 6px solid transparent;
-        border-top-color: rgba(0, 0, 0, 0.9);
-        z-index: 1000;
-        pointer-events: none;
-      }
     `;
     
     return (
@@ -199,10 +254,14 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
         }}>
           {/* Turnarounds counter */}
           {displayedTurnaroundCount > 0 && (
-            <div 
+            <div
               className={`stat-badge trophy-badge ${displayedTurnaroundCount < turnaroundCount ? 'animated' : ''}`}
-              data-tooltip={`${displayedTurnaroundCount} item${displayedTurnaroundCount === 1 ? '' : 's'} conquered from wrong to mastered!`}
               key={`turnaround-${displayedTurnaroundCount}`}
+              tabIndex={0}
+              onMouseEnter={(event) => showTooltip(event, `${displayedTurnaroundCount} item${displayedTurnaroundCount === 1 ? '' : 's'} conquered from wrong to mastered!`, 'below')}
+              onFocus={(event) => showTooltip(event, `${displayedTurnaroundCount} item${displayedTurnaroundCount === 1 ? '' : 's'} conquered from wrong to mastered!`, 'below')}
+              onMouseLeave={hideTooltip}
+              onBlur={hideTooltip}
             >
               <span className="emoji">🏆</span>
               <span>{displayedTurnaroundCount}</span>
@@ -210,31 +269,41 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
           )}
           {/* Streak counter */}
           {currentStreak > 0 && (
-            <div 
+            <div
               className={`stat-badge ${streakChanged ? 'animated' : ''}`}
-              data-tooltip={`${currentStreak} day${currentStreak === 1 ? '' : 's'} practice streak!`}
               key={`streak-${currentStreak}`}
+              tabIndex={0}
+              onMouseEnter={(event) => showTooltip(event, `${currentStreak} day${currentStreak === 1 ? '' : 's'} practice streak!`, 'below')}
+              onFocus={(event) => showTooltip(event, `${currentStreak} day${currentStreak === 1 ? '' : 's'} practice streak!`, 'below')}
+              onMouseLeave={hideTooltip}
+              onBlur={hideTooltip}
             >
               <span className="emoji">🔥</span>
               <span>{currentStreak}</span>
             </div>
           )}
           {/* Overall attempts counter */}
-          <div 
+          <div
             className={`stat-badge ${attemptsChanged ? 'animated' : ''}`}
-            data-tooltip={`${todayAttempts} question${todayAttempts === 1 ? '' : 's'} attempted today${subject ? ` in ${getSubjectDisplayLabel(subject)}` : ''}`}
             key={`attempts-${todayAttempts}`}
+            tabIndex={0}
+            onMouseEnter={(event) => showTooltip(event, `${todayAttempts} question${todayAttempts === 1 ? '' : 's'} attempted today${subject ? ` in ${getSubjectDisplayLabel(subject)}` : ''}`, 'below')}
+            onFocus={(event) => showTooltip(event, `${todayAttempts} question${todayAttempts === 1 ? '' : 's'} attempted today${subject ? ` in ${getSubjectDisplayLabel(subject)}` : ''}`, 'below')}
+            onMouseLeave={hideTooltip}
+            onBlur={hideTooltip}
           >
             <span className="emoji">📝</span>
             <span>{todayAttempts}</span>
           </div>
         </div>
+        {tooltipNode}
       </>
     );
   }
   
   return (
-    <div style={{
+    <>
+      <div style={{
       display: 'flex',
       flexDirection: 'column',
       gap: 16,
@@ -335,7 +404,9 @@ export function ProgressStatsDisplay({ currentUserId, compact = false, subject }
           )}
         </div>
       </div>
-    </div>
+      </div>
+      {tooltipNode}
+    </>
   );
 }
 
