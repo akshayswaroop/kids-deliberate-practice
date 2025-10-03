@@ -6,6 +6,5 @@ import react from '@vitejs/plugin-react';
 // Minimal Vite config without Storybook Vitest integration
 export default defineConfig({
   plugins: [react()],
-  // No base path needed for Netlify deployment
-  // base: '/kids-deliberate-practice/', // only needed for GitHub Pages
+  base: '/kids-deliberate-practice/', // required for GitHub Pages asset loading
 });
