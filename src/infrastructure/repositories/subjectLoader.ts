@@ -95,8 +95,8 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     language: 'english',
     displayIcon: '🇺🇸',
     displayLabel: 'English',
-    promptLabel: 'Read this sentence aloud',
-    parentInstruction: 'Read the question aloud and let your child reply. You tap the matching button afterwards.',
+  promptLabel: 'Read this sentence aloud',
+  parentInstruction: "Ask your child to read the sentence aloud. Listen and confirm their response, then tap the button that matches how well they did.",
   },
   {
     name: 'kannada',
