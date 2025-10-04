@@ -6,6 +6,7 @@ import { getSubjectPromptLabel, getSubjectParentInstruction } from '../../infras
 
 import FlyingUnicorn from './FlyingUnicorn.jsx';
 import SadBalloonAnimation from './SadBalloonAnimation.jsx';
+import PracticeActionBarPortal from './PracticeActionBarPortal.jsx';
 
 const PROGRESSION_DELAY_MS = 120;
 
@@ -223,22 +224,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const hasDetails = Boolean(answer || notes || (whyRepeat && !whyRepeatDismissed));
 
   return (
-    <div data-testid="practice-root" style={{
-      backgroundColor: 'transparent',
-      borderRadius: '16px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      justifyContent: 'stretch',
-      gap: 0,
-      width: '100%',
-      minHeight: 'auto',
-      maxWidth: '100vw',
-      margin: '0 auto',
-      boxSizing: 'border-box',
-      overflow: 'visible', // allow natural page flow and scrolling
-      position: 'relative'
-    }}>
+    <div data-testid="practice-root" className="practice-root" style={{ backgroundColor: 'transparent' }}>
       {/* Flying unicorn animation overlay */}
       <FlyingUnicorn
         visible={showUnicorn}
@@ -260,25 +246,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
       />
 
       {/* Question Area - Flexible space for readability */}
-      <div style={{
-        textAlign: 'center',
-        color: 'var(--text-primary)',
-        width: '100%',
-        boxSizing: 'border-box',
-        flex: '0 0 auto',
-        minHeight: '6rem',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        padding: '12px 12px 0',
-        overflow: 'visible',
-        borderBottomLeftRadius: '0px',
-        borderBottomRightRadius: '0px',
-        borderTopLeftRadius: '16px',
-        borderTopRightRadius: '16px',
-        gap: 8
-      }}>
+      <div className="practice-question-area" style={{ color: 'var(--text-primary)' }}>
         {/* Subtle prompt label with session progress */}
         {mode && (
           <div style={{
@@ -347,7 +315,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           }
 
           return (
-            <div className="target-word-glow" data-testid="target-word" style={{
+            <div className="target-word-glow practice-main-target" data-testid="target-word" style={{
               fontSize,
               fontWeight: 900,
               marginTop: 0,
@@ -364,14 +332,9 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
               wordBreak: 'break-word',
               overflowWrap: 'break-word',
               overflow: 'visible',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
               position: 'relative',
               zIndex: 2,
               minHeight: 0,
-              flex: '0 0 auto',
               textAlign: 'center' // Ensure centered text alignment
             }}>
               <GradientText
@@ -386,21 +349,10 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
 
               <div style={{ position: 'absolute', right: 8, top: 8, zIndex: 3, display: 'flex', gap: 8, alignItems: 'center' }}>
                 {isMastered && (
-                  <div aria-hidden style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 6,
-                    background: 'linear-gradient(90deg,#10b981,#34d399)',
-                    color: 'white',
-                    padding: '6px 10px',
-                    borderRadius: 999,
-                    fontWeight: 900,
-                    fontSize: 12,
-                    boxShadow: '0 8px 20px rgba(16,185,129,0.12)'
-                  }}>
-                    ✅ Mastered
-                  </div>
-                )}
+                    <div aria-hidden className="mastered-badge">
+                      ✅ Mastered
+                    </div>
+                  )}
               </div>
 
               <div aria-live="polite" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>{isMastered ? 'Mastered' : ``}</div>
@@ -414,36 +366,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
 
         {/* Only render the details panel when there is content to show */}
         {showAnswerPanel && hasDetails && (
-          <div key={mainWord} className="details-panel" data-testid="details-panel" style={{
-            width: '100%',
-            flex: '0 0 auto',
-            minHeight: 0,
-            maxHeight: '40vh',
-            padding: '8px',
-            boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'column',
-            borderTopLeftRadius: '0px',
-            borderTopRightRadius: '0px',
-            borderRadius: '16px',
-            background: 'var(--bg-secondary)',
-            boxShadow: '0 2px 18px rgba(79,70,229,0.04)',
-            overflow: 'auto',
-            marginTop: '8px',
-            marginBottom: '8px'
-          }}>
-            <div className="answer-panel" data-testid="answer-panel" style={{
-              width: '100%',
-              maxWidth: '100%',
-              flex: '1 1 auto',
-              borderRadius: 12,
-              padding: '10px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px',
-              overflow: 'auto',
-              boxSizing: 'border-box'
-            }}>
+          <div key={mainWord} className="details-panel practice-details" data-testid="details-panel">
+            <div className="answer-panel" data-testid="answer-panel" style={{ width: '100%', maxWidth: '100%', flex: '1 1 auto' }}>
               {answer && (
                 <div className={`answer-panel__headline ${getScriptFontClass(answer || '')}`} style={{
                   maxWidth: '100%',
@@ -505,26 +429,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
       </div>
 
       {/* Action Buttons Area */}
-      <div className="practice-action-bar" style={{
-        flex: '0 0 auto',
-        width: 'auto',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        gap: '16px',
-        padding: '12px 12px 14px',
-        margin: '0 12px 8px',
-        background: 'var(--bg-accent)',
-        borderRadius: 16,
-        boxShadow: 'var(--shadow-strong)',
-        zIndex: 10,
-        backdropFilter: 'blur(10px)',
-        border: '1px solid var(--border-secondary)',
-        boxSizing: 'border-box',
-        flexShrink: 0,
-        position: 'sticky',
-        bottom: '16px'
-      }}>
+      <PracticeActionBarPortal>
+        <div className="practice-action-bar">
         {!isEnglishMode && (
           <button
             data-testid="btn-reveal"
@@ -609,9 +515,9 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         >
           <span style={{fontSize: 'clamp(18px, 4vw, 24px)'}}>👍</span>
           <span>Kid got it</span>
-        </button>
+  </button>
 
-        <button
+  <button
           data-testid="btn-wrong"
           onClick={() => {
             if (status !== 'idle') return;
@@ -654,7 +560,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           <span>Needs another try</span>
         </button>
         {/* Next button removed: progression will auto-trigger after actions */}
-      </div>
+        </div>
+      </PracticeActionBarPortal>
     </div>
   );
 }

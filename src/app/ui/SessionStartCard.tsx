@@ -59,7 +59,7 @@ export default function SessionStartCard({ totalQuestions, onStart }: SessionSta
             color: '#fbbf24',
             fontWeight: 700
           }}>
-            → Let's fill the stars! ⭐
+            → Let's get started!
           </p>
         </div>
 

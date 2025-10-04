@@ -165,8 +165,7 @@ export default function EnhancedPracticePanel({
       )}
 
       {/* Main Practice Card - always rendered so tests can find the practice root; overlays will sit on top */}
-      (
-        <PracticeCard
+      <PracticeCard
           mainWord={card.mainWord}
           transliteration={card.transliteration}
           transliterationHi={card.transliterationHi}
@@ -186,7 +185,6 @@ export default function EnhancedPracticePanel({
           attemptStats={card.attempts}
           sessionProgress={card.sessionProgress}
         />
-      )
     </div>
   );
 }

@@ -341,38 +341,36 @@ export default function HomePage({
             <h1 style={{ fontSize: '1.8rem', fontWeight: 900, margin: 0, whiteSpace: 'nowrap' }}>Kids Deliberate Practice</h1>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', minWidth: 0 }}>
-            <div style={{
-              position: 'relative',
-              borderRadius: 999,
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.12))',
-              padding: '4px 16px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              minWidth: 180,
-              maxWidth: 'min(340px, 100%)'
-            }}>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
-              </div>
-              <button
-                type="button"
-                onClick={() => setSubjectPickerOpen(true)}
-                style={{
-                  border: 'none',
-                  background: 'rgba(15,23,42,0.32)',
-                  color: 'var(--text-inverse)',
-                  borderRadius: 999,
-                  padding: '6px 12px',
-                  fontSize: '0.8rem',
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
-              >
-                Browse all
-              </button>
+          <div style={{ display: 'flex', justifyContent: 'center', minWidth: 0, gap: 8, alignItems: 'center' }}>
+            {/* Inline Mode selector without large pill container */}
+            <div style={{ flex: '0 1 auto', minWidth: 0 }}>
+              <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
             </div>
+
+            {/* Small icon-only button to open subject picker (replaces 'Browse all' text) */}
+            <button
+              type="button"
+              onClick={() => setSubjectPickerOpen(true)}
+              aria-label="Browse all subjects"
+              title="Browse all subjects"
+              style={{
+                border: 'none',
+                background: 'rgba(15,23,42,0.16)',
+                color: 'var(--text-inverse)',
+                borderRadius: 10,
+                padding: 8,
+                width: 36,
+                height: 36,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer'
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                <path d="M3 5h18M3 12h18M3 19h18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
