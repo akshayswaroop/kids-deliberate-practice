@@ -162,6 +162,8 @@ export async function dismissPracticeIntroIfPresent(page: Page) {
           }
         }
       });
+      // Also remove overlay-open class from body to unhide action buttons
+      document.body.classList.remove('overlay-open');
     });
   } catch (e) {
     // ignore

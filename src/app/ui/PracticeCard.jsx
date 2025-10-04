@@ -114,7 +114,7 @@ function AttemptBadge({ label, value, accentRGB, info }) {
   );
 }
 
-export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode, currentUserId, whyRepeat = null, onWhyRepeatAcknowledged, attemptStats = null, sessionProgress = null }) {
+export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode, currentUserId, whyRepeat = null, onWhyRepeatAcknowledged, attemptStats = null, sessionProgress = null, onStatusChange }) {
   const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
   const isTestMode = env?.MODE === 'test';
   const normalizedAttemptStats = attemptStats || { total: 0, correct: 0, incorrect: 0 };
@@ -181,6 +181,14 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const [showUnicorn, setShowUnicorn] = React.useState(false);
   const [showSadBalloon, setShowSadBalloon] = React.useState(false);
   const [whyRepeatDismissed, setWhyRepeatDismissed] = React.useState(false);
+  const [lastAnswer, setLastAnswer] = React.useState(null); // Track last answer for banner feedback: 'correct' | 'wrong' | null
+
+  // Notify parent of status/answer changes for banner updates
+  React.useEffect(() => {
+    if (onStatusChange) {
+      onStatusChange({ status, lastAnswer });
+    }
+  }, [status, lastAnswer, onStatusChange]);
 
 
   // --- Centralized progression logic ---
@@ -197,6 +205,7 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     setShowSadBalloon(false);
     setStatus('idle');
     setWhyRepeatDismissed(false);
+    setLastAnswer(null);
   }, [mainWord, answer]);
 
 
@@ -207,15 +216,15 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const handleUnicornEnd = React.useCallback(() => {
     setShowUnicorn(false);
     setStatus('waiting');
-    setTimeout(() => handleProgression(), PROGRESSION_DELAY_MS);
-  }, [handleProgression]);
+    // No auto-advance - parent must click Next button
+  }, []);
 
   // Handler for encouragement overlay end
   const handleSadBalloonEnd = React.useCallback(() => {
     setShowSadBalloon(false);
     setStatus('waiting');
-    setTimeout(() => handleProgression(), PROGRESSION_DELAY_MS);
-  }, [handleProgression]);
+    // No auto-advance - parent must click Next button
+  }, []);
   // Determine current active choice progress to render rainbow fill for the main question
   const activeChoice = (choices || []).find(c => String(c.label) === String(mainWord));
   const activeProgress = Math.min(100, Math.max(0, (activeChoice && (typeof activeChoice.progress === 'number' ? activeChoice.progress : Number(activeChoice && activeChoice.progress))) || 0));
@@ -250,35 +259,6 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
 
         {/* Main content area: question, answer/notes, and action bar only */}
         <div className="practice-question-area" style={{ color: 'var(--text-primary)' }}>
-          {/* Prompt label and session progress */}
-          {mode && (
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '4px'
-            }}>
-              {sessionProgress && sessionProgress.total > 0 && (
-                <div style={{
-                  fontSize: '0.65rem',
-                  fontWeight: '500',
-                  color: 'rgba(15,23,42,0.5)',
-                  letterSpacing: '0.02em'
-                }}>
-                  {sessionProgress.current} of {sessionProgress.total}
-                </div>
-              )}
-              <div style={{
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                color: 'rgba(15,23,42,0.7)',
-                letterSpacing: '0',
-                textTransform: 'none'
-              }}>
-                {parentInstruction}
-              </div>
-            </div>
-          )}
 
           {/* Main question */}
           {(() => {
@@ -438,67 +418,86 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           </PracticeActionButton>
         )}
 
-        <PracticeActionButton
-          data-testid="btn-correct"
-          variant="primary"
-          onClick={() => {
-            if (status !== 'idle') return;
-            if (isTestMode) {
-              onCorrect && onCorrect();
-              handleProgression();
-              return;
-            }
-            setStatus('animating');
-            createConfettiBurst();
-            setShowUnicorn(true);
-            try {
-              const audio = new window.Audio(buildSoundUrl('happy-logo-167474.mp3'));
-              audio.volume = 0.7;
-              audio.play()?.catch(() => {});
-            } catch (e) {
-              // Ignore playback errors
-            }
-            onCorrect && onCorrect();
-            // Progression will be handled by unicorn animation end
-          }}
-          disabled={interactionLocked}
-          aria-label="Kid answered correctly"
-          style={{
-            opacity: interactionLocked ? 0.6 : 1,
-            cursor: interactionLocked ? 'not-allowed' : 'pointer'
-          }}
-        >
-          <span role="img" aria-label="thumbs up">👍</span>
-          Kid got it
-        </PracticeActionButton>
+        {/* Show correct/wrong buttons only when idle, hide when waiting for Next */}
+        {status !== 'waiting' && (
+          <>
+            <PracticeActionButton
+              data-testid="btn-correct"
+              variant="primary"
+              onClick={() => {
+                if (status !== 'idle') return;
+                if (isTestMode) {
+                  onCorrect && onCorrect();
+                  handleProgression();
+                  return;
+                }
+                setStatus('animating');
+                setLastAnswer('correct');
+                createConfettiBurst();
+                setShowUnicorn(true);
+                try {
+                  const audio = new window.Audio(buildSoundUrl('happy-logo-167474.mp3'));
+                  audio.volume = 0.7;
+                  audio.play()?.catch(() => {});
+                } catch (e) {
+                  // Ignore playback errors
+                }
+                onCorrect && onCorrect();
+                // Next button will appear after animation completes
+              }}
+              disabled={interactionLocked}
+              aria-label="Kid answered correctly"
+              style={{
+                opacity: interactionLocked ? 0.6 : 1,
+                cursor: interactionLocked ? 'not-allowed' : 'pointer'
+              }}
+            >
+              <span role="img" aria-label="thumbs up">👍</span>
+              Kid got it
+            </PracticeActionButton>
 
-        <PracticeActionButton
-          data-testid="btn-wrong"
-          variant="secondary"
-          onClick={() => {
-            if (status !== 'idle') return;
-            if (isTestMode) {
-              onWrong && onWrong();
-              handleProgression();
-              return;
-            }
-            setStatus('animating');
-            triggerBounceAnimation();
-            setShowSadBalloon(true);
-            onWrong && onWrong();
-            // Progression will be handled by encouragement overlay end
-          }}
-          disabled={interactionLocked}
-          aria-label="Kid needs another try"
-          style={{
-            opacity: interactionLocked ? 0.6 : 1,
-            cursor: interactionLocked ? 'not-allowed' : 'pointer'
-          }}
-        >
-          <span role="img" aria-label="try again">↺</span>
-          Needs another try
-        </PracticeActionButton>
-        {/* Next button removed: progression will auto-trigger after actions */}
+            <PracticeActionButton
+              data-testid="btn-wrong"
+              variant="secondary"
+              onClick={() => {
+                if (status !== 'idle') return;
+                if (isTestMode) {
+                  onWrong && onWrong();
+                  handleProgression();
+                  return;
+                }
+                setStatus('animating');
+                setLastAnswer('wrong');
+                triggerBounceAnimation();
+                setShowSadBalloon(true);
+                onWrong && onWrong();
+                // Next button will appear after animation completes
+              }}
+              disabled={interactionLocked}
+              aria-label="Kid needs another try"
+              style={{
+                opacity: interactionLocked ? 0.6 : 1,
+                cursor: interactionLocked ? 'not-allowed' : 'pointer'
+              }}
+            >
+              <span role="img" aria-label="try again">↺</span>
+              Needs another try
+            </PracticeActionButton>
+          </>
+        )}
+        
+        {/* Show Next button when waiting for progression */}
+        {status === 'waiting' && (
+          <PracticeActionButton
+            data-testid="btn-next"
+            variant="primary"
+            onClick={handleProgression}
+            aria-label="Move to next question"
+          >
+            <span role="img" aria-label="next">→</span>
+            Next
+          </PracticeActionButton>
+        )}
         </PracticeActionBar>
       </PracticeActionBarPortal>
     </div>

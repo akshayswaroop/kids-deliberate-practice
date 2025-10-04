@@ -43,6 +43,12 @@ export default function EnhancedPracticePanel({
   const [showSessionEnd, setShowSessionEnd] = useState(sessionFraming.showSessionEnd);
   const [showRepeatBanner, setShowRepeatBanner] = useState(sessionFraming.showRepeatExplanation);
   
+  // Local state for PracticeCard status/answer (for unified banner)
+  const [cardState, setCardState] = useState<{ status: string; lastAnswer: 'correct' | 'wrong' | null }>({ 
+    status: 'idle', 
+    lastAnswer: null 
+  });
+  
   // 🎯 DDD Services (when enabled)
   const practiceService = usePracticeApplicationService();
   const [domainEventMessage, setDomainEventMessage] = useState<string | null>(null);
@@ -161,6 +167,9 @@ export default function EnhancedPracticePanel({
           showRepeatExplanation={showRepeatBanner}
           revealCount={card.whyRepeat?.revealCount}
           onDismiss={showRepeatBanner ? handleRepeatBannerDismiss : undefined}
+          mode={mode}
+          lastAnswer={cardState.lastAnswer}
+          sessionProgress={card.sessionProgress}
         />
       )}
 
@@ -184,6 +193,7 @@ export default function EnhancedPracticePanel({
           onWhyRepeatAcknowledged={onWhyRepeatAcknowledged}
           attemptStats={card.attempts}
           sessionProgress={card.sessionProgress}
+          {...({ onStatusChange: setCardState } as any)}
         />
     </div>
   );

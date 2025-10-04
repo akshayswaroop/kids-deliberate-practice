@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import PracticeCard from '../PracticeCard.jsx';
 import type { PracticeCardProps } from '../PracticeCard';
 
@@ -109,10 +109,17 @@ describe('PracticeCard interaction locking', () => {
     expect(wrong).toBeDisabled();
     expect(reveal).toBeDisabled();
 
-    await waitFor(() => expect(onNext).toHaveBeenCalled());
-    await waitFor(() => expect(correct).not.toBeDisabled());
-    expect(wrong).not.toBeDisabled();
-    expect(reveal).not.toBeDisabled();
+    // Wait for Next button to appear after animation
+    const nextButton = await screen.findByTestId('btn-next');
+    expect(nextButton).toBeInTheDocument();
+    
+    // Correct/wrong buttons should be hidden when Next button appears
+    expect(screen.queryByTestId('btn-correct')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('btn-wrong')).not.toBeInTheDocument();
+    
+    // Click Next button to progress
+    fireEvent.click(nextButton);
+    expect(onNext).toHaveBeenCalled();
   });
 
   it('keeps reveal button inactive while interaction is locked', () => {
@@ -163,9 +170,16 @@ describe('PracticeCard interaction locking', () => {
     expect(wrong).toBeDisabled();
     expect(reveal).toBeDisabled();
 
-    await waitFor(() => expect(onNext).toHaveBeenCalled());
-    await waitFor(() => expect(correct).not.toBeDisabled());
-    expect(wrong).not.toBeDisabled();
-    expect(reveal).not.toBeDisabled();
+    // Wait for Next button to appear after animation
+    const nextButton = await screen.findByTestId('btn-next');
+    expect(nextButton).toBeInTheDocument();
+    
+    // Correct/wrong buttons should be hidden when Next button appears
+    expect(screen.queryByTestId('btn-correct')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('btn-wrong')).not.toBeInTheDocument();
+    
+    // Click Next button to progress
+    fireEvent.click(nextButton);
+    expect(onNext).toHaveBeenCalled();
   });
 });

@@ -7,6 +7,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PracticeCard from '../ui/PracticeCard.jsx';
+import UnifiedParentBanner from '../ui/UnifiedParentBanner';
 import { getSubjectPromptLabel } from '../../infrastructure/repositories/subjectLoader.ts';
 
 // Mock dependencies
@@ -64,27 +65,33 @@ describe('Prompt Labels', () => {
   });
 
   describe('PracticeCard prompt label display', () => {
-    it('should display parent instruction when mode is provided', () => {
-      render(<PracticeCard {...mockProps} mode="kannadaalphabets" />);
-      
+    // Banner moved to UnifiedParentBanner; assert banner text there
+    const mockWord = {
+      id: 'w1',
+      text: 'Test',
+      attempts: [],
+      revealCount: 0,
+    } as any;
+
+    it('should display parent instruction when mode is provided (unified banner)', () => {
+      render(<UnifiedParentBanner currentWord={mockWord} mode="kannadaalphabets" />);
       // Check that the parent instruction appears in the DOM
       expect(screen.getByText('Show letter, ask for sound, then tap result.')).toBeInTheDocument();
     });
 
-    it('should display different parent instructions for different modes', () => {
-      const { rerender } = render(<PracticeCard {...mockProps} mode="numberspellings" />);
+    it('should display different parent instructions for different modes (unified banner)', () => {
+      const { rerender } = render(<UnifiedParentBanner currentWord={mockWord} mode="numberspellings" />);
       expect(screen.getByText('Show number, ask child to spell aloud, then tap.')).toBeInTheDocument();
 
-      rerender(<PracticeCard {...mockProps} mode="mathtables" />);
+      rerender(<UnifiedParentBanner currentWord={mockWord} mode="mathtables" />);
       expect(screen.getByText('Ask mentally, encourage quick recall, then tap.')).toBeInTheDocument();
 
-      rerender(<PracticeCard {...mockProps} mode="comprehension" />);
+      rerender(<UnifiedParentBanner currentWord={mockWord} mode="comprehension" />);
       expect(screen.getByText('Read passage together, discuss, then record answer.')).toBeInTheDocument();
     });
 
     it('should not display parent instruction when mode is not provided', () => {
-      render(<PracticeCard {...mockProps} mode={undefined} />);
-      
+      render(<UnifiedParentBanner currentWord={mockWord} mode={undefined as any} />);
       // Should not find any of our parent instruction texts
       expect(screen.queryByText('Show letter, ask for sound, then tap result.')).not.toBeInTheDocument();
       expect(screen.queryByText('Show number, ask child to spell aloud, then tap.')).not.toBeInTheDocument();

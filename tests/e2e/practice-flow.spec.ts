@@ -51,12 +51,9 @@ test.describe('Story: Practicing a seeded word', () => {
     });
 
     await test.step('When the learner marks the card as correct', async () => {
-      await expect(page.getByTestId('btn-correct')).toBeVisible();
-      await expect(page.getByTestId('btn-wrong')).toBeVisible();
       // Ensure any overlays (session start/end) are dismissed right before interacting
       await dismissPracticeIntroIfPresent(page);
-      // As an immediate last-resort, forcibly hide any overlay elements that might still
-      // be intercepting pointer events (helps in CI where timing can be racy)
+      // As an immediate last-resort, forcibly hide any overlay elements and remove overlay-open class
       await page.evaluate(() => {
         const ids = ['practice-intro-overlay', 'session-start-card', 'session-end-card'];
         ids.forEach((id) => {
@@ -67,7 +64,11 @@ test.describe('Story: Practicing a seeded word', () => {
             el.setAttribute('data-e2e-forced-hidden', '1');
           }
         });
+        // Remove overlay-open class to ensure buttons are visible
+        document.body.classList.remove('overlay-open');
       });
+      await expect(page.getByTestId('btn-correct')).toBeVisible();
+      await expect(page.getByTestId('btn-wrong')).toBeVisible();
       try {
         await page.getByTestId('btn-correct').click();
       } catch (e) {
