@@ -7,7 +7,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PracticeCard from '../ui/PracticeCard.jsx';
-import { getSubjectPromptLabel } from '../../infrastructure/repositories/subjectLoader.ts';
+import { getSubjectPromptLabel, getSubjectParentInstruction } from '../../infrastructure/repositories/subjectLoader.ts';
 
 // Mock dependencies
 const mockProps = {
@@ -64,31 +64,31 @@ describe('Prompt Labels', () => {
   });
 
   describe('PracticeCard prompt label display', () => {
-    it('should display prompt label when mode is provided', () => {
+    it('should display parent instruction when mode is provided', () => {
       render(<PracticeCard {...mockProps} mode="kannadaalphabets" />);
       
-      // Check that the prompt label appears in the DOM
-      expect(screen.getByText('Say the letter')).toBeInTheDocument();
+      // Check that the parent instruction appears in the DOM
+      expect(screen.getByText('Show letter, ask for sound, then tap result.')).toBeInTheDocument();
     });
 
-    it('should display different prompt labels for different modes', () => {
+    it('should display different parent instructions for different modes', () => {
       const { rerender } = render(<PracticeCard {...mockProps} mode="numberspellings" />);
-      expect(screen.getByText('Spell this number')).toBeInTheDocument();
+      expect(screen.getByText('Show number, ask child to spell aloud, then tap.')).toBeInTheDocument();
 
       rerender(<PracticeCard {...mockProps} mode="mathtables" />);
-      expect(screen.getByText('Solve this problem')).toBeInTheDocument();
+      expect(screen.getByText('Ask mentally, encourage quick recall, then tap.')).toBeInTheDocument();
 
       rerender(<PracticeCard {...mockProps} mode="comprehension" />);
-      expect(screen.getByText('Read and answer')).toBeInTheDocument();
+      expect(screen.getByText('Read passage together, discuss, then record answer.')).toBeInTheDocument();
     });
 
-    it('should not display prompt label when mode is not provided', () => {
+    it('should not display parent instruction when mode is not provided', () => {
       render(<PracticeCard {...mockProps} mode={undefined} />);
       
-      // Should not find any of our prompt texts
-      expect(screen.queryByText('Say the letter')).not.toBeInTheDocument();
-      expect(screen.queryByText('Spell this number')).not.toBeInTheDocument();
-      expect(screen.queryByText('Solve this problem')).not.toBeInTheDocument();
+      // Should not find any of our parent instruction texts
+      expect(screen.queryByText('Show letter, ask for sound, then tap result.')).not.toBeInTheDocument();
+      expect(screen.queryByText('Show number, ask child to spell aloud, then tap.')).not.toBeInTheDocument();
+      expect(screen.queryByText('Ask mentally, encourage quick recall, then tap.')).not.toBeInTheDocument();
     });
   });
 });

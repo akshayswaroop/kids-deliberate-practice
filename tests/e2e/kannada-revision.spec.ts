@@ -17,8 +17,10 @@ test.describe('Story: Kannada Revision Library', () => {
   // Don't enforce a strict initial state; the test will verify visibility after selecting a mode.
 
     await page.selectOption('#mode-select', 'kannadaalphabets');
-    await page.waitForTimeout(100);
-    await page.getByTestId('btn-revision-panel').click();
+    await page.waitForTimeout(500);
+    
+    // Click the revision button by text instead of test-id
+    await page.getByRole('button', { name: /revision/i }).click();
 
     await page.waitForFunction(() => !!document.querySelector('.revision-grid'), { timeout: 5000 });
 
