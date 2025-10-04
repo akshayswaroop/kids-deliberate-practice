@@ -120,8 +120,14 @@ const gameSlice = createSlice({
       
       const session = user.sessions[sessionId];
       if (session) {
-        // Don't auto-reveal answers on attempt - only track the attempt result
+        // Auto-reveal answer after attempt for better kids recall
+        session.revealed = true;
         session.lastAttempt = result;
+        
+        // Increment reveal count for analytics
+        if (word) {
+          word.revealCount = (word.revealCount || 0) + 1;
+        }
       }
     },
     nextCard: function (

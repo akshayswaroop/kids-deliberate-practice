@@ -51,7 +51,6 @@ export default function EnhancedPracticePanel({
   
   // 🎯 DDD Services (when enabled)
   const practiceService = usePracticeApplicationService();
-  const [domainEventMessage, setDomainEventMessage] = useState<string | null>(null);
 
   // Session framing handlers
   const handleSessionStart = () => {
@@ -82,14 +81,11 @@ export default function EnhancedPracticePanel({
         );
 
         if (result.success) {
-          setDomainEventMessage(result.event || '🎉 Great job!');
-          setTimeout(() => setDomainEventMessage(null), 2000);
           onCorrect();
           return;
         }
       } catch {
-        setDomainEventMessage('⚠️ Unable to reach practice service');
-        setTimeout(() => setDomainEventMessage(null), 2000);
+        // Optionally handle error silently
       }
     }
 
@@ -106,14 +102,11 @@ export default function EnhancedPracticePanel({
         );
 
         if (result.success) {
-          setDomainEventMessage(result.event || '📚 Keep practicing!');
-          setTimeout(() => setDomainEventMessage(null), 2000);
           onWrong();
           return;
         }
       } catch {
-        setDomainEventMessage('⚠️ Unable to reach practice service');
-        setTimeout(() => setDomainEventMessage(null), 2000);
+        // Optionally handle error silently
       }
     }
 
@@ -141,24 +134,7 @@ export default function EnhancedPracticePanel({
         />
       )}
 
-      {/* 🎯 Domain Event Messages */}
-      {domainEventMessage && (
-        <div style={{
-          position: 'fixed',
-          top: '20px',
-          right: '20px',
-          background: '#4CAF50',
-          color: 'white',
-          padding: '12px 20px',
-          borderRadius: '8px',
-          boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-          zIndex: 1000,
-          fontSize: '14px',
-          fontWeight: 'bold'
-        }}>
-          {domainEventMessage}
-        </div>
-      )}
+      {/* 🎯 Domain Event Messages - banner removed as requested */}
 
       {/* Unified Parent Banner - combines guidance and repeat explanation */}
       {card.currentWord && (

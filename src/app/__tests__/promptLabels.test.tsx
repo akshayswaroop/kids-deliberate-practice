@@ -6,24 +6,10 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import PracticeCard from '../ui/PracticeCard.jsx';
 import UnifiedParentBanner from '../ui/UnifiedParentBanner';
 import { getSubjectPromptLabel } from '../../infrastructure/repositories/subjectLoader.ts';
 
 // Mock dependencies
-const mockProps = {
-  mainWord: 'Test',
-  answer: 'Test Answer',
-  choices: [],
-  onCorrect: () => {},
-  onWrong: () => {},
-  onNext: () => {},
-  onRevealAnswer: () => {},
-  isAnswerRevealed: false,
-  isEnglishMode: false,
-  currentUserId: 'test-user',
-  attemptStats: { total: 0, correct: 0, incorrect: 0 }
-};
 
 describe('Prompt Labels', () => {
   describe('getSubjectPromptLabel helper function', () => {
