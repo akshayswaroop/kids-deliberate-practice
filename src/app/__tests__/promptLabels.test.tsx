@@ -7,7 +7,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PracticeCard from '../ui/PracticeCard.jsx';
-import { getSubjectPromptLabel, getSubjectParentInstruction } from '../../infrastructure/repositories/subjectLoader.ts';
+import { getSubjectPromptLabel } from '../../infrastructure/repositories/subjectLoader.ts';
 
 // Mock dependencies
 const mockProps = {
