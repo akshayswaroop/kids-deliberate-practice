@@ -153,6 +153,8 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
   align-items: center;
   justify-content: center;
   padding: 6px 12px;
+  /* DEBUG: temporary background to visualize panel */
+  background: rgba(255, 230, 230, 0.6);
 }
 
 .practice-session-banner {
@@ -161,6 +163,8 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
   align-items:center;
   justify-content:center;
   padding: 8px 12px;
+  /* DEBUG: temporary background to visualize panel */
+  background: rgba(230, 255, 230, 0.6);
 }
 
 .practice-question-area {
@@ -174,6 +178,8 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
   gap: 12px;
   padding: 16px;
   box-sizing: border-box;
+  /* DEBUG: temporary background to visualize panel */
+  background: rgba(230, 230, 255, 0.6);
 }
 
 .practice-main-target {
@@ -183,6 +189,8 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
   justify-content:center;
   min-height: 84px;
   padding: 8px 12px;
+  /* DEBUG: temporary background to visualize panel */
+  background: rgba(255, 255, 230, 0.6);
 }
 
 .practice-answer-area {
@@ -191,11 +199,15 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
   align-items:center;
   justify-content:center;
   padding: 12px;
+  /* DEBUG: temporary background to visualize panel */
+  background: rgba(230, 255, 255, 0.6);
 }
 
 .practice-details {
   min-height: 48px;
   padding: 8px 12px;
+  /* DEBUG: temporary background to visualize panel */
+  background: rgba(255, 230, 255, 0.6);
 }
 
 .practice-action-bar-wrapper {
@@ -213,6 +225,8 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
   box-shadow: 0 -8px 30px rgba(2,6,23,0.04);
   z-index: 2147483647; /* extremely high to avoid being clipped by stacking contexts */
   pointer-events: auto;
+  /* DEBUG: temporary background to visualize panel */
+  outline: 2px dashed rgba(0,0,0,0.08);
 }
 
 .practice-action-bar {
