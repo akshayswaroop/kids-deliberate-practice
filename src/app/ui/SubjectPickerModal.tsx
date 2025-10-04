@@ -1,4 +1,7 @@
-import { getSubjectParentInstruction, getSubjectPromptLabel, SUBJECT_CONFIGS } from '../../infrastructure/repositories/subjectLoader';
+import { getSubjectParentInstruction, SUBJECT_CONFIGS } from '../../infrastructure/repositories/subjectLoader';
+import { useEffect } from 'react';
+import SubjectCard from './SubjectCard';
+import ReadyToPractice from './ReadyToPractice';
 
 interface SubjectPickerModalProps {
   open: boolean;
@@ -11,11 +14,37 @@ const subjectCards = SUBJECT_CONFIGS.map(config => ({
   name: config.name,
   label: config.displayLabel,
   icon: config.displayIcon,
-  prompt: getSubjectPromptLabel(config.name),
+  // Show the parent instruction to the caretaker instead of a short prompt
   instruction: getSubjectParentInstruction(config.name),
 }));
 
 export default function SubjectPickerModal({ open, selectedMode, onSelect, onClose }: SubjectPickerModalProps) {
+  // Add class synchronously when open to ensure action bar is hidden immediately
+  if (open && typeof document !== 'undefined' && !document.body.classList.contains('overlay-open')) {
+    document.body.classList.add('overlay-open');
+  }
+  
+  // Toggle global overlay class so the bottom action bar is hidden while this modal is open
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add('overlay-open');
+    } else {
+      document.body.classList.remove('overlay-open');
+    }
+    return () => document.body.classList.remove('overlay-open');
+  }, [open]);
+
+  // Close on Escape for accessibility and mobile convenience
+  // Keep this hook before the early return so hooks are called in the same order
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!open) return; // only close when modal is open
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose, open]);
+
   if (!open) return null;
 
   return (
@@ -35,6 +64,27 @@ export default function SubjectPickerModal({ open, selectedMode, onSelect, onClo
         zIndex: 5000,
       }}
     >
+      {/* Pinned close button so modal can be dismissed on small screens */}
+      <button
+        aria-label="Close subject picker"
+        onClick={onClose}
+        style={{
+          position: 'fixed',
+          right: 14,
+          top: 14,
+          zIndex: 5100,
+          background: 'rgba(255,255,255,0.9)',
+          border: 'none',
+          borderRadius: 10,
+          padding: '6px 10px',
+          cursor: 'pointer',
+          boxShadow: '0 6px 18px rgba(2,6,23,0.12)',
+          fontWeight: 700,
+          color: 'var(--text-primary)'
+        }}
+      >
+        ✕
+      </button>
       <div
         style={{
           width: 'min(900px, 100%)',
@@ -49,70 +99,27 @@ export default function SubjectPickerModal({ open, selectedMode, onSelect, onClo
           gap: 24,
         }}
       >
-        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-          <div>
-            <h2 style={{ margin: 0, fontSize: '1.9rem', fontWeight: 800, color: 'var(--text-primary)' }}>Pick what to practice</h2>
-            <p style={{ margin: '8px 0 0', color: 'var(--text-secondary)', fontSize: '0.95rem', maxWidth: 520 }}>
-              Sit beside your child, pick a subject, and guide them as they answer aloud. You’ll tap the buttons while they practise.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: 'var(--text-tertiary)',
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-          >
-            Maybe later
-          </button>
-        </header>
+        {/* Reusable header component */}
+        <ReadyToPractice onClose={onClose} />
 
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 16,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+            gap: 12,
             width: '100%',
           }}
         >
-          {subjectCards.map(subject => {
-            const isActive = subject.name === selectedMode;
-            return (
-              <button
-                key={subject.name}
-                type="button"
-                onClick={() => onSelect(subject.name)}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  gap: 10,
-                  padding: '18px 20px',
-                  borderRadius: 18,
-                  border: `2px solid ${isActive ? 'var(--color-primary, #2563eb)' : 'rgba(148, 163, 184, 0.25)'}`,
-                  background: isActive ? 'rgba(59, 130, 246, 0.1)' : 'rgba(255,255,255,0.85)',
-                  boxShadow: isActive ? '0 14px 30px rgba(37, 99, 235, 0.18)' : '0 12px 24px rgba(15, 23, 42, 0.08)',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
-                }}
-              >
-                <span aria-hidden style={{ fontSize: '2rem', lineHeight: 1 }}>{subject.icon}</span>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <span style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-primary)' }}>{subject.label}</span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{subject.prompt}</span>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-tertiary)' }}>{subject.instruction}</span>
-                </div>
-                {isActive && (
-                  <span style={{ marginTop: 8, fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-primary, #2563eb)' }}>Current selection</span>
-                )}
-              </button>
-            );
-          })}
+          {subjectCards.map(subject => (
+            <SubjectCard
+              key={subject.name}
+              icon={subject.icon}
+              label={subject.label}
+              instruction={subject.instruction}
+              isActive={subject.name === selectedMode}
+              onClick={() => onSelect(subject.name)}
+            />
+          ))}
         </div>
       </div>
     </div>

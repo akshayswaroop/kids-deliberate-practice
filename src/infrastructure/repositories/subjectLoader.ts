@@ -96,7 +96,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🇺🇸',
     displayLabel: 'English',
   promptLabel: 'Read this sentence aloud',
-  parentInstruction: "Ask your child to read the sentence aloud. Listen and confirm their response, then tap the button that matches how well they did.",
+  parentInstruction: 'Ask child to read aloud, then tap how it went.',
   },
   {
     name: 'kannada',
@@ -105,7 +105,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🇮🇳',
     displayLabel: 'Kannada',
     promptLabel: 'Read this word',
-    parentInstruction: 'Point to the word, invite your child to read it aloud, then log how it went.',
+  parentInstruction: 'Point to word, have child read aloud, then log.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Kannada Revision',
@@ -122,7 +122,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🔤',
     displayLabel: 'Kannada Alphabets',
     promptLabel: 'Say the letter',
-    parentInstruction: 'Show the letter and ask for the sound. If it is tricky, say it together before tapping.',
+  parentInstruction: 'Show letter, ask for sound, then tap result.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Kannada Alphabet Revision',
@@ -139,7 +139,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🇮🇳', 
     displayLabel: 'Hindi Alphabets', 
     promptLabel: 'Say the letter',
-    parentInstruction: 'Have your child speak the Hindi sound aloud. Model it gently, then record the attempt.',
+  parentInstruction: 'Say the Hindi sound together, then record attempt.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Hindi Alphabet Revision',
@@ -156,7 +156,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🔢', 
     displayLabel: 'Math Tables', 
     promptLabel: 'Solve this problem',
-    parentInstruction: 'Ask for the answer out loud. Encourage quick mental recall before you tap the response.',
+  parentInstruction: 'Ask mentally, encourage quick recall, then tap.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Math Tables Revision',
@@ -173,7 +173,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🧠',
     displayLabel: 'Human Body',
     promptLabel: 'Answer the question',
-    parentInstruction: 'Read the fact aloud, hear their answer, then tap the button that matches how confident it was.',
+  parentInstruction: 'Read fact aloud, hear answer, then tap.',
   },
   {
     name: 'indiageography',
@@ -182,7 +182,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🗺️',
     displayLabel: 'India Geography',
     promptLabel: 'Answer the question',
-    parentInstruction: 'Ask the question out loud, listen to the response, and record it with the buttons.',
+  parentInstruction: 'Ask the question aloud; listen, then record.',
   },
   {
     name: 'grampanchayat',
@@ -191,7 +191,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🏛️',
     displayLabel: 'Gram Panchayat',
     promptLabel: 'Answer the question',
-    parentInstruction: 'Talk through the civics prompt together, then log whether they remembered it.',
+  parentInstruction: 'Discuss civics prompt, then log response.',
   },
   {
     name: 'hanuman',
@@ -200,7 +200,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🕉️',
     displayLabel: 'Hanuman Chalisa',
     promptLabel: 'Read and answer',
-    parentInstruction: 'Chant or read together, then ask what comes next or what it means before tapping.',
+  parentInstruction: 'Read or chant together, ask meaning, then log.',
   },
   {
     name: 'comprehension',
@@ -209,7 +209,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '📚',
     displayLabel: 'Story Comprehension',
     promptLabel: 'Read and answer',
-    parentInstruction: 'Read the passage with your child, discuss briefly, then record how completely they answered.',
+  parentInstruction: 'Read passage together, discuss, then record answer.',
   },
   {
     name: 'numberspellings',
@@ -218,7 +218,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🔤',
     displayLabel: 'Number Spellings (1–20)',
     promptLabel: 'Spell this number',
-    parentInstruction: 'Show the number and ask your child to spell it letter by letter aloud before you tap.',
+  parentInstruction: 'Show number, ask child to spell aloud, then tap.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Number Spelling Revision',
@@ -235,7 +235,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🇮🇳',
     displayLabel: 'National Symbols',
     promptLabel: 'Answer the question',
-    parentInstruction: 'Quiz them on what each symbol stands for, then choose the button that matches how sure they were.',
+  parentInstruction: 'Quiz meanings, then choose how confident they are.',
     supportsRevision: false,
   },
   {
@@ -245,7 +245,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🔢',
     displayLabel: 'Before & After Numbers',
     promptLabel: 'Complete the sequence',
-    parentInstruction: 'Point to the number and ask what comes before or after. Let them think aloud before you tap.',
+  parentInstruction: 'Point number, ask before or after, then tap.',
     supportsRevision: false,
   },
   // ADD NEW SUBJECTS HERE - no code changes needed elsewhere!

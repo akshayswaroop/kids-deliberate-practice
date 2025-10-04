@@ -1,9 +1,24 @@
+import { useEffect } from 'react';
+
 interface SessionStartCardProps {
   totalQuestions: number;
   onStart: () => void;
 }
 
 export default function SessionStartCard({ totalQuestions, onStart }: SessionStartCardProps) {
+  // Add class synchronously BEFORE render to ensure action bar is hidden immediately
+  if (typeof document !== 'undefined' && !document.body.classList.contains('overlay-open')) {
+    document.body.classList.add('overlay-open');
+  }
+  
+  useEffect(() => {
+    // Ensure class is present (defensive)
+    if (typeof document !== 'undefined') document.body.classList.add('overlay-open');
+    return () => { 
+      if (typeof document !== 'undefined') document.body.classList.remove('overlay-open'); 
+    };
+  }, []);
+  
   return (
     <div
       data-testid="session-start-card"

@@ -22,6 +22,7 @@
 .confetti-particle{position:absolute;width:10px;height:10px;background:#ff6b6b;border-radius:50%;animation:confettiFall 2000ms ease-out forwards;}
 /* AUDIT: absolute particles use fixed pixel sizes which may overlap on small screens.
   Suggestion: use responsive units or max() clamp: width:clamp(6px,0.9vw,10px);height:clamp(6px,0.9vw,10px); to avoid overflow. */
+
 @keyframes confettiFall{
   0%{transform:translateY(0) translateX(0) rotateZ(0deg) scale(1);opacity:1}
   25%{transform:translateY(-30px) translateX(var(--random-x, 0px)) rotateZ(90deg) scale(1.2);opacity:1}
@@ -54,28 +55,27 @@
 .answer-panel{
   background: var(--gradient-answer-bg);
   border: 1px solid var(--border-primary);
-  box-shadow: var(--shadow-strong);
-  border-radius: 16px;
-  padding: 28px;
+  box-shadow: 0 6px 16px rgba(2,6,23,0.06); /* lighter */
+  border-radius: 12px;
+  padding: 14px; /* compact */
   position: relative;
-  overflow: hidden; /* AUDIT: overflow:hidden may clip animated/content children (confetti/toasts). If used for visual clipping, consider adding a dedicated clipping wrapper and avoid hiding global overflow. */
+  overflow: hidden; /* keep clipping but reduced size */
   display: flex;
   flex-direction: column;
-  align-items: center; /* center inner content (headline & notes) */
-  transition: background 0.3s ease, border-color 0.3s ease;
+  align-items: center;
+  transition: background 0.18s ease, border-color 0.18s ease;
 }
 .answer-panel__title{font-size:14px;color:var(--color-success);font-weight:800;margin-bottom:10px;align-self:flex-start}
 .answer-panel__headline{
-  font-size:clamp(28px,6.5vw,56px);
+  font-size:clamp(20px,5vw,40px); /* more compact */
   font-weight:900;
   color:transparent;
-  line-height:1.02; /* AUDIT: very tight line-height (<1.2) can cause overlap on multiline or scaled fonts; prefer >=1.2 for accessibility. Suggestion: use line-height:1.2 and test with large font-sizes or clamp to reduce risk. */
+  line-height:1.2; /* safer line-height */
   letter-spacing:-0.02em;
-  /* vibrant gradient text */
   background: var(--gradient-answer-text);
   -webkit-background-clip: text;
   background-clip: text;
-  text-shadow: var(--shadow-soft);
+  text-shadow: 0 6px 18px rgba(2,6,23,0.06);
   margin-bottom:6px;
   text-align: center;
 }
@@ -106,7 +106,7 @@
 .details-side__history{font-size:13px;color:var(--text-secondary)}
 .details-side__transliteration{margin-top:6px;font-size:13px;color:var(--color-secondary);font-style:italic;font-weight:700}
 
-.progress-bar-outer{height:12px;width:100%;background:var(--bg-tertiary);border-radius:999px;overflow:hidden;box-shadow:var(--shadow-soft);transition:background 0.3s ease;}
+.progress-bar-outer{height:10px;width:100%;background:var(--bg-tertiary);border-radius:999px;overflow:hidden;box-shadow:0 6px 14px rgba(2,6,23,0.04);transition:background 0.18s ease;}
 /* AUDIT: fixed height progress bars may clip in high-DPI or when fonts scale.
   Suggestion: prefer min-height or use clamp() for accessibility: height:clamp(8px,0.8vh,12px); */
 .progress-bar-inner{height:100%;background:var(--gradient-rainbow);transition:width 420ms cubic-bezier(.2,.9,.2,1);border-radius:999px}
@@ -115,6 +115,7 @@
 .progress-state{font-size:12px;color:var(--text-secondary)}
 
 /* playful fonts and accents */
+
 body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
 
 /* Mastered badge style — kept compact in the top-right of the question */
@@ -131,21 +132,18 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
 
 /* Responsive, calm layout for the Practice screen */
 .practice-root {
-  --kdp-action-bar-height: 64px; /* total space to reserve for action bar (buttons + padding) */
-  display: grid;
-  /* Use auto rows so the question area doesn't stretch to fill parent (avoids large empty gaps) */
-  grid-template-rows: auto auto auto; /* header banner, session banner, question area */
-  gap: 12px;
+  --kdp-action-bar-height: 56px; /* slightly smaller */
+  display: block;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 12px; /* outer gutter */
-  /* Reserve space at bottom to avoid content being hidden by fixed action bar */
-  padding-bottom: calc(var(--kdp-action-bar-height) + env(safe-area-inset-bottom, 8px));
-  /* Don't stretch to fill parent flex height (prevents large empty gaps) */
-  align-self: start;
+  padding: 8px; /* compact */
+  padding-bottom: max(12px, calc(var(--kdp-action-bar-height) * 0.55 + env(safe-area-inset-bottom, 4px)));
+  min-height: auto;
 }
+
+/* Layout debug styles removed */
 
 .practice-top-banner {
   min-height: 48px;
@@ -164,15 +162,14 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
 }
 
 .practice-question-area {
-  /* Reserve space to avoid layout shift when content changes */
-  /* reduced heights to avoid large empty gaps */
-  min-height: clamp(84px, 22vh, 220px);
+  /* Reserve just enough space to avoid layout shift */
+  min-height: clamp(64px, 18vh, 180px);
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  gap: 12px;
-  padding: 16px;
+  gap: 8px;
+  padding: 10px; /* compact */
   box-sizing: border-box;
 }
 
@@ -181,16 +178,16 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
   display:flex;
   align-items:center;
   justify-content:center;
-  min-height: 84px;
-  padding: 8px 12px;
+  min-height: 64px;
+  padding: 6px 10px;
 }
 
 .practice-answer-area {
-  min-height: clamp(64px, 10vh, 140px);
+  min-height: clamp(48px, 8vh, 110px);
   display:flex;
   align-items:center;
   justify-content:center;
-  padding: 12px;
+  padding: 8px;
 }
 
 .practice-details {
@@ -206,50 +203,82 @@ body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Rob
   display: flex;
   justify-content: center;
   width: 100%;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-bottom: env(safe-area-inset-bottom, 12px);
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: calc(env(safe-area-inset-bottom, 8px) + 6px);
   background: linear-gradient(180deg, rgba(255,255,255,0.001), rgba(255,255,255,0.02));
-  box-shadow: 0 -8px 30px rgba(2,6,23,0.04);
-  z-index: 2147483647; /* extremely high to avoid being clipped by stacking contexts */
+  box-shadow: 0 -6px 18px rgba(2,6,23,0.03);
+  z-index: 5500; /* overlays can still sit above */
   pointer-events: auto;
-  /* Debug visuals removed */
+  overflow: visible;
 }
 
+/* Hide the bottom action bar when an overlay (tour/modal) is open */
+body.overlay-open .practice-action-bar-wrapper {
+  display: none !important;
+}
+
+/* Fix: allow wrapping and increase gap for buttons */
 .practice-action-bar {
-  width: calc(100% - 24px);
-  max-width: 920px;
+  width: calc(100% - 16px);
+  max-width: 900px;
   display: flex;
-  gap: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px; /* slightly reduced padding to fit mobile */
-  border-radius: 14px;
+  padding: 6px 10px;
+  border-radius: 12px;
   box-sizing: border-box;
   background: var(--bg-accent);
-  box-shadow: 0 8px 30px rgba(2,6,23,0.06);
-  transform: translateY(-6px); /* visually lift the bar so it doesn't feel clipped */
+  box-shadow: 0 6px 18px rgba(2,6,23,0.04);
+  transform: none;
 }
 
 /* Make action buttons stable height and avoid reflow */
+/* Fix: ensure min-width and prevent text wrap on desktop, allow wrap on very small screens */
 .mastery-footer-button {
-  min-height: 44px;
-  height: 44px;
-  padding: 0 16px;
+  min-height: 44px; /* slightly smaller */
+  height: auto;
+  min-width: 110px;
+  max-width: 380px;
+  padding: 6px 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
+  font-size: 0.98rem;
+  font-weight: 600;
+  overflow: visible;
+  word-break: normal;
+  line-height: 1.1;
+  text-overflow: ellipsis;
 }
 
 /* Stack action bar on small widths while keeping fixed height buttons */
 @media (max-width: 640px) {
   .practice-root { padding: 10px; }
-  .practice-action-bar { flex-direction: column; gap: 12px; align-items: center; }
-  /* Buttons slightly inset so they don't touch screen edges on mobile */
-  .mastery-footer-button { width: 92%; max-width: 520px; }
+  .practice-action-bar {
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  .mastery-footer-button {
+    width: 100%;
+    max-width: 520px;
+    min-width: 0;
+    font-size: 1rem;
+    padding: 0 6px;
+    white-space: normal; /* allow wrapping on small screens */
+    word-break: break-word;
+    line-height: 1.2;
+  }
   .practice-question-area { padding: 12px; }
-  /* Reduce reserved bottom space on small screens slightly (keeps content visible when keyboard opens) */
-  .practice-root { --kdp-action-bar-height: 88px; padding-bottom: calc(var(--kdp-action-bar-height) + env(safe-area-inset-bottom, 8px)); }
+  .practice-root {
+    --kdp-action-bar-height: 64px;
+    padding-bottom: max(8px, calc(var(--kdp-action-bar-height) * 0.5 + env(safe-area-inset-bottom, 4px)));
+  }
 }
 
 /* Reduce motion for users who prefer reduced motion */

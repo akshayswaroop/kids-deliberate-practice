@@ -21,19 +21,28 @@
     "dev:safe": "npm run build && npm run test && npm run dev",
     "predeploy": "npm run build",
     "deploy": "npm run deploy:gh",
-    "deploy:gh": "npm run build && cp dist/index.html dist/404.html && npx gh-pages -d dist"
+    "deploy:gh": "npm run build && cp dist/index.html dist/404.html && npx gh-pages -d dist",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@microlink/react-json-view": "^1.27.0",
     "@reduxjs/toolkit": "^2.9.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-redux": "^9.2.0"
+    "react-redux": "^9.2.0",
+    "storybook": "^9.1.10"
   },
   "homepage": "https://akshayswaroop.github.io/kids-deliberate-practice/",
   "devDependencies": {
+    "@chromatic-com/storybook": "^4.1.1",
     "@eslint/js": "^9.36.0",
     "@playwright/test": "^1.55.1",
+    "@storybook/addon-a11y": "^9.1.10",
+    "@storybook/addon-docs": "^9.1.10",
+    "@storybook/addon-onboarding": "^9.1.10",
+    "@storybook/addon-vitest": "^9.1.10",
+    "@storybook/react-vite": "^9.1.10",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^24.5.2",
@@ -49,11 +58,11 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "eslint-plugin-storybook": "^9.1.10",
     "gh-pages": "^6.3.0",
     "globals": "^16.4.0",
     "husky": "^8.0.3",
     "jsdom": "^27.0.0",
-    
     "playwright": "^1.55.1",
     "prettier": "^3.6.2",
     "seedrandom": "^3.0.5",

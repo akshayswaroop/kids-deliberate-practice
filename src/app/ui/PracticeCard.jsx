@@ -7,6 +7,8 @@ import { getSubjectPromptLabel, getSubjectParentInstruction } from '../../infras
 import FlyingUnicorn from './FlyingUnicorn.jsx';
 import SadBalloonAnimation from './SadBalloonAnimation.jsx';
 import PracticeActionBarPortal from './PracticeActionBarPortal.jsx';
+import PracticeActionBar from './PracticeActionBar.jsx';
+import PracticeActionButton from './PracticeActionButton.jsx';
 
 const PROGRESSION_DELAY_MS = 120;
 
@@ -116,7 +118,8 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
   const isTestMode = env?.MODE === 'test';
   const normalizedAttemptStats = attemptStats || { total: 0, correct: 0, incorrect: 0 };
-  const promptLabel = getSubjectPromptLabel(mode);
+  // We prefer showing the parent instruction (guidance for the caregiver)
+  // in the practice header instead of the short prompt label.
   const parentInstruction = getSubjectParentInstruction(mode);
   const showAnswerPanel = isAnswerRevealed;
 
@@ -224,251 +227,220 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const hasDetails = Boolean(answer || notes || (whyRepeat && !whyRepeatDismissed));
 
   return (
-    <div data-testid="practice-root" className="practice-root" style={{ backgroundColor: 'transparent' }}>
-      {/* Flying unicorn animation overlay */}
-      <FlyingUnicorn
-        visible={showUnicorn}
-        onAnimationEnd={handleUnicornEnd}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          pointerEvents: 'none',
-          zIndex: 2000
-        }}
-      />
-      {/* Encouragement overlay for wrong answers */}
-      <SadBalloonAnimation
-        visible={showSadBalloon}
-        onAnimationEnd={handleSadBalloonEnd}
-      />
+      <div data-testid="practice-root" className="practice-root" style={{ backgroundColor: 'transparent' }}>
+        {/* Flying unicorn animation overlay */}
+        <FlyingUnicorn
+          visible={showUnicorn}
+          onAnimationEnd={handleUnicornEnd}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+            zIndex: 2000
+          }}
+        />
+        {/* Encouragement overlay for wrong answers */}
+        <SadBalloonAnimation
+          visible={showSadBalloon}
+          onAnimationEnd={handleSadBalloonEnd}
+        />
 
-      {/* Question Area - Flexible space for readability */}
-      <div className="practice-question-area" style={{ color: 'var(--text-primary)' }}>
-        {/* Subtle prompt label with session progress */}
-        {mode && (
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '4px'
-          }}>
-            {/* Session progress - small text above prompt */}
-            {sessionProgress && sessionProgress.total > 0 && (
-              <div style={{
-                fontSize: '0.65rem',
-                fontWeight: '500',
-                color: 'rgba(15,23,42,0.5)',
-                letterSpacing: '0.02em'
-              }}>
-                {sessionProgress.current} of {sessionProgress.total}
-              </div>
-            )}
-            
-            {/* Main prompt label */}
+        {/* Main content area: question, answer/notes, and action bar only */}
+        <div className="practice-question-area" style={{ color: 'var(--text-primary)' }}>
+          {/* Prompt label and session progress */}
+          {mode && (
             <div style={{
-              fontSize: '0.75rem',
-              fontWeight: '600',
-              color: 'rgba(15,23,42,0.6)',
-              letterSpacing: '0.05em',
-              textTransform: 'uppercase'
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '4px'
             }}>
-              {promptLabel}
-            </div>
-          </div>
-        )}
-
-        {(() => {
-          const text = String(mainWord || '');
-          const len = text.length;
-          // Responsive typography within the 30vh Question Area
-          // Enhanced readability for long text (especially story comprehension)
-          let fontSize = 'clamp(20px, min(5.2vw, 7vh), 56px)';
-          let lineHeight = getScriptLineHeight(text); // Use script-aware line height
-          let padding = '8px 16px';
-
-          // Better scaling for long text comprehension questions
-          if (len > 100) {
-            // Very long text (story comprehension questions)
-            fontSize = 'clamp(16px, min(3vw, 3.5vh), 24px)';
-            lineHeight = Math.max(getScriptLineHeight(text), 1.5); // Ensure minimum 1.5 for very long text
-            padding = '12px 20px';
-          } else if (len > 80) {
-            // Long story questions
-            fontSize = 'clamp(17px, min(3.2vw, 4vh), 28px)';
-            lineHeight = Math.max(getScriptLineHeight(text), 1.4);
-            padding = '10px 18px';
-          } else if (len > 60) {
-            fontSize = 'clamp(18px, min(4vw, 5vh), 48px)';
-            lineHeight = Math.max(getScriptLineHeight(text), 1.2);
-            padding = '6px 12px';
-          } else if (len > 40) {
-            fontSize = 'clamp(20px, min(5vw, 6vh), 56px)';
-            lineHeight = Math.max(getScriptLineHeight(text), 1.15);
-            padding = '6px 14px';
-          } else if (len > 28) {
-            fontSize = 'clamp(22px, min(5.5vw, 7vh), 64px)';
-            lineHeight = getScriptLineHeight(text);
-            padding = '8px 16px';
-          }
-
-          return (
-            <div className="target-word-glow practice-main-target" data-testid="target-word" style={{
-              fontSize,
-              fontWeight: 900,
-              marginTop: 0,
-              marginBottom: transliteration ? '6px' : '0px',
-              lineHeight,
-              letterSpacing: '-0.02em',
-              maxWidth: '100%',
-              background: 'linear-gradient(135deg, rgba(79,70,229,0.035), rgba(139,92,246,0.015))',
-              borderRadius: '20px',
-              padding,
-              border: '2px solid rgba(79,70,229,0.08)',
-              boxShadow: '0 6px 30px rgba(79,70,229,0.08)',
-              whiteSpace: 'normal',
-              wordBreak: 'break-word',
-              overflowWrap: 'break-word',
-              overflow: 'visible',
-              position: 'relative',
-              zIndex: 2,
-              minHeight: 0,
-              textAlign: 'center' // Ensure centered text alignment
-            }}>
-              <GradientText
-                progress={activeProgress}
-                gradientColors="red, orange, yellow, green, blue, indigo, violet"
-                neutralColor="var(--text-tertiary)"
-                style={{ textAlign: 'center', width: '100%' }}
-                className={getScriptFontClass(mainWord || '')}
-              >
-                {mainWord}
-              </GradientText>
-
-              <div style={{ position: 'absolute', right: 8, top: 8, zIndex: 3, display: 'flex', gap: 8, alignItems: 'center' }}>
-                {isMastered && (
-                    <div aria-hidden className="mastered-badge">
-                      ✅ Mastered
-                    </div>
-                  )}
-              </div>
-
-              <div aria-live="polite" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>{isMastered ? 'Mastered' : ``}</div>
-            </div>
-          );
-        })()}
-
-        {/* Attempt badges completely removed for mobile optimization */}
-
-        {/* Parent instruction now handled by unified banner above */}
-
-        {/* Only render the details panel when there is content to show */}
-        {showAnswerPanel && hasDetails && (
-          <div key={mainWord} className="details-panel practice-details" data-testid="details-panel">
-            <div className="answer-panel" data-testid="answer-panel" style={{ width: '100%', maxWidth: '100%', flex: '1 1 auto' }}>
-              {answer && (
-                <div className={`answer-panel__headline ${getScriptFontClass(answer || '')}`} style={{
-                  maxWidth: '100%',
-                  fontSize: 'clamp(16px, 3vw, 28px)',
-                  lineHeight: 1.4,
-                  wordBreak: 'break-word',
-                  overflowWrap: 'break-word'
-                }}>{answer}</div>
-              )}
-              {notes && (
-                <div className={`answer-panel__notes ${getScriptFontClass(notes || '')}`} style={{
-                  maxWidth: '100%',
-                  fontSize: 'clamp(14px, 2.5vw, 22px)',
-                  lineHeight: 1.5,
-                  wordBreak: 'break-word',
-                  overflowWrap: 'break-word'
-                }}>{notes}</div>
-              )}
-              {whyRepeat && !whyRepeatDismissed && (
+              {sessionProgress && sessionProgress.total > 0 && (
                 <div style={{
-                  width: '100%',
-                  background: 'rgba(37,99,235,0.08)',
-                  border: '1px solid rgba(37,99,235,0.2)',
-                  borderRadius: 14,
-                  padding: '12px 14px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 6,
-                  textAlign: 'left',
+                  fontSize: '0.65rem',
+                  fontWeight: '500',
+                  color: 'rgba(15,23,42,0.5)',
+                  letterSpacing: '0.02em'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontWeight: 700, color: '#1d4ed8', fontSize: '0.95rem' }}>Why repeat this card?</span>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setWhyRepeatDismissed(true);
-                        onWhyRepeatAcknowledged && onWhyRepeatAcknowledged();
-                      }}
-                      style={{
-                        background: 'transparent',
-                        border: 'none',
-                        color: '#1d4ed8',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Got it
-                    </button>
-                  </div>
-                  <p style={{ margin: 0, color: '#1e3a8a', fontSize: '0.9rem', lineHeight: 1.5 }}>
-                    We have revealed this answer {whyRepeat.revealCount} times. Repeating it right now helps the memory stick—ask your child to say the answer aloud before moving on.
-                  </p>
+                  {sessionProgress.current} of {sessionProgress.total}
                 </div>
               )}
+              <div style={{
+                fontSize: '0.85rem',
+                fontWeight: 600,
+                color: 'rgba(15,23,42,0.7)',
+                letterSpacing: '0',
+                textTransform: 'none'
+              }}>
+                {parentInstruction}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-      </div>
+          {/* Main question */}
+          {(() => {
+            const text = String(mainWord || '');
+            const len = text.length;
+            let fontSize = 'clamp(20px, min(5.2vw, 7vh), 56px)';
+            let lineHeight = getScriptLineHeight(text);
+            let padding = '8px 16px';
+            if (len > 100) {
+              fontSize = 'clamp(16px, min(3vw, 3.5vh), 24px)';
+              lineHeight = Math.max(getScriptLineHeight(text), 1.5);
+              padding = '12px 20px';
+            } else if (len > 80) {
+              fontSize = 'clamp(17px, min(3.2vw, 4vh), 28px)';
+              lineHeight = Math.max(getScriptLineHeight(text), 1.4);
+              padding = '10px 18px';
+            } else if (len > 60) {
+              fontSize = 'clamp(18px, min(4vw, 5vh), 48px)';
+              lineHeight = Math.max(getScriptLineHeight(text), 1.2);
+              padding = '6px 12px';
+            } else if (len > 40) {
+              fontSize = 'clamp(20px, min(5vw, 6vh), 56px)';
+              lineHeight = Math.max(getScriptLineHeight(text), 1.15);
+              padding = '6px 14px';
+            } else if (len > 28) {
+              fontSize = 'clamp(22px, min(5.5vw, 7vh), 64px)';
+              lineHeight = getScriptLineHeight(text);
+              padding = '8px 16px';
+            }
+            return (
+              <div className="target-word-glow practice-main-target" data-testid="target-word" style={{
+                fontSize,
+                fontWeight: 900,
+                marginTop: 0,
+                marginBottom: transliteration ? '6px' : '0px',
+                lineHeight,
+                letterSpacing: '-0.02em',
+                maxWidth: '100%',
+                background: 'linear-gradient(135deg, rgba(79,70,229,0.035), rgba(139,92,246,0.015))',
+                borderRadius: '20px',
+                padding,
+                border: '2px solid rgba(79,70,229,0.08)',
+                boxShadow: '0 6px 30px rgba(79,70,229,0.08)',
+                whiteSpace: 'normal',
+                wordBreak: 'break-word',
+                overflowWrap: 'break-word',
+                overflow: 'visible',
+                position: 'relative',
+                zIndex: 2,
+                minHeight: 0,
+                textAlign: 'center'
+              }}>
+                <GradientText
+                  progress={activeProgress}
+                  gradientColors="red, orange, yellow, green, blue, indigo, violet"
+                  neutralColor="var(--text-tertiary)"
+                  style={{ textAlign: 'center', width: '100%' }}
+                  className={getScriptFontClass(mainWord || '')}
+                >
+                  {mainWord}
+                </GradientText>
+                <div style={{ position: 'absolute', right: 8, top: 8, zIndex: 3, display: 'flex', gap: 8, alignItems: 'center' }}>
+                  {isMastered && (
+                      <div aria-hidden className="mastered-badge">
+                        ✅ Mastered
+                      </div>
+                    )}
+                </div>
+                <div aria-live="polite" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>{isMastered ? 'Mastered' : ``}</div>
+              </div>
+            );
+          })()}
 
-      {/* Action Buttons Area */}
-      <PracticeActionBarPortal>
-        <div className="practice-action-bar">
+          {/* Only render the details panel when there is content to show */}
+          {showAnswerPanel && hasDetails && (
+            <div key={mainWord} className="details-panel practice-details" data-testid="details-panel">
+              <div className="answer-panel" data-testid="answer-panel" style={{ width: '100%', maxWidth: '100%', flex: '1 1 auto' }}>
+                {answer && (
+                  <div className={`answer-panel__headline ${getScriptFontClass(answer || '')}`} style={{
+                    maxWidth: '100%',
+                    fontSize: 'clamp(16px, 3vw, 28px)',
+                    lineHeight: 1.4,
+                    wordBreak: 'break-word',
+                    overflowWrap: 'break-word'
+                  }}>{answer}</div>
+                )}
+                {notes && (
+                  <div className={`answer-panel__notes ${getScriptFontClass(notes || '')}`} style={{
+                    maxWidth: '100%',
+                    fontSize: 'clamp(14px, 2.5vw, 22px)',
+                    lineHeight: 1.5,
+                    wordBreak: 'break-word',
+                    overflowWrap: 'break-word'
+                  }}>{notes}</div>
+                )}
+                {whyRepeat && !whyRepeatDismissed && (
+                  <div style={{
+                    width: '100%',
+                    background: 'rgba(37,99,235,0.08)',
+                    border: '1px solid rgba(37,99,235,0.2)',
+                    borderRadius: 14,
+                    padding: '12px 14px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 6,
+                    textAlign: 'left',
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontWeight: 700, color: '#1d4ed8', fontSize: '0.95rem' }}>Why repeat this card?</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setWhyRepeatDismissed(true);
+                          onWhyRepeatAcknowledged && onWhyRepeatAcknowledged();
+                        }}
+                        style={{
+                          background: 'transparent',
+                          border: 'none',
+                          color: '#1d4ed8',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Got it
+                      </button>
+                    </div>
+                    <p style={{ margin: 0, color: '#1e3a8a', fontSize: '0.9rem', lineHeight: 1.5 }}>
+                      We have revealed this answer {whyRepeat.revealCount} times. Repeating it right now helps the memory stick—ask your child to say the answer aloud before moving on.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Action Buttons Area */}
+        <PracticeActionBarPortal>
+          <PracticeActionBar>
         {!isEnglishMode && (
-          <button
+          <PracticeActionButton
             data-testid="btn-reveal"
+            variant="reveal"
             onClick={() => { 
               if (interactionLocked) return;
               onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
             }}
             disabled={interactionLocked}
             aria-label={isAnswerRevealed ? 'Hide coaching hint' : 'Show coaching hint'}
-            className="mastery-footer-button reveal"
             style={{
-              backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'transparent',
-              color: interactionLocked ? 'var(--text-tertiary, #94a3b8)' : 'var(--button-primary-bg, #2563eb)',
-              border: interactionLocked ? '2px solid var(--bg-tertiary, #cbd5e1)' : '2px solid var(--button-primary-bg, #2563eb)',
-              borderRadius: 10,
-              padding: 'clamp(3px, 0.6vh, 6px) clamp(12px, 2vw, 16px)',
-              fontSize: 'clamp(13px, 2.2vw, 16px)',
-              fontWeight: 700,
-              cursor: interactionLocked ? 'not-allowed' : 'pointer',
-              display: 'flex',
-              gap: '6px',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'transform 180ms ease, box-shadow 180ms ease',
-              boxShadow: interactionLocked ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
-              minHeight: 'clamp(28px, 4.5vh, 36px)',
-              flex: '1 1 auto',
-              maxWidth: '130px',
-              opacity: interactionLocked ? 0.6 : 1
+              opacity: interactionLocked ? 0.6 : 1,
+              cursor: interactionLocked ? 'not-allowed' : 'pointer'
             }}
           >
-            <span style={{fontSize: 'clamp(14px, 3vw, 18px)'}}>{isAnswerRevealed ? '🙈' : '🔍'}</span>
-            <span>{isAnswerRevealed ? 'Hide coach hint' : 'Show coach hint'}</span>
-          </button>
+            <span role="img" aria-label={isAnswerRevealed ? 'hide' : 'reveal'}>{isAnswerRevealed ? '🙈' : '🔍'}</span>
+            {isAnswerRevealed ? 'Hide coach hint' : 'Show coach hint'}
+          </PracticeActionButton>
         )}
 
-        <button
+        <PracticeActionButton
           data-testid="btn-correct"
+          variant="primary"
           onClick={() => {
             if (status !== 'idle') return;
             if (isTestMode) {
@@ -491,34 +463,18 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           }}
           disabled={interactionLocked}
           aria-label="Kid answered correctly"
-          className="mastery-footer-button primary"
           style={{
-            backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-primary-bg, #2563eb)',
-            color: interactionLocked ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
-            border: 'none',
-            borderRadius: 10,
-            padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
-            fontSize: 'clamp(13px, 2.2vw, 16px)',
-            fontWeight: 700,
-            cursor: interactionLocked ? 'not-allowed' : 'pointer',
-            display: 'flex',
-            gap: '8px',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease',
-            boxShadow: interactionLocked ? 'none' : '0 4px 12px rgba(37,99,235,0.10)',
-            minHeight: 'clamp(30px, 5vh, 38px)',
-            flex: '1 1 auto',
-            maxWidth: '140px',
-            opacity: interactionLocked ? 0.6 : 1
+            opacity: interactionLocked ? 0.6 : 1,
+            cursor: interactionLocked ? 'not-allowed' : 'pointer'
           }}
         >
-          <span style={{fontSize: 'clamp(18px, 4vw, 24px)'}}>👍</span>
-          <span>Kid got it</span>
-  </button>
+          <span role="img" aria-label="thumbs up">👍</span>
+          Kid got it
+        </PracticeActionButton>
 
-  <button
+        <PracticeActionButton
           data-testid="btn-wrong"
+          variant="secondary"
           onClick={() => {
             if (status !== 'idle') return;
             if (isTestMode) {
@@ -534,33 +490,16 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           }}
           disabled={interactionLocked}
           aria-label="Kid needs another try"
-          className="mastery-footer-button secondary"
           style={{
-            backgroundColor: interactionLocked ? 'var(--bg-tertiary, #cbd5e1)' : 'var(--button-secondary-bg, #64748b)',
-            color: interactionLocked ? 'var(--text-tertiary, #94a3b8)' : 'var(--text-inverse, #fff)',
-            border: 'none',
-            borderRadius: 10,
-            padding: 'clamp(4px, 0.8vh, 8px) clamp(14px, 2.5vw, 18px)',
-            fontSize: 'clamp(13px, 2.2vw, 16px)',
-            fontWeight: 700,
-            cursor: interactionLocked ? 'not-allowed' : 'pointer',
-            display: 'flex',
-            gap: '8px',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease',
-            boxShadow: interactionLocked ? 'none' : '0 4px 12px rgba(100,116,139,0.10)',
-            minHeight: 'clamp(30px, 5vh, 38px)',
-            flex: '1 1 auto',
-            maxWidth: '140px',
-            opacity: interactionLocked ? 0.6 : 1
+            opacity: interactionLocked ? 0.6 : 1,
+            cursor: interactionLocked ? 'not-allowed' : 'pointer'
           }}
         >
-          <span style={{fontSize: 'clamp(18px, 4vw, 24px)'}}>↺</span>
-          <span>Needs another try</span>
-        </button>
+          <span role="img" aria-label="try again">↺</span>
+          Needs another try
+        </PracticeActionButton>
         {/* Next button removed: progression will auto-trigger after actions */}
-        </div>
+        </PracticeActionBar>
       </PracticeActionBarPortal>
     </div>
   );

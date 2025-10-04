@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface PracticeIntroProps {
   onDismiss: () => void;
@@ -31,6 +31,17 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
   const [index, setIndex] = useState(0);
   const atLastSlide = index === CARDS.length - 1;
 
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('overlay-open');
+    }
+    return () => {
+      if (typeof document !== 'undefined') {
+        document.body.classList.remove('overlay-open');
+      }
+    };
+  }, []);
+
   const handleNext = () => {
     if (atLastSlide) {
       onDismiss();
@@ -49,92 +60,128 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
       style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(15, 23, 42, 0.75)',
-        backdropFilter: 'blur(12px)',
+        background: 'rgba(15, 23, 42, 0.80)',
+        backdropFilter: 'blur(10px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '24px',
-        zIndex: 4000,
+        padding: 0,
+        zIndex: 10000, // ensure intro sits above any bottom controls
       }}
     >
       <div
+        role="dialog"
+        aria-modal="true"
         style={{
-          width: 'min(540px, 100%)',
-          background: 'linear-gradient(160deg, rgba(15,23,42,0.95), rgba(30,41,59,0.9))',
-          borderRadius: 20,
-          boxShadow: '0 30px 60px rgba(15, 23, 42, 0.45)',
-          padding: '32px 28px',
+          width: '100%',
+          height: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          gap: 24,
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '24px',
+          boxSizing: 'border-box'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, color: '#e2e8f0' }}>
-          <span style={{ fontSize: '2.5rem' }}>{CARDS[index].icon}</span>
-          <div>
-            <h2 style={{ margin: 0, fontSize: '1.75rem', fontWeight: 800 }}>{CARDS[index].title}</h2>
-            <p style={{ margin: '8px 0 0', fontSize: '1rem', lineHeight: 1.6, color: 'rgba(226, 232, 240, 0.8)' }}>{CARDS[index].body}</p>
+        <div style={{
+          width: 'min(1000px, 96vw)',
+          height: 'min(760px, 92vh)',
+    background: 'linear-gradient(160deg, var(--bg-overlay, rgba(15,23,42,0.98)), var(--bg-secondary, rgba(30,41,59,0.95)))',
+          borderRadius: 16,
+          boxShadow: '0 40px 90px rgba(2,6,23,0.6)',
+          padding: '28px 28px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 20,
+          overflow: 'hidden'
+        }}>
+          {/* Header: App title + skip */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'var(--text-inverse, #e2e8f0)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <div style={{ width: 46, height: 46, borderRadius: 10, background: 'linear-gradient(135deg,var(--color-primary,#60a5fa),var(--color-secondary,#7c3aed))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>🧒</div>
+              <div>
+                <div style={{ fontSize: '1.25rem', fontWeight: 800 }}>Kids Practice</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-inverse-muted, rgba(226,232,240,0.8))' }}>Gentle daily practice for kids</div>
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="button"
+                onClick={onDismiss}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'var(--text-inverse-muted, rgba(226, 232, 240, 0.75))',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  padding: '8px 12px'
+                }}
+              >
+                Skip tour
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 8 }}>
-          {CARDS.map((_, i) => (
-            <div
-              key={i}
-              style={{
-                width: 10,
-                height: 10,
-                borderRadius: '50%',
-                background: i === index ? '#60a5fa' : 'rgba(148, 163, 184, 0.4)',
-                transition: 'background 0.2s ease',
-              }}
-            />
-          ))}
-        </div>
+          {/* Body: card content */}
+          <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start', overflow: 'hidden', flex: 1 }}>
+            <div style={{ flex: '0 0 110px', display: 'flex', alignItems: 'flex-start', justifyContent: 'center' }}>
+              <div style={{ fontSize: '3.25rem' }}>{CARDS[index].icon}</div>
+            </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <button
-            type="button"
-            onClick={onDismiss}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: 'rgba(226, 232, 240, 0.65)',
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-          >
-            Skip tour
-          </button>
-          <div style={{ display: 'flex', gap: 12 }}>
+            <div style={{ flex: 1, overflowY: 'auto', paddingRight: 6 }}>
+              <h2 style={{ margin: 0, fontSize: '1.9rem', fontWeight: 800, color: 'var(--text-inverse, #e6eefc)' }}>{CARDS[index].title}</h2>
+              <p style={{ marginTop: 12, fontSize: '1.05rem', lineHeight: 1.7, color: 'var(--text-inverse-muted, rgba(226, 232, 240, 0.9))' }}>{CARDS[index].body}</p>
+
+              <div style={{ marginTop: 20, display: 'flex', gap: 10, alignItems: 'center' }}>
+                {CARDS.map((_, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      width: 12,
+                      height: 12,
+                      borderRadius: '50%',
+                      background: i === index ? '#60a5fa' : 'rgba(148, 163, 184, 0.28)',
+                      transition: 'background 0.2s ease',
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Footer: navigation */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 14 }}>
             <button
               type="button"
               onClick={handleBack}
               disabled={index === 0}
+              aria-disabled={index === 0}
               style={{
-                padding: '10px 18px',
+                padding: '12px 22px',
                 borderRadius: 999,
-                border: '1px solid rgba(148, 163, 184, 0.6)',
-                background: index === 0 ? 'rgba(71, 85, 105, 0.4)' : 'rgba(15,23,42,0.6)',
+                border: '1px solid rgba(148, 163, 184, 0.24)',
+                background: index === 0 ? 'rgba(71,85,105,0.35)' : 'rgba(15,23,42,0.85)',
                 color: '#e2e8f0',
-                fontWeight: 600,
+                fontWeight: 700,
                 cursor: index === 0 ? 'not-allowed' : 'pointer',
+                minWidth: 120,
               }}
             >
               Back
             </button>
+
             <button
               type="button"
               onClick={handleNext}
               style={{
-                padding: '10px 22px',
+                padding: '12px 28px',
                 borderRadius: 999,
                 border: 'none',
                 background: 'linear-gradient(135deg, #38bdf8, #7c3aed)',
                 color: '#fff',
-                fontWeight: 700,
+                fontWeight: 800,
                 cursor: 'pointer',
+                minWidth: 160,
               }}
             >
               {atLastSlide ? 'Start practicing' : 'Next'}
@@ -145,3 +192,5 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
     </div>
   );
 }
+
+// Ensure body class is removed if component unmounts unexpectedly

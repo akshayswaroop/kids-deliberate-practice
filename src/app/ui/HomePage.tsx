@@ -4,7 +4,7 @@ import ProfileForm from './ProfileForm';
 import ModeSelector from './ModeSelector';
 import EnhancedPracticePanel from './EnhancedPracticePanel';
 import ThemeToggle from './ThemeToggle';
-import ProgressStatsDisplay from './ProgressStatsDisplay';
+// ProgressStatsDisplay removed - previously displayed inline stats in header
 import RevisionPanel from './RevisionPanel';
 import { useState, useEffect, useCallback } from 'react';
 import { traceAPI } from '../tracing/traceMiddleware';
@@ -12,6 +12,8 @@ import PracticeIntro from './PracticeIntro';
 import Coachmark from './Coachmark';
 import ParentGuideSheet from './ParentGuideSheet';
 import SubjectPickerModal from './SubjectPickerModal';
+// @ts-ignore
+import AppHeader from './AppHeader';
 // Trace export UI removed
 
 import type { PracticeHomeViewModel } from '../presenters/practicePresenter';
@@ -327,115 +329,18 @@ export default function HomePage({
       )}
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-        <header style={{
-          background: 'var(--gradient-rainbow)',
-          padding: '14px 24px',
-          display: 'grid',
-          gridTemplateColumns: 'minmax(220px, 1fr) minmax(220px, auto) minmax(200px, auto)',
-          gap: 16,
-          alignItems: 'center',
-          boxShadow: '0 6px 18px rgba(15, 23, 42, 0.15)'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-inverse)', minWidth: 180 }}>
-            <span role="img" aria-label="sparkle" style={{ fontSize: 22 }}>✨</span>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: 900, margin: 0, whiteSpace: 'nowrap' }}>Kids Deliberate Practice</h1>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'center', minWidth: 0, gap: 8, alignItems: 'center' }}>
-            {/* Inline Mode selector without large pill container */}
-            <div style={{ flex: '0 1 auto', minWidth: 0 }}>
-              <ModeSelector compact mode={ui.mode} options={ui.modeOptions} onSetMode={onSetMode} />
-            </div>
-
-            {/* Small icon-only button to open subject picker (replaces 'Browse all' text) */}
-            <button
-              type="button"
-              onClick={() => setSubjectPickerOpen(true)}
-              aria-label="Browse all subjects"
-              title="Browse all subjects"
-              style={{
-                border: 'none',
-                background: 'rgba(15,23,42,0.16)',
-                color: 'var(--text-inverse)',
-                borderRadius: 10,
-                padding: 8,
-                width: 36,
-                height: 36,
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer'
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                <path d="M3 5h18M3 12h18M3 19h18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-            {/* Parent guidance chip removed to reduce header clutter on small screens */}
-            <div style={{ position: 'relative' }}>
-              <ProgressStatsDisplay currentUserId={ui.currentUserId} compact subject={ui.mode} />
-              {ui.guidance.showStreakCoachmark && !showIntroOverlay && (
-                <div style={{ position: 'absolute', top: '110%', right: 0 }}>
-                  <Coachmark
-                    message="Daily streaks and attempts climb with every try—show this to keep them motivated."
-                    onDismiss={() => handleCoachmarkDismiss('streak')}
-                    ctaLabel={ui.guidance.showParentGuideHint ? 'See Parent Guide' : undefined}
-                    onCta={openParentGuide}
-                    testId="coachmark-streak"
-                  />
-                </div>
-              )}
-            </div>
-            {hasRevisionPanel && ui.revisionPanel && (
-              <button
-                type="button"
-                data-testid="btn-revision-panel"
-                onClick={() => setShowRevisionPanel(true)}
-                style={{
-                  padding: '8px 14px',
-                  borderRadius: 999,
-                  border: 'none',
-                  background: 'rgba(15,23,42,0.18)',
-                  color: 'var(--text-inverse)',
-                  fontWeight: 600,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6
-                }}
-              >
-                📚 Revision
-              </button>
-            )}
-            <button
-              type="button"
-              onClick={() => setControlsOpen(true)}
-              aria-label="Open practice settings"
-              style={{
-                border: 'none',
-                background: 'rgba(15,23,42,0.18)',
-                borderRadius: 14,
-                padding: '8px 16px',
-                color: 'var(--text-inverse)',
-                fontWeight: 600,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 8
-              }}
-            >
-              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 18, height: 18 }}>
-                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="3" y="4.5" width="14" height="2" rx="1" fill="currentColor" />
-                  <rect x="3" y="9" width="14" height="2" rx="1" fill="currentColor" />
-                  <rect x="3" y="13.5" width="14" height="2" rx="1" fill="currentColor" />
-                </svg>
-              </span>
-              Settings
-            </button>
-          </div>
-        </header>
+        <AppHeader
+          mode={ui.mode}
+          modeOptions={ui.modeOptions}
+          currentUserId={ui.currentUserId}
+          onSetMode={onSetMode}
+          onOpenSubjectPicker={() => setSubjectPickerOpen(true)}
+          onOpenRevision={() => setShowRevisionPanel(true)}
+          onOpenSettings={() => setControlsOpen(true)}
+          showRevisionButton={hasRevisionPanel && !!ui.revisionPanel}
+          revisionButtonLabel="Revision"
+          statsSlot={null}
+        />
 
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '24px' }}>
           <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: 'var(--bg-secondary)', borderRadius: 16, boxShadow: 'var(--shadow-soft)', position: 'relative', overflow: 'hidden' }}>
@@ -491,7 +396,7 @@ export default function HomePage({
             
             {/* Show Growth Story */}
             <div style={{ width: '100%', maxWidth: '600px', marginBottom: '24px' }}>
-              <ProgressStatsDisplay currentUserId={ui.currentUserId} />
+              {/* ProgressStatsDisplay removed */}
             </div>
             
             <button
