@@ -6,24 +6,29 @@ interface PracticeIntroProps {
 
 const CARDS = [
   {
-    title: 'Every attempt counts',
-    body: 'Kids see streaks and attempt tallies grow even before answers are perfect. No typing—just say the answer aloud—so practice stays playful and fast.',
-    icon: '🎯',
+    title: 'Learning over points',
+    body: 'No streak traps or glitter. Calm reps that build real understanding.',
+    icon: '📚',
   },
   {
-    title: 'Grown-ups guide practice',
-    body: 'A parent or caregiver taps the buttons while encouraging the child to say answers aloud. The app is built for side-by-side coaching, not independent screen time.',
+    title: 'Deliberate practice',
+    body: 'Short sets + spaced repetition so tough items return and stick.',
+    icon: '🔁',
+  },
+  {
+    title: 'Parent‑assisted flow',
+    body: 'You ask, your child answers aloud; you tap ✅/↺. Coaching, not solo screen time.',
     icon: '🤝',
   },
   {
-    title: 'Smart repetition',
-    body: 'We lean on spaced repetition and deliberate practice so tricky cards resurface gently until they stick.',
-    icon: '🧠',
+    title: 'Private by design',
+    body: 'All local on your computer. No logins, no ads, no cloud.',
+    icon: '🔒',
   },
   {
-    title: 'Built for families',
-    body: 'Switch between subjects and learner profiles instantly. Progress stays safely on this device—no accounts needed.',
-    icon: '👪',
+    title: 'Built by parents',
+    body: 'Made and tested by parents for real home routines.',
+    icon: '🧑‍🧒',
   },
 ];
 
@@ -66,7 +71,7 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
         alignItems: 'center',
         justifyContent: 'center',
         padding: 0,
-        zIndex: 10000, // ensure intro sits above any bottom controls
+        zIndex: 10000,
       }}
     >
       <div
@@ -82,19 +87,22 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
           boxSizing: 'border-box'
         }}
       >
-        <div style={{
-          width: 'min(1000px, 96vw)',
-          height: 'min(760px, 92vh)',
-    background: 'linear-gradient(160deg, var(--bg-overlay, rgba(15,23,42,0.98)), var(--bg-secondary, rgba(30,41,59,0.95)))',
-          borderRadius: 16,
-          boxShadow: '0 40px 90px rgba(2,6,23,0.6)',
-          padding: '28px 28px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 20,
-          overflow: 'hidden'
-        }}>
-          {/* Header: App title + skip */}
+        <div
+          style={{
+            width: '100%',
+            maxWidth: 420,
+            height: '100%',
+            maxHeight: 700,
+            background: 'linear-gradient(160deg, var(--bg-overlay, rgba(15,23,42,0.98)), var(--bg-secondary, rgba(30,41,59,0.95)))',
+            borderRadius: 16,
+            boxShadow: '0 40px 90px rgba(2,6,23,0.6)',
+            padding: '20px 16px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
+            overflow: 'hidden',
+          }}
+        >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'var(--text-inverse, #e2e8f0)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               <div style={{ width: 46, height: 46, borderRadius: 10, background: 'linear-gradient(135deg,var(--color-primary,#60a5fa),var(--color-secondary,#7c3aed))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>🧒</div>
@@ -117,28 +125,69 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
                   padding: '8px 12px'
                 }}
               >
-                Skip tour
+                Skip
               </button>
             </div>
           </div>
 
-          {/* Body: card content */}
-          <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start', overflow: 'hidden', flex: 1 }}>
-            <div style={{ flex: '0 0 110px', display: 'flex', alignItems: 'flex-start', justifyContent: 'center' }}>
-              <div style={{ fontSize: '3.25rem' }}>{CARDS[index].icon}</div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: 16,
+              alignItems: 'flex-start',
+              overflow: 'hidden',
+              flex: 1,
+            }}
+          >
+            <div
+              style={{
+                flex: '0 0 80px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+                minWidth: 60,
+              }}
+            >
+              <div style={{ fontSize: '2.5rem' }}>{CARDS[index].icon}</div>
             </div>
-
-            <div style={{ flex: 1, overflowY: 'auto', paddingRight: 6 }}>
-              <h2 style={{ margin: 0, fontSize: '1.9rem', fontWeight: 800, color: 'var(--text-inverse, #e6eefc)' }}>{CARDS[index].title}</h2>
-              <p style={{ marginTop: 12, fontSize: '1.05rem', lineHeight: 1.7, color: 'var(--text-inverse-muted, rgba(226, 232, 240, 0.9))' }}>{CARDS[index].body}</p>
-
-              <div style={{ marginTop: 20, display: 'flex', gap: 10, alignItems: 'center' }}>
+            <div
+              style={{
+                flex: 1,
+                overflowY: 'auto',
+                paddingRight: 2,
+                minWidth: 0,
+              }}
+            >
+              <h2
+                style={{
+                  margin: 0,
+                  fontSize: '1.35rem',
+                  fontWeight: 800,
+                  color: 'var(--text-inverse, #e6eefc)',
+                  wordBreak: 'break-word',
+                }}
+              >
+                {CARDS[index].title}
+              </h2>
+              <p
+                style={{
+                  marginTop: 12,
+                  fontSize: '1rem',
+                  lineHeight: 1.6,
+                  color: 'var(--text-inverse-muted, rgba(226, 232, 240, 0.9))',
+                  wordBreak: 'break-word',
+                }}
+              >
+                {CARDS[index].body}
+              </p>
+              <div style={{ marginTop: 18, display: 'flex', gap: 8, alignItems: 'center' }}>
                 {CARDS.map((_, i) => (
                   <div
                     key={i}
                     style={{
-                      width: 12,
-                      height: 12,
+                      width: 10,
+                      height: 10,
                       borderRadius: '50%',
                       background: i === index ? '#60a5fa' : 'rgba(148, 163, 184, 0.28)',
                       transition: 'background 0.2s ease',
@@ -149,7 +198,6 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
             </div>
           </div>
 
-          {/* Footer: navigation */}
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 14 }}>
             <button
               type="button"
@@ -164,7 +212,7 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
                 color: '#e2e8f0',
                 fontWeight: 700,
                 cursor: index === 0 ? 'not-allowed' : 'pointer',
-                minWidth: 120,
+                minWidth: 110,
               }}
             >
               Back
@@ -181,10 +229,10 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
                 color: '#fff',
                 fontWeight: 800,
                 cursor: 'pointer',
-                minWidth: 160,
+                minWidth: 150,
               }}
             >
-              {atLastSlide ? 'Start practicing' : 'Next'}
+              {atLastSlide ? 'Start' : 'Next'}
             </button>
           </div>
         </div>
@@ -192,5 +240,3 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
     </div>
   );
 }
-
-// Ensure body class is removed if component unmounts unexpectedly

@@ -30,7 +30,7 @@ export async function dismissPracticeIntroIfPresent(page: Page) {
     return;
   }
 
-  const skipButton = page.getByRole('button', { name: /Skip tour/i });
+  const skipButton = page.getByRole('button', { name: /Skip/i });
   let skipVisible = false;
   try {
     skipVisible = await skipButton.isVisible();
@@ -41,7 +41,7 @@ export async function dismissPracticeIntroIfPresent(page: Page) {
   if (skipVisible) {
     await skipButton.click();
   } else {
-    const startButton = page.getByRole('button', { name: /Start practicing/i });
+    const startButton = page.getByRole('button', { name: /Start/i });
     let startVisible = false;
     try {
       startVisible = await startButton.isVisible();
