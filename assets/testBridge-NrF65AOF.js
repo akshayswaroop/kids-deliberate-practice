@@ -1,0 +1,1 @@
+import{s as e}from"./index-DSQyaJYP.js";function d(){typeof window>"u"||window.__seedState&&window.__readState||(window.__seedState=t=>{e.dispatch({type:"game/__replaceAll",payload:t})},window.__readState=()=>e.getState())}export{d as installTestBridge};
