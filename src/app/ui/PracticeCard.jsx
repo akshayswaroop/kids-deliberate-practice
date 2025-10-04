@@ -354,42 +354,6 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                     overflowWrap: 'break-word'
                   }}>{notes}</div>
                 )}
-                {whyRepeat && !whyRepeatDismissed && (
-                  <div style={{
-                    width: '100%',
-                    background: 'rgba(37,99,235,0.08)',
-                    border: '1px solid rgba(37,99,235,0.2)',
-                    borderRadius: 14,
-                    padding: '12px 14px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 6,
-                    textAlign: 'left',
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontWeight: 700, color: '#1d4ed8', fontSize: '0.95rem' }}>Why repeat this card?</span>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setWhyRepeatDismissed(true);
-                          onWhyRepeatAcknowledged && onWhyRepeatAcknowledged();
-                        }}
-                        style={{
-                          background: 'transparent',
-                          border: 'none',
-                          color: '#1d4ed8',
-                          fontWeight: 600,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Got it
-                      </button>
-                    </div>
-                    <p style={{ margin: 0, color: '#1e3a8a', fontSize: '0.9rem', lineHeight: 1.5 }}>
-                      We have revealed this answer {whyRepeat.revealCount} times. Repeating it right now helps the memory stick—ask your child to say the answer aloud before moving on.
-                    </p>
-                  </div>
-                )}
               </div>
             </div>
           )}
