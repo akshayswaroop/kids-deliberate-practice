@@ -61,27 +61,25 @@ describe('Prompt Labels', () => {
 
     it('should display parent instruction when mode is provided (unified banner)', () => {
       render(<UnifiedParentBanner currentWord={mockWord} mode="kannadaalphabets" />);
-      // Check that the parent instruction appears in the DOM
-      expect(screen.getByText('Show letter, ask for sound, then tap result.')).toBeInTheDocument();
+      // Check that the actionable instruction appears (now integrated with subject tip)
+      expect(screen.getByText(/Trace in air \+ say the sound/)).toBeInTheDocument();
     });
 
     it('should display different parent instructions for different modes (unified banner)', () => {
       const { rerender } = render(<UnifiedParentBanner currentWord={mockWord} mode="numberspellings" />);
-      expect(screen.getByText('Show number, ask child to spell aloud, then tap.')).toBeInTheDocument();
+      expect(screen.getByText(/Show number, ask child to spell aloud/)).toBeInTheDocument();
 
       rerender(<UnifiedParentBanner currentWord={mockWord} mode="mathtables" />);
-      expect(screen.getByText('Ask mentally, encourage quick recall, then tap.')).toBeInTheDocument();
+      expect(screen.getByText(/Ask them to explain the step/)).toBeInTheDocument();
 
       rerender(<UnifiedParentBanner currentWord={mockWord} mode="comprehension" />);
-      expect(screen.getByText('Read passage together, discuss, then record answer.')).toBeInTheDocument();
+      expect(screen.getByText(/One-line re-tell/)).toBeInTheDocument();
     });
 
     it('should not display parent instruction when mode is not provided', () => {
       render(<UnifiedParentBanner currentWord={mockWord} mode={undefined as any} />);
-      // Should not find any of our parent instruction texts
-      expect(screen.queryByText('Show letter, ask for sound, then tap result.')).not.toBeInTheDocument();
-      expect(screen.queryByText('Show number, ask child to spell aloud, then tap.')).not.toBeInTheDocument();
-      expect(screen.queryByText('Ask mentally, encourage quick recall, then tap.')).not.toBeInTheDocument();
+      // Should show generic "First try" message when no mode and no attempts
+      expect(screen.getByText(/First try/)).toBeInTheDocument();
     });
   });
 });

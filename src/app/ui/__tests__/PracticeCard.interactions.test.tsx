@@ -17,19 +17,6 @@ vi.mock('../FlyingUnicorn.jsx', () => {
   return { default: Mock };
 });
 
-vi.mock('../SadBalloonAnimation.jsx', () => {
-  const React = require('react');
-  const Mock = ({ visible, onAnimationEnd }: { visible: boolean; onAnimationEnd?: () => void }) => {
-    React.useEffect(() => {
-      if (visible) {
-        onAnimationEnd?.();
-      }
-    }, [visible, onAnimationEnd]);
-    return <div data-testid="mock-sad-balloon" />;
-  };
-  return { default: Mock };
-});
-
 class FakeAudio {
   public onended: (() => void) | null = null;
   public onerror: (() => void) | null = null;

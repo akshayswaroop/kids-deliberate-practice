@@ -5,7 +5,6 @@ import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetec
 import { getSubjectPromptLabel, getSubjectParentInstruction } from '../../infrastructure/repositories/subjectLoader.ts';
 
 import FlyingUnicorn from './FlyingUnicorn.jsx';
-import SadBalloonAnimation from './SadBalloonAnimation.jsx';
 import PracticeActionBarPortal from './PracticeActionBarPortal.jsx';
 import PracticeActionBar from './PracticeActionBar.jsx';
 import PracticeActionButton from './PracticeActionButton.jsx';
@@ -179,7 +178,6 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   const [status, setStatus] = React.useState('idle');
   // Animation states
   const [showUnicorn, setShowUnicorn] = React.useState(false);
-  const [showSadBalloon, setShowSadBalloon] = React.useState(false);
   const [whyRepeatDismissed, setWhyRepeatDismissed] = React.useState(false);
   const [lastAnswer, setLastAnswer] = React.useState(null); // Track last answer for banner feedback: 'correct' | 'wrong' | null
 
@@ -202,7 +200,6 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
   // Reset all state on new question
   React.useEffect(() => {
     setShowUnicorn(false);
-    setShowSadBalloon(false);
     setStatus('idle');
     setWhyRepeatDismissed(false);
     setLastAnswer(null);
@@ -219,12 +216,6 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
     // No auto-advance - parent must click Next button
   }, []);
 
-  // Handler for encouragement overlay end
-  const handleSadBalloonEnd = React.useCallback(() => {
-    setShowSadBalloon(false);
-    setStatus('waiting');
-    // No auto-advance - parent must click Next button
-  }, []);
   // Determine current active choice progress to render rainbow fill for the main question
   const activeChoice = (choices || []).find(c => String(c.label) === String(mainWord));
   const activeProgress = Math.min(100, Math.max(0, (activeChoice && (typeof activeChoice.progress === 'number' ? activeChoice.progress : Number(activeChoice && activeChoice.progress))) || 0));
@@ -250,11 +241,6 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
             pointerEvents: 'none',
             zIndex: 2000
           }}
-        />
-        {/* Encouragement overlay for wrong answers */}
-        <SadBalloonAnimation
-          visible={showSadBalloon}
-          onAnimationEnd={handleSadBalloonEnd}
         />
 
         {/* Main content area: question, answer/notes, and action bar only */}
@@ -433,8 +419,11 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
                 setStatus('animating');
                 setLastAnswer('wrong');
                 triggerBounceAnimation();
-                setShowSadBalloon(true);
                 onWrong && onWrong();
+                // After bounce animation, transition to 'waiting' to show Next button
+                setTimeout(() => {
+                  setStatus('waiting');
+                }, 700); // bounce animation duration + buffer
                 // Next button will appear after animation completes
               }}
               disabled={interactionLocked}
