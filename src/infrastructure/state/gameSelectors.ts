@@ -1,7 +1,7 @@
 // Redux Selectors - Infrastructure Layer
 // Extract and transform Redux state for UI consumption
 
-import type { RootState } from './gameState';
+import type { RootState, SessionStats } from './gameState';
 import type { Word } from './gameState';
 import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
 import { ModeConfiguration } from '../config/modeConfiguration';
@@ -51,6 +51,75 @@ export function selectSessionProgress(
     current: session.currentIndex + 1,
     total: session.wordIds.length,
   };
+}
+
+export function selectSessionStats(
+  state: RootState,
+  sessionId: string
+): SessionStats | null {
+  if (!state.currentUserId) return null;
+  const user = state.users[state.currentUserId];
+  if (!user) return null;
+  const session = user.sessions[sessionId];
+  if (!session) return null;
+  
+  // Calculate current session statistics
+  const totalQuestions = session.wordIds.length;
+  const questionsCompleted = session.currentIndex + 1;
+  
+  // Track words mastered during this session vs. initially mastered
+  const initialMastered = new Set(session.initialMasteredWords || []);
+  let masteredInSession = 0;
+  let practicedInSession = 0;
+  let yetToTry = 0;
+  
+  for (let i = 0; i < session.wordIds.length; i++) {
+    const wordId = session.wordIds[i];
+    const word = user.words[wordId];
+    
+    if (word) {
+      const isCurrentlyMastered = word.step >= 2; // Using MasteryConfiguration threshold
+      const wasInitiallyMastered = initialMastered.has(wordId);
+      
+      if (i < questionsCompleted) {
+        // Question has been seen in this session
+        if (isCurrentlyMastered && !wasInitiallyMastered) {
+          masteredInSession++;
+        } else if (!isCurrentlyMastered) {
+          practicedInSession++;
+        }
+      } else {
+        // Question not yet attempted
+        yetToTry++;
+      }
+    } else {
+      // Word not found, count as yet to try
+      if (i >= questionsCompleted) {
+        yetToTry++;
+      }
+    }
+  }
+  
+  return {
+    totalQuestions,
+    questionsCompleted,
+    masteredInSession,
+    practicedInSession,
+    yetToTry,
+  };
+}
+
+export function selectIsSessionComplete(
+  state: RootState,
+  sessionId: string
+): boolean {
+  if (!state.currentUserId) return false;
+  const user = state.users[state.currentUserId];
+  if (!user) return false;
+  const session = user.sessions[sessionId];
+  if (!session) return false;
+  
+  return session.currentIndex >= session.wordIds.length - 1;
 }
 
 // Language filtering selectors

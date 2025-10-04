@@ -145,21 +145,18 @@ function PracticeSnapshot({ practiceApp }: { practiceApp: PracticeAppViewModel }
         </div>
       )}
       <div>
-        <div style={{ fontWeight: 600, marginBottom: 4 }}>Choices</div>
+                <div style={{ fontWeight: 600, marginBottom: 4 }}>Card Info</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          {card.choices.map(choice => (
-            <div
-              key={choice.id}
-              style={{
-                padding: '6px 10px',
-                borderRadius: 999,
-                background: '#E5E7EB',
-                fontSize: 12,
-              }}
-            >
-              {choice.label} ({choice.progress}%)
-            </div>
-          ))}
+          <div style={{
+            padding: '6px 10px',
+            borderRadius: 999,
+            background: 'rgba(99, 102, 241, 0.1)',
+            border: '1px solid rgba(99, 102, 241, 0.2)',
+            fontSize: '0.75rem',
+            color: 'rgb(99, 102, 241)'
+          }}>
+            Choices removed - using unified parent banner
+          </div>
         </div>
       </div>
       <div style={{ fontSize: 12, color: '#6B7280' }}>

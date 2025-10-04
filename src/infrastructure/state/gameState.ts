@@ -58,6 +58,14 @@ export type GuidanceExperience = {
   seenIntroVersion?: string;
 };
 
+export type SessionStats = {
+  totalQuestions: number;
+  questionsCompleted: number;
+  masteredInSession: number; // Questions that reached mastery during this session
+  practicedInSession: number; // Questions that were attempted but not yet mastered
+  yetToTry: number; // Questions not yet attempted in this session
+};
+
 export type Session = {
   wordIds: string[];
   currentIndex: number;
@@ -68,6 +76,10 @@ export type Session = {
   settings: SessionSettings;
   // Flag indicating that all words are mastered and a new session should be generated
   needsNewSession?: boolean;
+  // Track session progress and mastery statistics
+  stats?: SessionStats;
+  // Track which words were mastered at the start of this session (to calculate session-specific mastery)
+  initialMasteredWords?: string[];
 };
 
 export type UserState = {

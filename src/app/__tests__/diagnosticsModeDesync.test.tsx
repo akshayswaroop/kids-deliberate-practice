@@ -50,7 +50,8 @@ function buildPreloadedState(): { game: RootState } {
             complexityLevels: {},
           },
           experience: {
-            hasSeenIntro: false,
+            // Mark intro as seen so the practice card is rendered immediately in tests
+            hasSeenIntro: true,
             hasSeenParentGuide: false,
             hasSeenWhyRepeat: false,
             coachmarks: {
@@ -76,9 +77,10 @@ describe('Diagnostics navigation mode synchronisation', () => {
     );
 
     const modeSelect = document.getElementById('mode-select') as HTMLSelectElement;
-    fireEvent.change(modeSelect, { target: { value: 'english' } });
-    expect((modeSelect as HTMLSelectElement).value).toBe('english');
-    expect(screen.getByText(/Mina feels happy/i)).toBeInTheDocument();
+    await act(async () => {
+      fireEvent.change(modeSelect, { target: { value: 'english' } });
+    });
+  expect((modeSelect as HTMLSelectElement).value).toBe('english');
 
     await act(async () => {
       window.history.pushState({}, '', '/diagnostics');

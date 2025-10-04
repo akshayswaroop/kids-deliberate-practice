@@ -6,9 +6,23 @@ import {
   selectResponsiveColumns,
   selectShouldShowOnboarding,
   selectGuidanceExperience,
+  selectSessionProgress,
+  selectSessionStats,
+  selectIsSessionComplete,
 } from '../../infrastructure/state/gameSelectors';
-import type { RootState as GameState, UserState } from '../../infrastructure/state/gameState';
+import type { RootState as GameState, UserState, SessionStats } from '../../infrastructure/state/gameState';
 import { INTRO_TOUR_VERSION } from '../../infrastructure/config/guidance';
+
+export interface SessionFramingViewModel {
+  showSessionStart: boolean;
+  showSessionEnd: boolean;
+  sessionProgress: {
+    current: number;
+    total: number;
+  };
+  sessionStats: SessionStats | null;
+  showRepeatExplanation: boolean;
+}
 
 export interface PracticeCardViewModel {
   mainWord: string;
@@ -16,7 +30,7 @@ export interface PracticeCardViewModel {
   transliterationHi?: string;
   answer?: string;
   notes?: string;
-  choices: Array<{ id: string; label: string; progress: number }>;
+  // Remove choices array - no more per-question badges
   isAnswerRevealed: boolean;
   isEnglishMode: boolean;
   columns: number;
@@ -26,6 +40,13 @@ export interface PracticeCardViewModel {
     correct: number;
     incorrect: number;
   };
+  // Add current word data for intelligent parent guidance
+  currentWord?: import('../../infrastructure/state/gameState').Word;
+  // Add session progress for display above question
+  sessionProgress?: {
+    current: number;
+    total: number;
+  };
 }
 
 export interface PracticePanelViewModel {
@@ -34,6 +55,7 @@ export interface PracticePanelViewModel {
   needsNewSession: boolean;
   showCheckForNewQuestions: boolean;
   card: PracticeCardViewModel;
+  sessionFraming: SessionFramingViewModel;
 }
 
 export interface RevisionPanelItemViewModel {
@@ -160,23 +182,49 @@ export function buildPracticeAppViewModel(params: {
   const experience = selectGuidanceExperience(state);
   const shouldExplainRepeat = !!experience && !experience.hasSeenWhyRepeat && !!practiceData.whyRepeatInfo;
 
+  // Session framing logic
+  const sessionProgress = sessionId ? selectSessionProgress(state, sessionId) : { current: 0, total: 0 };
+  const sessionStats = sessionId ? selectSessionStats(state, sessionId) : null;
+  const isSessionComplete = sessionId ? selectIsSessionComplete(state, sessionId) : false;
+  
+  // Determine when to show session start/end cards
+  // Show session start when a new session is created (first question, index 0)
+  const showSessionStart = sessionId && sessionProgress.current === 1 && !practiceData.needsNewSession;
+  // Show session end when session is complete
+  const showSessionEnd = sessionId && isSessionComplete && !practiceData.needsNewSession;
+  // Show repeat explanation for questions that have been revealed multiple times
+  const showRepeatExplanation = shouldExplainRepeat;
+
+  const sessionFraming: SessionFramingViewModel = {
+    showSessionStart: !!showSessionStart,
+    showSessionEnd: !!showSessionEnd,
+    sessionProgress,
+    sessionStats,
+    showRepeatExplanation,
+  };
+
   const practiceView: PracticePanelViewModel = {
     sessionId,
     currentWordId,
     needsNewSession: practiceData.needsNewSession ?? false,
     showCheckForNewQuestions: practiceData.needsNewSession ?? false,
+    sessionFraming,
     card: {
       mainWord: practiceData.mainWord,
       transliteration: practiceData.transliteration,
       transliterationHi: practiceData.transliterationHi,
       answer: practiceData.answer,
       notes: practiceData.notes,
-      choices: practiceData.choices,
       isAnswerRevealed: practiceData.isAnswerRevealed ?? false,
       isEnglishMode: practiceData.isEnglishMode ?? false,
       columns,
       whyRepeat: shouldExplainRepeat && practiceData.whyRepeatInfo ? practiceData.whyRepeatInfo : null,
       attempts: practiceData.attemptSummary,
+      currentWord: currentWord,
+      sessionProgress: sessionStats && sessionStats.totalQuestions > 0 ? {
+        current: sessionStats.questionsCompleted,
+        total: sessionStats.totalQuestions
+      } : undefined,
     },
   };
 

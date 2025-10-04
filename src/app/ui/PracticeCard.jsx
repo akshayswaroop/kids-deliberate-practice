@@ -111,7 +111,7 @@ function AttemptBadge({ label, value, accentRGB, info }) {
   );
 }
 
-export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode, currentUserId, whyRepeat = null, onWhyRepeatAcknowledged, attemptStats = null }) {
+export default function PracticeCard({ mainWord, transliteration, transliterationHi, answer, notes, choices, onCorrect, onWrong, onNext, onRevealAnswer, columns = 6, mode, isAnswerRevealed, isEnglishMode, currentUserId, whyRepeat = null, onWhyRepeatAcknowledged, attemptStats = null, sessionProgress = null }) {
   const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
   const isTestMode = env?.MODE === 'test';
   const normalizedAttemptStats = attemptStats || { total: 0, correct: 0, incorrect: 0 };
@@ -279,16 +279,36 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
         borderTopRightRadius: '16px',
         gap: 8
       }}>
-        {/* Subtle prompt label to clarify expected action */}
+        {/* Subtle prompt label with session progress */}
         {mode && (
           <div style={{
-            fontSize: '0.75rem',
-            fontWeight: '600',
-            color: 'rgba(15,23,42,0.6)',
-            letterSpacing: '0.05em',
-            textTransform: 'uppercase'
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '4px'
           }}>
-            {promptLabel}
+            {/* Session progress - small text above prompt */}
+            {sessionProgress && sessionProgress.total > 0 && (
+              <div style={{
+                fontSize: '0.65rem',
+                fontWeight: '500',
+                color: 'rgba(15,23,42,0.5)',
+                letterSpacing: '0.02em'
+              }}>
+                {sessionProgress.current} of {sessionProgress.total}
+              </div>
+            )}
+            
+            {/* Main prompt label */}
+            <div style={{
+              fontSize: '0.75rem',
+              fontWeight: '600',
+              color: 'rgba(15,23,42,0.6)',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase'
+            }}>
+              {promptLabel}
+            </div>
           </div>
         )}
 
@@ -388,44 +408,9 @@ export default function PracticeCard({ mainWord, transliteration, transliteratio
           );
         })()}
 
-        <div style={{
-          marginTop: 10,
-          display: 'flex',
-          gap: 10,
-          flexWrap: 'nowrap',
-          justifyContent: 'center',
-          width: '100%',
-          alignItems: 'center'
-        }}>
-          <AttemptBadge label="Correct" value={normalizedAttemptStats.correct} accentRGB="16, 185, 129" />
-          <AttemptBadge
-            label="Try again"
-            value={normalizedAttemptStats.incorrect}
-            accentRGB="239, 68, 68"
-            info="We use spaced repetition so tricky cards resurface at the right time—every retry helps the app schedule the next gentle reminder."
-          />
-          <AttemptBadge label="Total tries" value={normalizedAttemptStats.total} accentRGB="37, 99, 235" />
-        </div>
+        {/* Attempt badges completely removed for mobile optimization */}
 
-        <div className="parent-instruction-card" role="note" style={{
-          marginTop: 6,
-          marginBottom: 8,
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 6,
-          padding: '6px 10px',
-          borderRadius: 12,
-          background: 'rgba(148, 163, 184, 0.12)',
-          border: '1px solid rgba(148, 163, 184, 0.22)',
-          maxWidth: 'min(360px, 100%)',
-          textAlign: 'left'
-        }}>
-          <span aria-hidden style={{ fontSize: '1.1rem', lineHeight: 1 }}>🤝</span>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <span style={{ fontSize: '0.72rem', letterSpacing: '0.05em', fontWeight: 700, textTransform: 'uppercase', color: 'rgba(15,23,42,0.58)' }}>Parent cue</span>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.35 }}>{parentInstruction}</span>
-          </div>
-        </div>
+        {/* Parent instruction now handled by unified banner above */}
 
         {/* Only render the details panel when there is content to show */}
         {showAnswerPanel && hasDetails && (

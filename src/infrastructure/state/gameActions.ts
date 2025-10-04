@@ -174,6 +174,12 @@ export const ensureActiveSession = (payload: { mode: string }) => (dispatch: any
     selectSessionSizeForMode(state as any, payload.mode)
   );
 
+  // Track which words are already mastered at session start
+  const initialMasteredWords = ids.filter(wordId => {
+    const word = user.words[wordId];
+    return word && MasteryConfiguration.isMastered(word);
+  });
+
   const newSessionId = 'session_' + Date.now();
   const session = {
     wordIds: ids,
@@ -182,6 +188,7 @@ export const ensureActiveSession = (payload: { mode: string }) => (dispatch: any
     mode: 'practice',
     createdAt: Date.now(),
     settings: user.settings,
+    initialMasteredWords,
   } as any;
 
   dispatch(addSession({ sessionId: newSessionId, session } as any));

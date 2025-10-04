@@ -376,22 +376,7 @@ export default function HomePage({
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '6px 12px',
-                borderRadius: 999,
-                background: 'rgba(15, 23, 42, 0.25)',
-                color: 'var(--text-inverse)',
-                fontSize: '0.8rem',
-                fontWeight: 600
-              }}
-            >
-              <span aria-hidden style={{ fontSize: '1rem' }}>🤝</span>
-              <span>Parent guides practice</span>
-            </div>
+            {/* Parent guidance chip removed to reduce header clutter on small screens */}
             <div style={{ position: 'relative' }}>
               <ProgressStatsDisplay currentUserId={ui.currentUserId} compact subject={ui.mode} />
               {ui.guidance.showStreakCoachmark && !showIntroOverlay && (
