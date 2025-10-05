@@ -119,38 +119,20 @@ export class SessionGuidance {
   }
 
   private createCompletionGuidance(): SessionGuidanceResult {
-    const subjectDisplayName = this.formatSubjectName(this.data.subject);
-    
+    // Domain layer should not format subject names - that's infrastructure concern
+    // Return subject code and let infrastructure/UI layer format it
     return {
-      message: `Amazing! You've mastered everything in ${subjectDisplayName}. Check back for new questions!`,
+      message: `Amazing! You've mastered everything. Check back for new questions!`,
       urgency: 'success',
       context: 'completion'
     };
   }
 
-  private formatSubjectName(subject: string): string {
-    // Convert subject codes to display names
-    const subjectMap: Record<string, string> = {
-      'english': 'English',
-      'englishquestions': 'English Questions',
-      'kannada': 'Kannada',
-      'kannadaalphabets': 'Kannada Alphabets',
-      'kannadawords': 'Kannada Words',
-      'hindi': 'Hindi',
-      'hindialphabets': 'Hindi Alphabets',
-      'mathtables': 'Math Tables',
-      'math': 'Math',
-      'geography': 'Geography',
-      'hanuman': 'Hanuman Chalisa',
-      'comprehension': 'Story Comprehension',
-      'humanbody': 'Human Body',
-      'nationalsymbols': 'National Symbols'
-    };
-
-    return subjectMap[subject] || this.capitalizeFirstLetter(subject);
-  }
-
-  private capitalizeFirstLetter(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  /**
+   * Get the subject code for external formatting
+   * Domain entity provides raw data, infrastructure formats for display
+   */
+  getSubject(): string {
+    return this.data.subject;
   }
 }

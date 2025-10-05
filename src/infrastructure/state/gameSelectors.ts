@@ -8,6 +8,7 @@ import { SessionGuidance, type SessionGuidanceResult } from '../../domain/entiti
 import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
 import { ModeConfiguration } from '../config/modeConfiguration';
 import { ProgressTracker } from '../../domain/entities/ProgressTracker';
+import { SubjectConfiguration } from '../config/subjectConfiguration';
 
 // Step-based mastery calculation per new spec (0-5 where 5 = mastered)
 export function selectMasteryStep(state: RootState, wordId: string): number {
@@ -584,6 +585,12 @@ export function selectSessionGuidance(
 
   // Delegate to domain entity
   const guidance = sessionGuidance.getSessionGuidance();
+  
+  // Infrastructure layer formats subject name for display (domain stays agnostic)
+  if (guidance && guidance.context === 'completion') {
+    const subjectDisplayName = SubjectConfiguration.getDisplayName(sessionGuidance.getSubject());
+    guidance.message = `Amazing! You've mastered everything in ${subjectDisplayName}. Check back for new questions!`;
+  }
   
   // Cache the result
   sessionGuidanceCache.set(cacheKey, guidance);
