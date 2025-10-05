@@ -9,7 +9,17 @@ import { SessionGenerationService } from '../../domain/services/SessionGeneratio
 import type { Session, Word } from './gameState';
 import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
 
-const selectNextPracticeIndex = (session: Session | undefined, words: Record<string, Word>): number | null => {
+/**
+ * Pure function: Select next practice index from unmastered words
+ * Randomness injected as parameter for testability
+ * 
+ * Architecture principle: "Keep randomness/time at the edge, inject as inputs"
+ */
+const selectNextPracticeIndex = (
+  session: Session | undefined, 
+  words: Record<string, Word>,
+  randomValue: number = Math.random() // Default at edge, can be injected for tests
+): number | null => {
   if (!session || !Array.isArray(session.wordIds)) return null;
   const unmasteredIndices: number[] = [];
   for (let i = 0; i < session.wordIds.length; i++) {
@@ -22,8 +32,18 @@ const selectNextPracticeIndex = (session: Session | undefined, words: Record<str
   if (unmasteredIndices.length === 0) {
     return null;
   }
-  const randomIndex = Math.floor(Math.random() * unmasteredIndices.length);
+  const randomIndex = Math.floor(randomValue * unmasteredIndices.length);
   return unmasteredIndices[randomIndex];
+};
+
+/**
+ * Generate session ID with timestamp
+ * Time injected as parameter for testability
+ * 
+ * Architecture principle: "Pure Core - inject time at the edge"
+ */
+const generateSessionId = (timestamp: number = Date.now()): string => {
+  return 'session_' + timestamp;
 };
 
 // Thunk to handle UI 'Next' press orchestration. Keeps domain logic out of UI components.
@@ -73,14 +93,15 @@ export const handleNextPressed = (payload: { mode: string }) => (dispatch: any, 
       // Use domain service for session word selection
       const ids = SessionGenerationService.selectSessionWords(allWordsArr as Word[], sessionSize);
 
-      const newSessionId = 'session_' + Date.now();
+      const newSessionId = generateSessionId(); // Use helper with injected time
+      const now = Date.now(); // Get time once at the edge
       const freshUser = freshState.users[uid!];
       const session = {
         wordIds: ids,
         currentIndex: 0,
         revealed: false,
         mode: 'practice',
-        createdAt: Date.now(),
+        createdAt: now,
         settings: freshUser.settings,
       } as any;
 
@@ -88,7 +109,7 @@ export const handleNextPressed = (payload: { mode: string }) => (dispatch: any, 
       dispatch(setMode({ mode: payload.mode, sessionId: newSessionId } as any));
     }
   } else {
-    const nextIndex = selectNextPracticeIndex(currentSession, user.words);
+    const nextIndex = selectNextPracticeIndex(currentSession, user.words); // Uses default Math.random at edge
     if (nextIndex !== null) {
       dispatch(nextCard({ sessionId: activeSessionId, nextIndex } as any));
     } else {
@@ -180,13 +201,14 @@ export const ensureActiveSession = (payload: { mode: string }) => (dispatch: any
     return word && MasteryConfiguration.isMastered(word);
   });
 
-  const newSessionId = 'session_' + Date.now();
+  const newSessionId = generateSessionId(); // Use helper with injected time
+  const now = Date.now(); // Get time once at the edge
   const session = {
     wordIds: ids,
     currentIndex: 0,
     revealed: false,
     mode: 'practice',
-    createdAt: Date.now(),
+    createdAt: now,
     settings: user.settings,
     initialMasteredWords,
   } as any;

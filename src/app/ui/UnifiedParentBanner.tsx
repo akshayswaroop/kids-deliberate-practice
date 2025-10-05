@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Word } from '../../infrastructure/state/gameState';
 import type { ParentGuidance } from '../../domain/entities/ProgressTracker';
 import type { SessionGuidanceResult } from '../../domain/entities/SessionGuidance';
+import { SubjectConfiguration } from '../../infrastructure/config/subjectConfiguration';
 
 interface UnifiedParentBannerProps {
   currentWord: Word;
@@ -62,18 +63,10 @@ export default function UnifiedParentBanner({
   // Generate mini timeline (last 8 attempts)
   const recentAttempts = attempts.slice(-8);
   
-  // Get subject-specific tip
+  // Get subject-specific tip from infrastructure config
+  // Architecture: UI reads config, doesn't hard-code subject knowledge
   const getSubjectTip = () => {
-    if (mode === 'mathtables') {
-      return 'Ask them to explain the step.';
-    } else if (mode === 'kannadaalphabets' || mode === 'hindialphabets') {
-      return 'Trace in air + say the sound.';
-    } else if (mode === 'comprehension' || mode === 'hanuman') {
-      return 'One-line re-tell before Next.';
-    } else if (mode === 'english') {
-      return 'Have them read it again.';
-    }
-    return '';
+    return mode ? SubjectConfiguration.getParentTip(mode) || '' : '';
   };
   
   // Determine which guidance to use: session guidance takes priority over word guidance

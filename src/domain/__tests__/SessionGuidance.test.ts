@@ -93,7 +93,9 @@ describe('SessionGuidance Domain Entity', () => {
   });
 
   describe('Completion Scenario', () => {
-    test('should provide completion guidance when all levels are finished', () => {
+    test('should provide completion guidance without subject formatting (domain agnostic)', () => {
+      // Domain test: Domain layer should not format subject names
+      // Infrastructure layer will format subject names per architecture docs
       const sessionGuidance = SessionGuidance.fromSessionData({
         sessionId: 'test-session',
         currentQuestionIndex: 5,
@@ -109,12 +111,16 @@ describe('SessionGuidance Domain Entity', () => {
 
   expect(guidance).not.toBeNull();
   expect(guidance!.context).toBe('completion');
-  expect(guidance!.message).toContain('mastered everything in Math Tables');
+  expect(guidance!.message).toContain('mastered everything');
   expect(guidance!.message).toContain('Check back for new questions');
   expect(guidance!.urgency).toBe('success');
+  // Domain entity exposes subject code for infrastructure to format
+  expect(sessionGuidance.getSubject()).toBe('mathtables');
     });
 
-    test('should handle subject name formatting in completion message', () => {
+    test('should provide completion message without subject-specific formatting', () => {
+      // Domain test: Domain layer should not format subject names
+      // That's infrastructure concern per architecture docs
       const sessionGuidance = SessionGuidance.fromSessionData({
         sessionId: 'test-session',
         currentQuestionIndex: 2,
@@ -130,7 +136,9 @@ describe('SessionGuidance Domain Entity', () => {
 
   expect(guidance).not.toBeNull();
   expect(guidance!.context).toBe('completion');
-  expect(guidance!.message).toContain('mastered everything in Kannada Alphabets');
+  expect(guidance!.message).toContain('mastered everything');
+  // Domain entity exposes subject code for infrastructure to format
+  expect(sessionGuidance.getSubject()).toBe('kannadaalphabets');
     });
   });
 
