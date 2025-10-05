@@ -209,7 +209,7 @@ describe('ProgressTracker Negative Tests', () => {
 
       const guidance = tracker.getParentGuidance();
       expect(guidance.context).toBe('initial');
-      expect(guidance.message).toBe('First try');
+      expect(guidance.message).toBe('Ready when you are');
       expect(guidance.urgency).toBe('info');
     });
 
@@ -225,7 +225,7 @@ describe('ProgressTracker Negative Tests', () => {
 
       const guidance = tracker.getParentGuidance();
       expect(guidance.context).toBe('struggling');
-      expect(guidance.urgency).toBe('warning');
+      expect(guidance.urgency).toBe('info'); // Changed from 'warning' to match new implementation
     });
 
     test('should provide correct guidance after many failed attempts', () => {
@@ -240,8 +240,8 @@ describe('ProgressTracker Negative Tests', () => {
       }
 
       const guidance = tracker.getParentGuidance();
-      expect(guidance.urgency).toBe('warning');
-      expect(guidance.context).toMatch(/needs-practice|struggling/);
+      expect(guidance.urgency).toBe('warning'); // Low accuracy returns warning
+      expect(guidance.context).toMatch(/needs-practice|struggling|retry-needed/);
     });
 
     test('should maintain guidance consistency at boundaries', () => {
@@ -408,7 +408,7 @@ describe('ProgressTracker Negative Tests', () => {
 
       const guidance = tracker.getParentGuidance();
       expect(guidance.context).toBe('struggling');
-      expect(guidance.urgency).toBe('warning');
+      expect(guidance.urgency).toBe('info'); // Changed to match reassuring tone
     });
   });
 });

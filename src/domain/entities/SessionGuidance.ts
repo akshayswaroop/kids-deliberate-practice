@@ -112,8 +112,8 @@ export class SessionGuidance {
 
   private createLevelTransitionGuidance(): SessionGuidanceResult {
     return {
-      message: 'Great! All questions mastered. Ready for the next challenge?',
-      urgency: 'success',
+      message: 'New round begins — these are fresh cards',
+      urgency: 'info',
       context: 'level-transition'
     };
   }
@@ -122,7 +122,7 @@ export class SessionGuidance {
     // Domain layer should not format subject names - that's infrastructure concern
     // Return subject code and let infrastructure/UI layer format it
     return {
-      message: `Amazing! You've mastered everything. Check back for new questions!`,
+      message: `All done for this subject! Time to rest those neurons`,
       urgency: 'success',
       context: 'completion'
     };

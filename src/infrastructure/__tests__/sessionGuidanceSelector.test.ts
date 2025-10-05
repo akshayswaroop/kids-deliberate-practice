@@ -136,9 +136,8 @@ describe('selectSessionGuidance', () => {
       const guidance = selectSessionGuidance(mockState, 'session1');
 
       expect(guidance?.context).toBe('level-transition');
-      expect(guidance?.message).toContain('All questions mastered');
-      expect(guidance?.message).toContain('Ready for the next challenge');
-      expect(guidance?.urgency).toBe('success');
+      expect(guidance?.message).toContain('New round begins');
+      expect(guidance?.urgency).toBe('info');
       
       // Clean up for subsequent tests
       delete mockState.users.user1.words.word4;
@@ -170,7 +169,7 @@ describe('selectSessionGuidance', () => {
       const guidance = selectSessionGuidance(mockState, 'session1');
 
       expect(guidance?.context).toBe('completion');
-      expect(guidance?.message).toContain('mastered everything in English');
+      expect(guidance?.message).toContain('All done for English');
       expect(guidance?.urgency).toBe('success');
     });
 
@@ -230,8 +229,7 @@ describe('selectSessionGuidance', () => {
       const guidance = selectSessionGuidance(mockState, 'completionSession');
 
       expect(guidance?.context).toBe('completion');
-      expect(guidance?.message).toContain('mastered everything in Math Tables');
-      expect(guidance?.message).toContain('Check back for new questions');
+      expect(guidance?.message).toContain('All done for Math Tables');
     });
   });
 

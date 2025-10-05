@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { ProgressTracker } from '../entities/ProgressTracker';
 
 describe('🎯 Parent Guidance Messages (Trace-Based)', () => {
-  it('should show "First try" with no attempts', () => {
+  it('should show "Ready when you are" with no attempts', () => {
     const tracker = ProgressTracker.fromData({
       wordId: 'word1',
       learnerId: 'learner1',
@@ -15,7 +15,7 @@ describe('🎯 Parent Guidance Messages (Trace-Based)', () => {
 
     const guidance = tracker.getParentGuidance();
     
-    expect(guidance.message).toBe('First try');
+    expect(guidance.message).toBe('Ready when you are');
     expect(guidance.context).toBe('initial');
     expect(guidance.urgency).toBe('info');
   });
@@ -37,7 +37,7 @@ describe('🎯 Parent Guidance Messages (Trace-Based)', () => {
     
     console.log('Guidance after 1 correct:', guidance);
     
-    expect(guidance.message).toContain('Great');
+    expect(guidance.message).toContain('Nice');
     expect(guidance.context).toBe('first-success');
     expect(guidance.urgency).toBe('success');
   });
@@ -59,12 +59,12 @@ describe('🎯 Parent Guidance Messages (Trace-Based)', () => {
     
     console.log('Guidance after 1 wrong:', guidance);
     
-    expect(guidance.message).toContain('First try');
+    expect(guidance.message).toContain('Let\'s try');
     expect(guidance.context).toBe('first-attempt-wrong');
     expect(guidance.urgency).toBe('info');
   });
 
-  it('should show "Good job" after second CORRECT attempt', () => {
+  it('should show "Two correct in a row" after second CORRECT attempt', () => {
     const tracker = ProgressTracker.fromData({
       wordId: 'word1',
       learnerId: 'learner1',
@@ -82,7 +82,7 @@ describe('🎯 Parent Guidance Messages (Trace-Based)', () => {
     
     console.log('Guidance after 2 correct:', guidance);
     
-    expect(guidance.message).toContain('Good job');
+    expect(guidance.message).toContain('Two correct in a row');
     expect(guidance.context).toBe('correct-progress');
     expect(guidance.urgency).toBe('success');
   });
@@ -106,7 +106,7 @@ describe('🎯 Parent Guidance Messages (Trace-Based)', () => {
     
     console.log('Guidance at mastery:', guidance);
     
-    expect(guidance.message).toContain('Mastered');
+    expect(guidance.message).toContain('mastered');
     expect(guidance.context).toBe('mastered');
     expect(guidance.urgency).toBe('success');
   });

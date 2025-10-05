@@ -11,7 +11,7 @@ const createDefaultExperience = () => ({
 });
 
 describe('🎯 selectParentGuidance Integration Test', () => {
-  it('should return "First try" with no attempts in Redux', () => {
+  it('should return "Ready when you are" with no attempts in Redux', () => {
     const state: RootState = {
       currentUserId: 'user1',
       users: {
@@ -45,7 +45,7 @@ describe('🎯 selectParentGuidance Integration Test', () => {
     
     console.log('Selector guidance with 0 attempts:', guidance);
     
-    expect(guidance.message).toBe('First try');
+    expect(guidance.message).toBe('Ready when you are');
     expect(guidance.context).toBe('initial');
   });
 
@@ -85,7 +85,7 @@ describe('🎯 selectParentGuidance Integration Test', () => {
     
     console.log('Selector guidance with 1 correct attempt:', guidance);
     
-    expect(guidance.message).toContain('Great');
+    expect(guidance.message).toContain('Nice');
     expect(guidance.context).toBe('first-success');
     expect(guidance.urgency).toBe('success');
   });
@@ -123,7 +123,7 @@ describe('🎯 selectParentGuidance Integration Test', () => {
 
     const guidance1 = selectParentGuidance(state, 'word1');
     console.log('Before answer:', guidance1);
-    expect(guidance1.message).toBe('First try');
+    expect(guidance1.message).toBe('Ready when you are');
 
     // Simulate Redux update after correct answer
     state = {
@@ -150,8 +150,8 @@ describe('🎯 selectParentGuidance Integration Test', () => {
     console.log('After correct answer:', guidance2);
     
     // Should show different message now
-    expect(guidance2.message).not.toBe('First try');
-    expect(guidance2.message).toContain('Great');
+    expect(guidance2.message).not.toBe('Ready when you are');
+    expect(guidance2.message).toContain('Nice');
     expect(guidance2.context).toBe('first-success');
   });
 });

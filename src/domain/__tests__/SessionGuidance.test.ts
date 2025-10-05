@@ -69,9 +69,8 @@ describe('SessionGuidance Domain Entity', () => {
 
   expect(guidance).not.toBeNull();
   expect(guidance!.context).toBe('level-transition');
-  expect(guidance!.message).toContain('All questions mastered');
-  expect(guidance!.message).toContain('Ready for the next challenge');
-  expect(guidance!.urgency).toBe('success');
+  expect(guidance!.message).toContain('New round begins');
+  expect(guidance!.urgency).toBe('info');
     });
 
     test('should not show level transition if more questions remain in current level', () => {
@@ -111,8 +110,7 @@ describe('SessionGuidance Domain Entity', () => {
 
   expect(guidance).not.toBeNull();
   expect(guidance!.context).toBe('completion');
-  expect(guidance!.message).toContain('mastered everything');
-  expect(guidance!.message).toContain('Check back for new questions');
+  expect(guidance!.message).toContain('All done');
   expect(guidance!.urgency).toBe('success');
   // Domain entity exposes subject code for infrastructure to format
   expect(sessionGuidance.getSubject()).toBe('mathtables');
@@ -136,7 +134,7 @@ describe('SessionGuidance Domain Entity', () => {
 
   expect(guidance).not.toBeNull();
   expect(guidance!.context).toBe('completion');
-  expect(guidance!.message).toContain('mastered everything');
+  expect(guidance!.message).toContain('All done');
   // Domain entity exposes subject code for infrastructure to format
   expect(sessionGuidance.getSubject()).toBe('kannadaalphabets');
     });
