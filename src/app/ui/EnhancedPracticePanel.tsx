@@ -7,6 +7,7 @@
  */
 
 import { useState, useCallback } from 'react';
+import { useAppSelector } from '../../infrastructure/hooks/reduxHooks';
 // @ts-ignore
 import PracticeCard from './PracticeCard.jsx';
 import SessionStartCard from './SessionStartCard';
@@ -14,6 +15,7 @@ import SessionEndCard from './SessionEndCard';
 import UnifiedParentBanner from './UnifiedParentBanner';
 import { usePracticeApplicationService } from '../providers/PracticeServiceProvider';
 import type { PracticePanelViewModel } from '../presenters/practicePresenter';
+import { selectParentGuidance } from '../../infrastructure/state/gameSelectors';
 
 interface EnhancedPracticePanelProps {
   practice: PracticePanelViewModel;
@@ -43,10 +45,23 @@ export default function EnhancedPracticePanel({
   const [showSessionEnd, setShowSessionEnd] = useState(sessionFraming.showSessionEnd);
   const [showRepeatBanner, setShowRepeatBanner] = useState(sessionFraming.showRepeatExplanation);
   
-  // Local state for PracticeCard status/answer (for unified banner)
-  const [cardState, setCardState] = useState<{ status: string; lastAnswer: 'correct' | 'wrong' | null }>({ 
-    status: 'idle', 
-    lastAnswer: null 
+  // 🎯 DDD-Compliant: Get parent guidance from domain via selector
+  // Follows trace-based architecture: reads current Redux state only
+  // No temporal coupling, no local state dependencies
+  //
+  // IMPORTANT: We must subscribe to the actual word state that affects guidance
+  // so that useSelector triggers re-render when Redux state changes
+  const parentGuidance = useAppSelector(state => {
+    if (!currentWordId) {
+      return { message: 'First try', urgency: 'info' as const, context: 'initial' as const };
+    }
+    // This selector will re-run whenever the word's attempts, step, or revealCount changes
+    return selectParentGuidance(state.game, currentWordId);
+  }, (left, right) => {
+    // Custom equality: compare the actual message/context, not object reference
+    return left.message === right.message && 
+           left.context === right.context && 
+           left.urgency === right.urgency;
   });
   
   // 🎯 DDD Services (when enabled)
@@ -140,11 +155,10 @@ export default function EnhancedPracticePanel({
       {card.currentWord && (
         <UnifiedParentBanner
           currentWord={card.currentWord}
+          parentGuidance={parentGuidance}
           showRepeatExplanation={showRepeatBanner}
-          revealCount={card.whyRepeat?.revealCount}
           onDismiss={showRepeatBanner ? handleRepeatBannerDismiss : undefined}
           mode={mode}
-          lastAnswer={cardState.lastAnswer}
           sessionProgress={card.sessionProgress}
         />
       )}
@@ -168,8 +182,8 @@ export default function EnhancedPracticePanel({
           whyRepeat={card.whyRepeat}
           onWhyRepeatAcknowledged={onWhyRepeatAcknowledged}
           attemptStats={card.attempts}
+          attemptHistory={card.currentWord?.attempts ?? []}
           sessionProgress={card.sessionProgress}
-          {...({ onStatusChange: setCardState } as any)}
         />
     </div>
   );

@@ -12,6 +12,7 @@ export default function PracticeActionButton({
   style = {},
   ...props 
 }) {
+  const isDisabled = Boolean(props.disabled);
   // Defensive styles to ensure consistent button rendering
   const baseStyles = {
     // CSS isolation
@@ -21,7 +22,7 @@ export default function PracticeActionButton({
     // Core button styling
     border: '0',
     outline: '0',
-    cursor: 'pointer',
+    cursor: isDisabled ? 'not-allowed' : 'pointer',
     borderRadius: '10px',
     transition: 'transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease',
     
@@ -65,7 +66,8 @@ export default function PracticeActionButton({
       background: 'white',
       fontWeight: '700'
     }),
-    
+    opacity: isDisabled ? 0.55 : 1,
+    pointerEvents: isDisabled ? 'none' : 'auto',
     ...style // Allow style prop to override
   };
 
@@ -82,10 +84,21 @@ export default function PracticeActionButton({
       className={`practice-action-button ${className}`}
       style={baseStyles}
       onClick={onClick}
-      onMouseEnter={(e) => Object.assign(e.target.style, hoverStyles)}
-      onMouseLeave={(e) => Object.assign(e.target.style, baseStyles)}
-      onMouseDown={(e) => Object.assign(e.target.style, activeStyles)}
-      onMouseUp={(e) => Object.assign(e.target.style, baseStyles)}
+      onMouseEnter={(e) => {
+        if (isDisabled) return;
+        Object.assign(e.target.style, { ...baseStyles, ...hoverStyles });
+      }}
+      onMouseLeave={(e) => {
+        Object.assign(e.target.style, baseStyles);
+      }}
+      onMouseDown={(e) => {
+        if (isDisabled) return;
+        Object.assign(e.target.style, { ...baseStyles, ...activeStyles });
+      }}
+      onMouseUp={(e) => {
+        if (isDisabled) return;
+        Object.assign(e.target.style, baseStyles);
+      }}
       {...props}
     >
       {children}

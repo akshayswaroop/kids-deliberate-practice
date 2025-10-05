@@ -1,10 +1,11 @@
+import { useEffect, useRef, useState } from 'react';
 import type { Word } from '../../infrastructure/state/gameState';
-import { getSubjectParentInstruction } from '../../infrastructure/repositories/subjectLoader';
+import type { ParentGuidance } from '../../domain/entities/ProgressTracker';
 
 interface UnifiedParentBannerProps {
   currentWord: Word;
+  parentGuidance: ParentGuidance; // Domain-provided guidance (DDD compliant)
   showRepeatExplanation?: boolean;
-  revealCount?: number;
   onDismiss?: () => void;
   mode?: string; // Subject mode for context-specific tips
   lastAnswer?: 'correct' | 'wrong' | null; // Track answer state for feedback
@@ -13,8 +14,8 @@ interface UnifiedParentBannerProps {
 
 export default function UnifiedParentBanner({ 
   currentWord, 
+  parentGuidance,
   showRepeatExplanation = false,
-  revealCount = 0,
   onDismiss,
   mode,
   lastAnswer = null,
@@ -22,15 +23,41 @@ export default function UnifiedParentBanner({
 }: UnifiedParentBannerProps) {
   
   const attempts = Array.isArray(currentWord.attempts) ? currentWord.attempts : [];
-  const totalAttempts = attempts.length;
-  const correctAttempts = attempts.filter(attempt => attempt.result === 'correct').length;
-  const accuracyRate = totalAttempts > 0 ? correctAttempts / totalAttempts : 0;
+  const attemptCount = attempts.length;
+  const lastAttempt = attemptCount > 0 ? attempts[attemptCount - 1] : null;
+  const previousAttemptCountRef = useRef(attemptCount);
+  const [isHighlighted, setIsHighlighted] = useState(false);
+  const [showUpdateCue, setShowUpdateCue] = useState(false);
+
+  useEffect(() => {
+    let highlightTimer: number | null = null;
+    let cueTimer: number | null = null;
+    const previousCount = previousAttemptCountRef.current ?? 0;
+    if (attemptCount > previousCount) {
+      setIsHighlighted(true);
+      setShowUpdateCue(true);
+      highlightTimer = window.setTimeout(() => {
+        setIsHighlighted(false);
+        highlightTimer = null;
+      }, 600);
+      cueTimer = window.setTimeout(() => {
+        setShowUpdateCue(false);
+        cueTimer = null;
+      }, 1600);
+    }
+    previousAttemptCountRef.current = attemptCount;
+    return () => {
+      if (highlightTimer !== null) {
+        window.clearTimeout(highlightTimer);
+      }
+      if (cueTimer !== null) {
+        window.clearTimeout(cueTimer);
+      }
+    };
+  }, [attemptCount]);
   
   // Generate mini timeline (last 8 attempts)
   const recentAttempts = attempts.slice(-8);
-  const timeline = recentAttempts.map(attempt => 
-    attempt.result === 'correct' ? '✓' : '✗'
-  ).join('');
   
   // Get subject-specific tip
   const getSubjectTip = () => {
@@ -40,61 +67,76 @@ export default function UnifiedParentBanner({
       return 'Trace in air + say the sound.';
     } else if (mode === 'comprehension' || mode === 'hanuman') {
       return 'One-line re-tell before Next.';
+    } else if (mode === 'english') {
+      return 'Have them read it again.';
     }
     return '';
   };
   
-  // Determine actionable cue and styling
-  let actionableCue = '';
-  let bannerColor = 'rgba(59, 130, 246, 0.08)';
-  let borderColor = 'rgba(59, 130, 246, 0.2)';
-  let textColor = '#1e40af';
-  
-  // Answer feedback takes priority
-  if (lastAnswer === 'correct') {
-    const tip = getSubjectTip();
-    actionableCue = tip ? `Good! ${tip}` : 'Good! Click Next.';
-    bannerColor = 'rgba(34, 197, 94, 0.08)';
-    borderColor = 'rgba(34, 197, 94, 0.2)';
-    textColor = '#15803d';
-  } else if (lastAnswer === 'wrong') {
-    const tip = getSubjectTip();
-    actionableCue = tip ? `Say it once, then Next. ${tip}` : 'Say it once, then Next—we\'ll repeat it soon.';
-    bannerColor = 'rgba(251, 146, 60, 0.08)';
-    borderColor = 'rgba(251, 146, 60, 0.2)';
-    textColor = '#c2410c';
-  } else {
-    // No answer yet - show performance-based cue
-    if (showRepeatExplanation && revealCount >= 3) {
-      actionableCue = 'Tricky—keep going. ' + (getSubjectTip() || 'We\'ll practice this more.');
-      bannerColor = 'rgba(245, 158, 11, 0.1)';
-      borderColor = 'rgba(245, 158, 11, 0.25)';
-      textColor = '#b45309';
-    } else if (totalAttempts === 0) {
-      const tip = getSubjectTip();
-      actionableCue = tip ? `First try—${tip}` : (mode ? getSubjectParentInstruction(mode) : 'First try.');
-    } else if (revealCount >= 3) {
-      actionableCue = 'Tricky—keep going. ' + (getSubjectTip() || 'We\'ll practice this more.');
-      bannerColor = 'rgba(239, 68, 68, 0.08)';
-      borderColor = 'rgba(239, 68, 68, 0.2)';
-      textColor = '#dc2626';
-    } else if (totalAttempts >= 2 && accuracyRate > 0.8) {
-      actionableCue = 'Steady recall. ' + (getSubjectTip() || 'Great work!');
-      bannerColor = 'rgba(34, 197, 94, 0.08)';
-      borderColor = 'rgba(34, 197, 94, 0.2)';
-      textColor = '#16a34a';
-    } else if (totalAttempts >= 2 && accuracyRate < 0.4) {
-      actionableCue = 'Needs practice. ' + (getSubjectTip() || 'We\'ll repeat this more.');
-      bannerColor = 'rgba(251, 146, 60, 0.08)';
-      borderColor = 'rgba(251, 146, 60, 0.2)';
-      textColor = '#ea580c';
-    } else if (totalAttempts >= 2) {
-      actionableCue = 'Building mastery. ' + (getSubjectTip() || 'Keep going!');
-    } else {
-      const tip = getSubjectTip();
-      actionableCue = tip || (mode ? getSubjectParentInstruction(mode) : 'Let\'s practice.');
+  // Map domain urgency to visual styling (presentation logic only)
+  const getStylesForUrgency = (urgency: 'success' | 'warning' | 'info') => {
+    switch (urgency) {
+      case 'success':
+        return {
+          bannerColor: 'rgba(34, 197, 94, 0.08)',
+          borderColor: 'rgba(34, 197, 94, 0.2)',
+          textColor: '#15803d'
+        };
+      case 'warning':
+        return {
+          bannerColor: 'rgba(251, 146, 60, 0.08)',
+          borderColor: 'rgba(251, 146, 60, 0.2)',
+          textColor: '#c2410c'
+        };
+      case 'info':
+      default:
+        return {
+          bannerColor: 'rgba(59, 130, 246, 0.08)',
+          borderColor: 'rgba(59, 130, 246, 0.2)',
+          textColor: '#1e40af'
+        };
     }
-  }
+  };
+
+  const styles = getStylesForUrgency(parentGuidance.urgency);
+  const highlightPalettes = {
+    success: {
+      border: 'rgba(34, 197, 94, 0.45)',
+      glow: 'rgba(34, 197, 94, 0.28)',
+      badge: '#22c55e'
+    },
+    warning: {
+      border: 'rgba(249, 115, 22, 0.45)',
+      glow: 'rgba(249, 115, 22, 0.28)',
+      badge: '#fb923c'
+    },
+    info: {
+      border: 'rgba(59, 130, 246, 0.45)',
+      glow: 'rgba(59, 130, 246, 0.28)',
+      badge: '#3b82f6'
+    }
+  } as const;
+
+  const negativePalette = {
+    border: 'rgba(248, 113, 113, 0.55)',
+    glow: 'rgba(248, 113, 113, 0.32)',
+    badge: '#ef4444'
+  };
+
+  const latestResult = lastAttempt?.result === 'wrong' ? 'wrong' : lastAttempt ? 'correct' : null;
+  const paletteKey = parentGuidance.urgency in highlightPalettes ? parentGuidance.urgency : 'info';
+  const basePalette = highlightPalettes[paletteKey];
+  const appliedPalette = latestResult === 'wrong' ? negativePalette : basePalette;
+
+  const bannerBorderColor = isHighlighted ? appliedPalette.border : styles.borderColor;
+  const bannerShadow = isHighlighted
+    ? `0 18px 36px ${appliedPalette.glow}`
+    : '0 2px 8px rgba(0,0,0,0.05)';
+  const updateBadgeColor = appliedPalette.badge;
+
+  // Append subject-specific tip to domain message if available
+  const tip = getSubjectTip();
+  const actionableCue = tip ? `${parentGuidance.message}. ${tip}` : parentGuidance.message;
 
   const handleDismiss = () => {
     if (onDismiss) {
@@ -104,11 +146,11 @@ export default function UnifiedParentBanner({
 
   return (
     <div
-      key={`${lastAnswer}-${totalAttempts}`}
+      key={`${lastAnswer}-${attempts.length}`}
       data-testid="unified-parent-banner"
       style={{
-        background: bannerColor,
-        border: `1px solid ${borderColor}`,
+        background: styles.bannerColor,
+        border: `1px solid ${bannerBorderColor}`,
         borderRadius: 12,
         padding: '10px 16px',
         margin: '8px 12px',
@@ -119,12 +161,39 @@ export default function UnifiedParentBanner({
         gap: '12px',
         fontSize: '0.8rem',
         fontWeight: 600,
-        color: textColor,
+        color: styles.textColor,
         minHeight: '44px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+        boxShadow: bannerShadow,
         animation: lastAnswer ? 'bannerHighlight 300ms ease-out' : 'none',
+        position: 'relative',
+        overflow: 'visible',
+        transform: isHighlighted ? 'translateY(-2px)' : 'translateY(0)',
+        transition: 'box-shadow 220ms ease-out, transform 220ms ease-out, border-color 220ms ease-out'
       }}
     >
+      {showUpdateCue && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: -6,
+            left: '50%',
+            transform: 'translate(-50%, 100%)',
+            padding: '3px 12px',
+            borderRadius: 999,
+            background: updateBadgeColor,
+            color: '#fff',
+            fontSize: '0.65rem',
+            fontWeight: 700,
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+            boxShadow: '0 6px 16px rgba(15, 23, 42, 0.18)',
+            pointerEvents: 'none',
+            whiteSpace: 'nowrap'
+          }}
+        >
+          New guidance
+        </div>
+      )}
       {/* Left: Session progress with clear label */}
       {sessionProgress && sessionProgress.total > 0 && (
         <div style={{
@@ -138,43 +207,63 @@ export default function UnifiedParentBanner({
         </div>
       )}
       
-      {/* Center: Actionable message (primary) */}
+      {/* Center: Actionable message (from domain) */}
       <div style={{ 
         flex: '1 1 auto',
         lineHeight: 1.3,
         fontSize: '0.85rem',
         textAlign: 'center',
-        minWidth: '200px'
+        minWidth: '200px',
+        transition: 'opacity 220ms ease-out, transform 220ms ease-out',
+        opacity: isHighlighted ? 1 : 0.92,
+        transform: isHighlighted ? 'translateY(-1px)' : 'translateY(0)'
       }}>
         {actionableCue}
       </div>
       
       {/* Right: Visual timeline showing attempt history */}
-      {timeline && timeline.length > 0 && (
-        <div style={{
-          fontSize: '0.8rem',
-          letterSpacing: '3px',
-          fontFamily: 'monospace',
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          maxWidth: '100px',
-          flexShrink: 0,
-          display: 'flex',
-          gap: '3px'
-        }}>
-          {recentAttempts.map((attempt, idx) => (
+      <div style={{
+        fontSize: '1.8rem',
+        letterSpacing: '2px',
+        fontFamily: 'monospace',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        minWidth: '140px',
+        maxWidth: '140px',
+        flexShrink: 0,
+        display: 'flex',
+        gap: '8px',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        paddingRight: '4px'
+      }}>
+        {recentAttempts.length > 0 ? (
+          recentAttempts.map((attempt, idx) => (
             <span 
               key={idx} 
               style={{ 
-                color: attempt.result === 'correct' ? '#16a34a' : '#dc2626',
-                fontWeight: 600
+                color: attempt.result === 'correct' ? '#22c55e' : '#f87171',
+                fontWeight: 600,
+                opacity: isHighlighted && idx === recentAttempts.length - 1 ? 1 : 0.92,
+                textShadow: isHighlighted && idx === recentAttempts.length - 1
+                  ? `0 0 12px ${appliedPalette.glow}`
+                  : 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '1.2em',
+                height: '1.2em',
+                transform: isHighlighted && idx === recentAttempts.length - 1 ? 'scale(1.3)' : 'scale(1)',
+                transition: 'transform 180ms ease-out, opacity 180ms ease-out, text-shadow 180ms ease-out'
               }}
             >
               {attempt.result === 'correct' ? '✓' : '✗'}
             </span>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <span style={{ opacity: 0 }}>···</span>
+        )}
+      </div>
       
       {/* Dismiss button for repeat explanation */}
       {showRepeatExplanation && onDismiss && (
@@ -191,7 +280,7 @@ export default function UnifiedParentBanner({
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            color: textColor,
+            color: styles.textColor,
             fontSize: '0.7rem',
             flexShrink: 0,
             marginLeft: 'auto'

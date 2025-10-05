@@ -14,6 +14,22 @@ import { WordId } from '../value-objects/WordId';
 import { LearnerId } from '../value-objects/LearnerId';
 import { MasteryEvent } from '../events/MasteryEvent';
 
+/**
+ * Parent guidance value object
+ * 
+ * Represents the coaching message parents should see to guide their child.
+ * This is a domain concept - the system "knows" what message is appropriate
+ * based on learning progress state.
+ */
+export interface ParentGuidance {
+  /** The message text to display to the parent */
+  message: string;
+  /** Urgency level affects visual styling (success=green, warning=orange, info=blue) */
+  urgency: 'success' | 'warning' | 'info';
+  /** Context identifier for analytics/testing - not displayed to user */
+  context: string;
+}
+
 export class ProgressTracker {
   private wordId: WordId;
   private learnerId: LearnerId;
@@ -203,6 +219,125 @@ export class ProgressTracker {
 
     // Check if there's at least one wrong attempt in history
     return this.attempts.some(attempt => !attempt.isCorrect());
+  }
+
+  /**
+   * 🎯 BUSINESS LOGIC: Get parent guidance message
+   * 
+   * Returns contextual coaching message for parents based on the child's
+   * CURRENT progress state (from Redux/domain state).
+   * 
+   * This follows trace-based architecture: read current state, return guidance.
+   * No temporal coupling, no predictive logic, single source of truth.
+   * 
+   * Business rules:
+   * - Uses progress (step) and attempts array as source of truth
+   * - Most recent attempt determines context (correct/wrong feedback)
+   * - progress 2+: at or approaching mastery
+   * - High reveal count: struggling, needs different approach
+   * 
+   * @returns ParentGuidance with message and urgency level
+   */
+  getParentGuidance(): ParentGuidance {
+    const totalAttempts = this.attempts.length;
+    const correctCount = this.attempts.filter(a => a.isCorrect()).length;
+    const accuracyRate = totalAttempts > 0 ? correctCount / totalAttempts : 0;
+    
+    // Check most recent attempt for contextual feedback
+    const lastAttempt = totalAttempts > 0 ? this.attempts[totalAttempts - 1] : null;
+
+    // Context: Most recent attempt was correct
+    if (lastAttempt?.isCorrect()) {
+      if (this.progress >= 2) {
+        // At or beyond mastery threshold
+        return {
+          message: 'Mastered — celebrate and move on',
+          urgency: 'success',
+          context: 'mastered'
+        };
+      }
+      if (totalAttempts === 1) {
+        // First attempt and it was correct
+        return {
+          message: 'Great! First correct — try once more to lock it in',
+          urgency: 'success',
+          context: 'first-success'
+        };
+      }
+      // General correct answer
+      return {
+        message: 'Good job. One more repetition will help',
+        urgency: 'success',
+        context: 'correct-progress'
+      };
+    }
+
+    // Context: Most recent attempt was wrong
+    if (lastAttempt && !lastAttempt.isCorrect()) {
+      if (totalAttempts === 1) {
+        // First attempt was wrong
+        return {
+          message: 'First try — show them the answer, then try together',
+          urgency: 'info',
+          context: 'first-attempt-wrong'
+        };
+      }
+      if (accuracyRate < 0.4) {
+        // Low accuracy indicates struggle
+        return {
+          message: 'This one needs practice — break it into steps',
+          urgency: 'warning',
+          context: 'needs-practice'
+        };
+      }
+      // General wrong answer
+      return {
+        message: 'Try once more together',
+        urgency: 'info',
+        context: 'retry-needed'
+      };
+    }
+
+    // Context: No attempts yet (or between questions)
+    if (this.revealCount >= 3) {
+      return {
+        message: 'Tricky. Keep going — we\'ll practice this more',
+        urgency: 'warning',
+        context: 'struggling'
+      };
+    }
+    
+    if (totalAttempts === 0) {
+      return {
+        message: 'First try',
+        urgency: 'info',
+        context: 'initial'
+      };
+    }
+
+    // Performance-based feedback (when no recent attempt context)
+    if (totalAttempts >= 2 && accuracyRate > 0.8) {
+      return {
+        message: `Steady recall (${Math.round(accuracyRate * 100)}%)`,
+        urgency: 'success',
+        context: 'strong-performance'
+      };
+    }
+
+    if (totalAttempts >= 2 && accuracyRate < 0.4) {
+      return {
+        message: `Needs practice (${Math.round(accuracyRate * 100)}%)`,
+        urgency: 'warning',
+        context: 'weak-performance'
+      };
+    }
+
+    // Default: building mastery
+    return {
+      message: 'Building mastery',
+      urgency: 'info',
+      context: 'in-progress'
+    };
   }
 
   /**

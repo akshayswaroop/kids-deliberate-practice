@@ -1,6 +1,7 @@
+import React from 'react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import PracticeCard from '../PracticeCard.jsx';
 import type { PracticeCardProps } from '../PracticeCard';
 
@@ -35,6 +36,13 @@ class FakeAudio {
   load() {}
 }
 
+function createAttemptStats(history: Array<{ result: 'correct' | 'wrong' }>) {
+  const total = history.length;
+  const correct = history.filter(a => a.result === 'correct').length;
+  const incorrect = total - correct;
+  return { total, correct, incorrect };
+}
+
 describe('PracticeCard interaction locking', () => {
   const originalAudio = globalThis.Audio;
 
@@ -55,6 +63,33 @@ describe('PracticeCard interaction locking', () => {
     onNext: () => {},
   };
 
+  function PracticeCardHarness(props: Partial<PracticeCardProps>) {
+    const [history, setHistory] = React.useState<Array<{ timestamp: number; result: 'correct' | 'wrong' }>>([]);
+
+    const handleCorrect = () => {
+      props.onCorrect?.();
+      setHistory(prev => [...prev, { timestamp: Date.now(), result: 'correct' }]);
+    };
+
+    const handleWrong = () => {
+      props.onWrong?.();
+      setHistory(prev => [...prev, { timestamp: Date.now(), result: 'wrong' }]);
+    };
+
+    return (
+    <PracticeCard
+      {...baseStaticProps}
+      {...props}
+      onCorrect={handleCorrect}
+      onWrong={handleWrong}
+      attemptHistory={history}
+      attemptStats={createAttemptStats(history)}
+      animationDurationMs={20}
+      isAnswerRevealed={history.length > 0}
+    />
+  );
+}
+
   beforeEach(() => {
     vi.stubEnv('MODE', 'development');
     globalThis.Audio = FakeAudio as unknown as typeof Audio;
@@ -73,8 +108,7 @@ describe('PracticeCard interaction locking', () => {
     const onReveal = vi.fn();
 
     render(
-      <PracticeCard
-        {...baseStaticProps}
+      <PracticeCardHarness
         onCorrect={onCorrect}
         onWrong={onWrong}
         onNext={onNext}
@@ -91,18 +125,19 @@ describe('PracticeCard interaction locking', () => {
     expect(reveal).not.toBeDisabled();
 
     fireEvent.click(correct);
-
     expect(correct).toBeDisabled();
     expect(wrong).toBeDisabled();
     expect(reveal).toBeDisabled();
 
-    // Wait for Next button to appear after animation
-    const nextButton = await screen.findByTestId('btn-next');
-    expect(nextButton).toBeInTheDocument();
+    // Wait for Next button to become enabled after animation (2.5s)
+    const nextButton = screen.getByTestId('btn-next');
+    await waitFor(() => {
+      expect(nextButton).toBeEnabled();
+    });
     
-    // Correct/wrong buttons should be hidden when Next button appears
-    expect(screen.queryByTestId('btn-correct')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('btn-wrong')).not.toBeInTheDocument();
+    // Correct/wrong buttons should be disabled when Next button is enabled (they stay visible)
+    expect(screen.queryByTestId('btn-correct')).toBeDisabled();
+    expect(screen.queryByTestId('btn-wrong')).toBeDisabled();
     
     // Click Next button to progress
     fireEvent.click(nextButton);
@@ -112,8 +147,7 @@ describe('PracticeCard interaction locking', () => {
   it('keeps reveal button inactive while interaction is locked', () => {
     const onReveal = vi.fn();
     render(
-      <PracticeCard
-        {...baseStaticProps}
+      <PracticeCardHarness
         onCorrect={vi.fn()}
         onWrong={vi.fn()}
         onNext={vi.fn()}
@@ -138,8 +172,7 @@ describe('PracticeCard interaction locking', () => {
     const onReveal = vi.fn();
 
     render(
-      <PracticeCard
-        {...baseStaticProps}
+      <PracticeCardHarness
         onCorrect={onCorrect}
         onWrong={onWrong}
         onNext={onNext}
@@ -152,18 +185,19 @@ describe('PracticeCard interaction locking', () => {
     const reveal = screen.getByTestId('btn-reveal');
 
     fireEvent.click(wrong);
-
     expect(correct).toBeDisabled();
     expect(wrong).toBeDisabled();
     expect(reveal).toBeDisabled();
 
-    // Wait for Next button to appear after animation
-    const nextButton = await screen.findByTestId('btn-next');
-    expect(nextButton).toBeInTheDocument();
+    // Wait for Next button to become enabled after animation (2.5s)
+    const nextButton = screen.getByTestId('btn-next');
+    await waitFor(() => {
+      expect(nextButton).toBeEnabled();
+    });
     
-    // Correct/wrong buttons should be hidden when Next button appears
-    expect(screen.queryByTestId('btn-correct')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('btn-wrong')).not.toBeInTheDocument();
+    // Correct/wrong buttons should be disabled when Next button is enabled (they stay visible)
+    expect(screen.queryByTestId('btn-correct')).toBeDisabled();
+    expect(screen.queryByTestId('btn-wrong')).toBeDisabled();
     
     // Click Next button to progress
     fireEvent.click(nextButton);

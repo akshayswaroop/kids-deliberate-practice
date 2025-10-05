@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from './infrastructure/store';
 
 async function bootstrap() {
-  const shouldInstallTestBridge = import.meta.env.MODE === 'test';
+  const shouldInstallTestBridge = import.meta.env.MODE === 'test' || import.meta.env.MODE === 'development';
   if (shouldInstallTestBridge) {
     const { installTestBridge } = await import('./app/testBridge');
     installTestBridge();

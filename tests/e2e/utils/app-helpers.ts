@@ -11,7 +11,6 @@ export async function gotoAppWithFreshStorage(page: Page) {
   await page.reload();
   await page.waitForLoadState('domcontentloaded');
   await page.waitForFunction(() => typeof (window as any).__seedState === 'function');
-  // (no auto-dismiss here) leave overlay handling to tests via dismissPracticeIntroIfPresent
 }
 
 export async function clickWhenEnabled(locator: Locator) {
@@ -20,195 +19,154 @@ export async function clickWhenEnabled(locator: Locator) {
   await locator.click();
 }
 
-export async function dismissPracticeIntroIfPresent(page: Page) {
-  const overlay = page.getByTestId('practice-intro-overlay');
-  if ((await overlay.count()) === 0) {
-    return;
-  }
-
-  if (!(await overlay.isVisible())) {
-    return;
-  }
-
-  const skipButton = page.getByRole('button', { name: /Skip/i });
-  let skipVisible = false;
-  try {
-    skipVisible = await skipButton.isVisible();
-  } catch {
-    skipVisible = false;
-  }
-
-  if (skipVisible) {
-    await skipButton.click();
-  } else {
-    const startButton = page.getByRole('button', { name: /Start/i });
-    let startVisible = false;
-    try {
-      startVisible = await startButton.isVisible();
-    } catch {
-      startVisible = false;
-    }
-    if (startVisible) {
-      await startButton.click();
-    }
-  }
-
-  await expect(overlay).toBeHidden();
-
-  // Also dismiss session start overlay if present (new session framing overlay)
-  const sessionStart = page.getByTestId('session-start-card');
-  try {
-    if ((await sessionStart.count()) > 0 && (await sessionStart.isVisible())) {
-      // Try matching the Start Practice button label
-      const startBtn = page.getByRole('button', { name: /Start Practice/i });
-      if (await startBtn.count() > 0) {
-        await startBtn.click();
-        await expect(sessionStart).toBeHidden();
-      } else {
-        // Fallback: click any visible button inside the overlay
-        const btns = sessionStart.locator('button');
-        if ((await btns.count()) > 0) {
-          await btns.first().click();
-          await expect(sessionStart).toBeHidden();
-        }
-      }
-    }
-  } catch (e) {
-    // Ignore errors here; helper should be resilient in CI/local runs
-  }
-
-  // Dismiss session end overlay if present (can appear when session is already complete)
-  const sessionEnd = page.getByTestId('session-end-card');
-  try {
-    // Try dismissing now and also retry a few times in case the overlay appears shortly after
-    const tryDismissSessionEnd = async () => {
-      if ((await sessionEnd.count()) === 0) return false;
-      if (!(await sessionEnd.isVisible())) return false;
-
-      const endBtns = sessionEnd.locator('button');
-      if ((await endBtns.count()) > 0) {
-        try {
-          await endBtns.first().click();
-        } catch {
-          // ignore click errors and fallback
-        }
-        try {
-          await expect(sessionEnd).toBeHidden({ timeout: 500 }).catch(() => {});
-        } catch {}
-        if (!(await sessionEnd.isVisible())) return true;
-      }
-
-      // Fallback: try role/text match
-      const continueBtn = page.getByRole('button', { name: /Continue Practice|New Session|Continue/i });
-      if ((await continueBtn.count()) > 0) {
-        try {
-          await continueBtn.first().click();
-        } catch {}
-        try {
-          await expect(sessionEnd).toBeHidden({ timeout: 500 }).catch(() => {});
-        } catch {}
-        if (!(await sessionEnd.isVisible())) return true;
-      }
-
-      return false;
-    };
-
-    if (await tryDismissSessionEnd()) {
-      // dismissed immediately
+export async function dismissPracticeIntroIfPresent(page: Page): Promise<void> {
+  console.log('🔄 Checking for overlays to dismiss...');
+  
+  // First, dismiss practice-intro-overlay (if present) as it can block other UI elements
+  const practiceIntroOverlay = page.getByTestId('practice-intro-overlay');
+  if (await practiceIntroOverlay.isVisible()) {
+    console.log('✅ Found practice-intro-overlay, dismissing...');
+    
+    // Look for start practice button
+    const startBtn = practiceIntroOverlay.getByRole('button', { name: /start practice|begin|continue/i });
+    
+    if (await startBtn.isVisible()) {
+      await startBtn.click();
     } else {
-      // retry a few times as the overlay may appear slightly later
-      for (let i = 0; i < 6; i++) {
-        await page.waitForTimeout(150);
-        if (await tryDismissSessionEnd()) break;
-        try {
-          // Try hitting Escape and clicking center to close any modals
-          await page.keyboard.press('Escape');
-          const vp = page.viewportSize();
-          const cx = vp && vp.width ? Math.floor(vp.width / 2) : 100;
-          const cy = vp && vp.height ? Math.floor(vp.height / 2) : 100;
-          await page.mouse.click(cx, cy);
-        } catch {}
+      // Fallback: try any button in the overlay
+      const buttons = practiceIntroOverlay.locator('button');
+      const buttonCount = await buttons.count();
+      if (buttonCount > 0) {
+        await buttons.first().click();
       }
     }
-  } catch (e) {
-    // ignore errors; best-effort dismissal only
+    
+    // Wait for the overlay to disappear
+    await practiceIntroOverlay.waitFor({ state: 'hidden', timeout: 5000 });
+    console.log('✅ practice-intro-overlay dismissed');
   }
 
-  // If practice-root still not visible, try sending Escape and clicking overlay backdrop as a last resort
-  try {
-    await page.keyboard.press('Escape');
-    // Click center of viewport to dismiss any modal that closes on backdrop click
-    const vp = page.viewportSize();
-    const cx = vp && vp.width ? Math.floor(vp.width / 2) : 100;
-    const cy = vp && vp.height ? Math.floor(vp.height / 2) : 100;
-    await page.mouse.click(cx, cy);
-  } catch (e) {
-    // ignore
+  // Then check for session-end-card (appears after completing words)
+  const sessionEndOverlay = page.getByTestId('session-end-card');
+  if (await sessionEndOverlay.isVisible()) {
+    console.log('✅ Found session-end-card overlay, dismissing...');
+    
+    // Try to find a continue or new session button
+    const continueBtn = sessionEndOverlay.getByRole('button', { name: /continue|new session/i });
+    
+    if (await continueBtn.isVisible()) {
+      await continueBtn.click();
+    } else {
+      // Fallback: click any button in the overlay
+      const buttons = sessionEndOverlay.locator('button');
+      const buttonCount = await buttons.count();
+      if (buttonCount > 0) {
+        await buttons.first().click();
+      }
+    }
+    
+    // Wait for the overlay to disappear
+    await sessionEndOverlay.waitFor({ state: 'hidden', timeout: 5000 });
+    console.log('✅ session-end-card dismissed');
   }
 
-  // Final fallback: if any of the overlays are still present and intercepting clicks, forcibly hide them
-  try {
-    await page.evaluate(() => {
-      const ids = ['practice-intro-overlay', 'session-start-card', 'session-end-card'];
-      ids.forEach((id) => {
-        const el = document.querySelector(`[data-testid="${id}"]`) as HTMLElement | null;
-        if (el) {
-          try {
-            el.style.display = 'none';
-            el.style.pointerEvents = 'none';
-            el.setAttribute('data-e2e-forced-hidden', '1');
-          } catch (e) {
-            // ignore
-          }
-        }
-      });
-      // Also remove overlay-open class from body to unhide action buttons
-      document.body.classList.remove('overlay-open');
-    });
-  } catch (e) {
-    // ignore
-  }
+  console.log('✅ All overlays checked and dismissed if present');
+}
 
-  // Also install a short-lived MutationObserver that will hide any such overlays if they are
-  // added shortly after this helper runs. This avoids races where overlays appear after
-  // dismissal attempts and then intercept pointer events.
-  try {
-    await page.evaluate(() => {
-      // @ts-ignore
-      if ((window as any).__e2eOverlayHiderInstalled) return;
-      const hideOverlay = (el: Element) => {
-        try {
-          const ids = ['practice-intro-overlay', 'session-start-card', 'session-end-card'];
-          for (const id of ids) {
-            const match = el.matches && (el as Element).matches(`[data-testid="${id}"]`);
-            const found = match ? el as HTMLElement : (el.querySelector ? (el.querySelector(`[data-testid="${id}"]`) as HTMLElement | null) : null);
-            if (found) {
-              found.style.display = 'none';
-              found.style.pointerEvents = 'none';
-              found.setAttribute('data-e2e-forced-hidden', '1');
+// Alias for test code that expects this name
+export const ensurePracticeOverlayDismissed = dismissPracticeIntroIfPresent;
+
+// Helper to seed a single-word session for deterministic E2E tests
+export async function seedSingleWordSession(page: Page, word: { id: string; text: string; language: string; answer?: string; notes?: string }) {
+  // Wait for the test bridge to be available
+  await page.waitForFunction(() => typeof (window as any).__seedState === 'function');
+  
+  // Seed a complete, valid game state following the actual Redux schema
+  await page.evaluate(({ word }) => {
+    const userId = 'test-user';
+    const sessionId = 'test-session';
+    const mode = word.language || 'english';
+    
+    const gameState = {
+      users: {
+        [userId]: {
+          displayName: 'Test User',
+          words: {
+            [word.id]: {
+              id: word.id,
+              text: word.text,
+              language: word.language,
+              complexityLevel: 1,
+              answer: word.answer || '',
+              notes: word.notes || '',
+              attempts: [],
+              step: 0, // Starting step for new words
+              cooldownSessionsLeft: 0,
+              revealCount: 0,
+            },
+          },
+          sessions: {
+            [sessionId]: {
+              wordIds: [word.id],
+              currentIndex: 0,
+              revealed: false,
+              mode: mode,
+              createdAt: Date.now(),
+              settings: {
+                sessionSizes: { [mode]: 1 },
+                languages: [word.language],
+                complexityLevels: { [word.language]: 1 }
+              }
             }
+          },
+          activeSessions: {
+            [mode]: sessionId
+          },
+          currentMode: mode,
+          settings: {
+            sessionSizes: { [mode]: 1 },
+            languages: [word.language],
+            complexityLevels: { [word.language]: 1 }
+          },
+          experience: {
+            hasSeenIntro: true, // Skip intro for tests
+            coachmarks: { streak: true, profiles: true },
+            hasSeenParentGuide: true,
+            hasSeenWhyRepeat: true,
+            seenIntroVersion: '1.0.0'
           }
-        } catch (err) {
-          // ignore
         }
-      };
-
-      const mo = new MutationObserver((mutations) => {
-        for (const m of mutations) {
-          if (m.addedNodes && m.addedNodes.length) {
-            m.addedNodes.forEach((n) => {
-              if (n instanceof Element) hideOverlay(n);
-            });
-          }
-        }
-      });
-      mo.observe(document.body, { childList: true, subtree: true });
-      // automatically disconnect after a short window to avoid leaking observers in long tests
-      setTimeout(() => mo.disconnect(), 5000);
-      // @ts-ignore
-      window.__e2eOverlayHiderInstalled = true;
-    });
-  } catch (e) {
-    // ignore
+      },
+      currentUserId: userId
+    };
+    
+    // Seed the state
+    (window as any).__seedState(gameState);
+    
+    // Debug log
+    console.log('Seeded state, checking result:', (window as any).__readState?.());
+  }, { word });
+  
+  // Wait for the UI to be ready - fix: check state.game.currentUserId, not state.currentUserId
+  await page.waitForFunction(() => {
+    const state = (window as any).__readState?.();
+    return state?.game?.currentUserId === 'test-user';
+  });
+  
+  // Wait for practice UI to render, then dismiss any overlays
+  await page.waitForTimeout(500);
+  await dismissPracticeIntroIfPresent(page);
+  
+  // Start the practice session if we're on the ready screen
+  const startPracticeBtn = page.getByRole('button', { name: /start practice/i });
+  if (await startPracticeBtn.isVisible()) {
+    console.log('✅ Found Start Practice button, clicking...');
+    await startPracticeBtn.click();
+    
+    // Wait for practice screen to load and correct button to appear
+    await page.getByTestId('btn-correct').waitFor({ state: 'visible', timeout: 10000 });
+    console.log('✅ Practice session started successfully');
   }
+
+  console.log('✅ Single word session seeded successfully');
 }

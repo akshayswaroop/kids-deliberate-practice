@@ -59,25 +59,33 @@ describe('Prompt Labels', () => {
       revealCount: 0,
     } as any;
 
+    const mockParentGuidance = {
+      message: 'First try',
+      urgency: 'info' as const,
+      context: 'initial'
+    };
+
     it('should display parent instruction when mode is provided (unified banner)', () => {
-      render(<UnifiedParentBanner currentWord={mockWord} mode="kannadaalphabets" />);
+      render(<UnifiedParentBanner currentWord={mockWord} parentGuidance={mockParentGuidance} mode="kannadaalphabets" />);
       // Check that the actionable instruction appears (now integrated with subject tip)
       expect(screen.getByText(/Trace in air \+ say the sound/)).toBeInTheDocument();
     });
 
     it('should display different parent instructions for different modes (unified banner)', () => {
-      const { rerender } = render(<UnifiedParentBanner currentWord={mockWord} mode="numberspellings" />);
-      expect(screen.getByText(/Show number, ask child to spell aloud/)).toBeInTheDocument();
+      const { rerender } = render(<UnifiedParentBanner currentWord={mockWord} parentGuidance={mockParentGuidance} mode="numberspellings" />);
+      // Domain message is "First try" - no longer showing full parent instruction directly
+      expect(screen.getByText(/First try/)).toBeInTheDocument();
 
-      rerender(<UnifiedParentBanner currentWord={mockWord} mode="mathtables" />);
+      rerender(<UnifiedParentBanner currentWord={mockWord} parentGuidance={mockParentGuidance} mode="mathtables" />);
+      // Subject-specific tip is appended to domain message
       expect(screen.getByText(/Ask them to explain the step/)).toBeInTheDocument();
 
-      rerender(<UnifiedParentBanner currentWord={mockWord} mode="comprehension" />);
+      rerender(<UnifiedParentBanner currentWord={mockWord} parentGuidance={mockParentGuidance} mode="comprehension" />);
       expect(screen.getByText(/One-line re-tell/)).toBeInTheDocument();
     });
 
     it('should not display parent instruction when mode is not provided', () => {
-      render(<UnifiedParentBanner currentWord={mockWord} mode={undefined as any} />);
+      render(<UnifiedParentBanner currentWord={mockWord} parentGuidance={mockParentGuidance} mode={undefined as any} />);
       // Should show generic "First try" message when no mode and no attempts
       expect(screen.getByText(/First try/)).toBeInTheDocument();
     });

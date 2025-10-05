@@ -3,8 +3,10 @@
 
 import type { RootState, SessionStats } from './gameState';
 import type { Word } from './gameState';
+import type { ParentGuidance } from '../../domain/entities/ProgressTracker';
 import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
 import { ModeConfiguration } from '../config/modeConfiguration';
+import { ProgressTracker } from '../../domain/entities/ProgressTracker';
 
 // Step-based mastery calculation per new spec (0-5 where 5 = mastered)
 export function selectMasteryStep(state: RootState, wordId: string): number {
@@ -36,6 +38,94 @@ export function selectCurrentWord(state: RootState, sessionId: string): Word | u
   const wordId = session.wordIds[session.currentIndex];
   if (!wordId || !user.words[wordId]) return undefined;
   return user.words[wordId];
+}
+
+/**
+ * 🎯 DDD-Compliant Selector: Parent Guidance
+ * 
+ * Maps Redux state to domain entity and delegates business logic to the domain.
+ * Follows trace-based architecture: reads current state, no temporal coupling.
+ * 
+ * Architecture principle: "Selectors = DTOs only (never styled text)"
+ * - Selectors extract state and pass to domain
+ * - Domain calculates what message parent should see
+ * - UI receives plain data and displays it (no business logic)
+ * 
+ * NOTE: Memoized to prevent unnecessary React re-renders when returning same guidance.
+ * Cache key: userId_wordId_attemptCount_step_revealCount
+ * 
+ * @param state Redux root state
+ * @param wordId Current word ID
+ * @returns ParentGuidance DTO with message, urgency, and context
+ */
+const parentGuidanceCache = new Map<string, ParentGuidance>();
+
+export function selectParentGuidance(
+  state: RootState,
+  wordId: string
+): ParentGuidance {
+  if (!state.currentUserId) {
+    return {
+      message: 'First try',
+      urgency: 'info',
+      context: 'initial'
+    };
+  }
+
+  const user = state.users[state.currentUserId];
+  if (!user || !user.words[wordId]) {
+    return {
+      message: 'First try',
+      urgency: 'info',
+      context: 'initial'
+    };
+  }
+
+  const word = user.words[wordId];
+
+  // Create cache key based on state that affects guidance
+  const cacheKey = `${state.currentUserId}_${wordId}_${word.attempts?.length || 0}_${word.step || 0}_${word.revealCount || 0}`;
+  
+  console.log('[selectParentGuidance] Called with cache key:', cacheKey);
+  
+  // Return cached result if unchanged
+  const cached = parentGuidanceCache.get(cacheKey);
+  if (cached) {
+    console.log('[selectParentGuidance] Returning cached:', cached);
+    return cached;
+  }
+
+  console.log('[selectParentGuidance] Cache miss, computing new guidance');
+
+  // Reconstitute domain entity from state
+  const progressTracker = ProgressTracker.fromData({
+    wordId: word.id,
+    learnerId: state.currentUserId,
+    progress: word.step || 0,
+    attempts: (word.attempts || []).map(a => ({
+      timestamp: a.timestamp,
+      result: a.result
+    })),
+    cooldownSessionsLeft: 0,
+    masteryAchievedAt: undefined,
+    revealCount: word.revealCount || 0
+  });
+
+  // Delegate to domain entity - it knows the business rules
+  const guidance = progressTracker.getParentGuidance();
+  
+  console.log('[selectParentGuidance] Computed guidance:', guidance);
+  
+  // Cache the result
+  parentGuidanceCache.set(cacheKey, guidance);
+  
+  // Keep cache size reasonable (max 100 entries)
+  if (parentGuidanceCache.size > 100) {
+    const firstKey = parentGuidanceCache.keys().next().value;
+    if (firstKey) parentGuidanceCache.delete(firstKey);
+  }
+  
+  return guidance;
 }
 
 export function selectSessionProgress(
@@ -178,7 +268,7 @@ export function selectComplexityLevels(state: RootState): Record<string, number>
 export function selectShouldProgressLevel(state: RootState, language: string): boolean {
   if (!state.currentUserId) return false;
   const user = state.users[state.currentUserId];
-  if (!user) return false;
+  if (!user || !user.settings || !user.settings.complexityLevels) return false;
   
   const currentLevel = user.settings.complexityLevels[language] || 1;
   

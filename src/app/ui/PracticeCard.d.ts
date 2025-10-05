@@ -21,10 +21,12 @@ export interface PracticeCardProps {
     correct: number;
     incorrect: number;
   } | null;
+  attemptHistory?: Array<{ timestamp: number; result: 'correct' | 'wrong' }>;
   sessionProgress?: {
     current: number;
     total: number;
   };
+  animationDurationMs?: number;
 }
 
 export default function PracticeCard(props: PracticeCardProps): JSX.Element;
