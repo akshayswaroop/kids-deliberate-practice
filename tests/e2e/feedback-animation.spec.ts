@@ -29,7 +29,8 @@ test.describe('Feedback Animation and Button States', () => {
 
   test('banner reacts once and stays stable after a correct answer', async ({ page }) => {
     await correctButton(page).click();
-    await expect(banner(page)).not.toContainText('First try');
+    // After answering, session guidance is no longer shown, word guidance takes over
+    await expect(banner(page)).not.toContainText('Practice Set');
     await expect(banner(page)).toHaveText(/good|great|mastered/i);
   });
 

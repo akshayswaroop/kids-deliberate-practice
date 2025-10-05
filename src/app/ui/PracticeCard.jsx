@@ -135,6 +135,7 @@ export default function PracticeCard({
   sessionProgress = null,
   attemptHistory = [],
   animationDurationMs = 2500,
+  sessionGuidance = null,
   onStatusChange,
 }) {
   const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
@@ -299,10 +300,11 @@ export default function PracticeCard({
   const activeChoice = (choices || []).find(c => String(c.label) === String(mainWord));
   const activeProgress = Math.min(100, Math.max(0, (activeChoice && (typeof activeChoice.progress === 'number' ? activeChoice.progress : Number(activeChoice && activeChoice.progress))) || 0));
   const isMastered = activeProgress >= 100;
+  const isSessionComplete = sessionGuidance?.context === 'completion';
 
 
 
-  const interactionLocked = status !== 'idle';
+  const interactionLocked = status !== 'idle' || isMastered || isSessionComplete;
   const hasDetails = Boolean(answer || notes || (whyRepeat && !whyRepeatDismissed));
 
   return (
@@ -455,7 +457,7 @@ export default function PracticeCard({
           data-testid="btn-correct"
           variant="primary"
           onClick={() => {
-            if (status !== 'idle') return;
+            if (interactionLocked) return;
             if (isTestMode) {
               onCorrect && onCorrect();
               handleProgression();
@@ -464,11 +466,11 @@ export default function PracticeCard({
             setStatus('pending');
             onCorrect && onCorrect();
           }}
-          disabled={status !== 'idle'}
+          disabled={interactionLocked}
           aria-label="Kid answered correctly"
           style={{
-            opacity: status !== 'idle' ? 0.4 : 1,
-            cursor: status !== 'idle' ? 'not-allowed' : 'pointer'
+            opacity: interactionLocked ? 0.4 : 1,
+            cursor: interactionLocked ? 'not-allowed' : 'pointer'
           }}
         >
           <span role="img" aria-label="thumbs up">👍</span>
@@ -479,7 +481,7 @@ export default function PracticeCard({
           data-testid="btn-wrong"
           variant="secondary"
           onClick={() => {
-            if (status !== 'idle') return;
+            if (interactionLocked) return;
             if (isTestMode) {
               onWrong && onWrong();
               handleProgression();
@@ -488,11 +490,11 @@ export default function PracticeCard({
             setStatus('pending');
             onWrong && onWrong();
           }}
-          disabled={status !== 'idle'}
+          disabled={interactionLocked}
           aria-label="Kid needs another try"
           style={{
-            opacity: status !== 'idle' ? 0.4 : 1,
-            cursor: status !== 'idle' ? 'not-allowed' : 'pointer'
+            opacity: interactionLocked ? 0.4 : 1,
+            cursor: interactionLocked ? 'not-allowed' : 'pointer'
           }}
         >
           <span role="img" aria-label="try again">↺</span>
@@ -504,11 +506,11 @@ export default function PracticeCard({
           data-testid="btn-next"
           variant="primary"
           onClick={handleProgression}
-          disabled={status !== 'waiting'}
+          disabled={status !== 'waiting' || isMastered || isSessionComplete}
           aria-label="Move to next question"
           style={{
-            opacity: status !== 'waiting' ? 0.4 : 1,
-            cursor: status !== 'waiting' ? 'not-allowed' : 'pointer'
+            opacity: (status !== 'waiting' || isMastered || isSessionComplete) ? 0.4 : 1,
+            cursor: (status !== 'waiting' || isMastered || isSessionComplete) ? 'not-allowed' : 'pointer'
           }}
         >
           <span role="img" aria-label="next">→</span>

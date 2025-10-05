@@ -10,12 +10,11 @@ import { useState, useCallback } from 'react';
 import { useAppSelector } from '../../infrastructure/hooks/reduxHooks';
 // @ts-ignore
 import PracticeCard from './PracticeCard.jsx';
-import SessionStartCard from './SessionStartCard';
-import SessionEndCard from './SessionEndCard';
+
 import UnifiedParentBanner from './UnifiedParentBanner';
 import { usePracticeApplicationService } from '../providers/PracticeServiceProvider';
 import type { PracticePanelViewModel } from '../presenters/practicePresenter';
-import { selectParentGuidance } from '../../infrastructure/state/gameSelectors';
+import { selectParentGuidance, selectSessionGuidance } from '../../infrastructure/state/gameSelectors';
 
 interface EnhancedPracticePanelProps {
   practice: PracticePanelViewModel;
@@ -38,19 +37,20 @@ export default function EnhancedPracticePanel({
   currentUserId,
   onWhyRepeatAcknowledged,
 }: EnhancedPracticePanelProps) {
-  const { card, currentWordId, sessionFraming } = practice;
+  const { card, currentWordId, sessionFraming, sessionId } = practice;
   
-  // Local state for session framing
-  const [showSessionStart, setShowSessionStart] = useState(sessionFraming.showSessionStart);
-  const [showSessionEnd, setShowSessionEnd] = useState(sessionFraming.showSessionEnd);
+  // Local state for repeat banner
   const [showRepeatBanner, setShowRepeatBanner] = useState(sessionFraming.showRepeatExplanation);
   
-  // 🎯 DDD-Compliant: Get parent guidance from domain via selector
+  // 🎯 DDD-Compliant: Get session guidance first, then word guidance
   // Follows trace-based architecture: reads current Redux state only
-  // No temporal coupling, no local state dependencies
-  //
-  // IMPORTANT: We must subscribe to the actual word state that affects guidance
-  // so that useSelector triggers re-render when Redux state changes
+  // Session guidance takes priority for contextual messages
+  const sessionGuidance = useAppSelector(state => {
+    if (!sessionId) return null;
+    return selectSessionGuidance(state.game, sessionId);
+  });
+  
+  // Word-level guidance as fallback
   const parentGuidance = useAppSelector(state => {
     if (!currentWordId) {
       return { message: 'First try', urgency: 'info' as const, context: 'initial' as const };
@@ -67,17 +67,7 @@ export default function EnhancedPracticePanel({
   // 🎯 DDD Services (when enabled)
   const practiceService = usePracticeApplicationService();
 
-  // Session framing handlers
-  const handleSessionStart = () => {
-    setShowSessionStart(false);
-  };
-
-  const handleSessionContinue = () => {
-    setShowSessionEnd(false);
-    // This would typically trigger creation of a new session
-    onNext();
-  };
-
+  // Repeat banner handler
   const handleRepeatBannerDismiss = () => {
     setShowRepeatBanner(false);
     if (onWhyRepeatAcknowledged) {
@@ -130,32 +120,15 @@ export default function EnhancedPracticePanel({
 
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {/* Session Start Card */}
-      {showSessionStart && (
-        <SessionStartCard
-          totalQuestions={sessionFraming.sessionProgress.total}
-          onStart={handleSessionStart}
-        />
-      )}
-
-      {/* Session End Card */}
-      {showSessionEnd && sessionFraming.sessionStats && (
-        <SessionEndCard
-          masteredInSession={sessionFraming.sessionStats.masteredInSession}
-          practicedInSession={sessionFraming.sessionStats.practicedInSession}
-          yetToTry={sessionFraming.sessionStats.yetToTry}
-          onContinue={handleSessionContinue}
-          showMasteryAnimation={sessionFraming.sessionStats.masteredInSession > 0}
-        />
-      )}
 
       {/* 🎯 Domain Event Messages - banner removed as requested */}
 
-      {/* Unified Parent Banner - combines guidance and repeat explanation */}
+      {/* Unified Parent Banner - combines session guidance, word guidance and repeat explanation */}
       {card.currentWord && (
         <UnifiedParentBanner
           currentWord={card.currentWord}
           parentGuidance={parentGuidance}
+          sessionGuidance={sessionGuidance}
           showRepeatExplanation={showRepeatBanner}
           onDismiss={showRepeatBanner ? handleRepeatBannerDismiss : undefined}
           mode={mode}
@@ -184,6 +157,7 @@ export default function EnhancedPracticePanel({
           attemptStats={card.attempts}
           attemptHistory={card.currentWord?.attempts ?? []}
           sessionProgress={card.sessionProgress}
+          sessionGuidance={sessionGuidance}
         />
     </div>
   );

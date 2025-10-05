@@ -4,6 +4,7 @@
 import type { RootState, SessionStats } from './gameState';
 import type { Word } from './gameState';
 import type { ParentGuidance } from '../../domain/entities/ProgressTracker';
+import { SessionGuidance, type SessionGuidanceResult } from '../../domain/entities/SessionGuidance';
 import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
 import { ModeConfiguration } from '../config/modeConfiguration';
 import { ProgressTracker } from '../../domain/entities/ProgressTracker';
@@ -491,4 +492,107 @@ export function selectIsSessionFullyMastered(state: RootState, sessionId: string
 export function selectSessionSizeForMode(_state: RootState, _mode: string): number {
   // Use domain service default - can be enhanced to read user preferences
   return 12;
+}
+
+/**
+ * 🎯 DDD-Compliant Selector: Session Guidance
+ * 
+ * Provides session-level guidance to replace ReadyToPracticeCard modal.
+ * Delegates to SessionGuidance domain entity following the same pattern as selectParentGuidance.
+ * 
+ * Architecture principle: "Selectors = DTOs only (never styled text)"
+ * - Selectors extract state and pass to domain
+ * - Domain calculates what session-level message to show
+ * - UI receives plain data and displays it
+ * 
+ * @param state Redux root state
+ * @param sessionId Current session ID
+ * @returns SessionGuidanceResult or null if no session guidance needed
+ */
+const sessionGuidanceCache = new Map<string, SessionGuidanceResult | null>();
+
+export function selectSessionGuidance(
+  state: RootState,
+  sessionId: string
+): SessionGuidanceResult | null {
+  if (!state.currentUserId) {
+    return null;
+  }
+
+  const user = state.users[state.currentUserId];
+  if (!user || !user.sessions[sessionId]) {
+    return null;
+  }
+
+  const session = user.sessions[sessionId];
+  
+  // Create cache key based on session state that affects guidance
+  const masteredCount = session.wordIds.filter(wordId => {
+    const word = user.words[wordId];
+    return word && MasteryConfiguration.isMastered(word);
+  }).length;
+
+  // Include total attempts in cache key to invalidate when attempts change
+  const totalAttempts = session.wordIds.reduce((total, wordId) => {
+    const word = user.words[wordId];
+    return total + (word ? word.attempts.length : 0);
+  }, 0);
+  
+  const cacheKey = `${state.currentUserId}_${sessionId}_${session.currentIndex}_${masteredCount}_${totalAttempts}_${session.wordIds.length}`;
+  
+  // Return cached result if unchanged
+  const cached = sessionGuidanceCache.get(cacheKey);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  // Determine if all questions in set are mastered
+  const allQuestionsInSetMastered = session.wordIds.every(wordId => {
+    const word = user.words[wordId];
+    return word && MasteryConfiguration.isMastered(word);
+  });
+
+  // Check if there are more complexity levels available
+  // Look for unmastered words at higher complexity levels in the same language/mode
+  const currentLevel = user.settings.complexityLevels[session.mode || 'english'] || 1;
+  const hasWordsAtHigherLevels = Object.values(user.words).some(word => 
+    word.language === (session.mode || 'english') && 
+    word.complexityLevel > currentLevel &&
+    !MasteryConfiguration.isMastered(word)
+  );
+  const hasMoreLevels = hasWordsAtHigherLevels;
+
+  // Check if this is truly the first question ever in this session
+  // True only when at index 0 AND no words in session have any attempts yet
+  const isFirstQuestionEver = session.currentIndex === 0 && 
+    session.wordIds.every(wordId => {
+      const word = user.words[wordId];
+      return !word || word.attempts.length === 0;
+    });
+
+  // Reconstitute domain entity from state
+  const sessionGuidance = SessionGuidance.fromSessionData({
+    sessionId: sessionId,
+    currentQuestionIndex: session.currentIndex,
+    totalQuestions: session.wordIds.length,
+    masteredInSession: masteredCount,
+    allQuestionsInSetMastered,
+    hasMoreLevels,
+    subject: session.mode || 'english',
+    isFirstQuestionEver
+  });
+
+  // Delegate to domain entity
+  const guidance = sessionGuidance.getSessionGuidance();
+  
+  // Cache the result
+  sessionGuidanceCache.set(cacheKey, guidance);
+  
+  // Keep cache size reasonable (max 50 entries)
+  if (sessionGuidanceCache.size > 50) {
+    const firstKey = sessionGuidanceCache.keys().next().value;
+    if (firstKey) sessionGuidanceCache.delete(firstKey);
+  }
+  
+  return guidance;
 }

@@ -14,13 +14,15 @@ test.describe('Parent Banner Messages', () => {
       });
     });
 
-    await test.step('Initial state: should show "First try" message', async () => {
+    await test.step('Initial state: should show session introduction message', async () => {
       const banner = page.getByTestId('unified-parent-banner');
       await expect(banner).toBeVisible();
       
       const bannerText = await banner.textContent();
       console.log('Initial banner text:', bannerText);
-      expect(bannerText).toContain('First try');
+      // With the new session guidance priority, first question shows session introduction
+      expect(bannerText).toContain('Practice Set');
+      expect(bannerText).toContain('Master this question'); // Single question session
     });
 
     await test.step('After clicking correct: should show success message', async () => {
@@ -36,7 +38,8 @@ test.describe('Parent Banner Messages', () => {
         return state?.attempts?.length;
       }, { message: 'waiting for recorded attempt' }).toBe(1);
 
-      await expect(page.getByTestId('unified-parent-banner')).not.toContainText('First try');
+      // After answering, session guidance is no longer shown, word guidance takes over
+      await expect(page.getByTestId('unified-parent-banner')).not.toContainText('Practice Set');
     });
   });
 });

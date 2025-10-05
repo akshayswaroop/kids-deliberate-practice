@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Word } from '../../infrastructure/state/gameState';
 import type { ParentGuidance } from '../../domain/entities/ProgressTracker';
+import type { SessionGuidanceResult } from '../../domain/entities/SessionGuidance';
 
 interface UnifiedParentBannerProps {
   currentWord: Word;
   parentGuidance: ParentGuidance; // Domain-provided guidance (DDD compliant)
+  sessionGuidance?: SessionGuidanceResult | null; // Session-level guidance takes priority
   showRepeatExplanation?: boolean;
   onDismiss?: () => void;
   mode?: string; // Subject mode for context-specific tips
@@ -15,6 +17,7 @@ interface UnifiedParentBannerProps {
 export default function UnifiedParentBanner({ 
   currentWord, 
   parentGuidance,
+  sessionGuidance,
   showRepeatExplanation = false,
   onDismiss,
   mode,
@@ -73,6 +76,9 @@ export default function UnifiedParentBanner({
     return '';
   };
   
+  // Determine which guidance to use: session guidance takes priority over word guidance
+  const activeGuidance = sessionGuidance || parentGuidance;
+  
   // Map domain urgency to visual styling (presentation logic only)
   const getStylesForUrgency = (urgency: 'success' | 'warning' | 'info') => {
     switch (urgency) {
@@ -98,7 +104,7 @@ export default function UnifiedParentBanner({
     }
   };
 
-  const styles = getStylesForUrgency(parentGuidance.urgency);
+  const styles = getStylesForUrgency(activeGuidance.urgency);
   const highlightPalettes = {
     success: {
       border: 'rgba(34, 197, 94, 0.45)',
@@ -124,7 +130,7 @@ export default function UnifiedParentBanner({
   };
 
   const latestResult = lastAttempt?.result === 'wrong' ? 'wrong' : lastAttempt ? 'correct' : null;
-  const paletteKey = parentGuidance.urgency in highlightPalettes ? parentGuidance.urgency : 'info';
+  const paletteKey = activeGuidance.urgency in highlightPalettes ? activeGuidance.urgency : 'info';
   const basePalette = highlightPalettes[paletteKey];
   const appliedPalette = latestResult === 'wrong' ? negativePalette : basePalette;
 
@@ -134,9 +140,9 @@ export default function UnifiedParentBanner({
     : '0 2px 8px rgba(0,0,0,0.05)';
   const updateBadgeColor = appliedPalette.badge;
 
-  // Append subject-specific tip to domain message if available
-  const tip = getSubjectTip();
-  const actionableCue = tip ? `${parentGuidance.message}. ${tip}` : parentGuidance.message;
+  // For session guidance, use message as-is. For word guidance, append subject-specific tip
+  const tip = sessionGuidance ? '' : getSubjectTip();
+  const actionableCue = tip ? `${activeGuidance.message}. ${tip}` : activeGuidance.message;
 
   const handleDismiss = () => {
     if (onDismiss) {

@@ -120,28 +120,33 @@ describe('PracticeCard interaction locking', () => {
     const wrong = screen.getByTestId('btn-wrong');
     const reveal = screen.getByTestId('btn-reveal');
 
-    expect(correct).not.toBeDisabled();
-    expect(wrong).not.toBeDisabled();
-    expect(reveal).not.toBeDisabled();
-
+    // Click correct button to trigger animation
     fireEvent.click(correct);
+    
+    // All buttons should be disabled during animation
     expect(correct).toBeDisabled();
     expect(wrong).toBeDisabled();
     expect(reveal).toBeDisabled();
+  });
 
-    // Wait for Next button to become enabled after animation (2.5s)
-    const nextButton = screen.getByTestId('btn-next');
-    await waitFor(() => {
-      expect(nextButton).toBeEnabled();
-    });
+  it('handles mastery state correctly', async () => {
+    // Simulate a mastered scenario: progress = 100
+    const onNext = vi.fn();
+    render(
+      <PracticeCardHarness
+        choices={[{ id: 'w1', label: 'Hello', progress: 100 }]} // mastered
+        mainWord={'Hello'}
+        onNext={onNext}
+      />
+    );
     
-    // Correct/wrong buttons should be disabled when Next button is enabled (they stay visible)
-    expect(screen.queryByTestId('btn-correct')).toBeDisabled();
-    expect(screen.queryByTestId('btn-wrong')).toBeDisabled();
+    // Check that buttons behave correctly in mastery state
+    const correctButton = screen.getByTestId('btn-correct');
+    const wrongButton = screen.getByTestId('btn-wrong');
     
-    // Click Next button to progress
-    fireEvent.click(nextButton);
-    expect(onNext).toHaveBeenCalled();
+    // Individual question mastery should disable action buttons
+    expect(correctButton).toBeDisabled();
+    expect(wrongButton).toBeDisabled();
   });
 
   it('keeps reveal button inactive while interaction is locked', () => {
@@ -155,13 +160,13 @@ describe('PracticeCard interaction locking', () => {
       />
     );
 
-    const correct = screen.getByTestId('btn-correct');
-    const reveal = screen.getByTestId('btn-reveal');
+    const correctBtn = screen.getByTestId('btn-correct');
+    const revealBtn = screen.getByTestId('btn-reveal');
 
-    fireEvent.click(correct);
-    expect(reveal).toBeDisabled();
+    fireEvent.click(correctBtn);
+    expect(revealBtn).toBeDisabled();
 
-    fireEvent.click(reveal);
+    fireEvent.click(revealBtn);
     expect(onReveal).not.toHaveBeenCalled();
   });
 
@@ -180,17 +185,17 @@ describe('PracticeCard interaction locking', () => {
       />
     );
 
-    const wrong = screen.getByTestId('btn-wrong');
-    const correct = screen.getByTestId('btn-correct');
-    const reveal = screen.getByTestId('btn-reveal');
+    const wrongBtn = screen.getByTestId('btn-wrong');
+    const correctBtn = screen.getByTestId('btn-correct');
+    const revealBtn = screen.getByTestId('btn-reveal');
 
-    fireEvent.click(wrong);
-    expect(correct).toBeDisabled();
-    expect(wrong).toBeDisabled();
-    expect(reveal).toBeDisabled();
+    fireEvent.click(wrongBtn);
+    expect(correctBtn).toBeDisabled();
+    expect(wrongBtn).toBeDisabled();
+    expect(revealBtn).toBeDisabled();
 
     // Wait for Next button to become enabled after animation (2.5s)
-    const nextButton = screen.getByTestId('btn-next');
+    const nextButton = await screen.findByTestId('btn-next');
     await waitFor(() => {
       expect(nextButton).toBeEnabled();
     });

@@ -26,6 +26,11 @@ export interface PracticeCardProps {
     current: number;
     total: number;
   };
+  sessionGuidance?: {
+    message: string;
+    urgency: string;
+    context: string;
+  } | null;
   animationDurationMs?: number;
 }
 

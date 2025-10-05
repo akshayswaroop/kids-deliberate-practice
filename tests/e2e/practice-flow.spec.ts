@@ -55,7 +55,7 @@ test.describe('Story: Practicing a seeded word', () => {
       await dismissPracticeIntroIfPresent(page);
       // As an immediate last-resort, forcibly hide any overlay elements and remove overlay-open class
       await page.evaluate(() => {
-        const ids = ['practice-intro-overlay', 'session-start-card', 'session-end-card'];
+        const ids = ['practice-intro-overlay']; // Removed ready-to-practice-card and session-end-card as they no longer exist
         ids.forEach((id) => {
           const el = document.querySelector(`[data-testid="${id}"]`) as HTMLElement | null;
           if (el) {

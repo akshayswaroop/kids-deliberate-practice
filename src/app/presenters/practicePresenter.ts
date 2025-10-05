@@ -8,14 +8,12 @@ import {
   selectGuidanceExperience,
   selectSessionProgress,
   selectSessionStats,
-  selectIsSessionComplete,
 } from '../../infrastructure/state/gameSelectors';
 import type { RootState as GameState, UserState, SessionStats } from '../../infrastructure/state/gameState';
 import { INTRO_TOUR_VERSION } from '../../infrastructure/config/guidance';
 
 export interface SessionFramingViewModel {
-  showSessionStart: boolean;
-  showSessionEnd: boolean;
+  showReadyToPractice: boolean;
   sessionProgress: {
     current: number;
     total: number;
@@ -185,19 +183,15 @@ export function buildPracticeAppViewModel(params: {
   // Session framing logic
   const sessionProgress = sessionId ? selectSessionProgress(state, sessionId) : { current: 0, total: 0 };
   const sessionStats = sessionId ? selectSessionStats(state, sessionId) : null;
-  const isSessionComplete = sessionId ? selectIsSessionComplete(state, sessionId) : false;
   
-  // Determine when to show session start/end cards
+  // Determine when to show session start card and repeat explanation
   // Show session start when a new session is created (first question, index 0)
-  const showSessionStart = sessionId && sessionProgress.current === 1 && !practiceData.needsNewSession;
-  // Show session end when session is complete
-  const showSessionEnd = sessionId && isSessionComplete && !practiceData.needsNewSession;
+  const showReadyToPractice = sessionId && sessionProgress.current === 1 && !practiceData.needsNewSession;
   // Show repeat explanation for questions that have been revealed multiple times
   const showRepeatExplanation = shouldExplainRepeat;
 
   const sessionFraming: SessionFramingViewModel = {
-    showSessionStart: !!showSessionStart,
-    showSessionEnd: !!showSessionEnd,
+    showReadyToPractice: !!showReadyToPractice,
     sessionProgress,
     sessionStats,
     showRepeatExplanation,
