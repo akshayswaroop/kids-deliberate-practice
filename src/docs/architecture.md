@@ -1,101 +1,106 @@
-Trace-Driven Contracts with Redux
+# Kids Practice – Trace‑Driven Architecture Handbook
 
-Goal: Every UI action → traceable domain response. Tests check traces, not pixels.
+### Philosophy
+Build systems that reveal their reasoning. Every click, every update, should leave a trail you can replay. A good architecture isn’t just functional — it’s narratable.
 
-⸻
+---
 
-Core Loop
-	1.	UI dispatches intents (button, tap, etc.).
-	2.	Reducers update state (pure).
-	3.	Selectors project state → plain JSON view models.
-	4.	UI renders view model.
+## Core Loop
 
-⸻
+```text
+UI Intent → Reducer (pure) → State → Selector → ViewModel → UI Render
+```
 
-Trace Layer
-	•	Middleware records {intent, viewModel} for each dispatch.
-	•	Traces are immutable arrays, stored per session.
-	•	Invariants (e.g., “progress never negative”) run here.
+1. **UI dispatches intents** — user taps “Kid got it,” “Reveal,” or “Next.”  
+2. **Reducers update state** — pure, deterministic functions.  
+3. **Selectors** turn state into plain JSON view models (no styling).  
+4. **UI** simply renders the view model — never computes domain logic.
 
-⸻
+---
 
-Testing
-	•	Tests replay UI intents (dispatches).
-	•	Assert on final state + trace history.
-	•	No console logs, no Playwright; tests use traces as contracts.
+## Trace Layer
 
-⸻
+Each user action generates a **trace**:
 
-Principles
-	•	Reducers = pure functions, no time/random inside.
-	•	Selectors = DTOs only (never styled text).
-	•	Middleware = side effects only (storage, API, logging).
-	•	Trace = dev-only, can be persisted if debugging.
-	•	Adding a new subject should be a minimal change involving adding a question bank and a config change somewhere
-	• The core domain classes should have no knowledge about subject , also the UI should also not know anything about subjects
-	Principles of Change-Resilient Software
+```json
+{
+  "intent": "markCorrect",
+  "prevState": { ... },
+  "nextState": { ... },
+  "viewModel": { ... }
+}
+```
 
-(Promise → Controversy → Resolution)
+- Traces are immutable and stored per session.  
+- Middleware ensures every domain transition is auditable.  
+- Invariants like “progress ≥ 0” or “streak ≤ total” are validated here.  
 
-⸻
+This means debugging isn’t a log hunt — it’s story replay.
 
-1. Essence over Tools
-	•	Promise: Core rules outlive frameworks.
-	•	Controversy: Abstraction slows small teams.
-	•	Resolution: Abstract only at the seam: business rules pure, adapters thin. Don’t generalize what isn’t changing.
+---
 
-⸻
+## Testing Model
 
-2. One Source of Truth
-	•	Promise: Consistent data everywhere.
-	•	Controversy: Caches and replicas are duplications.
-	•	Resolution: One authoritative source, many read-optimized copies. Duplication is fine if authority is clear.
+We don’t test pixels. We test **traces**.
 
-⸻
+- Tests replay UI dispatches.  
+- Assertions check final state and trace sequence.  
+- No Playwright, no screenshots. Traces act as living contracts.  
 
-3. Pure Core
-	•	Promise: Deterministic, testable rules.
-	•	Controversy: Some domains need randomness.
-	•	Resolution: Keep randomness/time at the edge, inject as inputs. Core rules remain deterministic.
+**Outcome:** UI refactors become safe; logic remains provable.
 
-⸻
+---
 
-4. Sharp Boundaries
-	•	Promise: Tools can be swapped without breaking rules.
-	•	Controversy: Extra layers = boilerplate.
-	•	Resolution: Boundaries where churn is likely (DB, UI, API). Inline the rest until change pressures demand a seam.
+## Design Principles
 
-⸻
+### 1. Essence over Tools  
+Frameworks change; rules persist. Abstract only at the seam — business logic pure, adapters thin.
 
-5. Small & Clear
-	•	Promise: Easier onboarding, safer refactoring.
-	•	Controversy: Too many tiny files is worse than a few chunky ones.
-	•	Resolution: Split only when function is reused, exceeds mental load, or crosses responsibility.
+### 2. One Source of Truth  
+State lives in Redux. Selectors may project copies for the UI, but there’s one canonical state per session.
 
-⸻
+### 3. Pure Core  
+Reducers must be deterministic. Inject randomness or timestamps as explicit parameters, never hidden inside.
 
-6. Tests Buy Freedom
-	•	Promise: Outcome tests enable fearless refactoring.
-	•	Controversy: Internals (SQL, performance) sometimes matter.
-	•	Resolution: Majority outcome-based tests; sprinkle targeted internal tests for non-functional requirements.
+### 4. Sharp Boundaries  
+Domain → Store → UI. Side effects (storage, API, sound) stay at the edge.
 
-⸻
+### 5. Small & Clear  
+Split only when code exceeds mental load or crosses responsibility. Avoid fragmentation for its own sake.
 
-7. Trace Every Story
-	•	Promise: Debugging feels like following a timeline.
-	•	Controversy: Distributed/AI systems resist clean traces.
-	•	Resolution: Trace at the event level, not every detail. Logs/events make the system narratable without pretending it’s linear.
+### 6. Tests Buy Freedom  
+Traces are your insurance policy. The more complete they are, the more boldly you can refactor.
 
-⸻
+### 7. Trace Every Story  
+Debugging should feel like reading a diary. Every dispatch becomes part of the system’s narrative.
 
-8. Reversible by Design
-	•	Promise: Mistakes are cheap.
-	•	Controversy: Not everything is reversible (data loss, schema changes).
-	•	Resolution: Favor feature flags & incremental migrations. For irreversible changes: simulate, double-write, then cut over.
+### 8. Reversible by Design  
+Feature flags, incremental migrations, and testable rollbacks. Never paint the system into a corner.
 
-⸻
+### 9. Shippable & Honest  
+If a state can exist, represent it honestly. It’s fine if it looks ugly — lies in state lead to chaos later.
 
-9. Shippable & Honest
-	•	Promise: Safe deploys, honest states, user trust.
-	•	Controversy: Business sometimes favors speed over polish.
-	•	Resolution: Ship small, safe increments. Honest error states can be ugly but must exist; polish later.
+---
+
+## Example: End‑to‑End Flow
+
+```text
+UI tap ("Kid got it")
+   ↓
+Dispatch → reducer.markCorrect()
+   ↓
+state.progress += 1
+   ↓
+selector.getPracticeView() → JSON
+   ↓
+render(viewModel)
+   ↓
+trace.append({intent, state, viewModel})
+```
+
+Every loop leaves a breadcrumb. That’s the audit trail of learning.
+
+---
+
+### Closing Thought
+Software that can tell its own story is easier to trust, test, and teach.

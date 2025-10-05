@@ -137,11 +137,18 @@ During development you can open an interactive Diagnostics panel in the running 
 
 ## 🏗️ Architecture
 
-### Redux-First Design
-- **Calculations** (`selectors.ts`): Pure functions for domain logic and mastery calculation
-- **Actions** (`slice.ts`): State mutations with minimal logic
-- **Data** (`state.ts`): Immutable data structures and type definitions
-- **Presentation**: Pure UI components tested in Storybook isolation
+### Trace-Driven Architecture
+This app uses a trace-driven architecture where every user action generates auditable traces for debugging and testing. See `src/docs/architecture.md` for detailed architectural principles.
+
+### Core Design Principles
+- **Pure Core**: Business logic in deterministic reducers with injected dependencies
+- **Sharp Boundaries**: Domain → Store → UI with side effects at the edge
+- **Trace Every Story**: Every dispatch becomes part of the system's narrative
+- **Tests Buy Freedom**: Comprehensive trace-based testing enables fearless refactoring
+
+For complete architecture details and domain philosophy, see:
+- `src/docs/architecture.md` - Technical architecture handbook
+- `src/docs/product.md` - Product domain and learning principles
 
 ## Developer Notes
 
