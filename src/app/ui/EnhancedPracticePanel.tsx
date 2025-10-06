@@ -53,7 +53,7 @@ export default function EnhancedPracticePanel({
   // Word-level guidance as fallback
   const parentGuidance = useAppSelector(state => {
     if (!currentWordId) {
-      return { message: 'First try', urgency: 'info' as const, context: 'initial' as const };
+      return { message: 'Ready when you are', urgency: 'info' as const, context: 'initial' as const };
     }
     // This selector will re-run whenever the word's attempts, step, or revealCount changes
     return selectParentGuidance(state.game, currentWordId);

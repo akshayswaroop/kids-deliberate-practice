@@ -68,7 +68,7 @@ export function selectParentGuidance(
 ): ParentGuidance {
   if (!state.currentUserId) {
     return {
-      message: 'First try',
+      message: 'Ready when you are',
       urgency: 'info',
       context: 'initial'
     };
@@ -77,7 +77,7 @@ export function selectParentGuidance(
   const user = state.users[state.currentUserId];
   if (!user || !user.words[wordId]) {
     return {
-      message: 'First try',
+      message: 'Ready when you are',
       urgency: 'info',
       context: 'initial'
     };
@@ -589,7 +589,7 @@ export function selectSessionGuidance(
   // Infrastructure layer formats subject name for display (domain stays agnostic)
   if (guidance && guidance.context === 'completion') {
     const subjectDisplayName = SubjectConfiguration.getDisplayName(sessionGuidance.getSubject());
-    guidance.message = `Amazing! You've mastered everything in ${subjectDisplayName}. Check back for new questions!`;
+    guidance.message = `All done for ${subjectDisplayName}! Time to rest those neurons`;
   }
   
   // Cache the result

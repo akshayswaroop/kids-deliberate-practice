@@ -251,7 +251,7 @@ export class ProgressTracker {
       if (this.progress >= 2) {
         // At or beyond mastery threshold
         return {
-          message: 'Mastered — celebrate and move on',
+          message: 'Great work — this one is mastered',
           urgency: 'success',
           context: 'mastered'
         };
@@ -259,14 +259,21 @@ export class ProgressTracker {
       if (totalAttempts === 1) {
         // First attempt and it was correct
         return {
-          message: 'Great! First correct — try once more to lock it in',
+          message: 'Nice start! One more time to lock it in',
           urgency: 'success',
           context: 'first-success'
         };
       }
-      // General correct answer
+      // General correct answer - progress toward mastery
+      if (this.progress === 1) {
+        return {
+          message: 'Two correct in a row! We\'ll mark it mastered soon',
+          urgency: 'success',
+          context: 'correct-progress'
+        };
+      }
       return {
-        message: 'Good job. One more repetition will help',
+        message: 'Good! One more correct will master this',
         urgency: 'success',
         context: 'correct-progress'
       };
@@ -277,7 +284,7 @@ export class ProgressTracker {
       if (totalAttempts === 1) {
         // First attempt was wrong
         return {
-          message: 'First try — show them the answer, then try together',
+          message: 'Let\'s try this together — show them first',
           urgency: 'info',
           context: 'first-attempt-wrong'
         };
@@ -285,14 +292,14 @@ export class ProgressTracker {
       if (accuracyRate < 0.4) {
         // Low accuracy indicates struggle
         return {
-          message: 'This one needs practice — break it into steps',
+          message: 'This one\'s been tricky before — let\'s try again slowly',
           urgency: 'warning',
           context: 'needs-practice'
         };
       }
       // General wrong answer
       return {
-        message: 'Try once more together',
+        message: 'Not quite — give it another try',
         urgency: 'info',
         context: 'retry-needed'
       };
@@ -301,15 +308,15 @@ export class ProgressTracker {
     // Context: No attempts yet (or between questions)
     if (this.revealCount >= 3) {
       return {
-        message: 'Tricky. Keep going — we\'ll practice this more',
-        urgency: 'warning',
+        message: 'We\'ll bring this one back later for review',
+        urgency: 'info',
         context: 'struggling'
       };
     }
     
     if (totalAttempts === 0) {
       return {
-        message: 'First try',
+        message: 'Ready when you are',
         urgency: 'info',
         context: 'initial'
       };
@@ -318,7 +325,7 @@ export class ProgressTracker {
     // Performance-based feedback (when no recent attempt context)
     if (totalAttempts >= 2 && accuracyRate > 0.8) {
       return {
-        message: `Steady recall (${Math.round(accuracyRate * 100)}%)`,
+        message: 'Steady progress — keep going',
         urgency: 'success',
         context: 'strong-performance'
       };
@@ -326,15 +333,15 @@ export class ProgressTracker {
 
     if (totalAttempts >= 2 && accuracyRate < 0.4) {
       return {
-        message: `Needs practice (${Math.round(accuracyRate * 100)}%)`,
-        urgency: 'warning',
+        message: 'Still forming the memory — we\'ll practice more',
+        urgency: 'info',
         context: 'weak-performance'
       };
     }
 
     // Default: building mastery
     return {
-      message: 'Building mastery',
+      message: 'Working on it',
       urgency: 'info',
       context: 'in-progress'
     };
