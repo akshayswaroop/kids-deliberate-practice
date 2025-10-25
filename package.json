@@ -31,6 +31,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-redux": "^9.2.0",
+    "sarvamai": "^0.1.9",
     "storybook": "^9.1.10"
   },
   "homepage": "https://akshayswaroop.github.io/kids-deliberate-practice/",

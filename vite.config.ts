@@ -14,6 +14,11 @@ export default defineConfig({
   plugins: [react()],
   base: '/kids-deliberate-practice/' // required for GitHub Pages asset loading
   ,
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8787'
+    }
+  },
 
   test: {
     projects: [{

@@ -7,6 +7,7 @@ import ThemeToggle from './ThemeToggle';
 // ProgressStatsDisplay removed - previously displayed inline stats in header
 import RevisionPanel from './RevisionPanel';
 import { useState, useEffect, useCallback } from 'react';
+import { setSarvamApiKey, hasUserSarvamApiKey, clearSarvamApiKey } from '../../utils/sarvamApiKey';
 import { traceAPI } from '../tracing/traceMiddleware';
 import PracticeIntro from './PracticeIntro';
 import Coachmark from './Coachmark';
@@ -60,6 +61,17 @@ export default function HomePage({
   });
   const [subjectPickerOpen, setSubjectPickerOpen] = useState(false);
   const hasRevisionPanel = !!ui.revisionPanel;
+
+  // Sarvam API key management (user-provided, stored in localStorage)
+  const [apiKeyInput, setApiKeyInput] = useState<string>(() => (hasUserSarvamApiKey() ? '********' : ''));
+  const [apiKeyMasked, setApiKeyMasked] = useState<boolean>(true);
+  const [apiKeyStatus, setApiKeyStatus] = useState<string>(() => {
+    const hasUserKey = hasUserSarvamApiKey();
+    const hasEnv = !!((import.meta as any)?.env?.VITE_SARVAM_API_KEY);
+    if (hasUserKey) return 'Using your key (stored in this browser)';
+    if (hasEnv) return 'Using app key (build-time)';
+    return 'No API key configured (TTS/Transliteration disabled)';
+  });
 
   const handleShareFeedback = useCallback(async () => {
     if (typeof window === 'undefined') return;
@@ -186,6 +198,33 @@ export default function HomePage({
     rememberSubjectPicker();
     setSubjectPickerOpen(false);
   }, [rememberSubjectPicker]);
+
+  const handleApiKeySave = () => {
+    // If the input is masked placeholder, do nothing
+    if (apiKeyInput === '********') return;
+    const trimmed = (apiKeyInput || '').trim();
+    if (!trimmed) {
+      clearSarvamApiKey();
+    } else {
+      setSarvamApiKey(trimmed);
+    }
+    // Update visible status and mask the input
+    const hasUserKey = hasUserSarvamApiKey();
+    const hasEnv = !!((import.meta as any)?.env?.VITE_SARVAM_API_KEY);
+    setApiKeyStatus(hasUserKey ? 'Using your key (stored in this browser)' : (hasEnv ? 'Using app key (build-time)' : 'No API key configured (TTS/Transliteration disabled)'));
+    setApiKeyMasked(true);
+    setApiKeyInput(hasUserKey ? '********' : '');
+    // Light feedback
+    try { if (typeof window !== 'undefined') window.alert('API key saved for this browser.'); } catch {}
+  };
+
+  const handleApiKeyClear = () => {
+    clearSarvamApiKey();
+    const hasEnv = !!((import.meta as any)?.env?.VITE_SARVAM_API_KEY);
+    setApiKeyStatus(hasEnv ? 'Using app key (build-time)' : 'No API key configured (TTS/Transliteration disabled)');
+    setApiKeyInput('');
+    setApiKeyMasked(true);
+  };
 
   return (
     <div style={{ height: '100vh', background: 'var(--bg-primary)', fontFamily: 'system-ui, sans-serif', overflow: 'hidden', display: 'flex' }}>
@@ -323,6 +362,52 @@ export default function HomePage({
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px', borderRadius: 12, background: 'rgba(15,23,42,0.65)' }}>
               <span style={{ fontWeight: 600, color: '#e2e8f0' }}>Dark mode</span>
               <ThemeToggle />
+            </div>
+
+            {/* Sarvam API Key configuration */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '12px 14px', borderRadius: 12, background: 'rgba(15,23,42,0.65)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 700, color: '#e2e8f0' }}>Sarvam API Key</span>
+                <span style={{ fontSize: 12, color: '#cbd5e1' }}>{apiKeyStatus}</span>
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input
+                  type={apiKeyMasked ? 'password' : 'text'}
+                  inputMode="text"
+                  placeholder="Paste your Sarvam API key"
+                  value={apiKeyInput}
+                  onChange={(e) => setApiKeyInput(e.target.value)}
+                  style={{ flex: 1, borderRadius: 10, border: '1px solid rgba(148,163,184,0.35)', padding: '10px 12px', background: 'rgba(2,6,23,0.35)', color: '#e2e8f0' }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setApiKeyMasked(m => !m)}
+                  title={apiKeyMasked ? 'Show key' : 'Hide key'}
+                  style={{ border: 'none', background: 'rgba(15,23,42,0.35)', color: '#e2e8f0', padding: '10px 12px', borderRadius: 10, cursor: 'pointer' }}
+                >
+                  {apiKeyMasked ? '👁️' : '🙈'}
+                </button>
+              </div>
+              <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                <button
+                  type="button"
+                  onClick={handleApiKeyClear}
+                  style={{ border: 'none', background: 'rgba(239,68,68,0.2)', color: '#fecaca', padding: '10px 12px', borderRadius: 10, cursor: 'pointer', fontWeight: 600 }}
+                >
+                  Remove
+                </button>
+                <button
+                  type="button"
+                  onClick={handleApiKeySave}
+                  style={{ border: 'none', background: 'linear-gradient(90deg,#60a5fa,#38bdf8)', color: '#0f172a', padding: '10px 16px', borderRadius: 10, cursor: 'pointer', fontWeight: 800 }}
+                >
+                  Save
+                </button>
+              </div>
+              <p style={{ margin: 0, fontSize: 12, color: '#94a3b8', lineHeight: 1.4 }}>
+                Your key is stored only in this browser&apos;s local storage. This is not secure; use for personal/testing.
+                To disable, click Remove. When no key is set, the app will use the build-time key if present.
+              </p>
             </div>
           </div>
         </div>

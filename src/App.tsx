@@ -11,13 +11,22 @@ import { buildPracticeAppViewModel } from './app/presenters/practicePresenter';
 import type { RootState as GameState } from './infrastructure/state/gameState';
 import TraceDiagnosticsApp from './app/diagnostics/TraceDiagnosticsApp';
 import { SUBJECT_CONFIGS } from './infrastructure/repositories/subjectLoader';
+import TTSDemo from './features/ui/TTSDemo';
 
 // Single, clean App implementation
 function App() {
-  if (typeof window !== 'undefined' && window.location.pathname.startsWith('/diagnostics')) {
+  if (typeof window !== 'undefined' && window.location.pathname.includes('/diagnostics')) {
     return (
       <ThemeProvider>
         <TraceDiagnosticsApp />
+      </ThemeProvider>
+    );
+  }
+
+  if (typeof window !== 'undefined' && window.location.pathname.includes('/tts-demo')) {
+    return (
+      <ThemeProvider>
+        <TTSDemo />
       </ThemeProvider>
     );
   }

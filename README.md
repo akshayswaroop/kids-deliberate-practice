@@ -32,6 +32,93 @@ npm run preview
 npm run deploy
 ```
 
+## Development
+
+Run `npm run dev` to start the Vite dev server.
+
+### Kannada Text-to-Speech (Sarvam AI)
+
+This repo includes a secure integration for Kannada TTS using a local dev proxy (suitable for GitHub Pages production where there is no server).
+
+What’s included:
+- Local dev proxy: `scripts/dev-tts-proxy.mjs`
+- Front-end service: `src/infrastructure/services/tts/sarvamTtsService.ts`
+- Demo UI: navigate to `/tts-demo` (dev) or `/kids-deliberate-practice/tts-demo` (GitHub Pages)
+
+UI-only mode (works on GitHub Pages, exposes the key to the browser):
+1) Add to `.env`:
+
+  ```bash
+  echo 'VITE_SARVAM_API_KEY=YOUR_KEY_HERE' >> .env
+  ```
+
+2) Run the app and open the demo:
+
+  ```bash
+  npm run dev
+  ```
+
+  - Dev: http://localhost:5173/kids-deliberate-practice/tts-demo
+  - GitHub Pages: https://<your-username>.github.io/kids-deliberate-practice/tts-demo
+
+3) Security note: anyone can view your key in the browser. Prefer server proxy in real deployments.
+
+Alternative: Per-user key in Settings
+- You can skip the `.env` step and paste your Sarvam API key in the app under Settings → "Sarvam API Key".
+- The key is stored only in this browser's localStorage and overrides the build-time key.
+- Same security caveat applies: suitable for personal/testing use only.
+
+Secure local mode (keeps key off the browser using a local proxy):
+Setup steps (local):
+1) Create a Sarvam API key from https://dashboard.sarvam.ai/
+2) Copy `.env.example` to `.env` and set `SARVAM_API_KEY`:
+
+  ```bash
+  cp .env.example .env
+  echo 'SARVAM_API_KEY=YOUR_KEY_HERE' >> .env
+  ```
+
+3) In one terminal, run the TTS proxy:
+
+  ```bash
+  node scripts/dev-tts-proxy.mjs
+  ```
+
+4) In another terminal, run the app:
+
+  ```bash
+  npm run dev
+  ```
+
+5) Open the demo:
+- Dev: http://localhost:5173/kids-deliberate-practice/tts-demo (base path configured)
+- GitHub Pages: For production, deploy a serverless proxy and set `VITE_TTS_PROXY_URL` to it.
+
+Notes:
+- The proxy keeps your API key out of the browser. For production, deploy an equivalent proxy to any serverless provider (e.g., Vercel, Cloudflare). Set `VITE_TTS_PROXY_URL` to its URL if needed.
+- Defaults use Kannada (`kn-IN`) and return WAV audio. You can tune pace/pitch/loudness via the service options.
+
+### Transliteration (Kannada → English)
+
+We integrate Sarvam's Transliterate API in UI-only mode to convert Kannada script into English (Latin) phonetic text.
+
+- Front-end service: `src/infrastructure/services/transliterate/sarvamTransliterateService.ts`
+- UI integration: Use the "ಅ→A" button on the practice card when in Kannada mode
+
+Setup (UI-only, GitHub Pages compatible):
+
+```bash
+echo 'VITE_SARVAM_API_KEY=YOUR_KEY_HERE' >> .env
+# Optional: override endpoint if Sarvam changes paths
+echo 'VITE_SARVAM_TRANSLITERATE_URL=https://api.sarvam.ai/transliterate' >> .env
+```
+
+Notes:
+- The provider supports Indic↔English transliteration. Indic↔Indic (e.g., Kannada→Hindi) is not supported and returns 400.
+- Options include `spoken_form`, `numerals_format` (`international` or `native`), and `spoken_form_numerals_language` (`english` or `native`).
+- Target language is `en-IN`; source is `kn-IN`.
+ - You can also paste your Sarvam API key in Settings. It is stored in localStorage and used by both TTS and Transliteration.
+
 ## 🌐 Deployment
 
 **Live Site**: https://<your-github-username>.github.io/kids-deliberate-practice/

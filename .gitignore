@@ -1,3 +1,10 @@
+.env
+.DS_Store
+dist
+node_modules
+playwright-report
+test-results
+coverage
 # Logs
 logs
 *.log
@@ -26,8 +33,7 @@ dist-ssr
 *storybook.log
 storybook-static
 
-# Local Netlify folder (no longer tracked; ignore any local Netlify state)
-.netlify/
+# Local service folders (legacy) — keep empty
 
 # Test output and reports (generated)
 test-results/
