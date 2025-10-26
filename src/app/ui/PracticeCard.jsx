@@ -308,28 +308,12 @@ export default function PracticeCard({
   const isMastered = activeProgress >= 100;
   const isSessionComplete = sessionGuidance?.context === 'completion';
   const [speaking, setSpeaking] = React.useState(false);
-  const [ttsOpen, setTtsOpen] = React.useState(false);
-  const [ttsPace, setTtsPace] = React.useState(() => {
-    if (typeof window === 'undefined') return 1;
-    const v = Number(window.localStorage.getItem('kdp:tts:pace') || '1');
-    return Number.isFinite(v) ? v : 1;
-  });
-  const [ttsSpeaker, setTtsSpeaker] = React.useState(() => {
-    if (typeof window === 'undefined') return 'anushka';
-    const raw = window.localStorage.getItem('kdp:tts:speaker') || 'anushka';
-    return String(raw).toLowerCase();
-  });
-  // Transliteration UI state (Kannada → Hindi)
+  // Simplified TTS: hardcode Anushka voice at 0.5x pace
+  const ttsPace = 0.5;
+  const ttsSpeaker = 'anushka';
+  // Transliteration UI state (Kannada → Hindi only, simplified)
   const [trlOpen, setTrlOpen] = React.useState(false);
   const [trlBusy, setTrlBusy] = React.useState(false);
-  const [trlSpoken, setTrlSpoken] = React.useState(() => {
-    if (typeof window === 'undefined') return true;
-    return (window.localStorage.getItem('kdp:trl:spoken') || 'true') === 'true';
-  });
-  const [trlNumerals, setTrlNumerals] = React.useState(() => {
-    if (typeof window === 'undefined') return 'international';
-    return window.localStorage.getItem('kdp:trl:numerals') || 'international';
-  });
   const [trlOutput, setTrlOutput] = React.useState('');
   const [showCompletionPrompt, setShowCompletionPrompt] = React.useState(false);
   const [hasAcknowledgedCompletion, setHasAcknowledgedCompletion] = React.useState(false);
@@ -338,23 +322,7 @@ export default function PracticeCard({
   const autoAdvanceIntervalRef = React.useRef(null);
   const previousCompletionContextRef = React.useRef(undefined);
 
-  const saveTtsPrefs = React.useCallback((pace, speaker) => {
-    try {
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem('kdp:tts:pace', String(pace));
-        window.localStorage.setItem('kdp:tts:speaker', String((speaker || '').toLowerCase()));
-      }
-    } catch {}
-  }, []);
-
-  const saveTrlPrefs = React.useCallback((spoken, numerals) => {
-    try {
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem('kdp:trl:spoken', String(!!spoken));
-        window.localStorage.setItem('kdp:trl:numerals', String(numerals || 'international'));
-      }
-    } catch {}
-  }, []);
+  // Removed saveTtsPrefs and saveTrlPrefs - no longer needed with hardcoded TTS and simplified transliteration
 
   const clearAutoAdvance = React.useCallback(() => {
     if (autoAdvanceTimeoutRef.current !== null) {
@@ -617,7 +585,7 @@ export default function PracticeCard({
                         onClick={handleSpeak}
                         disabled={speaking}
                         aria-label="Speak word"
-                        title="Speak word"
+                        title="Speak word (Anushka voice, 0.5x pace)"
                         style={{
                           border: '1px solid rgba(79,70,229,0.3)',
                           background: 'white',
@@ -630,102 +598,6 @@ export default function PracticeCard({
                       >
                         {speaking ? '🔉' : '🔊'}
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => setTtsOpen(v => !v)}
-                        aria-haspopup="dialog"
-                        aria-expanded={ttsOpen}
-                        aria-label="TTS options"
-                        title="TTS options"
-                        style={{
-                          border: '1px solid rgba(79,70,229,0.3)',
-                          background: 'white',
-                          color: 'var(--text-primary)',
-                          borderRadius: 10,
-                          padding: '6px 8px',
-                          cursor: 'pointer',
-                          boxShadow: '0 8px 18px rgba(15, 23, 42, 0.08)'
-                        }}
-                      >
-                        ⚙️
-                      </button>
-                      {ttsOpen && (
-                        <div
-                          role="dialog"
-                          aria-label="Text-to-Speech options"
-                          style={{
-                            position: 'absolute',
-                            right: 0,
-                            top: 'calc(100% + 8px)',
-                            background: 'white',
-                            color: 'var(--text-primary)',
-                            border: '1px solid rgba(15,23,42,0.12)',
-                            borderRadius: 12,
-                            boxShadow: '0 18px 36px rgba(15, 23, 42, 0.18)',
-                            padding: 12,
-                            width: 280,
-                            zIndex: 10,
-                            // Reset inherited giant font-size from the big target word container
-                            fontSize: 14,
-                            lineHeight: 1.4
-                          }}
-                          onClick={e => e.stopPropagation()}
-                        >
-                          <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', alignItems: 'center', columnGap: 8, marginBottom: 8 }}>
-                            <label htmlFor="tts-voice" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Voice</label>
-                            <select
-                              id="tts-voice"
-                              value={ttsSpeaker}
-                              onChange={e => { const v = String(e.target.value).toLowerCase(); setTtsSpeaker(v); saveTtsPrefs(ttsPace, v); }}
-                              style={{ fontSize: 14, padding: '6px 8px', borderRadius: 8, width: '100%' }}
-                            >
-                              {[
-                                'anushka','abhilash','manisha','vidya','arya','karun','hitesh',
-                                'aditya','isha','ritu','chirag','harsh','sakshi','priya','neha','rahul',
-                                'pooja','rohan','simran','kavya','anjali','sneha','kiran','vikram','rajesh',
-                                'sunita','tara','anirudh','kriti','ishaan'
-                              ].map(v => (
-                                <option key={v} value={v}>{v.charAt(0).toUpperCase() + v.slice(1)}</option>
-                              ))}
-                            </select>
-                          </div>
-
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-                            <label htmlFor="tts-pace" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Pace</label>
-                            <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{(Number(ttsPace) || 1).toFixed(2)}×</span>
-                          </div>
-                          <input
-                            id="tts-pace"
-                            type="range"
-                            min={0.5}
-                            max={1.5}
-                            step={0.05}
-                            value={Number(ttsPace) || 1}
-                            onChange={e => { const v = Number(e.target.value) || 1; setTtsPace(v); saveTtsPrefs(v, ttsSpeaker); }}
-                            style={{ width: '100%', marginTop: 6 }}
-                          />
-                          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 10 }}>
-                            <button
-                              type="button"
-                              onClick={() => setTtsOpen(false)}
-                              style={{ border: '1px solid rgba(15,23,42,0.12)', background: 'white', borderRadius: 8, padding: '6px 10px', cursor: 'pointer', whiteSpace: 'nowrap', minWidth: 80 }}
-                            >
-                              Close
-                            </button>
-                            <button
-                              type="button"
-                              onClick={handleSpeak}
-                              disabled={speaking}
-                              style={{ border: 'none', background: 'linear-gradient(135deg,#60a5fa,#38bdf8)', color: '#0f172a', borderRadius: 8, padding: '6px 10px', cursor: speaking ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', minWidth: 80 }}
-                            >
-                              {speaking ? 'Speaking…' : 'Test'}
-                            </button>
-                          </div>
-                          <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-tertiary)' }}>
-                            Tip: Pace range 0.3–3 is supported by the API. UI slider shows a conservative 0.5–1.5.
-                          </div>
-                        </div>
-                      )}
                       {trlOpen && (
                         <div
                           role="dialog"
@@ -748,42 +620,8 @@ export default function PracticeCard({
                           onClick={e => e.stopPropagation()}
                         >
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                            <div style={{ fontWeight: 600 }}>Kannada →</div>
+                            <div style={{ fontWeight: 600 }}>Kannada → Hindi (देवनागरी)</div>
                             <button type="button" onClick={() => setTrlOpen(false)} style={{ border: 'none', background: 'transparent', cursor: 'pointer' }} aria-label="Close">✕</button>
-                          </div>
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: 8 }}>
-                            {/* Target selection */}
-                            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                              <label style={{ fontSize: 12, color: 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                                <input
-                                  type="radio"
-                                  name="trl-target"
-                                  value="en"
-                                  defaultChecked
-                                  onChange={() => { /* default English */ }}
-                                /> English (Latin)
-                              </label>
-                              <label style={{ fontSize: 12, color: 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                                <input
-                                  type="radio"
-                                  name="trl-target"
-                                  value="hi"
-                                  onChange={(e) => { /* handled on click by reading DOM */ }}
-                                /> Hindi (देवनागरी)
-                              </label>
-                            </div>
-                            <label style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
-                              <input type="checkbox" checked={trlSpoken} onChange={e => { setTrlSpoken(e.target.checked); saveTrlPrefs(e.target.checked, trlNumerals); }} />
-                              <span style={{ marginLeft: 6 }}>Spoken form</span>
-                            </label>
-                            <select
-                              value={trlNumerals}
-                              onChange={e => { setTrlNumerals(e.target.value); saveTrlPrefs(trlSpoken, e.target.value); }}
-                              style={{ fontSize: 13, padding: '4px 6px', borderRadius: 8 }}
-                            >
-                              <option value="international">International numerals</option>
-                              <option value="native">Native numerals</option>
-                            </select>
                           </div>
                           <div style={{ marginTop: 10, display: 'flex', gap: 8 }}>
                             <button
@@ -792,35 +630,12 @@ export default function PracticeCard({
                                 try {
                                   if (!mainWord) return;
                                   setTrlBusy(true);
-                                  // Determine target selection (read from radios)
-                                  const target = (() => {
-                                    const radios = document.getElementsByName('trl-target');
-                                    for (let i = 0; i < radios.length; i++) {
-                                      const el = radios[i];
-                                      // In JS runtime, these are input elements
-                                      if (el && el.checked) return el.value;
-                                    }
-                                    return 'en';
-                                  })();
-
-                                  if (target === 'hi') {
-                                    // Kannada → Hindi (Devanagari) via Aksharamukha (no API key required)
-                                    const { transliterated_text } = await transliterateKannadaToHindi(String(mainWord));
-                                    setTrlOutput(transliterated_text);
-                                  } else {
-                                    // Kannada → English (Latin) via Sarvam
-                                    const { transliterated_text } = await transliterateText(String(mainWord), {
-                                      source_language_code: 'kn-IN',
-                                      target_language_code: 'en-IN',
-                                      spoken_form: !!trlSpoken,
-                                      numerals_format: trlNumerals,
-                                      spoken_form_numerals_language: 'english',
-                                    });
-                                    setTrlOutput(transliterated_text);
-                                  }
+                                  // Kannada → Hindi (Devanagari) via Aksharamukha (no API key required)
+                                  const { transliterated_text } = await transliterateKannadaToHindi(String(mainWord));
+                                  setTrlOutput(transliterated_text);
                                 } catch (e) {
                                   console.error('Transliterate error:', e);
-                                  setTrlOutput('Oops — transliteration failed. Check API key or input.');
+                                  setTrlOutput('Oops — transliteration failed.');
                                 } finally {
                                   setTrlBusy(false);
                                 }
@@ -847,7 +662,7 @@ export default function PracticeCard({
                             )}
                           </div>
                           <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-tertiary)' }}>
-                            English (Latin) uses Sarvam (requires API key via Settings or VITE_SARVAM_API_KEY). Hindi (Devanagari) uses Aksharamukha (no key required).
+                            Uses Aksharamukha public API (no key required).
                           </div>
                         </div>
                       )}
