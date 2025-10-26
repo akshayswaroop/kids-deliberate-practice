@@ -10,6 +10,7 @@ import PracticeActionBar from './PracticeActionBar.jsx';
 import { synthesizeSpeech } from '../../infrastructure/services/tts/sarvamTtsService';
 import PracticeActionButton from './PracticeActionButton.jsx';
 import { transliterateText } from '../../infrastructure/services/transliterate/sarvamTransliterateService';
+import { transliterateKannadaToHindi } from '../../infrastructure/services/transliterate/aksharamukhaTransliterateService';
 
 const PROGRESSION_DELAY_MS = 120;
 
@@ -615,10 +616,30 @@ export default function PracticeCard({
                           onClick={e => e.stopPropagation()}
                         >
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                            <div style={{ fontWeight: 600 }}>Kannada → English</div>
+                            <div style={{ fontWeight: 600 }}>Kannada →</div>
                             <button type="button" onClick={() => setTrlOpen(false)} style={{ border: 'none', background: 'transparent', cursor: 'pointer' }} aria-label="Close">✕</button>
                           </div>
                           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: 8 }}>
+                            {/* Target selection */}
+                            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                              <label style={{ fontSize: 12, color: 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                                <input
+                                  type="radio"
+                                  name="trl-target"
+                                  value="en"
+                                  defaultChecked
+                                  onChange={() => { /* default English */ }}
+                                /> English (Latin)
+                              </label>
+                              <label style={{ fontSize: 12, color: 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                                <input
+                                  type="radio"
+                                  name="trl-target"
+                                  value="hi"
+                                  onChange={(e) => { /* handled on click by reading DOM */ }}
+                                /> Hindi (देवनागरी)
+                              </label>
+                            </div>
                             <label style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
                               <input type="checkbox" checked={trlSpoken} onChange={e => { setTrlSpoken(e.target.checked); saveTrlPrefs(e.target.checked, trlNumerals); }} />
                               <span style={{ marginLeft: 6 }}>Spoken form</span>
@@ -639,14 +660,32 @@ export default function PracticeCard({
                                 try {
                                   if (!mainWord) return;
                                   setTrlBusy(true);
-                                  const { transliterated_text } = await transliterateText(String(mainWord), {
-                                    source_language_code: 'kn-IN',
-                                    target_language_code: 'en-IN',
-                                    spoken_form: !!trlSpoken,
-                                    numerals_format: trlNumerals,
-                                    spoken_form_numerals_language: 'english',
-                                  });
-                                  setTrlOutput(transliterated_text);
+                                  // Determine target selection (read from radios)
+                                  const target = (() => {
+                                    const radios = document.getElementsByName('trl-target');
+                                    for (let i = 0; i < radios.length; i++) {
+                                      const el = radios[i];
+                                      // In JS runtime, these are input elements
+                                      if (el && el.checked) return el.value;
+                                    }
+                                    return 'en';
+                                  })();
+
+                                  if (target === 'hi') {
+                                    // Kannada → Hindi (Devanagari) via Aksharamukha (no API key required)
+                                    const { transliterated_text } = await transliterateKannadaToHindi(String(mainWord));
+                                    setTrlOutput(transliterated_text);
+                                  } else {
+                                    // Kannada → English (Latin) via Sarvam
+                                    const { transliterated_text } = await transliterateText(String(mainWord), {
+                                      source_language_code: 'kn-IN',
+                                      target_language_code: 'en-IN',
+                                      spoken_form: !!trlSpoken,
+                                      numerals_format: trlNumerals,
+                                      spoken_form_numerals_language: 'english',
+                                    });
+                                    setTrlOutput(transliterated_text);
+                                  }
                                 } catch (e) {
                                   console.error('Transliterate error:', e);
                                   setTrlOutput('Oops — transliteration failed. Check API key or input.');
@@ -676,7 +715,7 @@ export default function PracticeCard({
                             )}
                           </div>
                           <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-tertiary)' }}>
-                            UI-only mode requires a Sarvam API key (either set at build as VITE_SARVAM_API_KEY or added in Settings). Note: Provider supports Indic↔English transliteration; Indic↔Indic is not supported.
+                            English (Latin) uses Sarvam (requires API key via Settings or VITE_SARVAM_API_KEY). Hindi (Devanagari) uses Aksharamukha (no key required).
                           </div>
                         </div>
                       )}

@@ -114,10 +114,26 @@ echo 'VITE_SARVAM_TRANSLITERATE_URL=https://api.sarvam.ai/transliterate' >> .env
 ```
 
 Notes:
-- The provider supports Indic↔English transliteration. Indic↔Indic (e.g., Kannada→Hindi) is not supported and returns 400.
+- The provider supports Indic↔English transliteration. Indic↔Indic via Sarvam is not supported and returns 400.
 - Options include `spoken_form`, `numerals_format` (`international` or `native`), and `spoken_form_numerals_language` (`english` or `native`).
 - Target language is `en-IN`; source is `kn-IN`.
- - You can also paste your Sarvam API key in Settings. It is stored in localStorage and used by both TTS and Transliteration.
+- You can also paste your Sarvam API key in Settings. It is stored in localStorage and used by both TTS and Transliteration.
+
+#### Optional: Kannada → Hindi (Devanagari) via Aksharamukha
+
+We’ve added a UI option to transliterate Kannada to Hindi using Aksharamukha’s public API.
+
+- Service: `src/infrastructure/services/transliterate/aksharamukhaTransliterateService.ts`
+- UI: In the transliteration popover, choose “Hindi (Devanagari)”
+- No API key required (public endpoint). If you encounter CORS issues, set:
+
+```bash
+echo 'VITE_AKSHARAMUKHA_URL=https://www.aksharamukha.com/api/public' >> .env
+# Optional proxy if needed
+echo 'VITE_AKSHARAMUKHA_PROXY_URL=https://your-proxy.example.com/aksharamukha' >> .env
+```
+
+This path is meant for learning convenience and personal use. Respect provider limits and terms.
 
 ## 🌐 Deployment
 

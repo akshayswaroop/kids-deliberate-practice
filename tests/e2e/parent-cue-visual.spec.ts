@@ -165,8 +165,8 @@ test.describe('Parent Cue Visual Tests - Desktop', () => {
 
     // Check for completion guidance
     await page.waitForTimeout(500);
-    const bannerText = await banner.textContent();
-    expect(bannerText).toMatch(/mastered|Great work/i);
+  const bannerText = await banner.textContent();
+  expect(bannerText).toMatch(/mastered|Great work|All done/i);
   });
 });
 

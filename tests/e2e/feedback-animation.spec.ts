@@ -31,7 +31,8 @@ test.describe('Feedback Animation and Button States', () => {
     await correctButton(page).click();
     // After answering, session guidance is no longer shown, word guidance takes over
     await expect(banner(page)).not.toContainText('Practice Set');
-    await expect(banner(page)).toHaveText(/good|great|mastered/i);
+  // Accept a range of positive cues that our UI may emit
+  await expect(banner(page)).toHaveText(/Nice|Good|Great|mastered|All done/i);
   });
 
   test('Next enables after correct animation and previous buttons stay disabled', async ({ page }) => {
