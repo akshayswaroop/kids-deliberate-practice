@@ -3,6 +3,10 @@ import ConfettiCelebration from './ConfettiCelebration';
 import ConstructionHint from './ConstructionHint';
 import { completeConstructionWord } from '../../infrastructure/state/gameActions';
 
+// Module-level map to prevent duplicate completion dispatches across component
+// instances and quick remounts. Keyed by `${mode}::${answer}` with timestamp.
+const recentCompletionMap = new Map();
+
 /**
  * DevanagariConstructionMode - Interactive component for building Devanagari words
  * 
@@ -24,9 +28,12 @@ export default function DevanagariConstructionMode({
   const [availableComponents, setAvailableComponents] = React.useState([]);
   const [showCelebration, setShowCelebration] = React.useState(false);
   const [showHint, setShowHint] = React.useState(false);
-  const [expectedComponents, setExpectedComponents] = React.useState([]);
+  const [expectedState, setExpectedState] = React.useState({ answerKey: '', components: [] });
   // Removed hasCalledOnCorrect ref - no longer needed with proper Redux dispatch
   const celebrateTimeoutRef = React.useRef(null);
+  // Prevent duplicate completion dispatches when the component re-renders or Redux updates
+  // Stores the last scheduled key ("${mode}::${answer}") for this instance
+  const completionGuardRef = React.useRef(null);
 
   // Helper: Parse Devanagari text into components (base chars + matras)
   const parseDevanagariComponents = React.useCallback((text) => {
@@ -88,13 +95,24 @@ export default function DevanagariConstructionMode({
 
   // Initialize components when answer changes
   React.useEffect(() => {
-    if (!answer) {
+    const normalizedAnswer = String(answer ?? '').trim();
+    if (!normalizedAnswer) {
+      setExpectedState({ answerKey: '', components: [] });
+      setConstructedWord([]);
+      setAvailableComponents([]);
+      setShowHint(false);
+      setShowCelebration(false);
+      completionGuardRef.current = false;
+      if (celebrateTimeoutRef.current !== null) {
+        window.clearTimeout(celebrateTimeoutRef.current);
+        celebrateTimeoutRef.current = null;
+      }
       return;
     }
     
     // Parse answer into grapheme components (base + matras)
-    const components = parseDevanagariComponents(String(answer).trim());
-    setExpectedComponents(components); // Store for hints
+    const components = parseDevanagariComponents(normalizedAnswer);
+    setExpectedState({ answerKey: normalizedAnswer, components }); // Store for hints
     
     // Add some distractor components (common Hindi letters/matras)
     const commonDistractors = ['क', 'ख', 'त', 'प', 'ब', 'ा', 'ि', 'ी', 'ु', 'े'];
@@ -116,6 +134,8 @@ export default function DevanagariConstructionMode({
     setConstructedWord([]);
     setShowHint(false);
     setShowCelebration(false);
+    // Reset completion guard when a new answer arrives
+    completionGuardRef.current = false;
     if (celebrateTimeoutRef.current !== null) {
       window.clearTimeout(celebrateTimeoutRef.current);
       celebrateTimeoutRef.current = null;
@@ -139,16 +159,30 @@ export default function DevanagariConstructionMode({
     }
 
     const constructedComponents = constructedWord.map(item => item.component);
-    const expectedComps = expectedComponents.length > 0 
-      ? expectedComponents 
-      : parseDevanagariComponents(String(answer).trim());
+    const normalizedAnswer = String(answer ?? '').trim();
+    const expectedComps = expectedState.answerKey === normalizedAnswer
+      ? expectedState.components
+      : parseDevanagariComponents(normalizedAnswer);
     
     // Check if complete
     if (constructedComponents.length === expectedComps.length) {
       const isCorrect = constructedComponents.every((comp, idx) => comp === expectedComps[idx]);
       
       if (isCorrect) {
+        // Compute schedule key for this completion (capture current mode+answer)
+        const scheduleKey = `${mode}::${String(answer)}`;
+        // If we've already scheduled or completed dispatch for this construction key, skip
+        if (completionGuardRef.current === scheduleKey) {
+          // eslint-disable-next-line no-console
+          console.debug('[DevanagariConstructionMode] completion already in progress for key - skipping re-schedule', { scheduleKey, ts: Date.now() });
+          return;
+        }
+        // Mark guard with scheduleKey so we don't schedule another completion while one is pending
+        completionGuardRef.current = scheduleKey;
         // Show celebration!
+        // Diagnostic log
+        // eslint-disable-next-line no-console
+        console.debug('[DevanagariConstructionMode] correct - constructed=', constructedComponents, 'expected=', expectedComps, 'ts=', Date.now());
         setShowCelebration(true);
         setShowHint(false);
         
@@ -156,12 +190,43 @@ export default function DevanagariConstructionMode({
         if (celebrateTimeoutRef.current !== null) {
           window.clearTimeout(celebrateTimeoutRef.current);
         }
+        // Capture current answer/mode for the timeout closure so changes to props
+        // won't cause us to dispatch for a different answer.
+        const capturedKey = scheduleKey;
+        const capturedAnswer = String(answer);
+        const capturedMode = mode;
         celebrateTimeoutRef.current = window.setTimeout(() => {
           setShowCelebration(false);
           // Dispatch proper Redux action instead of calling callback
-          if (dispatch && mode) {
-            dispatch(completeConstructionWord({ mode }));
+          if (dispatch && capturedMode) {
+            const key = capturedKey;
+            const now = Date.now();
+            const recentTs = recentCompletionMap.get(key) || 0;
+            // If we've dispatched for this (mode,answer) within the last 2500ms, skip duplicate
+            if (now - recentTs < 2500) {
+              // eslint-disable-next-line no-console
+              console.debug('[DevanagariConstructionMode] skipping duplicate dispatch due to recentCompletionMap', { key, recentTs, now });
+            } else {
+              recentCompletionMap.set(key, now);
+              // Clean up old entries occasionally
+              try {
+                // eslint-disable-next-line no-console
+                console.debug('[DevanagariConstructionMode] dispatching completeConstructionWord', { mode: capturedMode, answer: capturedAnswer, ts: Date.now() });
+                dispatch(completeConstructionWord({ mode: capturedMode }));
+                // eslint-disable-next-line no-console
+                console.debug('[DevanagariConstructionMode] dispatched completeConstructionWord OK', { mode: capturedMode, answer: capturedAnswer, ts: Date.now() });
+              } catch (err) {
+                // eslint-disable-next-line no-console
+                console.error('[DevanagariConstructionMode] dispatch error', err);
+              }
+              // prune entries older than 10s to avoid memory growth
+              for (const [k, t] of recentCompletionMap.entries()) {
+                if (now - t > 10000) recentCompletionMap.delete(k);
+              }
+            }
           }
+          // Keep guard set to capturedKey until a new answer resets it (prevents immediate re-scheduling)
+          // Note: do not clear completionGuardRef here; it will be reset when a new answer arrives
           celebrateTimeoutRef.current = null;
         }, 1200); // Give time for confetti to show
       } else {
@@ -175,12 +240,14 @@ export default function DevanagariConstructionMode({
       // Still building - hide hint until attempt is complete
       setShowHint(false);
     }
-  }, [constructedWord, answer, expectedComponents, parseDevanagariComponents, dispatch, mode]); // Added dispatch and mode to dependencies
+  }, [constructedWord, answer, expectedState, parseDevanagariComponents, dispatch, mode]); // Added dispatch and mode to dependencies
 
   const handleAddComponent = (item) => {
     if (item.used || disabled) return;
     
     // Add to constructed word
+    // eslint-disable-next-line no-console
+    console.debug('[DevanagariConstructionMode] handleAddComponent', { component: item.component, id: item.id, ts: Date.now() });
     setConstructedWord(prev => [...prev, item]);
     setAvailableComponents(prev => 
       prev.map(comp => 
@@ -194,6 +261,8 @@ export default function DevanagariConstructionMode({
     
     const removedItem = constructedWord[idx];
     
+    // eslint-disable-next-line no-console
+    console.debug('[DevanagariConstructionMode] handleRemoveComponent', { removed: removedItem && removedItem.component, idx, ts: Date.now() });
     // Remove from constructed and return to available
     setConstructedWord(prev => prev.filter((_, i) => i !== idx));
     setAvailableComponents(prev => 
@@ -377,7 +446,7 @@ export default function DevanagariConstructionMode({
       {showHint && (
         <ConstructionHint 
           constructed={constructedWord}
-          expected={expectedComponents}
+          expected={expectedState.components}
           show={showHint}
         />
       )}
