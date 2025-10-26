@@ -111,6 +111,7 @@ function mapUsersToOptions(users: Record<string, UserState>): UserOptionViewMode
 }
 
 function buildModeOptions(): ModeOptionViewModel[] {
+  // Only Kannada learning - no other subjects
   return SUBJECT_CONFIGS.map(config => ({
     value: config.name,
     label: config.displayLabel,

@@ -11,7 +11,7 @@ Build systems that reveal their reasoning. Every click, every update, should lea
 UI Intent → Reducer (pure) → State → Selector → ViewModel → UI Render
 ```
 
-1. **UI dispatches intents** — user taps “Kid got it,” “Reveal,” or “Next.”  
+1. **UI dispatches intents** — construction mode auto-validates, or parent taps "Kid got it," "Reveal," or "Next" (for non-construction modes).  
 2. **Reducers update state** — pure, deterministic functions.  
 3. **Selectors** turn state into plain JSON view models (no styling).  
 4. **UI** simply renders the view model — never computes domain logic.
@@ -85,8 +85,30 @@ If a state can exist, represent it honestly. It’s fine if it looks ugly — li
 
 ## Example: End‑to‑End Flow
 
+### Autonomous Construction Mode (Devanagari/Kannada Words)
 ```text
-UI tap ("Kid got it")
+Child builds word in construction UI
+   ↓
+Auto-validation checks answer
+   ↓
+Correct → Confetti celebration (1.2s)
+   ↓
+Dispatch → reducer.markCorrect()
+   ↓
+state.progress += 1, trophy earned
+   ↓
+handleProgression() → next word loads
+   ↓
+selector.getPracticeView() → JSON
+   ↓
+render(viewModel) → construction UI reactivates
+   ↓
+trace.append({intent: "autoValidatedCorrect", state, viewModel})
+```
+
+### Traditional Parent-Assisted Mode (Letters/Sounds)
+```text
+Parent taps ("Kid got it")
    ↓
 Dispatch → reducer.markCorrect()
    ↓
@@ -96,7 +118,7 @@ selector.getPracticeView() → JSON
    ↓
 render(viewModel)
    ↓
-trace.append({intent, state, viewModel})
+trace.append({intent: "markCorrect", state, viewModel})
 ```
 
 Every loop leaves a breadcrumb. That’s the audit trail of learning.

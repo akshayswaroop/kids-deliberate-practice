@@ -20,32 +20,35 @@ describe('selectSessionGuidance', () => {
           id: 'user1',
           displayName: 'Test User',
           words: {
-            'word1': { 
-              id: 'word1', 
-              text: 'cat', 
-              step: 0, 
-              attempts: [], 
-              language: 'english', 
+            'word1': {
+              id: 'word1',
+              text: 'ಅ',
+              wordKannada: 'ಅ',
+              step: 0,
+              attempts: [],
+              language: 'kannada',
               complexityLevel: 1,
               cooldownSessionsLeft: 0,
               revealCount: 0
             },
-            'word2': { 
-              id: 'word2', 
-              text: 'dog', 
-              step: 2, 
-              attempts: [], 
-              language: 'english', 
+            'word2': {
+              id: 'word2',
+              text: 'ಆ',
+              wordKannada: 'ಆ',
+              step: 2,
+              attempts: [],
+              language: 'kannada',
               complexityLevel: 1,
               cooldownSessionsLeft: 0,
               revealCount: 0
             }, // Mastered
-            'word3': { 
-              id: 'word3', 
-              text: 'bird', 
-              step: 1, 
-              attempts: [], 
-              language: 'english', 
+            'word3': {
+              id: 'word3',
+              text: 'ಇ',
+              wordKannada: 'ಇ',
+              step: 1,
+              attempts: [],
+              language: 'kannada',
               complexityLevel: 1,
               cooldownSessionsLeft: 0,
               revealCount: 0
@@ -56,23 +59,23 @@ describe('selectSessionGuidance', () => {
               id: 'session1',
               wordIds: ['word1', 'word2', 'word3'],
               currentIndex: 0, // First question
-              mode: 'english',
+              mode: 'kannada',
               revealed: false,
               createdAt: Date.now(),
               settings: {
-                sessionSizes: { english: 12 },
-                languages: ['english'],
-                complexityLevels: { english: 1 }
+                sessionSizes: { kannada: 12 },
+                languages: ['kannada'],
+                complexityLevels: { kannada: 1 }
               }
             }
           },
           activeSessions: {
-            english: 'session1'
+            kannada: 'session1'
           },
           settings: {
-            sessionSizes: { english: 12 },
-            languages: ['english'],
-            complexityLevels: { english: 1 }
+            sessionSizes: { kannada: 12 },
+            languages: ['kannada'],
+            complexityLevels: { kannada: 1 }
           },
           experience: {
             hasSeenIntro: true,
@@ -127,7 +130,7 @@ describe('selectSessionGuidance', () => {
         text: 'advanced',
         step: 0,
         complexityLevel: 2,
-        language: 'english',
+        language: 'kannada',
         attempts: [],
         cooldownSessionsLeft: 0,
         revealCount: 0
@@ -169,56 +172,59 @@ describe('selectSessionGuidance', () => {
       const guidance = selectSessionGuidance(mockState, 'session1');
 
       expect(guidance?.context).toBe('completion');
-      expect(guidance?.message).toContain('All done for English');
+      expect(guidance?.message).toContain('All done for Kannada Words');
       expect(guidance?.urgency).toBe('success');
     });
 
     test('should format subject names correctly in completion message', () => {
       // Create a separate session for completion test to avoid cache interference
       mockState.users.user1.sessions.completionSession = {
-        wordIds: ['math1', 'math2', 'math3'],
+        wordIds: ['alpha1', 'alpha2', 'alpha3'],
         currentIndex: 1, // Not first question
-        mode: 'mathtables',
+        mode: 'kannadaalphabets',
         revealed: false,
         createdAt: Date.now(),
         settings: {
-          sessionSizes: { mathtables: 12 },
-          languages: ['mathtables'],
-          complexityLevels: { mathtables: 1 }
+          sessionSizes: { kannadaalphabets: 12 },
+          languages: ['kannadaalphabets'],
+          complexityLevels: { kannadaalphabets: 1 }
         }
       };
       
-      // Set user complexity level for mathtables 
-      mockState.users.user1.settings.complexityLevels.mathtables = 1;
+      // Set user complexity level for alphabets
+      mockState.users.user1.settings.complexityLevels.kannadaalphabets = 1;
       
-      // Create words for mathtables mode at level 1 only
+      // Create words for alphabet mode at level 1 only
       mockState.users.user1.words = {
-        'math1': { 
-          id: 'math1', 
-          text: '2x2', 
+        alpha1: {
+          id: 'alpha1',
+          text: 'ಅ',
+          wordKannada: 'ಅ',
           step: 2, // Mastered
-          attempts: [], 
-          language: 'mathtables', 
+          attempts: [],
+          language: 'kannadaalphabets',
           complexityLevel: 1,
           cooldownSessionsLeft: 0,
           revealCount: 0
         },
-        'math2': { 
-          id: 'math2', 
-          text: '2x3', 
+        alpha2: {
+          id: 'alpha2',
+          text: 'ಆ',
+          wordKannada: 'ಆ',
           step: 2, // Mastered
-          attempts: [], 
-          language: 'mathtables', 
+          attempts: [],
+          language: 'kannadaalphabets',
           complexityLevel: 1,
           cooldownSessionsLeft: 0,
           revealCount: 0
         },
-        'math3': { 
-          id: 'math3', 
-          text: '2x4', 
+        alpha3: {
+          id: 'alpha3',
+          text: 'ಇ',
+          wordKannada: 'ಇ',
           step: 2, // Mastered
-          attempts: [], 
-          language: 'mathtables', 
+          attempts: [],
+          language: 'kannadaalphabets',
           complexityLevel: 1,
           cooldownSessionsLeft: 0,
           revealCount: 0
@@ -229,7 +235,7 @@ describe('selectSessionGuidance', () => {
       const guidance = selectSessionGuidance(mockState, 'completionSession');
 
       expect(guidance?.context).toBe('completion');
-      expect(guidance?.message).toContain('All done for Math Tables');
+      expect(guidance?.message).toContain('All done for Kannada Alphabets');
     });
   });
 

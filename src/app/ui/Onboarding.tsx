@@ -23,12 +23,12 @@ export default function Onboarding({ onCreate }: OnboardingProps) {
     <div data-testid="onboarding-container" style={{ minHeight: '100vh', background: '#f8fafc', fontFamily: 'system-ui, sans-serif', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ width: '100%', maxWidth: 600, borderRadius: 16, boxShadow: '0 8px 30px rgba(0,0,0,0.08)', background: '#fff', overflow: 'hidden' }}>
         <div style={{ width: '100%', background: rainbowBg, padding: '22px 32px 18px 32px', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}>
-          <h1 style={{ margin: 0, color: '#fff', fontSize: 22, fontWeight: 800 }}>Kids Practice</h1>
-          <div style={{ marginTop: 8, color: 'rgba(255,255,255,0.95)', fontWeight: 600, opacity: 1 }}>Gentle daily practice that sticks</div>
+          <h1 style={{ margin: 0, color: '#fff', fontSize: 22, fontWeight: 800 }}>📚 Learn Kannada</h1>
+          <div style={{ marginTop: 8, color: 'rgba(255,255,255,0.95)', fontWeight: 600, opacity: 1 }}>For Hindi-speaking kids</div>
         </div>
         <div style={{ padding: '32px 32px 28px 32px' }}>
-          <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: 24, fontWeight: 800, color: '#1e293b' }}>Kids master tricky concepts in just minutes a day.</h2>
-          <p style={{ marginTop: 0, color: '#4b5563', fontSize: 17 }}>Short, calm sessions. Real memory. No cramming.</p>
+          <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: 24, fontWeight: 800, color: '#1e293b' }}>Master Kannada through interactive practice.</h2>
+          <p style={{ marginTop: 0, color: '#4b5563', fontSize: 17 }}>Learn letters, matras, and words. Build by sound, practice with spaced repetition.</p>
           <div style={{ display: 'flex', gap: 10, marginTop: 18, alignItems: 'center' }}>
             <input
               data-testid="onboarding-name-input"
@@ -47,9 +47,9 @@ export default function Onboarding({ onCreate }: OnboardingProps) {
             </button>
           </div>
           <ul style={{ marginTop: 22, marginBottom: 0, paddingLeft: 20, color: '#334155', fontSize: 15, lineHeight: 1.7 }}>
-            <li>See progress daily</li>
-            <li>Review only what’s hard</li>
-            <li>Build lasting confidence</li>
+            <li>Start with vowels and consonants</li>
+            <li>Build words letter by letter</li>
+            <li>Track progress, review what's hard</li>
           </ul>
         </div>
       </div>

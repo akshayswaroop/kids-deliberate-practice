@@ -77,10 +77,10 @@ async function synthesizeSpeech(text, id) {
   }
 
   const data = await response.json();
-  
+
   // Handle both response shapes (audio vs audios[])
   const base64Audio = data.audios?.[0] || data.audio;
-  
+
   if (!base64Audio) {
     throw new Error('No audio data in response');
   }
@@ -103,7 +103,7 @@ function saveAudioFile(base64Audio, id) {
  */
 async function processEntry(entry, index, total, bankName) {
   const { id, question } = entry;
-  
+
   // Skip if file already exists
   const outputPath = path.join(OUTPUT_DIR, `${id}.wav`);
   if (fs.existsSync(outputPath)) {
@@ -113,12 +113,12 @@ async function processEntry(entry, index, total, bankName) {
 
   try {
     console.log(`🎵 [${index + 1}/${total}] ${bankName} - ${id}: Generating audio for "${question}"...`);
-    
+
     const base64Audio = await synthesizeSpeech(question, id);
     const filePath = saveAudioFile(base64Audio, id);
-    
+
     console.log(`✅ [${index + 1}/${total}] ${bankName} - ${id}: Saved to ${filePath}`);
-    
+
     return { id, status: 'success', text: question, filePath };
   } catch (error) {
     console.error(`❌ [${index + 1}/${total}] ${bankName} - ${id}: Failed - ${error.message}`);
@@ -144,9 +144,9 @@ async function processWordBank(filePath, bankName) {
 
   const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   const entries = Array.isArray(data) ? data : [];
-  
+
   console.log(`\n📚 Processing ${bankName}: ${entries.length} entries`);
-  
+
   const results = {
     processed: 0,
     skipped: 0,
@@ -157,7 +157,7 @@ async function processWordBank(filePath, bankName) {
   for (let i = 0; i < entries.length; i++) {
     const entry = entries[i];
     const result = await processEntry(entry, i, entries.length, bankName);
-    
+
     if (result.status === 'success') {
       results.processed++;
     } else if (result.status === 'skipped') {
@@ -166,7 +166,7 @@ async function processWordBank(filePath, bankName) {
       results.failed++;
       results.errors.push({ id: result.id, text: result.text, error: result.error });
     }
-    
+
     // Rate limiting: delay between requests (skip delay for skipped entries)
     if (result.status === 'success' && i < entries.length - 1) {
       await delay(DELAY_MS);
@@ -182,7 +182,7 @@ async function processWordBank(filePath, bankName) {
 async function main() {
   console.log('🚀 Kannada Audio Pre-Generation Script');
   console.log('=====================================\n');
-  
+
   if (!SARVAM_API_KEY) {
     console.error('❌ Error: SARVAM_API_KEY environment variable is required');
     console.error('Usage: SARVAM_API_KEY=<key> node scripts/generate-kannada-audio.mjs');
@@ -204,11 +204,11 @@ async function main() {
   console.log('==========');
   console.log(`Kannada Words:     ${wordResults.processed} generated, ${wordResults.skipped} skipped, ${wordResults.failed} failed`);
   console.log(`Kannada Alphabets: ${alphabetResults.processed} generated, ${alphabetResults.skipped} skipped, ${alphabetResults.failed} failed`);
-  
+
   const totalProcessed = wordResults.processed + alphabetResults.processed;
   const totalSkipped = wordResults.skipped + alphabetResults.skipped;
   const totalFailed = wordResults.failed + alphabetResults.failed;
-  
+
   console.log(`\nTotal: ${totalProcessed} generated, ${totalSkipped} skipped, ${totalFailed} failed`);
 
   // Show errors if any
@@ -220,7 +220,7 @@ async function main() {
   }
 
   console.log('\n✨ Done!');
-  
+
   // Exit with error code if there were failures
   process.exit(totalFailed > 0 ? 1 : 0);
 }

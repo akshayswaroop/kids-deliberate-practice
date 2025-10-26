@@ -426,6 +426,8 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
   
   // Some modes always show answers (configured in domain)
   const alwaysShowAnswer = ModeConfiguration.shouldAlwaysShowAnswer(mode);
+  // Kannada construction mode needs the answer data even before reveal for tile generation
+  const allowUnrevealedAnswer = String(mode || '').toLowerCase().includes('kannada');
 
   // If transliteration mode declares that its transliteration should act as the canonical answer,
   // surface the specified field on the current word as `answer` so the UI (details panel) shows it.
@@ -461,7 +463,7 @@ export function selectCurrentPracticeData(state: RootState, mode: string): {
     needsNewSession: session?.needsNewSession || false,
   transliteration: shouldShowTransliteration ? currentWord?.transliteration : undefined,
   transliterationHi: shouldShowTransliteration ? currentWord?.transliterationHi : undefined,
-  answer: computedAnswer || (shouldShowAnswer || alwaysShowAnswer ? currentWord?.answer : undefined),
+  answer: computedAnswer || (shouldShowAnswer || alwaysShowAnswer || allowUnrevealedAnswer ? currentWord?.answer : undefined),
   notes: computedNotes || (shouldShowAnswer || alwaysShowAnswer ? currentWord?.notes : undefined),
     choices,
     isAnswerRevealed: session?.revealed || false,

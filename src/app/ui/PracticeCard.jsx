@@ -3,6 +3,7 @@ import './PracticeCard.css';
 import GradientText from './GradientText.jsx';
 import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetector';
 import { getSubjectPromptLabel, getSubjectParentInstruction } from '../../infrastructure/repositories/subjectLoader.ts';
+import useAppDispatch from '../../infrastructure/hooks/reduxHooks';
 
 import FlyingUnicorn from './FlyingUnicorn.jsx';
 import PracticeActionBarPortal from './PracticeActionBarPortal.jsx';
@@ -11,6 +12,9 @@ import { synthesizeSpeech } from '../../infrastructure/services/tts/sarvamTtsSer
 import PracticeActionButton from './PracticeActionButton.jsx';
 import { transliterateText } from '../../infrastructure/services/transliterate/sarvamTransliterateService';
 import { transliterateKannadaToHindi } from '../../infrastructure/services/transliterate/aksharamukhaTransliterateService';
+import DevanagariConstructionMode from './DevanagariConstructionMode.jsx';
+import CircularProgressMeter from './CircularProgressMeter.jsx';
+import TrophyWall from './TrophyWall.jsx';
 
 const PROGRESSION_DELAY_MS = 120;
 const COMPLETION_AUTO_ADVANCE_MS = 5000;
@@ -144,10 +148,39 @@ export default function PracticeCard({
   sessionStats = null,
   onStatusChange,
   onReturnHome,
+  currentWord,
 }) {
   const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
   const isTestMode = env?.MODE === 'test';
   const normalizedAttemptStats = attemptStats || { total: 0, correct: 0, incorrect: 0 };
+  const dispatch = useAppDispatch(); // Redux dispatch hook for trace-driven architecture
+  
+  // Calculate session streak (consecutive correct answers from the end of attempt history)
+  const calculateSessionStreak = React.useCallback((history) => {
+    if (!Array.isArray(history) || history.length === 0) return 0;
+    
+    let streak = 0;
+    // Count consecutive correct from the most recent attempt backwards
+    for (let i = history.length - 1; i >= 0; i--) {
+      if (history[i].result === 'correct') {
+        streak++;
+      } else {
+        break; // Stop at first non-correct
+      }
+    }
+    return streak;
+  }, []);
+  
+  const sessionStreak = React.useMemo(
+    () => calculateSessionStreak(attemptHistory),
+    [attemptHistory, calculateSessionStreak]
+  );
+  
+  // Calculate mastery progress for current word (need 2 consecutive correct)
+  const masteryProgress = React.useMemo(() => {
+    return Math.min(normalizedAttemptStats.correct, 2);
+  }, [normalizedAttemptStats.correct]);
+  
   // We prefer showing the parent instruction (guidance for the caregiver)
   // in the practice header instead of the short prompt label.
   const parentInstruction = getSubjectParentInstruction(mode);
@@ -212,6 +245,20 @@ export default function PracticeCard({
   const [whyRepeatDismissed, setWhyRepeatDismissed] = React.useState(false);
   const [shakeButtons, setShakeButtons] = React.useState(false); // Shake animation for wrong answer
 
+  // Helper to check if answer contains Devanagari script (for construction mode)
+  const isDevanagariAnswer = React.useMemo(() => {
+    const answerText = answer || currentWord?.answer || '';
+    // Devanagari Unicode range: U+0900 to U+097F
+    return /[\u0900-\u097F]/.test(answerText);
+  }, [answer, currentWord]);
+
+  // Construction mode state
+  const shouldUseConstruction = React.useMemo(() => {
+    const modeKey = String(mode || '').toLowerCase();
+    return !isEnglishMode && modeKey.includes('kannada') && isDevanagariAnswer;
+  }, [isEnglishMode, mode, isDevanagariAnswer]);
+  const [constructionMode, setConstructionMode] = React.useState(shouldUseConstruction);
+
   const safeAttemptHistory = Array.isArray(attemptHistory) ? attemptHistory : [];
   const attemptCount = safeAttemptHistory.length;
   const lastAttempt = attemptCount > 0 ? safeAttemptHistory[attemptCount - 1] : null;
@@ -235,8 +282,10 @@ export default function PracticeCard({
     setShowUnicorn(false);
     setStatus('idle');
     setWhyRepeatDismissed(false);
+    // Auto-enable construction mode for Devanagari answers
+    setConstructionMode(shouldUseConstruction);
     previousAttemptCountRef.current = attemptCount;
-  }, [mainWord]);
+  }, [mainWord, shouldUseConstruction, attemptCount]);
 
   React.useEffect(() => {
     return () => {
@@ -423,10 +472,15 @@ export default function PracticeCard({
   }, [sessionGuidance?.context, hasAcknowledgedCompletion, scheduleAutoAdvance, clearAutoAdvance, showCompletionPrompt]);
 
   React.useEffect(() => {
-    if ((isMastered || isSessionComplete) && status === 'idle') {
+    // Only set status to 'waiting' for traditional (non-construction) modes
+    // Construction mode should stay 'idle' to allow continuous building
+    if ((isMastered || isSessionComplete) && status === 'idle' && !constructionMode) {
       setStatus('waiting');
     }
-  }, [isMastered, isSessionComplete, status]);
+  }, [isMastered, isSessionComplete, status, constructionMode]);
+
+  // Construction mode is determined purely by answer content - no complex state management
+  // This prevents infinite loops and follows trace-driven principles
 
   React.useEffect(() => {
     return () => {
@@ -498,7 +552,18 @@ export default function PracticeCard({
         />
 
         {/* Main content area: question, answer/notes, and action bar only */}
-        <div className="practice-question-area" style={{ color: 'var(--text-primary)' }}>
+        <div className="practice-question-area" style={{ color: 'var(--text-primary)', position: 'relative' }}>
+
+          {/* Trophy Wall - Kid-focused visual progress */}
+          {sessionStats && sessionStats.totalQuestions > 0 && (
+            <div style={{ marginBottom: '20px' }}>
+              <TrophyWall 
+                totalWords={sessionStats.totalQuestions}
+                masteredCount={sessionStats.currentlyMastered}
+                goalCount={sessionStats.totalQuestions} // 100% - all words must be mastered
+              />
+            </div>
+          )}
 
           {/* Main question */}
           {(() => {
@@ -681,8 +746,36 @@ export default function PracticeCard({
             );
           })()}
 
-          {/* Only render the details panel when there is content to show (not in English mode) */}
-          {showAnswerPanel && hasDetails && !isEnglishMode && (
+          {/* Circular Progress Meter - Shows 1/2 or 2/2 for current word mastery */}
+          {!isMastered && normalizedAttemptStats.total > 0 && (
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              marginTop: '8px',
+              marginBottom: '0px'
+            }}>
+              <CircularProgressMeter 
+                current={masteryProgress} 
+                total={2} 
+                size={36} 
+              />
+            </div>
+          )}
+
+          {/* Construction Mode Component - auto-activated for Devanagari answers */}
+          {constructionMode && status === 'idle' && (
+            <div style={{ marginTop: 24, maxWidth: 600, margin: '24px auto 0' }}>
+              <DevanagariConstructionMode
+                answer={answer || currentWord?.answer}
+                dispatch={dispatch}
+                mode={mode}
+                disabled={status !== 'idle'}
+              />
+            </div>
+          )}
+
+          {/* Only render the details panel when there is content to show (not in English mode, construction mode, or Devanagari practice) */}
+          {showAnswerPanel && hasDetails && !isEnglishMode && !constructionMode && !isDevanagariAnswer && (
             <div key={mainWord} className="details-panel practice-details" data-testid="details-panel">
               <div className="answer-panel" data-testid="answer-panel" style={{ width: '100%', maxWidth: '100%', flex: '1 1 auto' }}>
                 {answer && (
@@ -885,7 +978,7 @@ export default function PracticeCard({
 
         <PracticeActionBarPortal>
           <PracticeActionBar>
-        {!isEnglishMode && (
+        {!isEnglishMode && !constructionMode && (
           <PracticeActionButton
             data-testid="btn-reveal"
             variant="reveal"
@@ -905,7 +998,8 @@ export default function PracticeCard({
           </PracticeActionButton>
         )}
 
-        {/* Show all buttons always, but enable/disable appropriately */}
+        {/* Show all buttons always (when not in construction mode), but enable/disable appropriately */}
+        {!constructionMode && (
         <PracticeActionButton
           data-testid="btn-correct"
           variant="primary"
@@ -929,7 +1023,9 @@ export default function PracticeCard({
           <span role="img" aria-label="thumbs up">👍</span>
           Kid got it
         </PracticeActionButton>
+        )}
 
+        {!constructionMode && (
         <PracticeActionButton
           data-testid="btn-wrong"
           variant="secondary"
@@ -953,8 +1049,10 @@ export default function PracticeCard({
           <span role="img" aria-label="try again">↺</span>
           Needs another try
         </PracticeActionButton>
+        )}
 
         {/* Show Next button when waiting for progression */}
+        {!constructionMode && (
         <PracticeActionButton
           data-testid="btn-next"
           variant="primary"
@@ -969,6 +1067,7 @@ export default function PracticeCard({
           <span role="img" aria-label="next">→</span>
           Next
         </PracticeActionButton>
+        )}
         </PracticeActionBar>
       </PracticeActionBarPortal>
 

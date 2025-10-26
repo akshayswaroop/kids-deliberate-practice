@@ -12,7 +12,6 @@ import { traceAPI } from '../tracing/traceMiddleware';
 import PracticeIntro from './PracticeIntro';
 import Coachmark from './Coachmark';
 import ParentGuideSheet from './ParentGuideSheet';
-import SubjectPickerModal from './SubjectPickerModal';
 // @ts-ignore
 import AppHeader from './AppHeader';
 // Trace export UI removed
@@ -55,11 +54,6 @@ export default function HomePage({
   const [showIntroOverlay, setShowIntroOverlay] = useState(ui.guidance.showIntro);
   const [isParentGuideOpen, setParentGuideOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
-  const [subjectPickerSeen, setSubjectPickerSeen] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.localStorage.getItem('kdp:subject-picker-v1') === 'true';
-  });
-  const [subjectPickerOpen, setSubjectPickerOpen] = useState(false);
   const hasRevisionPanel = !!ui.revisionPanel;
 
   // Sarvam API key management (user-provided, stored in localStorage)
@@ -151,13 +145,7 @@ export default function HomePage({
     if (showIntroOverlay) {
       return;
     }
-    // Don't auto-open the subject picker during automated tests (Playwright/Vitest)
-    const isTestEnv = (typeof import.meta !== 'undefined' && import.meta.env?.MODE === 'test') || (typeof process !== 'undefined' && process.env?.NODE_ENV === 'test');
-    if (isTestEnv) return;
-    if (!subjectPickerSeen) {
-      setSubjectPickerOpen(true);
-    }
-  }, [showIntroOverlay, subjectPickerSeen]);
+  }, [showIntroOverlay]);
 
   const handleIntroDismiss = () => {
     setShowIntroOverlay(false);
@@ -180,29 +168,6 @@ export default function HomePage({
   const closeParentGuide = () => {
     setParentGuideOpen(false);
   };
-
-  const rememberSubjectPicker = useCallback(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem('kdp:subject-picker-v1', 'true');
-    }
-    setSubjectPickerSeen(true);
-  }, []);
-
-  const handleSubjectSelect = useCallback((modeValue: string) => {
-    onSetMode(modeValue);
-    rememberSubjectPicker();
-    setSubjectPickerOpen(false);
-  }, [onSetMode, rememberSubjectPicker]);
-
-  const handleSubjectPickerDismiss = useCallback(() => {
-    rememberSubjectPicker();
-    setSubjectPickerOpen(false);
-  }, [rememberSubjectPicker]);
-
-  const openCompletionOptions = useCallback(() => {
-    rememberSubjectPicker();
-    setSubjectPickerOpen(true);
-  }, [rememberSubjectPicker]);
 
   const handleApiKeySave = () => {
     // If the input is masked placeholder, do nothing
@@ -424,7 +389,7 @@ export default function HomePage({
           modeOptions={ui.modeOptions}
           currentUserId={ui.currentUserId}
           onSetMode={onSetMode}
-          onOpenSubjectPicker={() => setSubjectPickerOpen(true)}
+          onOpenSubjectPicker={() => {}} // No-op - single subject only
           onOpenRevision={() => setShowRevisionPanel(true)}
           onOpenSettings={() => setControlsOpen(true)}
           showRevisionButton={hasRevisionPanel && !!ui.revisionPanel}
@@ -520,7 +485,7 @@ export default function HomePage({
             mode={ui.mode} 
             currentUserId={ui.currentUserId ?? undefined}
             onWhyRepeatAcknowledged={onWhyRepeatAcknowledged}
-            onReturnHome={openCompletionOptions}
+            onReturnHome={() => {}} // No-op - single subject, just continue practicing
           />
         )}
           </div>
@@ -530,12 +495,6 @@ export default function HomePage({
       <ParentGuideSheet open={isParentGuideOpen} onClose={closeParentGuide} onAcknowledge={() => {
         onParentGuideAcknowledged();
       }} />
-      <SubjectPickerModal
-        open={subjectPickerOpen && !showIntroOverlay}
-        selectedMode={ui.mode}
-        onSelect={handleSubjectSelect}
-        onClose={handleSubjectPickerDismiss}
-      />
       {showIntroOverlay && <PracticeIntro onDismiss={handleIntroDismiss} />}
   {/* TraceExport component removed */}
     </div>

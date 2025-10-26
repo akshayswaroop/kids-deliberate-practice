@@ -6,15 +6,14 @@
  * Now includes session start/end cards and progress tracking.
  */
 
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useAppSelector } from '../../infrastructure/hooks/reduxHooks';
 // @ts-ignore
 import PracticeCard from './PracticeCard.jsx';
 
-import UnifiedParentBanner from './UnifiedParentBanner';
 import { usePracticeApplicationService } from '../providers/PracticeServiceProvider';
 import type { PracticePanelViewModel } from '../presenters/practicePresenter';
-import { selectParentGuidance, selectSessionGuidance } from '../../infrastructure/state/gameSelectors';
+import { selectSessionGuidance } from '../../infrastructure/state/gameSelectors';
 
 interface EnhancedPracticePanelProps {
   practice: PracticePanelViewModel;
@@ -41,41 +40,15 @@ export default function EnhancedPracticePanel({
 }: EnhancedPracticePanelProps) {
   const { card, currentWordId, sessionFraming, sessionId } = practice;
   
-  // Local state for repeat banner
-  const [showRepeatBanner, setShowRepeatBanner] = useState(sessionFraming.showRepeatExplanation);
-  
-  // 🎯 DDD-Compliant: Get session guidance first, then word guidance
+  // 🎯 DDD-Compliant: Get session guidance
   // Follows trace-based architecture: reads current Redux state only
-  // Session guidance takes priority for contextual messages
   const sessionGuidance = useAppSelector(state => {
     if (!sessionId) return null;
     return selectSessionGuidance(state.game, sessionId);
   });
   
-  // Word-level guidance as fallback
-  const parentGuidance = useAppSelector(state => {
-    if (!currentWordId) {
-      return { message: 'Ready when you are', urgency: 'info' as const, context: 'initial' as const };
-    }
-    // This selector will re-run whenever the word's attempts, step, or revealCount changes
-    return selectParentGuidance(state.game, currentWordId);
-  }, (left, right) => {
-    // Custom equality: compare the actual message/context, not object reference
-    return left.message === right.message && 
-           left.context === right.context && 
-           left.urgency === right.urgency;
-  });
-  
   // 🎯 DDD Services (when enabled)
   const practiceService = usePracticeApplicationService();
-
-  // Repeat banner handler
-  const handleRepeatBannerDismiss = () => {
-    setShowRepeatBanner(false);
-    if (onWhyRepeatAcknowledged) {
-      onWhyRepeatAcknowledged();
-    }
-  };
 
   // 🎯 Enhanced handlers that use domain services
   const handleCorrectWithDomain = useCallback(async () => {
@@ -123,21 +96,7 @@ export default function EnhancedPracticePanel({
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
 
-      {/* 🎯 Domain Event Messages - banner removed as requested */}
-
-      {/* Unified Parent Banner - combines session guidance, word guidance and repeat explanation */}
-      {card.currentWord && (
-        <UnifiedParentBanner
-          currentWord={card.currentWord}
-          parentGuidance={parentGuidance}
-          sessionGuidance={sessionGuidance}
-          showRepeatExplanation={showRepeatBanner}
-          onDismiss={showRepeatBanner ? handleRepeatBannerDismiss : undefined}
-          mode={mode}
-          sessionProgress={card.sessionProgress}
-          sessionStats={sessionFraming.sessionStats}
-        />
-      )}
+      {/* UnifiedParentBanner removed - trophy wall now provides kid-focused progress */}
 
       {/* Main Practice Card - always rendered so tests can find the practice root; overlays will sit on top */}
       <PracticeCard
@@ -147,6 +106,7 @@ export default function EnhancedPracticePanel({
           transliterationHi={card.transliterationHi}
           answer={card.answer}
           notes={card.notes}
+          currentWord={card.currentWord}
           onCorrect={handleCorrectWithDomain}
           onWrong={handleWrongWithDomain}
           onNext={onNext}

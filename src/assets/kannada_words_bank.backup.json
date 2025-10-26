@@ -1,0 +1,548 @@
+[
+  {
+    "id": "rama",
+    "complexity": 1,
+    "question": "ರಾಮ",
+    "answer": "राम",
+    "notes": "Transliteration: Rāma"
+  },
+  {
+    "id": "nala",
+    "complexity": 1,
+    "question": "ನಲ",
+    "answer": "नल",
+    "notes": "Transliteration: Nala"
+  },
+  {
+    "id": "nila",
+    "complexity": 1,
+    "question": "ನೀಲ",
+    "answer": "नील",
+    "notes": "Transliteration: Nīla"
+  },
+  {
+    "id": "lava",
+    "complexity": 1,
+    "question": "ಲವ",
+    "answer": "लव",
+    "notes": "Transliteration: Lava"
+  },
+  {
+    "id": "kusha",
+    "complexity": 1,
+    "question": "ಕುಶ",
+    "answer": "कुश",
+    "notes": "Transliteration: Kusha"
+  },
+  {
+    "id": "tara",
+    "complexity": 1,
+    "question": "ತಾರಾ",
+    "answer": "तारा",
+    "notes": "Transliteration: Tara"
+  },
+  {
+    "id": "din",
+    "complexity": 1,
+    "question": "ದಿನ",
+    "answer": "दिन",
+    "notes": "Transliteration: Din"
+  },
+  {
+    "id": "kal",
+    "complexity": 1,
+    "question": "ಕಲ",
+    "answer": "कल",
+    "notes": "Transliteration: Kal"
+  },
+  {
+    "id": "aaj",
+    "complexity": 1,
+    "question": "ಆಜ",
+    "answer": "आज",
+    "notes": "Transliteration: Āj"
+  },
+  {
+    "id": "am",
+    "complexity": 1,
+    "question": "ಆಮ",
+    "answer": "आम",
+    "notes": "Transliteration: Ām"
+  },
+  {
+    "id": "sebab",
+    "complexity": 1,
+    "question": "ಸೇಬ",
+    "answer": "सेब",
+    "notes": "Transliteration: Seb"
+  },
+  {
+    "id": "lal",
+    "complexity": 1,
+    "question": "ಲಾಲ",
+    "answer": "लाल",
+    "notes": "Transliteration: Lāl"
+  },
+  {
+    "id": "seeta",
+    "complexity": 2,
+    "question": "ಸೀತಾ",
+    "answer": "सीता",
+    "notes": "Transliteration: Sītā"
+  },
+  {
+    "id": "bharata",
+    "complexity": 2,
+    "question": "ಭರತ",
+    "answer": "भरत",
+    "notes": "Transliteration: Bharata"
+  },
+  {
+    "id": "janaka",
+    "complexity": 2,
+    "question": "ಜನಕ",
+    "answer": "जनक",
+    "notes": "Transliteration: Janaka"
+  },
+  {
+    "id": "hanuman",
+    "complexity": 2,
+    "question": "ಹನುಮಾನ",
+    "answer": "हनुमान",
+    "notes": "Transliteration: Hanumān"
+  },
+  {
+    "id": "sugreeva",
+    "complexity": 2,
+    "question": "ಸುಗ್ರೀವ",
+    "answer": "सुग्रीव",
+    "notes": "Transliteration: Sugrīva"
+  },
+  {
+    "id": "vali",
+    "complexity": 2,
+    "question": "ವಾಲೀ",
+    "answer": "वाली",
+    "notes": "Transliteration: Vālī"
+  },
+  {
+    "id": "angada",
+    "complexity": 2,
+    "question": "ಅಂಗದ",
+    "answer": "अंगद",
+    "notes": "Transliteration: Aṅgada"
+  },
+  {
+    "id": "ravana",
+    "complexity": 2,
+    "question": "ರಾವಣ",
+    "answer": "रावण",
+    "notes": "Transliteration: Rāvaṇa"
+  },
+  {
+    "id": "narada",
+    "complexity": 2,
+    "question": "ನಾರದ",
+    "answer": "नारद",
+    "notes": "Transliteration: Narada"
+  },
+  {
+    "id": "garuda",
+    "complexity": 2,
+    "question": "ಗರುಡ",
+    "answer": "गरुड़",
+    "notes": "Transliteration: Garuda"
+  },
+  {
+    "id": "pani",
+    "complexity": 2,
+    "question": "ಪಾನೀ",
+    "answer": "पानी",
+    "notes": "Transliteration: Pānī"
+  },
+  {
+    "id": "khana",
+    "complexity": 2,
+    "question": "ಖಾನಾ",
+    "answer": "खाना",
+    "notes": "Transliteration: Khānā"
+  },
+  {
+    "id": "skool",
+    "complexity": 2,
+    "question": "ಸ್ಕೂಲ",
+    "answer": "स्कूल",
+    "notes": "Transliteration: Skūl"
+  },
+  {
+    "id": "kitaab",
+    "complexity": 2,
+    "question": "ಕಿತಾಬ",
+    "answer": "किताब",
+    "notes": "Transliteration: Kitāb"
+  },
+  {
+    "id": "dost",
+    "complexity": 2,
+    "question": "ದೋಸ್ತ",
+    "answer": "दोस्त",
+    "notes": "Transliteration: Dost"
+  },
+  {
+    "id": "ghar",
+    "complexity": 2,
+    "question": "ಘರ",
+    "answer": "घर",
+    "notes": "Transliteration: Ghar"
+  },
+  {
+    "id": "chai",
+    "complexity": 2,
+    "question": "ಚಾಯ",
+    "answer": "चाय",
+    "notes": "Transliteration: Chāy"
+  },
+  {
+    "id": "aankh",
+    "complexity": 2,
+    "question": "ಆಁಖ",
+    "answer": "आँख",
+    "notes": "Transliteration: Ā̃kh"
+  },
+  {
+    "id": "haath",
+    "complexity": 2,
+    "question": "ಹಾಥ",
+    "answer": "हाथ",
+    "notes": "Transliteration: Hāth"
+  },
+  {
+    "id": "pair",
+    "complexity": 2,
+    "question": "ಪೈರ",
+    "answer": "पैर",
+    "notes": "Transliteration: Pair"
+  },
+  {
+    "id": "kela",
+    "complexity": 2,
+    "question": "ಕೇಲಾ",
+    "answer": "केला",
+    "notes": "Transliteration: Kelā"
+  },
+  {
+    "id": "angoor",
+    "complexity": 2,
+    "question": "ಅಂಗೂರ",
+    "answer": "अंगूर",
+    "notes": "Transliteration: Angoor"
+  },
+  {
+    "id": "anar",
+    "complexity": 2,
+    "question": "ಅನಾರ",
+    "answer": "अनार",
+    "notes": "Transliteration: Anār"
+  },
+  {
+    "id": "khara",
+    "complexity": 2,
+    "question": "ಖರ",
+    "answer": "खर",
+    "notes": "Transliteration: Khara"
+  },
+  {
+    "id": "dilli",
+    "complexity": 2,
+    "question": "ದಿಲ್ಲೀ",
+    "answer": "दिल्ली",
+    "notes": "Transliteration: Dillī"
+  },
+  {
+    "id": "mumbai",
+    "complexity": 2,
+    "question": "ಮುಂಬಈ",
+    "answer": "मुंबई",
+    "notes": "Transliteration: Mumbaī"
+  },
+  {
+    "id": "kerala",
+    "complexity": 2,
+    "question": "ಕೇರಲ",
+    "answer": "केरल",
+    "notes": "Transliteration: Kerala"
+  },
+  {
+    "id": "karnataka",
+    "complexity": 2,
+    "question": "ಕರ್ನಾಟಕ",
+    "answer": "कर्नाटक",
+    "notes": "Transliteration: Karṇāṭaka"
+  },
+  {
+    "id": "gujarat",
+    "complexity": 2,
+    "question": "ಗುಜರಾತ",
+    "answer": "गुजरात",
+    "notes": "Transliteration: Gujarāt"
+  },
+  {
+    "id": "punjab",
+    "complexity": 2,
+    "question": "ಪಂಜಾಬ",
+    "answer": "पंजाब",
+    "notes": "Transliteration: Panjāb"
+  },
+  {
+    "id": "lakshmana",
+    "complexity": 3,
+    "question": "ಲಕ್ಷ್ಮಣ",
+    "answer": "लक्ष्मण",
+    "notes": "Transliteration: Lakṣmaṇa"
+  },
+  {
+    "id": "shatrughna",
+    "complexity": 3,
+    "question": "ಶತ್ರುಘ್ನ",
+    "answer": "शत्रुघ्न",
+    "notes": "Transliteration: Śatrughna"
+  },
+  {
+    "id": "dasharatha",
+    "complexity": 3,
+    "question": "ದಶರಥ",
+    "answer": "दशरथ",
+    "notes": "Transliteration: Daśaratha"
+  },
+  {
+    "id": "kausalyaa",
+    "complexity": 3,
+    "question": "ಕೌಸಲ್ಯಾ",
+    "answer": "कौसल्या",
+    "notes": "Transliteration: Kausalyā"
+  },
+  {
+    "id": "kaikeyii",
+    "complexity": 3,
+    "question": "ಕೈಕೇಯೀ",
+    "answer": "कैकेयी",
+    "notes": "Transliteration: Kaikeyī"
+  },
+  {
+    "id": "sumitra",
+    "complexity": 3,
+    "question": "ಸುಮಿತ್ರ",
+    "answer": "सुमित्रा",
+    "notes": "Transliteration: Sumitrā"
+  },
+  {
+    "id": "vishvamitra",
+    "complexity": 3,
+    "question": "ವಿಶ್ವಾಮಿತ್ರ",
+    "answer": "विश्वामित्र",
+    "notes": "Transliteration: Viśvāmitra"
+  },
+  {
+    "id": "agastya",
+    "complexity": 3,
+    "question": "ಅಗಸ್ತ್ಯ",
+    "answer": "अगस्त्य",
+    "notes": "Transliteration: Agastya"
+  },
+  {
+    "id": "jambavan",
+    "complexity": 3,
+    "question": "ಜಾಂಬವಾನ್",
+    "answer": "जाम्भवान",
+    "notes": "Transliteration: Jāmbavān"
+  },
+  {
+    "id": "vibhishana",
+    "complexity": 3,
+    "question": "ವಿಭೀಷಣ",
+    "answer": "विभीषण",
+    "notes": "Transliteration: Vibhīṣaṇa"
+  },
+  {
+    "id": "parivar",
+    "complexity": 3,
+    "question": "ಪರಿವಾರ",
+    "answer": "परिवार",
+    "notes": "Transliteration: Parivār"
+  },
+  {
+    "id": "sarak",
+    "complexity": 3,
+    "question": "ಸಡ಼ಕ",
+    "answer": "सड़क",
+    "notes": "Transliteration: Saṛak"
+  },
+  {
+    "id": "bazar",
+    "complexity": 3,
+    "question": "ಬಾಜ಼ಾರ",
+    "answer": "बाज़ार",
+    "notes": "Transliteration: Bāzār"
+  },
+  {
+    "id": "aspatal",
+    "complexity": 3,
+    "question": "ಅಸ್ಪತಾಲ",
+    "answer": "अस्पताल",
+    "notes": "Transliteration: Aspatāl"
+  },
+  {
+    "id": "mandir",
+    "complexity": 3,
+    "question": "ಮಂದಿರ",
+    "answer": "मंदिर",
+    "notes": "Transliteration: Mandir"
+  },
+  {
+    "id": "naukri",
+    "complexity": 3,
+    "question": "ನೌಕರೀ",
+    "answer": "नौकरी",
+    "notes": "Transliteration: Nauk­rī"
+  },
+  {
+    "id": "samay",
+    "complexity": 3,
+    "question": "ಸಮಯ",
+    "answer": "समय",
+    "notes": "Transliteration: Samay"
+  },
+  {
+    "id": "raat",
+    "complexity": 3,
+    "question": "ರಾತ",
+    "answer": "रात",
+    "notes": "Transliteration: Rāt"
+  },
+  {
+    "id": "nariyal",
+    "complexity": 3,
+    "question": "ನಾರಿಯಲ",
+    "answer": "नारियल",
+    "notes": "Transliteration: Nāriyal"
+  },
+  {
+    "id": "ananas",
+    "complexity": 3,
+    "question": "ಅನಾನಾಸ",
+    "answer": "अनानास",
+    "notes": "Transliteration: Anānās"
+  },
+  {
+    "id": "angutha",
+    "complexity": 3,
+    "question": "ಅಂಗೂಠಾ",
+    "answer": "अंगूठा",
+    "notes": "Transliteration: Angūṭhā"
+  },
+  {
+    "id": "mandodari",
+    "complexity": 4,
+    "question": "ಮಂದೋದರೀ",
+    "answer": "मंदोदरी",
+    "notes": "Transliteration: Mandodarī"
+  },
+  {
+    "id": "meghanada",
+    "complexity": 4,
+    "question": "ಮೇಘನಾದ",
+    "answer": "मेघनाद",
+    "notes": "Transliteration: Meghanāda"
+  },
+  {
+    "id": "indrajit",
+    "complexity": 4,
+    "question": "ಇಂದ್ರಜಿತ್",
+    "answer": "इंद्रजित",
+    "notes": "Transliteration: Indrajit"
+  },
+  {
+    "id": "kumbhakarna",
+    "complexity": 4,
+    "question": "ಕುಂಭಕರ್ಣ",
+    "answer": "कुंभकर्ण",
+    "notes": "Transliteration: Kumbhakarṇa"
+  },
+  {
+    "id": "shurpanakha",
+    "complexity": 4,
+    "question": "ಶೂರ್ಪಣಖಾ",
+    "answer": "शूर्पणखा",
+    "notes": "Transliteration: Śūrpaṇakhā"
+  },
+  {
+    "id": "maricha",
+    "complexity": 4,
+    "question": "ಮಾರೀಚ",
+    "answer": "मारिच",
+    "notes": "Transliteration: Mārīca"
+  },
+  {
+    "id": "tadaka",
+    "complexity": 4,
+    "question": "ತಾಡಕಾ",
+    "answer": "ताड़का",
+    "notes": "Transliteration: Tāḍakā"
+  },
+  {
+    "id": "ahilya",
+    "complexity": 4,
+    "question": "ಅಹಿಲ್ಯಾ",
+    "answer": "अहल्या",
+    "notes": "Transliteration: Ahalyā"
+  },
+  {
+    "id": "gautama",
+    "complexity": 4,
+    "question": "ಗೌತಮ",
+    "answer": "गौतम",
+    "notes": "Transliteration: Gautama"
+  },
+  {
+    "id": "jatayu",
+    "complexity": 4,
+    "question": "ಜಟಾಯು",
+    "answer": "जटायु",
+    "notes": "Transliteration: Jaṭāyu"
+  },
+  {
+    "id": "sampati",
+    "complexity": 4,
+    "question": "ಸಂಪಾತೀ",
+    "answer": "संपाती",
+    "notes": "Transliteration: Sampātī"
+  },
+  {
+    "id": "shrutakirti",
+    "complexity": 4,
+    "question": "ಶ್ರುತಕೀರ್ತಿ",
+    "answer": "श्रुतकीर्ति",
+    "notes": "Transliteration: Shrutakirti"
+  },
+  {
+    "id": "vashistha",
+    "complexity": 4,
+    "question": "ವಶಿಷ್ಠ",
+    "answer": "वशिष्ठ",
+    "notes": "Transliteration: Vashistha"
+  },
+  {
+    "id": "trishira",
+    "complexity": 4,
+    "question": "ತ್ರಿಶಿರಾ",
+    "answer": "त्रिशिरा",
+    "notes": "Transliteration: Trishira"
+  },
+  {
+    "id": "chamakdar",
+    "complexity": 4,
+    "question": "ಚಮಕದಾರ",
+    "answer": "चमकदार",
+    "notes": "Transliteration: Chamakdār"
+  }
+]

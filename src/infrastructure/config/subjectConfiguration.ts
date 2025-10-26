@@ -18,59 +18,12 @@ interface SubjectConfig {
  */
 export class SubjectConfiguration {
   private static readonly SUBJECT_MAP: Record<string, SubjectConfig> = {
-    'english': {
-      displayName: 'English',
-      parentTip: 'Have them read it again.'
-    },
-    'englishquestions': {
-      displayName: 'English Questions'
-    },
     'kannada': {
-      displayName: 'Kannada'
+      displayName: 'Kannada Words'
     },
     'kannadaalphabets': {
       displayName: 'Kannada Alphabets',
       parentTip: 'Trace in air + say the sound.'
-    },
-    'kannadawords': {
-      displayName: 'Kannada Words'
-    },
-    'hindi': {
-      displayName: 'Hindi'
-    },
-    'hindialphabets': {
-      displayName: 'Hindi Alphabets',
-      parentTip: 'Trace in air + say the sound.'
-    },
-    'mathtables': {
-      displayName: 'Math Tables',
-      parentTip: 'Ask them to explain the step.'
-    },
-    'math': {
-      displayName: 'Math'
-    },
-    'geography': {
-      displayName: 'Geography'
-    },
-    'hanuman': {
-      displayName: 'Hanuman Chalisa',
-      parentTip: 'One-line re-tell before Next.'
-    },
-    'comprehension': {
-      displayName: 'Story Comprehension',
-      parentTip: 'One-line re-tell before Next.'
-    },
-    'humanbody': {
-      displayName: 'Human Body'
-    },
-    'nationalsymbols': {
-      displayName: 'National Symbols'
-    },
-    'indiageography': {
-      displayName: 'India Geography'
-    },
-    'grampanchayat': {
-      displayName: 'Gram Panchayat'
     }
   };
 

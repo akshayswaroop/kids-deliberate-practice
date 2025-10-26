@@ -16,9 +16,6 @@ test.describe('Story: Kannada Revision Library', () => {
   // The revision button's initial visibility can vary between environments.
   // Don't enforce a strict initial state; the test will verify visibility after selecting a mode.
 
-    await page.selectOption('#mode-select', 'kannadaalphabets');
-    await page.waitForTimeout(500);
-    
     // Click the revision button by text instead of test-id
     await page.getByRole('button', { name: /revision/i }).click();
 

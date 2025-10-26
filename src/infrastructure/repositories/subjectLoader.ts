@@ -1,35 +1,13 @@
 import type { Word } from '../state/gameState';
 
 // Import all JSON banks directly for synchronous loading
-import englishBank from '../../assets/english_questions_bank.json';
 import kannadaWordsBank from '../../assets/kannada_words_bank.json';
 import kannadaAlphabetsBank from '../../assets/kannada_alphabets_bank.json';
-import hindiAlphabetsBank from '../../assets/hindi_full_barakhadi_bank.json';
-import mathTablesBank from '../../assets/math_tables_bank.json';
-import humanBodyBank from '../../assets/human_body_grade3_full.json';
-import indiaGeographyBank from '../../assets/india_geography_questions.json';
-import gramPanchayatBank from '../../assets/gram_panchayat_questions.json';
-import hanumanBank from '../../assets/hanuman_chalisa_kids.json';
-import storyComprehensionBank from '../../assets/story_comprehension_100.json';
-import numberSpellingsBank from '../../assets/number_spellings_1_20.json';
-import nationalSymbolsBank from '../../assets/national_symbols.json';
-import beforeAfterNumbersBank from '../../assets/before_after_numbers_bank.json';
 
 // Map bank paths to imported data
 const BANK_DATA_MAP: Record<string, any> = {
-  'english_questions_bank.json': englishBank,
   'kannada_words_bank.json': kannadaWordsBank,
   'kannada_alphabets_bank.json': kannadaAlphabetsBank,
-  'hindi_full_barakhadi_bank.json': hindiAlphabetsBank,
-  'math_tables_bank.json': mathTablesBank,
-  'human_body_grade3_full.json': humanBodyBank,
-  'india_geography_questions.json': indiaGeographyBank,
-  'gram_panchayat_questions.json': gramPanchayatBank,
-  'hanuman_chalisa_kids.json': hanumanBank,
-  'story_comprehension_100.json': storyComprehensionBank,
-  'number_spellings_1_20.json': numberSpellingsBank,
-  'national_symbols.json': nationalSymbolsBank,
-  'before_after_numbers_bank.json': beforeAfterNumbersBank,
 };
 
 // Unified question bank item interface
@@ -90,26 +68,17 @@ export function loadSubjectWords(bankData: QuestionBankItem[], language: string)
  */
 export const SUBJECT_CONFIGS: SubjectConfig[] = [
   {
-    name: 'english',
-    bankPath: 'english_questions_bank.json',
-    language: 'english',
-    displayIcon: '🇺🇸',
-    displayLabel: 'English',
-  promptLabel: 'Read this sentence aloud',
-  parentInstruction: 'Ask child to read aloud, then tap how it went.',
-  },
-  {
     name: 'kannada',
     bankPath: 'kannada_words_bank.json',
     language: 'kannada',
     displayIcon: '🇮🇳',
-    displayLabel: 'Kannada',
-    promptLabel: 'Read this word',
-  parentInstruction: 'Point to word, have child read aloud, then log.',
+    displayLabel: 'Kannada Words',
+    promptLabel: 'Build this word',
+    parentInstruction: 'Help your learner build the Kannada word and say it aloud together.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Kannada Revision',
-      buttonLabel: 'Kannada Revision',
+      buttonLabel: 'Review',
       primaryField: 'text',
       secondaryField: 'answer',
       notesField: 'notes',
@@ -122,133 +91,15 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🔤',
     displayLabel: 'Kannada Alphabets',
     promptLabel: 'Say the letter',
-  parentInstruction: 'Show letter, ask for sound, then tap result.',
+    parentInstruction: 'Trace the letter in the air and repeat the sound together.',
     supportsRevision: true,
     revisionPanel: {
-      title: 'Kannada Alphabet Revision',
-      buttonLabel: 'Alphabet Revision',
+      title: 'Alphabet Revision',
+      buttonLabel: 'Review Letters',
       primaryField: 'text',
       secondaryField: 'answer',
-      notesField: 'notes',
     },
   },
-  { 
-    name: 'hindialphabets', 
-    bankPath: 'hindi_full_barakhadi_bank.json', 
-    language: 'hindialphabets', 
-    displayIcon: '🇮🇳', 
-    displayLabel: 'Hindi Alphabets', 
-    promptLabel: 'Say the letter',
-  parentInstruction: 'Say the Hindi sound together, then record attempt.',
-    supportsRevision: true,
-    revisionPanel: {
-      title: 'Hindi Alphabet Revision',
-      buttonLabel: 'Hindi Revision',
-      primaryField: 'text',
-      secondaryField: 'answer',
-      notesField: 'notes',
-    },
-  },
-  { 
-    name: 'mathtables', 
-    bankPath: 'math_tables_bank.json', 
-    language: 'mathtables', 
-    displayIcon: '🔢', 
-    displayLabel: 'Math Tables', 
-    promptLabel: 'Solve this problem',
-  parentInstruction: 'Ask mentally, encourage quick recall, then tap.',
-    supportsRevision: true,
-    revisionPanel: {
-      title: 'Math Tables Revision',
-      buttonLabel: 'Math Revision',
-      primaryField: 'text',
-      secondaryField: 'answer',
-      notesField: 'notes',
-    },
-  },
-  {
-    name: 'humanbody',
-    bankPath: 'human_body_grade3_full.json',
-    language: 'humanbody',
-    displayIcon: '🧠',
-    displayLabel: 'Human Body',
-    promptLabel: 'Answer the question',
-  parentInstruction: 'Read fact aloud, hear answer, then tap.',
-  },
-  {
-    name: 'indiageography',
-    bankPath: 'india_geography_questions.json',
-    language: 'indiageography',
-    displayIcon: '🗺️',
-    displayLabel: 'India Geography',
-    promptLabel: 'Answer the question',
-  parentInstruction: 'Ask the question aloud; listen, then record.',
-  },
-  {
-    name: 'grampanchayat',
-    bankPath: 'gram_panchayat_questions.json',
-    language: 'grampanchayat',
-    displayIcon: '🏛️',
-    displayLabel: 'Gram Panchayat',
-    promptLabel: 'Answer the question',
-  parentInstruction: 'Discuss civics prompt, then log response.',
-  },
-  {
-    name: 'hanuman',
-    bankPath: 'hanuman_chalisa_kids.json',
-    language: 'hanuman',
-    displayIcon: '🕉️',
-    displayLabel: 'Hanuman Chalisa',
-    promptLabel: 'Read and answer',
-  parentInstruction: 'Read or chant together, ask meaning, then log.',
-  },
-  {
-    name: 'comprehension',
-    bankPath: 'story_comprehension_100.json',
-    language: 'comprehension',
-    displayIcon: '📚',
-    displayLabel: 'Story Comprehension',
-    promptLabel: 'Read and answer',
-  parentInstruction: 'Read passage together, discuss, then record answer.',
-  },
-  {
-    name: 'numberspellings',
-    bankPath: 'number_spellings_1_20.json',
-    language: 'numberspellings',
-    displayIcon: '🔤',
-    displayLabel: 'Number Spellings (1–20)',
-    promptLabel: 'Spell this number',
-  parentInstruction: 'Show number, ask child to spell aloud, then tap.',
-    supportsRevision: true,
-    revisionPanel: {
-      title: 'Number Spelling Revision',
-      buttonLabel: 'Number Spellings',
-      primaryField: 'text',
-      secondaryField: 'answer',
-      notesField: 'notes',
-    },
-  },
-  {
-    name: 'nationalsymbols',
-    bankPath: 'national_symbols.json',
-    language: 'nationalsymbols',
-    displayIcon: '🇮🇳',
-    displayLabel: 'National Symbols',
-    promptLabel: 'Answer the question',
-  parentInstruction: 'Quiz meanings, then choose how confident they are.',
-    supportsRevision: false,
-  },
-  {
-    name: 'beforeafternumbers',
-    bankPath: 'before_after_numbers_bank.json',
-    language: 'beforeafternumbers',
-    displayIcon: '🔢',
-    displayLabel: 'Before & After Numbers',
-    promptLabel: 'Complete the sequence',
-  parentInstruction: 'Point number, ask before or after, then tap.',
-    supportsRevision: false,
-  },
-  // ADD NEW SUBJECTS HERE - no code changes needed elsewhere!
 ];
 
 /**

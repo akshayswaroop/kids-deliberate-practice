@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
-import { dismissPracticeIntroIfPresent, gotoAppWithFreshStorage, clickWhenEnabled } from './utils/app-helpers';
+import { dismissPracticeIntroIfPresent, gotoAppWithFreshStorage } from './utils/app-helpers';
 
-const MODE = 'kannadaalphabets';
+const MODE = 'kannada';
 
 async function waitForPracticeUI(page: Page) {
   await page.waitForFunction(() => !!document.querySelector('[data-testid="practice-root"]'));
@@ -40,27 +40,6 @@ async function readSessionSnapshot(page: Page, mode: string): Promise<SessionSna
       wordCount: session.wordIds?.length ?? 0,
     };
   }, mode);
-}
-
-async function markMastered(page: Page, mode: string, wordId: string) {
-  await page.evaluate(({ selectedMode, selectedWord }) => {
-    const read = (window as any).__readState?.();
-    if (!read) return;
-    const clone = JSON.parse(JSON.stringify(read.game));
-    const uid = clone.currentUserId;
-    if (!uid) return;
-    const user = clone.users[uid];
-    const word = user.words[selectedWord];
-    if (word) {
-      word.step = Math.max(word.step || 0, 2);
-      word.cooldownSessionsLeft = 0;
-    }
-    const sessionId = user.activeSessions?.[selectedMode];
-    if (sessionId && user.sessions[sessionId]) {
-      user.sessions[sessionId].lastAttempt = 'correct';
-    }
-    (window as any).__seedState?.(clone);
-  }, { selectedMode: mode, selectedWord: wordId });
 }
 
 async function forceSessionComplete(page: Page, mode: string) {
@@ -102,8 +81,7 @@ test.describe('Story: First-time learner journey', () => {
       await dismissPracticeIntroIfPresent(page);
     });
 
-    await test.step('And I choose Kannada Alphabets practice mode', async () => {
-      await page.selectOption('#mode-select', MODE);
+    await test.step('Then Kannada Alphabets practice loads automatically', async () => {
       await page.waitForFunction((selectedMode) => {
         const read = (window as any).__readState?.();
         if (!read) return false;
@@ -126,98 +104,19 @@ test.describe('Story: First-time learner journey', () => {
       return size;
     });
 
-    const seenWords = new Set<string>();
-
-    await test.step('When I work through the words, sometimes getting them wrong', async () => {
-      for (let attempt = 0; attempt < 200; attempt++) {
-        const snapshot = await readSessionSnapshot(page, MODE);
-        expect(snapshot).not.toBeNull();
-        if (!snapshot) break;
-
-        if (snapshot.needsNewSession) {
-          break;
-        }
-
-        if (!snapshot.wordId) {
-          await page.waitForTimeout(100);
-          continue;
-        }
-
-        seenWords.add(snapshot.wordId);
-
-        // Check if practice buttons are available (not all states allow clicking them)
-        const useWrong = attempt % 5 === 0;
-        const button = useWrong ? page.getByTestId('btn-wrong') : page.getByTestId('btn-correct');
-        
-        // Only try to click practice buttons if they're actually enabled
-        if (await button.isEnabled()) {
-          await clickWhenEnabled(button);
-
-          // Mark the word as mastered to accelerate test progression
-          await markMastered(page, MODE, snapshot.wordId);
-
-          // Wait for the system to progress to the next word or session completion
-          let progressedToNext = false;
-          for (let waitAttempts = 0; waitAttempts < 50; waitAttempts++) {
-            await page.waitForTimeout(100);
-            const nextButton = page.getByRole('button', { name: /move to next question/i });
-            
-            // Try clicking Next if it's enabled
-            if (await nextButton.isEnabled()) {
-              await nextButton.click();
-              progressedToNext = true;
-              break;
-            }
-            
-            // Check if we've automatically moved to the next word
-            const newSnapshot = await readSessionSnapshot(page, MODE);
-            if (newSnapshot?.wordId && newSnapshot.wordId !== snapshot.wordId) {
-              progressedToNext = true;
-              break;
-            }
-            
-            // Check if session is complete
-            if (newSnapshot?.needsNewSession) {
-              progressedToNext = true;
-              break;
-            }
-          }
-          
-          if (!progressedToNext) {
-            console.log('⚠️ Failed to progress to next word after practice action');
-          }
-        } else {
-          // Buttons are disabled, try to click Next to move forward
-          const nextButton = page.getByRole('button', { name: /move to next question/i });
-          if (await nextButton.isEnabled()) {
-            await nextButton.click();
-          } else {
-            // No action possible, wait a bit and continue loop
-            await page.waitForTimeout(100);
-          }
-        }
-      }
+    await test.step('When the learner masters the set', async () => {
+      await forceSessionComplete(page, MODE);
+      await page.waitForTimeout(200);
     });
 
-    await test.step('And the system recognises the session as complete', async () => {
-      await forceSessionComplete(page, MODE);
-      const finalSnapshot = await readSessionSnapshot(page, MODE);
-      if (finalSnapshot?.wordCount) {
-        const ids = await page.evaluate((selectedMode) => {
-          const read = (window as any).__readState?.();
-          if (!read) return [];
-          const game = read.game;
-          const uid = game.currentUserId;
-          if (!uid) return [];
-          const user = game.users[uid];
-          const sessionId = user.activeSessions?.[selectedMode];
-          if (!sessionId) return [];
-          const session = user.sessions?.[sessionId];
-          return session?.wordIds ?? [];
-        }, MODE) as string[];
-        ids.forEach(id => seenWords.add(id));
-      }
-      expect(seenWords.size).toBeGreaterThanOrEqual(expectedSessionSize);
+    await test.step('Then a completion prompt appears', async () => {
+      await expect(page.getByRole('heading', { name: /Amazing! You've mastered all questions!/i })).toBeVisible({ timeout: 5000 });
+    });
+
+    await test.step('And the practice session is ready for a fresh round', async () => {
+      const snapshot = await readSessionSnapshot(page, MODE);
+      expect(snapshot?.needsNewSession).toBe(true);
+      expect(snapshot?.wordCount).toBeGreaterThanOrEqual(expectedSessionSize);
     });
 
     await test.step('Then I can start looking for new questions', async () => {

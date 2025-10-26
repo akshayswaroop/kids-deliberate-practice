@@ -86,9 +86,9 @@ export default function AppHeader({
       `}</style>
       
       {/* Left: App Title */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-inverse)', minWidth: 0, flex: '0 0 auto' }}>
-        <span role="img" aria-label="sparkle" style={{ fontSize: 22, flexShrink: 0 }}>✨</span>
-        <h1 className="hide-text-on-mobile" style={{ 
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-inverse)', minWidth: 0, flex: '1 1 auto' }}>
+        <span role="img" aria-label="sparkle" style={{ fontSize: 22, flexShrink: 0 }}>📚</span>
+        <h1 style={{ 
           fontSize: 'clamp(1.2rem, 4vw, 1.8rem)', 
           fontWeight: 900, 
           margin: 0, 
@@ -97,74 +97,8 @@ export default function AppHeader({
           textOverflow: 'ellipsis', 
           minWidth: 0 
         }}>
-          Kids Deliberate Practice
+          Learn Kannada
         </h1>
-      </div>
-
-      {/* Center: Subject Selector */}
-      <div style={{ display: 'flex', justifyContent: 'center', minWidth: 0, gap: 8, alignItems: 'center', flex: '1 1 auto' }}>
-        {/* Desktop: Full subject dropdown */}
-        <div className="hide-on-mobile-subject" style={{ flex: '1 1 auto', minWidth: 0 }}>
-          <ModeSelector
-            compact
-            mode={mode}
-            options={modeOptions}
-            onSetMode={onSetMode}
-          />
-        </div>
-        
-        {/* Mobile: Compact subject icon button */}
-        <button
-          type="button"
-          onClick={onOpenSubjectPicker}
-          aria-label="Change subject"
-          title="Change subject"
-          className="show-on-mobile-subject"
-          style={{
-            display: 'none',
-            border: 'none',
-            background: 'rgba(255,255,255,0.95)',
-            color: '#1f2937',
-            borderRadius: 10,
-            padding: '8px 12px',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            fontWeight: 600,
-            fontSize: '0.9rem',
-            gap: 6,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-          }}
-        >
-          📚 <span style={{ maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            {modeOptions.find(opt => opt.value === mode)?.label || 'Select Subject'}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          onClick={onOpenSubjectPicker}
-          aria-label="Browse all subjects"
-          title="Browse all subjects"
-          className="hide-on-mobile"
-          style={{
-            border: 'none',
-            background: 'rgba(15,23,42,0.16)',
-            color: 'var(--text-inverse)',
-            borderRadius: 10,
-            padding: 8,
-            width: 36,
-            height: 36,
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer'
-          }}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-            <path d="M3 5h18M3 12h18M3 19h18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
       </div>
 
       {/* Right: Stats and Controls */}

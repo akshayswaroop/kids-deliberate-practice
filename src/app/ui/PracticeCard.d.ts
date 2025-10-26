@@ -43,6 +43,8 @@ export interface PracticeCardProps {
   } | null;
   animationDurationMs?: number;
   onReturnHome?: () => void;
+  onStatusChange?: (status: 'idle' | 'pending' | 'animating' | 'waiting') => void;
+  currentWord?: { answer?: string; notes?: string; [key: string]: any };
 }
 
 export default function PracticeCard(props: PracticeCardProps): JSX.Element;

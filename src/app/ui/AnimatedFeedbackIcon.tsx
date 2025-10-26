@@ -18,21 +18,20 @@ export default function AnimatedFeedbackIcon({ type, onComplete }: AnimatedFeedb
   }, [onComplete]);
 
   useEffect(() => {
-    // Find the banner timeline element
+    // Anchor feedback near the practice surface instead of the retired parent banner.
     const findTimelinePosition = () => {
-      const banner = document.querySelector('[data-testid="unified-parent-banner"]');
-      if (banner) {
-        const bannerRect = banner.getBoundingClientRect();
-        // Position at the right side of the banner where timeline is
+      const practiceRoot = document.querySelector('[data-testid="practice-root"]');
+      if (practiceRoot) {
+        const rect = practiceRoot.getBoundingClientRect();
         return {
-          x: bannerRect.right - 60, // 60px from right edge (timeline position)
-          y: bannerRect.top + bannerRect.height / 2,
+          x: rect.right - 80,
+          y: rect.bottom - 140,
         };
       }
-      // Fallback to top-right if banner not found
+      // Fallback to bottom-right if practice root is unavailable
       return {
         x: window.innerWidth - 80,
-        y: 60,
+        y: window.innerHeight - 140,
       };
     };
 

@@ -10,6 +10,7 @@ interface SubjectPickerModalProps {
   onClose: () => void;
 }
 
+// Only Kannada learning
 const subjectCards = SUBJECT_CONFIGS.map(config => ({
   name: config.name,
   label: config.displayLabel,

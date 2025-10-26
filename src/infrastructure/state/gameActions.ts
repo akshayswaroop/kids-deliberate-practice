@@ -18,10 +18,15 @@ import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfigur
 const selectNextPracticeIndex = (
   session: Session | undefined, 
   words: Record<string, Word>,
-  randomValue: number = Math.random() // Default at edge, can be injected for tests
+  _randomValue: number = Math.random()
 ): number | null => {
-  if (!session || !Array.isArray(session.wordIds)) return null;
+  if (!session || !Array.isArray(session.wordIds) || session.wordIds.length === 0) {
+    return null;
+  }
+
+  const currentIndex = Number.isInteger(session.currentIndex) ? session.currentIndex : 0;
   const unmasteredIndices: number[] = [];
+
   for (let i = 0; i < session.wordIds.length; i++) {
     const wordId = session.wordIds[i];
     const word = words[wordId];
@@ -29,11 +34,26 @@ const selectNextPracticeIndex = (
       unmasteredIndices.push(i);
     }
   }
+
   if (unmasteredIndices.length === 0) {
     return null;
   }
-  const randomIndex = Math.floor(randomValue * unmasteredIndices.length);
-  return unmasteredIndices[randomIndex];
+
+  if (unmasteredIndices.length === 1) {
+    return unmasteredIndices[0];
+  }
+
+  const nextHigher = unmasteredIndices.find(index => index > currentIndex);
+  if (typeof nextHigher === 'number') {
+    return nextHigher;
+  }
+
+  const fallback = unmasteredIndices.find(index => index !== currentIndex);
+  if (typeof fallback === 'number') {
+    return fallback;
+  }
+
+  return unmasteredIndices[0];
 };
 
 /**
@@ -141,6 +161,26 @@ export const markCurrentWordCorrect = (payload: { mode: string }) => (dispatch: 
   const wordId = session.wordIds[session.currentIndex];
   const now = Date.now();
   dispatch(attempt({ sessionId: activeSessionId, wordId, result: 'correct', now } as any));
+};
+
+export const completeConstructionWord = (payload: { mode: string }) => (dispatch: any, getState: any) => {
+  dispatch(markCurrentWordCorrect(payload) as any);
+
+  const state = getState();
+  const game = state.game;
+  const uid = game.currentUserId;
+  if (!uid) return;
+  const user = game.users[uid];
+  if (!user) return;
+  const activeSessionId = user.activeSessions?.[payload.mode];
+  if (!activeSessionId) return;
+  const session = user.sessions[activeSessionId];
+  if (!session) return;
+
+  // Auto-progress for construction mode sessions so the next word appears without manual input
+  if (Array.isArray(session.wordIds) && session.wordIds.length > 0) {
+    dispatch(handleNextPressed(payload) as any);
+  }
 };
 
 // Clean domain action: Mark current word as wrong (UI doesn't need to know about sessions)

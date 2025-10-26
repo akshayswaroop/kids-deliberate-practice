@@ -6,29 +6,29 @@ interface PracticeIntroProps {
 
 const CARDS = [
   {
-    title: 'Learning over points',
-    body: 'No streak traps or glitter. Calm reps that build real understanding.',
-    icon: '📚',
+    title: 'Learn Kannada',
+    body: 'Designed for Hindi-speaking children to learn Kannada through interactive practice and phonetic building.',
+    icon: '🇮🇳',
   },
   {
-    title: 'Deliberate practice',
-    body: 'Short sets + spaced repetition so tough items return and stick.',
-    icon: '🔁',
+    title: 'Build words by sound',
+    body: 'Tap letters and matras to construct Hindi transliterations, learning how Devanagari script works.',
+    icon: '�',
   },
   {
-    title: 'Parent‑assisted flow',
-    body: 'You ask, your child answers aloud; you tap ✅/↺. Coaching, not solo screen time.',
+    title: 'Parent‑guided practice',
+    body: 'Show the Kannada text, have your child read it, build the Hindi word together, then mark the result.',
     icon: '🤝',
   },
   {
-    title: 'Private by design',
-    body: 'All local on your computer. No logins, no ads, no cloud.',
-    icon: '🔒',
+    title: 'Spaced repetition',
+    body: 'Difficult words return automatically. Short practice sessions build lasting fluency.',
+    icon: '�',
   },
   {
-    title: 'Built by parents',
-    body: 'Made and tested by parents for real home routines.',
-    icon: '🧑‍🧒',
+    title: 'Private & local',
+    body: 'Everything stays on your device. No logins, no ads, no cloud storage.',
+    icon: '🔒',
   },
 ];
 
@@ -105,10 +105,10 @@ export default function PracticeIntro({ onDismiss }: PracticeIntroProps) {
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'var(--text-inverse, #e2e8f0)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-              <div style={{ width: 46, height: 46, borderRadius: 10, background: 'linear-gradient(135deg,var(--color-primary,#60a5fa),var(--color-secondary,#7c3aed))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>🧒</div>
+              <div style={{ width: 46, height: 46, borderRadius: 10, background: 'linear-gradient(135deg,var(--color-primary,#60a5fa),var(--color-secondary,#7c3aed))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>📚</div>
               <div>
-                <div style={{ fontSize: '1.25rem', fontWeight: 800 }}>Kids Practice</div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-inverse-muted, rgba(226,232,240,0.8))' }}>Gentle daily practice for kids</div>
+                <div style={{ fontSize: '1.25rem', fontWeight: 800 }}>Learn Kannada</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-inverse-muted, rgba(226,232,240,0.8))' }}>For Hindi-speaking kids</div>
               </div>
             </div>
 
