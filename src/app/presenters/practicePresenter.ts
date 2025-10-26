@@ -1,4 +1,4 @@
-import { SUBJECT_CONFIGS, getSubjectSupportsRevision } from '../../infrastructure/repositories/subjectLoader';
+import { SUBJECT_CONFIGS } from '../../infrastructure/repositories/subjectLoader';
 import {
   selectActiveSessionForMode,
   selectCurrentPracticeData,
@@ -56,19 +56,6 @@ export interface PracticePanelViewModel {
   sessionFraming: SessionFramingViewModel;
 }
 
-export interface RevisionPanelItemViewModel {
-  id: string;
-  primary: string;
-  secondary?: string;
-  notes?: string;
-}
-
-export interface RevisionPanelViewModel {
-  title: string;
-  buttonLabel: string;
-  items: RevisionPanelItemViewModel[];
-}
-
 export interface ModeOptionViewModel {
   value: string;
   label: string;
@@ -87,7 +74,6 @@ export interface PracticeHomeViewModel {
   modeOptions: ModeOptionViewModel[];
   columns: number;
   practice: PracticePanelViewModel;
-  revisionPanel?: RevisionPanelViewModel;
   guidance: GuidanceViewModel;
 }
 
@@ -117,52 +103,6 @@ function buildModeOptions(): ModeOptionViewModel[] {
     label: config.displayLabel,
     icon: config.displayIcon,
   }));
-}
-
-function buildRevisionPanel(state: GameState, mode: string): RevisionPanelViewModel | undefined {
-  const subjectConfig = SUBJECT_CONFIGS.find(config => config.name === mode);
-  if (!subjectConfig || !subjectConfig.revisionPanel || !getSubjectSupportsRevision(mode)) {
-    return undefined;
-  }
-
-  const user = state.currentUserId ? state.users[state.currentUserId] : undefined;
-  if (!user) {
-    return undefined;
-  }
-
-  const { primaryField, secondaryField, notesField, title, buttonLabel } = subjectConfig.revisionPanel;
-  const items = Object.values(user.words)
-    .filter(word => word.language === subjectConfig.language)
-    .map(word => {
-      const primary = (word as any)[primaryField];
-      const secondary = secondaryField ? (word as any)[secondaryField] : undefined;
-      const notes = notesField ? (word as any)[notesField] : undefined;
-      const attempts = Array.isArray((word as any).attempts) ? (word as any).attempts : [];
-      const correctAttempts = attempts.filter((attempt: any) => attempt?.result === 'correct').length;
-      const totalAttempts = attempts.length;
-      return {
-        id: word.id,
-        primary: typeof primary === 'string' ? primary : '',
-        secondary: typeof secondary === 'string' ? secondary : undefined,
-        notes: typeof notes === 'string' ? notes : undefined,
-        attempts: totalAttempts > 0 ? {
-          total: totalAttempts,
-          correct: correctAttempts,
-          incorrect: totalAttempts - correctAttempts,
-        } : undefined,
-      } as RevisionPanelItemViewModel;
-    })
-    .filter(item => !!item.primary);
-
-  if (items.length === 0) {
-    return undefined;
-  }
-
-  return {
-    title,
-    buttonLabel: buttonLabel ?? subjectConfig.displayLabel,
-    items,
-  };
 }
 
 export function buildPracticeAppViewModel(params: {
@@ -224,6 +164,13 @@ export function buildPracticeAppViewModel(params: {
   };
 
   const needsVersionedIntro = !!experience && experience.seenIntroVersion !== INTRO_TOUR_VERSION;
+  const guidance: GuidanceViewModel = {
+    showIntro: !!experience ? (!experience.hasSeenIntro || needsVersionedIntro) : true,
+    showStreakCoachmark: !!experience ? !experience.coachmarks.streak : false,
+    showProfilesCoachmark: !!experience ? !experience.coachmarks.profiles : false,
+    showParentGuideHint: !!experience ? !experience.hasSeenParentGuide : false,
+  };
+
   const home: PracticeHomeViewModel = {
     currentUserId: state.currentUserId,
     users: mapUsersToOptions(state.users),
@@ -231,14 +178,7 @@ export function buildPracticeAppViewModel(params: {
     modeOptions: buildModeOptions(),
     columns,
     practice: practiceView,
-    revisionPanel: buildRevisionPanel(state, mode),
-    guidance: {
-      // Show intro if either the legacy flag says not seen OR we bumped the version
-      showIntro: !!experience && (!experience.hasSeenIntro || needsVersionedIntro),
-      showStreakCoachmark: !!experience && !experience.coachmarks.streak,
-      showProfilesCoachmark: !!experience && !experience.coachmarks.profiles,
-      showParentGuideHint: !!experience && !experience.hasSeenParentGuide,
-    },
+    guidance,
   };
 
   return {

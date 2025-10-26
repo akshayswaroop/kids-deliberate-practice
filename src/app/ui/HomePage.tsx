@@ -5,7 +5,6 @@ import ModeSelector from './ModeSelector';
 import EnhancedPracticePanel from './EnhancedPracticePanel';
 import ThemeToggle from './ThemeToggle';
 // ProgressStatsDisplay removed - previously displayed inline stats in header
-import RevisionPanel from './RevisionPanel';
 import { useState, useEffect, useCallback } from 'react';
 import { setSarvamApiKey, hasUserSarvamApiKey, clearSarvamApiKey } from '../../utils/sarvamApiKey';
 import { traceAPI } from '../tracing/traceMiddleware';
@@ -50,11 +49,9 @@ export default function HomePage({
   // Form state for ProfileForm (moved from component to container)
   const [username, setUsername] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [showRevisionPanel, setShowRevisionPanel] = useState(false);
   const [showIntroOverlay, setShowIntroOverlay] = useState(ui.guidance.showIntro);
   const [isParentGuideOpen, setParentGuideOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
-  const hasRevisionPanel = !!ui.revisionPanel;
 
   // Sarvam API key management (user-provided, stored in localStorage)
   const [apiKeyInput, setApiKeyInput] = useState<string>(() => (hasUserSarvamApiKey() ? '********' : ''));
@@ -129,12 +126,6 @@ export default function HomePage({
   };
 
   // Close the Kannada revision panel if user switches away from Kannada mode(s)
-  useEffect(() => {
-    if (!hasRevisionPanel && showRevisionPanel) {
-      setShowRevisionPanel(false);
-    }
-  }, [hasRevisionPanel, showRevisionPanel]);
-
   useEffect(() => {
     if (ui.guidance.showIntro) {
       setShowIntroOverlay(true);
@@ -292,26 +283,6 @@ export default function HomePage({
                 />
               )}
             </button>
-
-            {hasRevisionPanel && ui.revisionPanel && (
-              <button
-                data-testid="btn-revision-panel"
-                onClick={() => setShowRevisionPanel(true)}
-                style={{
-                  padding: '12px 14px',
-                  borderRadius: 12,
-                  border: 'none',
-                  background: 'linear-gradient(90deg,#ffd29b,#ff8a8a)',
-                  cursor: 'pointer',
-                  fontWeight: 600,
-                  textAlign: 'left',
-                  color: '#7c2d12'
-                }}
-              >
-                {ui.revisionPanel.buttonLabel}
-              </button>
-            )}
-
             <button
               type="button"
               onClick={handleShareFeedback}
@@ -390,35 +361,13 @@ export default function HomePage({
           currentUserId={ui.currentUserId}
           onSetMode={onSetMode}
           onOpenSubjectPicker={() => {}} // No-op - single subject only
-          onOpenRevision={() => setShowRevisionPanel(true)}
           onOpenSettings={() => setControlsOpen(true)}
-          showRevisionButton={hasRevisionPanel && !!ui.revisionPanel}
-          revisionButtonLabel="Revision"
           statsSlot={null}
         />
 
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '24px' }}>
           <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', background: 'var(--bg-secondary)', borderRadius: 16, boxShadow: 'var(--shadow-soft)', position: 'relative', overflow: 'hidden' }}>
-        {showRevisionPanel && ui.revisionPanel ? (
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              padding: 16,
-              boxSizing: 'border-box',
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: 0,
-              overflow: 'hidden'
-            }}
-          >
-            <RevisionPanel
-              title={ui.revisionPanel.title}
-              items={ui.revisionPanel.items}
-              onClose={() => setShowRevisionPanel(false)}
-            />
-          </div>
-        ) : ui.practice.needsNewSession ? (
+        {ui.practice.needsNewSession ? (
           <div style={{
             display: 'flex',
             flexDirection: 'column',
