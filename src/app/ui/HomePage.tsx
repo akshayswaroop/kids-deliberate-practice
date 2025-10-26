@@ -199,6 +199,11 @@ export default function HomePage({
     setSubjectPickerOpen(false);
   }, [rememberSubjectPicker]);
 
+  const openCompletionOptions = useCallback(() => {
+    rememberSubjectPicker();
+    setSubjectPickerOpen(true);
+  }, [rememberSubjectPicker]);
+
   const handleApiKeySave = () => {
     // If the input is masked placeholder, do nothing
     if (apiKeyInput === '********') return;
@@ -515,6 +520,7 @@ export default function HomePage({
             mode={ui.mode} 
             currentUserId={ui.currentUserId ?? undefined}
             onWhyRepeatAcknowledged={onWhyRepeatAcknowledged}
+            onReturnHome={openCompletionOptions}
           />
         )}
           </div>

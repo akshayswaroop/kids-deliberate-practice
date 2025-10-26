@@ -154,43 +154,50 @@ export function selectSessionStats(
   if (!user) return null;
   const session = user.sessions[sessionId];
   if (!session) return null;
-  
+
   // Calculate current session statistics
   const totalQuestions = session.wordIds.length;
-  const questionsCompleted = session.currentIndex + 1;
+  const questionsCompleted = Math.min(session.currentIndex + 1, totalQuestions);
   
   // Track words mastered during this session vs. initially mastered
   const initialMastered = new Set(session.initialMasteredWords || []);
   let masteredInSession = 0;
   let practicedInSession = 0;
   let yetToTry = 0;
-  
+  let currentlyMastered = 0;
+
   for (let i = 0; i < session.wordIds.length; i++) {
     const wordId = session.wordIds[i];
     const word = user.words[wordId];
-    
-    if (word) {
-      const isCurrentlyMastered = word.step >= 2; // Using MasteryConfiguration threshold
-      const wasInitiallyMastered = initialMastered.has(wordId);
-      
-      if (i < questionsCompleted) {
-        // Question has been seen in this session
-        if (isCurrentlyMastered && !wasInitiallyMastered) {
-          masteredInSession++;
-        } else if (!isCurrentlyMastered) {
-          practicedInSession++;
-        }
+    const hasBeenSeen = i < questionsCompleted;
+
+    if (!word) {
+      if (hasBeenSeen) {
+        practicedInSession++;
       } else {
-        // Question not yet attempted
         yetToTry++;
       }
+      continue;
+    }
+
+    const isCurrentlyMastered = MasteryConfiguration.isMastered(word);
+    const wasInitiallyMastered = initialMastered.has(wordId);
+
+    if (isCurrentlyMastered) {
+      currentlyMastered++;
+      if (hasBeenSeen && !wasInitiallyMastered) {
+        masteredInSession++;
+      }
     } else {
-      // Word not found, count as yet to try
-      if (i >= questionsCompleted) {
+      if (hasBeenSeen) {
+        practicedInSession++;
+      } else {
         yetToTry++;
       }
     }
   }
+
+  const initiallyMasteredCount = initialMastered.size;
   
   return {
     totalQuestions,
@@ -198,6 +205,8 @@ export function selectSessionStats(
     masteredInSession,
     practicedInSession,
     yetToTry,
+    currentlyMastered,
+    initiallyMastered: initiallyMasteredCount,
   };
 }
 

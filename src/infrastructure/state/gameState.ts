@@ -64,6 +64,8 @@ export type SessionStats = {
   masteredInSession: number; // Questions that reached mastery during this session
   practicedInSession: number; // Questions that were attempted but not yet mastered
   yetToTry: number; // Questions not yet attempted in this session
+  currentlyMastered: number; // All questions in the session that are presently mastered (includes pre-mastered)
+  initiallyMastered: number; // Questions that were already mastered at session start
 };
 
 export type Session = {

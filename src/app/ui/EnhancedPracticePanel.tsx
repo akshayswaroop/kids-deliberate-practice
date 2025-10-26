@@ -25,6 +25,7 @@ interface EnhancedPracticePanelProps {
   onRevealAnswer?: (revealed: boolean) => void;
   currentUserId?: string | null;
   onWhyRepeatAcknowledged?: () => void;
+  onReturnHome?: () => void;
 }
 
 export default function EnhancedPracticePanel({
@@ -36,6 +37,7 @@ export default function EnhancedPracticePanel({
   onRevealAnswer,
   currentUserId,
   onWhyRepeatAcknowledged,
+  onReturnHome,
 }: EnhancedPracticePanelProps) {
   const { card, currentWordId, sessionFraming, sessionId } = practice;
   
@@ -133,6 +135,7 @@ export default function EnhancedPracticePanel({
           onDismiss={showRepeatBanner ? handleRepeatBannerDismiss : undefined}
           mode={mode}
           sessionProgress={card.sessionProgress}
+          sessionStats={sessionFraming.sessionStats}
         />
       )}
 
@@ -158,6 +161,8 @@ export default function EnhancedPracticePanel({
           attemptHistory={card.currentWord?.attempts ?? []}
           sessionProgress={card.sessionProgress}
           sessionGuidance={sessionGuidance}
+          sessionStats={sessionFraming.sessionStats}
+          onReturnHome={onReturnHome}
         />
     </div>
   );

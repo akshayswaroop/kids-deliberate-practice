@@ -1,7 +1,7 @@
 import React from 'react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import PracticeCard from '../PracticeCard.jsx';
 import type { PracticeCardProps } from '../PracticeCard';
 
@@ -91,17 +91,20 @@ describe('PracticeCard mastery edge cases', () => {
 }
 
   beforeEach(() => {
+    vi.useFakeTimers();
     vi.stubEnv('MODE', 'development');
     globalThis.Audio = FakeAudio as unknown as typeof Audio;
   });
 
   afterEach(() => {
+    vi.runOnlyPendingTimers();
+    vi.useRealTimers();
     vi.unstubAllEnvs();
     globalThis.Audio = originalAudio;
     vi.clearAllMocks();
   });
 
-  it('disables all action buttons when all questions are mastered', async () => {
+  it('enables Next button and shows completion prompt when session is complete', async () => {
     // Simulate the REAL mastery scenario: session completion with guidance
     const onNext = vi.fn();
     render(
@@ -114,16 +117,55 @@ describe('PracticeCard mastery edge cases', () => {
           urgency: 'success',
           context: 'completion'
         }}
+        sessionStats={{
+          totalQuestions: 4,
+          questionsCompleted: 4,
+          masteredInSession: 2,
+          practicedInSession: 1,
+          yetToTry: 1,
+          currentlyMastered: 3,
+          initiallyMastered: 1
+        }}
       />
     );
-    // All action buttons should be present and disabled due to session completion
-    const nextButton = await screen.findByTestId('btn-next');
-    const correctButton = await screen.findByTestId('btn-correct');
-    const wrongButton = await screen.findByTestId('btn-wrong');
-    const revealButton = await screen.findByTestId('btn-reveal');
-    expect(nextButton).toBeDisabled();
-    expect(correctButton).toBeDisabled();
-    expect(wrongButton).toBeDisabled();
-    expect(revealButton).toBeDisabled();
+    const nextButton = screen.getByTestId('btn-next');
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(nextButton).toBeEnabled();
+
+    const prompt = screen.getByRole('dialog');
+    expect(prompt).toBeInTheDocument();
+    expect(screen.getByText(/Practice next set/i)).toBeInTheDocument();
+
+    fireEvent.click(nextButton);
+    expect(onNext).toHaveBeenCalledTimes(1);
+    await act(async () => {
+      vi.advanceTimersByTime(5000);
+    });
+    expect(onNext).toHaveBeenCalledTimes(1);
+  });
+
+  it('auto-advances to a fresh session after the completion delay', async () => {
+    const onNext = vi.fn();
+    render(
+      <PracticeCardHarness
+        onNext={onNext}
+        sessionGuidance={{
+          message: 'Ready for a fresh round!',
+          urgency: 'success',
+          context: 'completion'
+        }}
+      />
+    );
+
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(5000);
+    });
+    expect(onNext).toHaveBeenCalledTimes(1);
   });
 });

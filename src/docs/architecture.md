@@ -41,13 +41,14 @@ This means debugging isn’t a log hunt — it’s story replay.
 
 ## Testing Model
 
-We don’t test pixels. We test **traces**.
+We ground our confidence in **traces**.
 
 - Tests replay UI dispatches.  
 - Assertions check final state and trace sequence.  
-- No Playwright, no screenshots. Traces act as living contracts.  
+- UI component tests render against selectors to guard interaction contracts.  
+- Browser automation is kept to a tiny Playwright smoke suite for sanity checks — the heavy lifting still lives in fast, deterministic trace tests.  
 
-**Outcome:** UI refactors become safe; logic remains provable.
+**Outcome:** UI refactors stay safe; logic remains provable without relying on slow end-to-end runs.
 
 ---
 

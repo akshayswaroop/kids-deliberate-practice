@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { Word } from '../../infrastructure/state/gameState';
+import type { Word, SessionStats } from '../../infrastructure/state/gameState';
 import type { ParentGuidance } from '../../domain/entities/ProgressTracker';
 import type { SessionGuidanceResult } from '../../domain/entities/SessionGuidance';
 import { SubjectConfiguration } from '../../infrastructure/config/subjectConfiguration';
@@ -13,6 +13,7 @@ interface UnifiedParentBannerProps {
   mode?: string; // Subject mode for context-specific tips
   lastAnswer?: 'correct' | 'wrong' | null; // Track answer state for feedback
   sessionProgress?: { current: number; total: number } | null;
+  sessionStats?: SessionStats | null;
 }
 
 export default function UnifiedParentBanner({ 
@@ -23,7 +24,8 @@ export default function UnifiedParentBanner({
   onDismiss,
   mode,
   lastAnswer = null,
-  sessionProgress
+  sessionProgress,
+  sessionStats
 }: UnifiedParentBannerProps) {
   
   const attempts = Array.isArray(currentWord.attempts) ? currentWord.attempts : [];
@@ -69,6 +71,23 @@ export default function UnifiedParentBanner({
     return mode ? SubjectConfiguration.getParentTip(mode) || '' : '';
   };
   
+  const totalQuestions = sessionStats?.totalQuestions ?? sessionProgress?.total ?? 0;
+  const completedQuestions = sessionStats?.questionsCompleted ?? sessionProgress?.current ?? 0;
+  const showProgressBreakdown = !!sessionStats && sessionStats.totalQuestions > 0;
+  const masteredCount = showProgressBreakdown ? sessionStats.currentlyMastered : 0;
+  const practicingCount = showProgressBreakdown ? Math.max(sessionStats.practicedInSession, 0) : 0;
+  const pendingCount = showProgressBreakdown
+    ? Math.max(sessionStats.totalQuestions - (masteredCount + practicingCount), 0)
+    : Math.max((sessionProgress?.total ?? 0) - (sessionProgress?.current ?? 0), 0);
+  const progressSegments = showProgressBreakdown ? [
+    { key: 'mastered', label: 'Mastered', value: masteredCount, color: '#22c55e' },
+    { key: 'practicing', label: 'Practicing', value: practicingCount, color: '#3b82f6' },
+    { key: 'pending', label: 'Pending', value: pendingCount, color: '#94a3b8' },
+  ].filter(segment => segment.value > 0 && sessionStats.totalQuestions > 0) : [];
+  const completionPercent = showProgressBreakdown && sessionStats.totalQuestions > 0
+    ? Math.round((masteredCount / sessionStats.totalQuestions) * 100)
+    : null;
+
   // Determine which guidance to use: session guidance takes priority over word guidance
   const activeGuidance = sessionGuidance || parentGuidance;
   
@@ -193,16 +212,102 @@ export default function UnifiedParentBanner({
           New guidance
         </div>
       )}
-      {/* Left: Session progress with clear label */}
-      {sessionProgress && sessionProgress.total > 0 && (
-        <div style={{
-          fontSize: '0.75rem',
-          fontWeight: '600',
-          opacity: 0.7,
-          whiteSpace: 'nowrap',
-          flexShrink: 0
-        }}>
-          Card {sessionProgress.current} of {sessionProgress.total}
+      {/* Left: Session progress with clear label and mastery overview */}
+      {(totalQuestions > 0 || showProgressBreakdown) && (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 6,
+            alignItems: 'flex-start',
+            minWidth: '160px',
+            flex: '0 1 220px',
+            whiteSpace: 'normal'
+          }}
+        >
+          {totalQuestions > 0 && (
+            <div
+              style={{
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                opacity: 0.75,
+              }}
+            >
+              Card {Math.min(completedQuestions, totalQuestions)} of {totalQuestions}
+            </div>
+          )}
+          {showProgressBreakdown && (
+            <>
+              <div
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 600,
+                  opacity: 0.8,
+                }}
+              >
+                Mastered {masteredCount}/{sessionStats.totalQuestions}
+                {completionPercent !== null ? ` (${completionPercent}%)` : ''}
+              </div>
+              <div
+                role="presentation"
+                aria-hidden
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  maxWidth: 220,
+                  height: 6,
+                  borderRadius: 999,
+                  overflow: 'hidden',
+                  background: 'rgba(15, 23, 42, 0.08)'
+                }}
+              >
+                {progressSegments.length > 0 ? progressSegments.map(segment => (
+                  <span
+                    key={segment.key}
+                    style={{
+                      width: `${(segment.value / sessionStats.totalQuestions) * 100}%`,
+                      background: segment.color,
+                      transition: 'width 220ms ease-out'
+                    }}
+                  />
+                )) : (
+                  <span style={{ width: '100%', background: 'rgba(203, 213, 225, 0.6)' }} />
+                )}
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: 12,
+                  flexWrap: 'wrap',
+                  fontSize: '0.68rem',
+                  opacity: 0.7,
+                  lineHeight: 1.3,
+                  width: '100%'
+                }}
+              >
+                {progressSegments.map(segment => (
+                  <span
+                    key={`${segment.key}-legend`}
+                    style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+                  >
+                    <span
+                      aria-hidden
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: '50%',
+                        background: segment.color,
+                      }}
+                    />
+                    {segment.label} {segment.value}
+                  </span>
+                ))}
+                {progressSegments.length === 0 && (
+                  <span style={{ opacity: 0.7 }}>Progress updates as you practice</span>
+                )}
+              </div>
+            </>
+          )}
         </div>
       )}
       

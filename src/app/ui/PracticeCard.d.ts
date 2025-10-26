@@ -31,7 +31,17 @@ export interface PracticeCardProps {
     urgency: string;
     context: string;
   } | null;
+  sessionStats?: {
+    totalQuestions: number;
+    questionsCompleted: number;
+    masteredInSession: number;
+    practicedInSession: number;
+    yetToTry: number;
+    currentlyMastered: number;
+    initiallyMastered: number;
+  } | null;
   animationDurationMs?: number;
+  onReturnHome?: () => void;
 }
 
 export default function PracticeCard(props: PracticeCardProps): JSX.Element;

@@ -28,7 +28,7 @@ Attempt → Update Progress → Schedule Repetition → Feedback → Next Questi
 - Correct twice → mark as mastered.  
 - Incorrect → streak resets, repeat sooner.  
 - Reveal → counts as “neutral” (no streak advance).  
-- Once all questions are mastered, controls disable and reflection banner appears.
+- Once all questions are mastered, a completion prompt appears with options to continue, pause, or return home. If the parent does nothing, the next set auto-loads after a short celebration window.
 
 ---
 
@@ -38,9 +38,9 @@ Attempt → Update Progress → Schedule Repetition → Feedback → Next Questi
 2. Child answers verbally or mentally.  
 3. Parent logs response (✅ or ↺).  
 4. Banner cue updates — e.g., *“This one was tough earlier — try recalling again!”*  
-5. Parent can reveal answers or pause before continuing.
+5. Parent can reveal answers, pause, or use the completion prompt to decide on the next action.
 
-This structure preserves deliberate pacing — no auto‑advance, no rush.
+This structure preserves deliberate pacing — celebration first, then either a deliberate choice or a gentle auto‑advance to keep momentum.
 
 ---
 
@@ -81,7 +81,7 @@ No points or streak anxiety. The win condition is attention.
 Parents remain co‑learners, not spectators. The UI only scaffolds this partnership.
 
 ### 3. Reflection over Speed  
-No auto‑advance. Each attempt invites a pause — a short reflection window before moving on.
+A short celebration window appears at completion, encouraging reflection before the next set auto-loads or the parent chooses another path.
 
 ### 4. Progressive Disclosure  
 Hints, answers, and feedback appear contextually — never overwhelm the screen.

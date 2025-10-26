@@ -57,8 +57,7 @@ test.describe('Feedback Animation and Button States', () => {
 
   test('card applies shake animation on wrong answer', async ({ page }) => {
     await wrongButton(page).click();
-    await expect.poll(async () =>
-      practiceRoot(page).evaluate((el) => window.getComputedStyle(el).animation)
-    ).toContain('shakeWrong');
+    await expect(practiceRoot(page)).toHaveAttribute('data-shake-state', 'active');
+    await expect(practiceRoot(page)).toHaveAttribute('data-shake-state', 'idle', { timeout: 1000 });
   });
 });

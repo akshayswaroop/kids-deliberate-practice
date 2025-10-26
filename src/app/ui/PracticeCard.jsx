@@ -13,6 +13,7 @@ import { transliterateText } from '../../infrastructure/services/transliterate/s
 import { transliterateKannadaToHindi } from '../../infrastructure/services/transliterate/aksharamukhaTransliterateService';
 
 const PROGRESSION_DELAY_MS = 120;
+const COMPLETION_AUTO_ADVANCE_MS = 5000;
 
 const rawBaseUrl = typeof import.meta !== 'undefined' && import.meta.env?.BASE_URL
   ? import.meta.env.BASE_URL
@@ -139,7 +140,9 @@ export default function PracticeCard({
   attemptHistory = [],
   animationDurationMs = 2500,
   sessionGuidance = null,
+  sessionStats = null,
   onStatusChange,
+  onReturnHome,
 }) {
   const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
   const isTestMode = env?.MODE === 'test';
@@ -328,6 +331,12 @@ export default function PracticeCard({
     return window.localStorage.getItem('kdp:trl:numerals') || 'international';
   });
   const [trlOutput, setTrlOutput] = React.useState('');
+  const [showCompletionPrompt, setShowCompletionPrompt] = React.useState(false);
+  const [hasAcknowledgedCompletion, setHasAcknowledgedCompletion] = React.useState(false);
+  const [autoAdvanceSeconds, setAutoAdvanceSeconds] = React.useState(null);
+  const autoAdvanceTimeoutRef = React.useRef(null);
+  const autoAdvanceIntervalRef = React.useRef(null);
+  const previousCompletionContextRef = React.useRef(undefined);
 
   const saveTtsPrefs = React.useCallback((pace, speaker) => {
     try {
@@ -346,6 +355,115 @@ export default function PracticeCard({
       }
     } catch {}
   }, []);
+
+  const clearAutoAdvance = React.useCallback(() => {
+    if (autoAdvanceTimeoutRef.current !== null) {
+      window.clearTimeout(autoAdvanceTimeoutRef.current);
+      autoAdvanceTimeoutRef.current = null;
+    }
+    if (autoAdvanceIntervalRef.current !== null) {
+      window.clearInterval(autoAdvanceIntervalRef.current);
+      autoAdvanceIntervalRef.current = null;
+    }
+    setAutoAdvanceSeconds(null);
+  }, []);
+
+  const handleContinueAfterCompletion = React.useCallback(() => {
+    setHasAcknowledgedCompletion(true);
+    setShowCompletionPrompt(false);
+    clearAutoAdvance();
+    handleProgression();
+  }, [clearAutoAdvance, handleProgression]);
+
+  const handleReturnHomeClick = React.useCallback(() => {
+    setHasAcknowledgedCompletion(true);
+    setShowCompletionPrompt(false);
+    clearAutoAdvance();
+    if (onReturnHome) {
+      onReturnHome();
+    }
+  }, [clearAutoAdvance, onReturnHome]);
+
+  const handleStayHere = React.useCallback(() => {
+    setHasAcknowledgedCompletion(true);
+    setShowCompletionPrompt(false);
+    clearAutoAdvance();
+  }, [clearAutoAdvance]);
+
+  const scheduleAutoAdvance = React.useCallback(() => {
+    clearAutoAdvance();
+    const totalMs = COMPLETION_AUTO_ADVANCE_MS;
+    if (!Number.isFinite(totalMs) || totalMs <= 0) {
+      handleContinueAfterCompletion();
+      return;
+    }
+    const startedAt = Date.now();
+    setAutoAdvanceSeconds(Math.ceil(totalMs / 1000));
+    autoAdvanceIntervalRef.current = window.setInterval(() => {
+      const elapsed = Date.now() - startedAt;
+      const remaining = Math.max(totalMs - elapsed, 0);
+      const nextSeconds = Math.ceil(remaining / 1000);
+      setAutoAdvanceSeconds(prev => (prev === nextSeconds ? prev : nextSeconds));
+      if (remaining <= 0) {
+        if (autoAdvanceIntervalRef.current !== null) {
+          window.clearInterval(autoAdvanceIntervalRef.current);
+          autoAdvanceIntervalRef.current = null;
+        }
+      }
+    }, 250);
+    autoAdvanceTimeoutRef.current = window.setTimeout(() => {
+      handleContinueAfterCompletion();
+    }, totalMs);
+  }, [clearAutoAdvance, handleContinueAfterCompletion]);
+
+  const totalSessionQuestions = sessionStats?.totalQuestions ?? 0;
+  const sessionMasteredCount = sessionStats?.currentlyMastered ?? 0;
+  const sessionPracticingCount = Math.max(sessionStats?.practicedInSession ?? 0, 0);
+  const sessionPendingCount = Math.max(totalSessionQuestions - (sessionMasteredCount + sessionPracticingCount), 0);
+  const sessionCompletionSegments = totalSessionQuestions > 0 ? [
+    { key: 'mastered', label: 'Mastered', value: sessionMasteredCount, color: '#22c55e' },
+    { key: 'practicing', label: 'Practicing', value: sessionPracticingCount, color: '#3b82f6' },
+    { key: 'pending', label: 'Pending', value: sessionPendingCount, color: '#94a3b8' },
+  ].filter(segment => segment.value > 0) : [];
+  const sessionCompletionPercent = totalSessionQuestions > 0
+    ? Math.round((sessionMasteredCount / totalSessionQuestions) * 100)
+    : null;
+
+  React.useEffect(() => {
+    const currentContext = sessionGuidance?.context;
+    const previousContext = previousCompletionContextRef.current;
+
+    if (currentContext === 'completion') {
+      if (!hasAcknowledgedCompletion) {
+        setShowCompletionPrompt(true);
+        if (previousContext !== 'completion') {
+          scheduleAutoAdvance();
+        }
+      }
+    } else {
+      if (previousContext === 'completion') {
+        setHasAcknowledgedCompletion(false);
+      }
+      if (showCompletionPrompt) {
+        setShowCompletionPrompt(false);
+      }
+      clearAutoAdvance();
+    }
+
+    previousCompletionContextRef.current = currentContext;
+  }, [sessionGuidance?.context, hasAcknowledgedCompletion, scheduleAutoAdvance, clearAutoAdvance, showCompletionPrompt]);
+
+  React.useEffect(() => {
+    if ((isMastered || isSessionComplete) && status === 'idle') {
+      setStatus('waiting');
+    }
+  }, [isMastered, isSessionComplete, status]);
+
+  React.useEffect(() => {
+    return () => {
+      clearAutoAdvance();
+    };
+  }, [clearAutoAdvance]);
 
   const handleSpeak = React.useCallback(async () => {
     try {
@@ -373,13 +491,27 @@ export default function PracticeCard({
 
 
   const interactionLocked = status !== 'idle' || isMastered || isSessionComplete;
+  const canProgress = status === 'waiting' || isSessionComplete;
+  const nextDisabled = !canProgress;
+  const handleManualNext = React.useCallback(() => {
+    if (isSessionComplete) {
+      handleContinueAfterCompletion();
+      return;
+    }
+    handleProgression();
+  }, [isSessionComplete, handleContinueAfterCompletion, handleProgression]);
   const hasDetails = Boolean(answer || notes || (whyRepeat && !whyRepeatDismissed));
 
   return (
-      <div data-testid="practice-root" className="practice-root" style={{ 
-        backgroundColor: 'transparent',
-        animation: shakeButtons ? 'shakeWrong 500ms ease-in-out' : 'none'
-      }}>
+      <div
+        data-testid="practice-root"
+        data-shake-state={shakeButtons ? 'active' : 'idle'}
+        className="practice-root"
+        style={{ 
+          backgroundColor: 'transparent',
+          animation: shakeButtons ? 'shakeWrong 500ms ease-in-out' : 'none'
+        }}
+      >
         {/* Flying unicorn animation overlay */}
         <FlyingUnicorn
           visible={showUnicorn}
@@ -760,6 +892,180 @@ export default function PracticeCard({
         </div>
 
         {/* Action Buttons Area */}
+        {showCompletionPrompt && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="completion-dialog-title"
+            aria-describedby="completion-dialog-description"
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(15,23,42,0.45)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 4000,
+              padding: '24px'
+            }}
+          >
+            <div
+              style={{
+                background: '#ffffff',
+                borderRadius: 18,
+                boxShadow: '0 28px 60px rgba(15, 23, 42, 0.35)',
+                width: 'min(92vw, 460px)',
+                maxWidth: '100%',
+                padding: '28px 24px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 18,
+              }}
+            >
+              <h2
+                id="completion-dialog-title"
+                style={{ margin: 0, fontSize: '1.35rem', fontWeight: 700, color: 'var(--text-primary)' }}
+              >
+                Set complete! 🎉
+              </h2>
+              <p
+                id="completion-dialog-description"
+                style={{ margin: 0, lineHeight: 1.5, fontSize: '0.95rem', color: 'var(--text-secondary)' }}
+              >
+                {sessionGuidance?.message || 'All done for this practice set! Time to celebrate those neurons.'}
+              </p>
+
+              {totalSessionQuestions > 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                    Progress this set: {sessionMasteredCount}/{totalSessionQuestions} mastered
+                    {sessionCompletionPercent !== null ? ` (${sessionCompletionPercent}%)` : ''}
+                  </div>
+                  <div
+                    role="presentation"
+                    aria-hidden
+                    style={{
+                      display: 'flex',
+                      height: 10,
+                      borderRadius: 999,
+                      overflow: 'hidden',
+                      background: 'rgba(15, 23, 42, 0.1)'
+                    }}
+                  >
+                    {sessionCompletionSegments.length > 0 ? (
+                      sessionCompletionSegments.map(segment => (
+                        <span
+                          key={`completion-segment-${segment.key}`}
+                          style={{
+                            width: `${(segment.value / totalSessionQuestions) * 100}%`,
+                            background: segment.color,
+                            transition: 'width 220ms ease-out'
+                          }}
+                        />
+                      ))
+                    ) : (
+                      <span style={{ width: '100%', background: 'rgba(203, 213, 225, 0.6)' }} />
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: 12,
+                      fontSize: '0.78rem',
+                      color: 'var(--text-secondary)'
+                    }}
+                  >
+                    {sessionCompletionSegments.map(segment => (
+                      <span key={`completion-legend-${segment.key}`} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span
+                          aria-hidden
+                          style={{
+                            width: 9,
+                            height: 9,
+                            borderRadius: '50%',
+                            background: segment.color
+                          }}
+                        />
+                        {segment.label} {segment.value}
+                      </span>
+                    ))}
+                    {sessionCompletionSegments.length === 0 && (
+                      <span>Keep practicing to see your progress fill up.</span>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {autoAdvanceSeconds !== null && autoAdvanceSeconds > 0 && (
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
+                  Continuing automatically in&nbsp;
+                  {Math.max(autoAdvanceSeconds, 1)} second{Math.max(autoAdvanceSeconds, 1) === 1 ? '' : 's'}…
+                </div>
+              )}
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+                <button
+                  type="button"
+                  onClick={handleContinueAfterCompletion}
+                  style={{
+                    flex: '1 1 160px',
+                    padding: '12px 16px',
+                    borderRadius: 12,
+                    border: 'none',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    background: 'linear-gradient(135deg, #34d399, #10b981)',
+                    color: '#064e3b',
+                    boxShadow: '0 12px 24px rgba(16, 185, 129, 0.28)'
+                  }}
+                >
+                  Practice next set
+                </button>
+                {onReturnHome && (
+                  <button
+                    type="button"
+                    onClick={handleReturnHomeClick}
+                    style={{
+                      flex: '1 1 160px',
+                      padding: '12px 16px',
+                      borderRadius: 12,
+                      border: '1px solid rgba(15, 23, 42, 0.12)',
+                      fontSize: '0.95rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      background: '#ffffff',
+                      color: 'var(--text-primary)',
+                      boxShadow: '0 4px 14px rgba(15, 23, 42, 0.12)'
+                    }}
+                  >
+                    Return to Home
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={handleStayHere}
+                  style={{
+                    flex: '1 1 140px',
+                    padding: '12px 16px',
+                    borderRadius: 12,
+                    border: 'none',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    background: '#f9fafb',
+                    color: 'var(--text-secondary)',
+                    boxShadow: '0 2px 10px rgba(15, 23, 42, 0.08)'
+                  }}
+                >
+                  Stay here
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <PracticeActionBarPortal>
           <PracticeActionBar>
         {!isEnglishMode && (
@@ -835,12 +1141,12 @@ export default function PracticeCard({
         <PracticeActionButton
           data-testid="btn-next"
           variant="primary"
-          onClick={handleProgression}
-          disabled={status !== 'waiting' || isMastered || isSessionComplete}
+          onClick={handleManualNext}
+          disabled={nextDisabled}
           aria-label="Move to next question"
           style={{
-            opacity: (status !== 'waiting' || isMastered || isSessionComplete) ? 0.4 : 1,
-            cursor: (status !== 'waiting' || isMastered || isSessionComplete) ? 'not-allowed' : 'pointer'
+            opacity: nextDisabled ? 0.4 : 1,
+            cursor: nextDisabled ? 'not-allowed' : 'pointer'
           }}
         >
           <span role="img" aria-label="next">→</span>
