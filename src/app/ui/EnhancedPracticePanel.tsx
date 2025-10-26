@@ -142,6 +142,7 @@ export default function EnhancedPracticePanel({
       {/* Main Practice Card - always rendered so tests can find the practice root; overlays will sit on top */}
       <PracticeCard
           mainWord={card.mainWord}
+          wordId={currentWordId ?? undefined}
           transliteration={card.transliteration}
           transliterationHi={card.transliterationHi}
           answer={card.answer}

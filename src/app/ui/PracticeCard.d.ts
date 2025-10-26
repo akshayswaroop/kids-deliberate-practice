@@ -1,5 +1,6 @@
 export interface PracticeCardProps {
   mainWord: string;
+  wordId?: string;
   transliteration?: string;
   transliterationHi?: string;
   answer?: string;

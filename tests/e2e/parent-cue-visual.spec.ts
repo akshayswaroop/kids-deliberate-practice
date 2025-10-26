@@ -1,5 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
-import { gotoAppWithFreshStorage, seedSingleWordSession, seedMultiWordSession } from './utils/app-helpers';
+import { gotoAppWithFreshStorage, seedSingleWordSession } from './utils/app-helpers';
 
 /**
  * Parent Cue Logic + Playwright Visual Test Integration

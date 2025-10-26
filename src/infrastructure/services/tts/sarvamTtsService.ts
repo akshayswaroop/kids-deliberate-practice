@@ -24,12 +24,46 @@ export type TTSSynthesizeResult = {
 const FN_URL = (import.meta as any).env?.VITE_TTS_PROXY_URL || '/api/sarvam-tts';
 import { getSarvamApiKey } from '../../../utils/sarvamApiKey';
 
+/**
+ * Check if a pre-generated audio file exists for the given word ID.
+ * Returns the audio URL if found, null otherwise.
+ * Uses HEAD request to check existence without downloading the file.
+ */
+async function tryPreGeneratedAudio(wordId: string | undefined): Promise<string | null> {
+  if (!wordId) return null;
+  
+  try {
+    // Use import.meta.env.BASE_URL to get the correct base path for Vite
+    const base = import.meta.env.BASE_URL || '/';
+    const audioPath = `${base}audio/kannada/${wordId}.wav`;
+    const response = await fetch(audioPath, { method: 'HEAD' });
+    
+    if (response.ok) {
+      return audioPath;
+    }
+  } catch {
+    // File doesn't exist or fetch failed, fall back to API
+  }
+  
+  return null;
+}
+
 export async function synthesizeSpeech(
   text: string,
-  opts: TTSOptions = {}
+  opts: TTSOptions & { wordId?: string } = {}
 ): Promise<TTSSynthesizeResult> {
   if (!text || !text.trim()) {
     throw new Error('Cannot synthesize empty text');
+  }
+
+  // Try pre-generated audio first if wordId is provided
+  const preGenAudioUrl = await tryPreGeneratedAudio(opts.wordId);
+  if (preGenAudioUrl) {
+    return {
+      request_id: null,
+      audioUrl: preGenAudioUrl,
+      mimeType: 'audio/wav',
+    };
   }
 
   const body = {

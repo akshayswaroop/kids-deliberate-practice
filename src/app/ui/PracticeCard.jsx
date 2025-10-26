@@ -119,6 +119,7 @@ function AttemptBadge({ label, value, accentRGB, info }) {
 
 export default function PracticeCard({
   mainWord,
+  wordId,
   transliteration,
   transliterationHi,
   answer,
@@ -442,6 +443,7 @@ export default function PracticeCard({
         enable_preprocessing: true,
         pace: Math.min(3, Math.max(0.3, Number(ttsPace) || 1)),
         speaker: (ttsSpeaker ? String(ttsSpeaker).toLowerCase() : undefined),
+        wordId, // Pass wordId for pre-generated audio lookup
       });
       const audio = new window.Audio(audioUrl);
       audio.onended = () => {
@@ -454,7 +456,7 @@ export default function PracticeCard({
     } finally {
       setSpeaking(false);
     }
-  }, [mainWord, ttsPace, ttsSpeaker]);
+  }, [mainWord, ttsPace, ttsSpeaker, wordId]);
 
 
 
