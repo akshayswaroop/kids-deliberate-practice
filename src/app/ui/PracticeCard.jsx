@@ -1,123 +1,62 @@
 import React from 'react';
 import './PracticeCard.css';
-import GradientText from './GradientText.jsx';
-import { getScriptFontClass, getScriptLineHeight } from '../../utils/scriptDetector';
-import { getSubjectPromptLabel, getSubjectParentInstruction } from '../../infrastructure/repositories/subjectLoader.ts';
-import useAppDispatch from '../../infrastructure/hooks/reduxHooks';
-
-import FlyingUnicorn from './FlyingUnicorn.jsx';
-import PracticeActionBarPortal from './PracticeActionBarPortal.jsx';
-import PracticeActionBar from './PracticeActionBar.jsx';
 import { synthesizeSpeech } from '../../infrastructure/services/tts/sarvamTtsService';
-import PracticeActionButton from './PracticeActionButton.jsx';
-import { transliterateText } from '../../infrastructure/services/transliterate/sarvamTransliterateService';
-import { transliterateKannadaToHindi } from '../../infrastructure/services/transliterate/aksharamukhaTransliterateService';
-import DevanagariConstructionMode from './DevanagariConstructionMode.jsx';
-import CircularProgressMeter from './CircularProgressMeter.jsx';
-import TrophyWall from './TrophyWall.jsx';
+import AlphabetChatBot from './AlphabetChatBot.jsx';
+import { getScriptFontClass } from '../../utils/scriptDetector';
 
-const PROGRESSION_DELAY_MS = 120;
-const COMPLETION_AUTO_ADVANCE_MS = 5000;
+const segmentWord = (word) => {
+  if (!word) return [];
+  try {
+    if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+      const segmenter = new Intl.Segmenter('kn', { granularity: 'grapheme' });
+      return Array.from(segmenter.segment(word)).map(entry => entry.segment);
+    }
+  } catch {
+    // Fallback to plain splitting
+  }
+  return Array.from(word);
+};
 
-const rawBaseUrl = typeof import.meta !== 'undefined' && import.meta.env?.BASE_URL
-  ? import.meta.env.BASE_URL
-  : '/';
-const ensureTrailingSlash = value => (value.endsWith('/') ? value : `${value}/`);
-const ensureLeadingSlash = value => (value.startsWith('/') ? value : `/${value}`);
-const normalizedBaseUrl = ensureLeadingSlash(ensureTrailingSlash(rawBaseUrl));
-const buildSoundUrl = filename => `${normalizedBaseUrl}${filename.replace(/^\/+/, '')}`;
+const shuffle = (items) => {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+};
 
-function AttemptBadge({ label, value, accentRGB, info }) {
-  const accentColor = `rgb(${accentRGB})`;
-  const accentBackground = `rgba(${accentRGB}, ${value > 0 ? 0.18 : 0.12})`;
-  const accentBorder = `1px solid rgba(${accentRGB}, 0.3)`;
-  const tooltipId = React.useId();
-  const [showTooltip, setShowTooltip] = React.useState(false);
-  const hasInfo = typeof info === 'string' && info.trim().length > 0;
+const buildStageLabel = (word) => {
+  const category = word?.category;
+  if (category === 'letter') return 'Letters';
+  if (category === 'matra') return 'Matra Combos';
+  if (category === 'word') return 'Words';
+  const level = word?.complexityLevel ?? 1;
+  if (level <= 1) return 'Letters';
+  if (level === 2) return 'Matra Combos';
+  return 'Words';
+};
 
-  const handleEnter = () => {
-    if (hasInfo) setShowTooltip(true);
-  };
+const joinSegments = (segments) => segments.map(tile => tile?.value ?? '').join('');
 
-  const handleLeave = () => setShowTooltip(false);
-
-  const handleClick = () => {
-    if (hasInfo) setShowTooltip(prev => !prev);
-  };
-
+function WordTile({ tile, onClick, onDragStart, onDragEnd, draggable, isDragging, className = '' }) {
+  if (!tile) return null;
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '6px 10px',
-        borderRadius: 10,
-        background: accentBackground,
-        border: accentBorder,
-        minWidth: 72,
-        minHeight: 48,
-        boxShadow: '0 8px 18px rgba(15, 23, 42, 0.08)',
-        position: 'relative',
-      }}
-      onMouseLeave={handleLeave}
+    <button
+      type="button"
+      className={[
+        'word-tile',
+        isDragging ? 'word-tile--dragging' : '',
+        className,
+      ].filter(Boolean).join(' ')}
+      draggable={draggable}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onClick={onClick}
+      data-segment={tile.value}
     >
-      <span style={{ fontSize: '1.05rem', fontWeight: 700, color: accentColor }}>{value}</span>
-      <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 4 }}>
-        {label}
-        {hasInfo && (
-          <button
-            type="button"
-            aria-label={`About ${label}`}
-            aria-describedby={showTooltip ? tooltipId : undefined}
-            onMouseEnter={handleEnter}
-            onBlur={handleLeave}
-            onClick={handleClick}
-            style={{
-              border: 'none',
-              background: 'transparent',
-              padding: 0,
-              margin: 0,
-              cursor: 'pointer',
-              color: accentColor,
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden focusable="false" style={{ display: 'block' }}>
-              <circle cx="8" cy="8" r="7" fill="currentColor" opacity="0.18" />
-              <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" fill="white" />
-              <text x="8" y="11" textAnchor="middle" fontSize="8" fontWeight="700" fill="currentColor">i</text>
-            </svg>
-            {/* AUDIT: Inline SVG uses hard-coded width/height (14px). Suggestion: use CSS-controlled size or set width/height to 1em and control via font-size so the icon scales with surrounding text, e.g., width="1em" height="1em" or style={{width: '14px', height: '14px', maxWidth: '1.2em'}}. */}
-          </button>
-        )}
-      </span>
-      {hasInfo && showTooltip && (
-        <div
-          id={tooltipId}
-          role="tooltip"
-          style={{
-            position: 'absolute',
-            top: 'calc(100% + 8px)',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            background: 'rgba(15,23,42,0.95)',
-            color: '#e2e8f0',
-            padding: '10px 12px',
-            borderRadius: 10,
-            boxShadow: '0 18px 36px rgba(15, 23, 42, 0.18)',
-            width: 220,
-            fontSize: '0.75rem',
-            lineHeight: 1.4,
-            zIndex: 50,
-          }}
-        >
-          {info}
-        </div>
-      )}
-    </div>
+      {tile.value}
+    </button>
   );
 }
 
@@ -125,952 +64,523 @@ export default function PracticeCard({
   mainWord,
   wordId,
   transliteration,
-  transliterationHi,
   answer,
   notes,
-  choices,
   onCorrect,
   onWrong,
   onNext,
   onRevealAnswer,
-  columns = 6,
-  mode,
   isAnswerRevealed,
-  isEnglishMode,
   currentUserId,
-  whyRepeat = null,
-  onWhyRepeatAcknowledged,
-  attemptStats = null,
-  sessionProgress = null,
-  attemptHistory = [],
-  animationDurationMs = 2500,
-  sessionGuidance = null,
-  sessionStats = null,
-  onStatusChange,
-  onReturnHome,
+  sessionProgress,
+  attemptStats,
   currentWord,
 }) {
-  const env = typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env : (typeof process !== 'undefined' ? { MODE: process.env?.NODE_ENV } : {});
-  const isTestMode = env?.MODE === 'test';
-  const normalizedAttemptStats = attemptStats || { total: 0, correct: 0, incorrect: 0 };
-  const dispatch = useAppDispatch(); // Redux dispatch hook for trace-driven architecture
-  
-  // Calculate session streak (consecutive correct answers from the end of attempt history)
-  const calculateSessionStreak = React.useCallback((history) => {
-    if (!Array.isArray(history) || history.length === 0) return 0;
-    
-    let streak = 0;
-    // Count consecutive correct from the most recent attempt backwards
-    for (let i = history.length - 1; i >= 0; i--) {
-      if (history[i].result === 'correct') {
-        streak++;
-      } else {
-        break; // Stop at first non-correct
-      }
-    }
-    return streak;
-  }, []);
-  
-  const sessionStreak = React.useMemo(
-    () => calculateSessionStreak(attemptHistory),
-    [attemptHistory, calculateSessionStreak]
-  );
-  
-  // Calculate mastery progress for current word (need 2 consecutive correct)
-  const masteryProgress = React.useMemo(() => {
-    return Math.min(normalizedAttemptStats.correct, 2);
-  }, [normalizedAttemptStats.correct]);
-  
-  // We prefer showing the parent instruction (guidance for the caregiver)
-  // in the practice header instead of the short prompt label.
-  const parentInstruction = getSubjectParentInstruction(mode);
-  const showAnswerPanel = isAnswerRevealed;
-
-  // Animation helper functions
-  const createConfettiBurst = () => {
-    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3'];
-    
-    // Find the main word element to center confetti on it
-    const targetWordElement = document.querySelector('.target-word-glow');
-    const rect = targetWordElement ? targetWordElement.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight * 0.2, width: 200, height: 80 };
-    
-    const container = document.createElement('div');
-    container.className = 'confetti-burst';
-    container.style.left = `${rect.left + rect.width / 2}px`;
-    container.style.top = `${rect.top + rect.height / 2}px`;
-    container.style.transform = 'translate(-50%, -50%)';
-  // AUDIT: confetti container uses fixed 300px size which can overflow or clip on narrow screens.
-  // Suggestion: use responsive sizing like: container.style.width = `${Math.min(300, window.innerWidth * 0.9)}px`; container.style.height likewise or use clamp() equivalent in JS.
-  container.style.width = '300px';
-  container.style.height = '300px';
-    document.body.appendChild(container);
-
-    // Increased quantity from 20 to 40 particles
-    for (let i = 0; i < 40; i++) {
-      const particle = document.createElement('div');
-      particle.className = 'confetti-particle';
-      particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      
-      // Spread particles in a circle around the main word
-      const angle = (i / 40) * Math.PI * 2;
-      const radius = Math.random() * 80 + 20; // Random radius between 20-100px
-      const startX = Math.cos(angle) * radius;
-      const startY = Math.sin(angle) * radius;
-      
-      particle.style.left = `${150 + startX}px`; // Center of 300px container
-      particle.style.top = `${150 + startY}px`;
-      particle.style.animationDelay = `${Math.random() * 300}ms`;
-      particle.style.animationDuration = `${1200 + Math.random() * 800}ms`;
-      container.appendChild(particle);
-    }
-
-    setTimeout(() => document.body.removeChild(container), 2500);
-  };
-
-  const triggerBounceAnimation = () => {
-    // Add bounce class to all non-active tiles
-    const tiles = document.querySelectorAll('.mastery-tile:not(.active)');
-    tiles.forEach(tile => {
-      tile.classList.add('bounce');
-      setTimeout(() => tile.classList.remove('bounce'), 600);
-    });
-  };
-
-
-  // --- Unified status state ---
-  // 'idle' = ready for input, 'pending' = waiting for state update, 'animating' = animating feedback, 'waiting' = waiting for next question
-  const [status, setStatus] = React.useState('idle');
-  // Animation states
-  const [showUnicorn, setShowUnicorn] = React.useState(false);
-  const [whyRepeatDismissed, setWhyRepeatDismissed] = React.useState(false);
-  const [shakeButtons, setShakeButtons] = React.useState(false); // Shake animation for wrong answer
-
-  // Helper to check if answer contains Devanagari script (for construction mode)
-  const isDevanagariAnswer = React.useMemo(() => {
-    const answerText = answer || currentWord?.answer || '';
-    // Devanagari Unicode range: U+0900 to U+097F
-    return /[\u0900-\u097F]/.test(answerText);
-  }, [answer, currentWord]);
-
-  // Construction mode state
-  const shouldUseConstruction = React.useMemo(() => {
-    const modeKey = String(mode || '').toLowerCase();
-    return !isEnglishMode && modeKey.includes('kannada') && isDevanagariAnswer;
-  }, [isEnglishMode, mode, isDevanagariAnswer]);
-  const [constructionMode, setConstructionMode] = React.useState(shouldUseConstruction);
-
-  const safeAttemptHistory = Array.isArray(attemptHistory) ? attemptHistory : [];
-  const attemptCount = safeAttemptHistory.length;
-  const lastAttempt = attemptCount > 0 ? safeAttemptHistory[attemptCount - 1] : null;
-  const previousAttemptCountRef = React.useRef(attemptCount);
-  const animationTimeoutRef = React.useRef(null);
-  const shakeTimeoutRef = React.useRef(null);
-
-  // onStatusChange removed - banner now reads directly from Redux (trace-based architecture)
-
-
-  // --- Centralized progression logic ---
-  // For wrong answer, coordinate sound and animation using Promise.all
-  const handleProgression = React.useCallback(() => {
-    if (onNext) onNext();
-    setStatus('idle');
-  }, [onNext]);
-  
-
-  // Reset all state on new question
-  React.useEffect(() => {
-    setShowUnicorn(false);
-    setStatus('idle');
-    setWhyRepeatDismissed(false);
-    // Auto-enable construction mode for Devanagari answers
-    setConstructionMode(shouldUseConstruction);
-    previousAttemptCountRef.current = attemptCount;
-  }, [mainWord, shouldUseConstruction, attemptCount]);
-
-  React.useEffect(() => {
-    return () => {
-      if (animationTimeoutRef.current !== null) {
-        window.clearTimeout(animationTimeoutRef.current);
-        animationTimeoutRef.current = null;
-      }
-      if (shakeTimeoutRef.current !== null) {
-        window.clearTimeout(shakeTimeoutRef.current);
-        shakeTimeoutRef.current = null;
-      }
-    };
-  }, []);
-
-  React.useEffect(() => {
-    const previousCount = previousAttemptCountRef.current ?? 0;
-    if (attemptCount > previousCount && lastAttempt) {
-      const result = lastAttempt.result === 'correct' ? 'correct' : 'wrong';
-      setStatus('animating');
-
-      if (result === 'correct') {
-        createConfettiBurst();
-        try {
-          const audio = new window.Audio(buildSoundUrl('happy-logo-167474.mp3'));
-          audio.volume = 0.7;
-          audio.play()?.catch(() => {});
-        } catch (e) {
-          // Ignore playback errors
-        }
-        setShakeButtons(false);
-      } else {
-        triggerBounceAnimation();
-        setShakeButtons(true);
-        const shakeDuration = Math.min(500, animationDurationMs);
-        if (shakeTimeoutRef.current !== null) {
-          window.clearTimeout(shakeTimeoutRef.current);
-        }
-        shakeTimeoutRef.current = window.setTimeout(() => {
-          setShakeButtons(false);
-          shakeTimeoutRef.current = null;
-        }, shakeDuration);
-      }
-
-      if (animationTimeoutRef.current !== null) {
-        window.clearTimeout(animationTimeoutRef.current);
-      }
-      animationTimeoutRef.current = window.setTimeout(() => {
-        setStatus('waiting');
-        animationTimeoutRef.current = null;
-      }, animationDurationMs);
-    }
-
-    previousAttemptCountRef.current = attemptCount;
-  }, [attemptCount, lastAttempt?.result]);
-
-
-  // No safety fallback needed with unified status
-
-
-  // Handler for unicorn animation end
-  const handleUnicornEnd = React.useCallback(() => {
-    setShowUnicorn(false);
-    setStatus('waiting');
-    // No auto-advance - parent must click Next button
-  }, []);
-
-  // Determine current active choice progress to render rainbow fill for the main question
-  const activeChoice = (choices || []).find(c => String(c.label) === String(mainWord));
-  const activeProgress = Math.min(100, Math.max(0, (activeChoice && (typeof activeChoice.progress === 'number' ? activeChoice.progress : Number(activeChoice && activeChoice.progress))) || 0));
-  const isMastered = activeProgress >= 100;
-  const isSessionComplete = sessionGuidance?.context === 'completion';
+  const [pool, setPool] = React.useState([]);
+  const [slots, setSlots] = React.useState([]);
+  const [status, setStatus] = React.useState('building'); // building | checking | correct | incorrect
+  const [feedback, setFeedback] = React.useState('');
   const [speaking, setSpeaking] = React.useState(false);
-  // Simplified TTS: hardcode Anushka voice at 0.5x pace
-  const ttsPace = 0.5;
-  const ttsSpeaker = 'anushka';
-  // Transliteration UI state (Kannada → Hindi only, simplified)
-  const [trlOpen, setTrlOpen] = React.useState(false);
-  const [trlBusy, setTrlBusy] = React.useState(false);
-  const [trlOutput, setTrlOutput] = React.useState('');
-  const [showCompletionPrompt, setShowCompletionPrompt] = React.useState(false);
-  const [hasAcknowledgedCompletion, setHasAcknowledgedCompletion] = React.useState(false);
-  const [autoAdvanceSeconds, setAutoAdvanceSeconds] = React.useState(null);
-  const autoAdvanceTimeoutRef = React.useRef(null);
-  const autoAdvanceIntervalRef = React.useRef(null);
-  const previousCompletionContextRef = React.useRef(undefined);
+  const [chatOpen, setChatOpen] = React.useState(false);
+  const [answerVisible, setAnswerVisible] = React.useState(!!isAnswerRevealed);
+  const [lastBuilt, setLastBuilt] = React.useState('');
+  const [draggingId, setDraggingId] = React.useState(null);
+  const [slotMatches, setSlotMatches] = React.useState([]);
+  const [slotFlashes, setSlotFlashes] = React.useState([]);
+  const resetKeyRef = React.useRef(0);
 
-  // Removed saveTtsPrefs and saveTrlPrefs - no longer needed with hardcoded TTS and simplified transliteration
+  const segments = React.useMemo(() => segmentWord(mainWord), [mainWord]);
+  const stageLabel = React.useMemo(() => buildStageLabel(currentWord), [currentWord]);
+  const stageTheme = React.useMemo(() => {
+    const key = (stageLabel || '').toLowerCase();
+    if (key.includes('matra')) return 'matra';
+    if (key.includes('word')) return 'words';
+    return 'letters';
+  }, [stageLabel]);
+  const isComplete = React.useMemo(() => slots.every(Boolean), [slots]);
+  const progressMeta = React.useMemo(() => {
+    const total = sessionProgress?.total ?? 0;
+    const current = Math.min(sessionProgress?.current ?? 0, total);
+    const safeTotal = Math.max(total, 0);
+    return { total: safeTotal, current };
+  }, [sessionProgress]);
+  const [gardenBloomIndex, setGardenBloomIndex] = React.useState(null);
+  const previousProgressRef = React.useRef(progressMeta.current);
 
-  const clearAutoAdvance = React.useCallback(() => {
-    if (autoAdvanceTimeoutRef.current !== null) {
-      window.clearTimeout(autoAdvanceTimeoutRef.current);
-      autoAdvanceTimeoutRef.current = null;
+  const handleMarkSuccess = React.useCallback(() => {
+    onCorrect?.();
+    setStatus('correct');
+    setFeedback('Locked in! Ready for the next word.');
+  }, [onCorrect]);
+
+  const handleMarkStruggle = React.useCallback(() => {
+    onWrong?.();
+    setStatus('incorrect');
+    setFeedback('No worries—let’s fix it together.');
+  }, [onWrong]);
+
+  React.useEffect(() => {
+    setAnswerVisible(!!isAnswerRevealed);
+  }, [isAnswerRevealed]);
+
+  React.useEffect(() => {
+    const startTiles = segments.map((segment, index) => ({
+      id: `${wordId || 'word'}-${index}-${segment}-${Math.random().toString(36).slice(2)}`,
+      value: segment,
+    }));
+    setPool(shuffle(startTiles));
+    setSlots(Array(segments.length).fill(null));
+    setStatus('building');
+    setFeedback('');
+    setLastBuilt('');
+    setDraggingId(null);
+    setAnswerVisible(false);
+    setSlotMatches(Array(segments.length).fill(false));
+    setSlotFlashes(Array(segments.length).fill(null));
+    resetKeyRef.current += 1;
+  }, [mainWord, segments.length, wordId, currentUserId]);
+
+  const updateSlotMatches = React.useCallback((nextSlots) => {
+    setSlotMatches(nextSlots.map((tile, idx) => Boolean(tile && tile.value === segments[idx])));
+  }, [segments]);
+
+  const triggerSlotFlash = React.useCallback((slotIndex, type) => {
+    const flashKey = Date.now();
+    setSlotFlashes(prev => {
+      const baseline = prev && prev.length ? [...prev] : [];
+      baseline[slotIndex] = { type, key: flashKey };
+      return baseline;
+    });
+    if (type === 'wrong') {
+      window.setTimeout(() => {
+        setSlotFlashes(prev => {
+          if (!prev || prev[slotIndex]?.key !== flashKey) return prev;
+          const next = [...prev];
+          next[slotIndex] = null;
+          return next;
+        });
+      }, 600);
     }
-    if (autoAdvanceIntervalRef.current !== null) {
-      window.clearInterval(autoAdvanceIntervalRef.current);
-      autoAdvanceIntervalRef.current = null;
-    }
-    setAutoAdvanceSeconds(null);
   }, []);
 
-  const handleContinueAfterCompletion = React.useCallback(() => {
-    setHasAcknowledgedCompletion(true);
-    setShowCompletionPrompt(false);
-    clearAutoAdvance();
-    handleProgression();
-  }, [clearAutoAdvance, handleProgression]);
-
-  const handleReturnHomeClick = React.useCallback(() => {
-    setHasAcknowledgedCompletion(true);
-    setShowCompletionPrompt(false);
-    clearAutoAdvance();
-    if (onReturnHome) {
-      onReturnHome();
+  React.useEffect(() => {
+    const prev = previousProgressRef.current ?? 0;
+    if (progressMeta.current > prev) {
+      setGardenBloomIndex(progressMeta.current - 1);
+    } else if (progressMeta.current === 0) {
+      setGardenBloomIndex(null);
     }
-  }, [clearAutoAdvance, onReturnHome]);
+    previousProgressRef.current = progressMeta.current;
+  }, [progressMeta.current]);
 
-  const handleStayHere = React.useCallback(() => {
-    setHasAcknowledgedCompletion(true);
-    setShowCompletionPrompt(false);
-    clearAutoAdvance();
-  }, [clearAutoAdvance]);
+  React.useEffect(() => {
+    if (gardenBloomIndex === null || gardenBloomIndex < 0) return;
+    const timer = window.setTimeout(() => setGardenBloomIndex(null), 900);
+    return () => window.clearTimeout(timer);
+  }, [gardenBloomIndex]);
 
-  const scheduleAutoAdvance = React.useCallback(() => {
-    clearAutoAdvance();
-    const totalMs = COMPLETION_AUTO_ADVANCE_MS;
-    if (!Number.isFinite(totalMs) || totalMs <= 0) {
-      handleContinueAfterCompletion();
+  const moveTileToSlot = React.useCallback((tileId, slotIndex) => {
+    setPool(prevPool => {
+      const tileFromPoolIdx = prevPool.findIndex(tile => tile.id === tileId);
+      const tileFromSlotIdx = slots.findIndex(tile => tile?.id === tileId);
+      let tile = null;
+      let nextPool = prevPool;
+      let nextSlots = [...slots];
+
+      if (tileFromPoolIdx >= 0) {
+        tile = prevPool[tileFromPoolIdx];
+        nextPool = [...prevPool];
+        nextPool.splice(tileFromPoolIdx, 1);
+      } else if (tileFromSlotIdx >= 0) {
+        tile = slots[tileFromSlotIdx];
+        nextSlots[tileFromSlotIdx] = null;
+      } else {
+        return prevPool;
+      }
+
+      const displaced = nextSlots[slotIndex];
+      nextSlots[slotIndex] = tile;
+      if (displaced) {
+        nextPool = [...nextPool, displaced];
+      }
+      setSlots(nextSlots);
+      updateSlotMatches(nextSlots);
+      if (tile) {
+        const isMatch = tile.value === segments[slotIndex];
+        triggerSlotFlash(slotIndex, isMatch ? 'correct' : 'wrong');
+      }
+      return nextPool;
+    });
+  }, [slots, segments, triggerSlotFlash, updateSlotMatches]);
+
+  const returnTileToPool = React.useCallback((tileId) => {
+    setPool(prevPool => {
+      if (prevPool.some(tile => tile.id === tileId)) {
+        return prevPool;
+      }
+      const slotIndex = slots.findIndex(tile => tile?.id === tileId);
+      if (slotIndex === -1) {
+        return prevPool;
+      }
+      const tile = slots[slotIndex];
+      const nextSlots = [...slots];
+      nextSlots[slotIndex] = null;
+      setSlots(nextSlots);
+      updateSlotMatches(nextSlots);
+      setSlotFlashes(prev => {
+        if (!prev || !prev.length) return prev;
+        const next = [...prev];
+        next[slotIndex] = null;
+        return next;
+      });
+      return [...prevPool, tile];
+    });
+  }, [slots, updateSlotMatches]);
+
+  const handleDropOnSlot = (event, slotIndex) => {
+    event.preventDefault();
+    const tileId = event.dataTransfer?.getData('text/plain') || draggingId;
+    if (!tileId) return;
+    moveTileToSlot(tileId, slotIndex);
+    setDraggingId(null);
+  };
+
+  const handleDropOnPool = (event) => {
+    event.preventDefault();
+    const tileId = event.dataTransfer?.getData('text/plain') || draggingId;
+    if (!tileId) return;
+    returnTileToPool(tileId);
+    setDraggingId(null);
+  };
+
+  const handleTileClick = (tileId) => {
+    const nextSlot = slots.findIndex(slot => !slot);
+    if (nextSlot === -1) {
       return;
     }
-    const startedAt = Date.now();
-    setAutoAdvanceSeconds(Math.ceil(totalMs / 1000));
-    autoAdvanceIntervalRef.current = window.setInterval(() => {
-      const elapsed = Date.now() - startedAt;
-      const remaining = Math.max(totalMs - elapsed, 0);
-      const nextSeconds = Math.ceil(remaining / 1000);
-      setAutoAdvanceSeconds(prev => (prev === nextSeconds ? prev : nextSeconds));
-      if (remaining <= 0) {
-        if (autoAdvanceIntervalRef.current !== null) {
-          window.clearInterval(autoAdvanceIntervalRef.current);
-          autoAdvanceIntervalRef.current = null;
-        }
+    moveTileToSlot(tileId, nextSlot);
+  };
+
+  const handleSlotClick = (tileId) => {
+    returnTileToPool(tileId);
+  };
+
+  const handleCheckAnswer = () => {
+    if (!isComplete) return;
+    const guess = joinSegments(slots);
+    setLastBuilt(guess);
+    if (guess === mainWord) {
+      if (status !== 'correct') {
+        onCorrect?.();
       }
-    }, 250);
-    autoAdvanceTimeoutRef.current = window.setTimeout(() => {
-      handleContinueAfterCompletion();
-    }, totalMs);
-  }, [clearAutoAdvance, handleContinueAfterCompletion]);
-
-  const totalSessionQuestions = sessionStats?.totalQuestions ?? 0;
-  const sessionMasteredCount = sessionStats?.currentlyMastered ?? 0;
-  const sessionPracticingCount = Math.max(sessionStats?.practicedInSession ?? 0, 0);
-  const sessionPendingCount = Math.max(totalSessionQuestions - (sessionMasteredCount + sessionPracticingCount), 0);
-  const sessionCompletionSegments = totalSessionQuestions > 0 ? [
-    { key: 'mastered', label: 'Mastered', value: sessionMasteredCount, color: '#22c55e' },
-    { key: 'practicing', label: 'Practicing', value: sessionPracticingCount, color: '#3b82f6' },
-    { key: 'pending', label: 'Pending', value: sessionPendingCount, color: '#94a3b8' },
-  ].filter(segment => segment.value > 0) : [];
-  const sessionCompletionPercent = totalSessionQuestions > 0
-    ? Math.round((sessionMasteredCount / totalSessionQuestions) * 100)
-    : null;
-
-  React.useEffect(() => {
-    const currentContext = sessionGuidance?.context;
-    const previousContext = previousCompletionContextRef.current;
-
-    if (currentContext === 'completion') {
-      if (!hasAcknowledgedCompletion) {
-        setShowCompletionPrompt(true);
-        if (previousContext !== 'completion') {
-          scheduleAutoAdvance();
-        }
-      }
+      setStatus('correct');
+      setFeedback('Brilliant! You built it perfectly.');
     } else {
-      if (previousContext === 'completion') {
-        setHasAcknowledgedCompletion(false);
-      }
-      if (showCompletionPrompt) {
-        setShowCompletionPrompt(false);
-      }
-      clearAutoAdvance();
+      onWrong?.();
+      setStatus('incorrect');
+      setFeedback('Almost there! Swap the tiles to fix the word.');
     }
+  };
 
-    previousCompletionContextRef.current = currentContext;
-  }, [sessionGuidance?.context, hasAcknowledgedCompletion, scheduleAutoAdvance, clearAutoAdvance, showCompletionPrompt]);
-
-  React.useEffect(() => {
-    // Only set status to 'waiting' for traditional (non-construction) modes
-    // Construction mode should stay 'idle' to allow continuous building
-    if ((isMastered || isSessionComplete) && status === 'idle' && !constructionMode) {
-      setStatus('waiting');
+  const handleResetBoard = () => {
+    const startTiles = segments.map((segment, index) => ({
+      id: `${wordId || 'word'}-${index}-${segment}-${Math.random().toString(36).slice(2)}`,
+      value: segment,
+    }));
+    setPool(shuffle(startTiles));
+    setSlots(Array(segments.length).fill(null));
+    setStatus('building');
+    setFeedback('');
+    setLastBuilt('');
+    setDraggingId(null);
+    setSlotMatches(Array(segments.length).fill(false));
+    setSlotFlashes(Array(segments.length).fill(null));
+    if (answerVisible) {
+      setAnswerVisible(false);
+      onRevealAnswer?.(false);
     }
-  }, [isMastered, isSessionComplete, status, constructionMode]);
+  };
 
-  // Construction mode is determined purely by answer content - no complex state management
-  // This prevents infinite loops and follows trace-driven principles
-
-  React.useEffect(() => {
-    return () => {
-      clearAutoAdvance();
-    };
-  }, [clearAutoAdvance]);
-
-  const handleSpeak = React.useCallback(async () => {
+  const handleSpeak = async () => {
+    if (!mainWord) return;
+    setSpeaking(true);
     try {
-      if (!mainWord) return;
-      setSpeaking(true);
-      const { audioUrl } = await synthesizeSpeech(String(mainWord), {
+      const { audioUrl } = await synthesizeSpeech(mainWord, {
         target_language_code: 'kn-IN',
         enable_preprocessing: true,
-        pace: Math.min(3, Math.max(0.3, Number(ttsPace) || 1)),
-        speaker: (ttsSpeaker ? String(ttsSpeaker).toLowerCase() : undefined),
-        wordId, // Pass wordId for pre-generated audio lookup
       });
-      const audio = new window.Audio(audioUrl);
+      const audio = new Audio(audioUrl);
       audio.onended = () => {
         try { URL.revokeObjectURL(audioUrl); } catch {}
+        setSpeaking(false);
       };
-      await audio.play().catch(() => {});
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error('TTS speak error:', e);
-    } finally {
+      await audio.play().catch(() => {
+        setSpeaking(false);
+      });
+    } catch {
       setSpeaking(false);
     }
-  }, [mainWord, ttsPace, ttsSpeaker, wordId]);
+  };
 
+  const toggleAnswer = () => {
+    const next = !answerVisible;
+    setAnswerVisible(next);
+    onRevealAnswer?.(next);
+  };
 
-
-  const interactionLocked = status !== 'idle' || isMastered || isSessionComplete;
-  const canProgress = status === 'waiting' || isSessionComplete;
-  const nextDisabled = !canProgress;
-  const handleManualNext = React.useCallback(() => {
-    if (isSessionComplete) {
-      handleContinueAfterCompletion();
-      return;
-    }
-    handleProgression();
-  }, [isSessionComplete, handleContinueAfterCompletion, handleProgression]);
-  const hasDetails = Boolean(answer || notes || (whyRepeat && !whyRepeatDismissed));
+  const showHint = status === 'incorrect' && lastBuilt && lastBuilt !== mainWord;
+  const mismatchMap = React.useMemo(() => {
+    if (!showHint) return new Set();
+    const set = new Set();
+    const parts = segmentWord(mainWord);
+    slots.forEach((tile, index) => {
+      if (!tile) return;
+      if (tile.value !== parts[index]) {
+        set.add(tile.id);
+      }
+    });
+    return set;
+  }, [showHint, slots, mainWord]);
 
   return (
-      <div
-        data-testid="practice-root"
-        data-shake-state={shakeButtons ? 'active' : 'idle'}
-        className="practice-root"
-        style={{ 
-          backgroundColor: 'transparent',
-          animation: shakeButtons ? 'shakeWrong 500ms ease-in-out' : 'none'
-        }}
-      >
-        {/* Flying unicorn animation overlay */}
-        <FlyingUnicorn
-          visible={showUnicorn}
-          onAnimationEnd={handleUnicornEnd}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'none',
-            zIndex: 2000
-          }}
-        />
-
-        {/* Main content area: question, answer/notes, and action bar only */}
-        <div className="practice-question-area" style={{ color: 'var(--text-primary)', position: 'relative' }}>
-
-          {/* Trophy Wall - Kid-focused visual progress */}
-          {sessionStats && sessionStats.totalQuestions > 0 && (
-            <div style={{ marginBottom: '20px' }}>
-              <TrophyWall 
-                totalWords={sessionStats.totalQuestions}
-                masteredCount={sessionStats.currentlyMastered}
-                goalCount={sessionStats.totalQuestions} // 100% - all words must be mastered
-              />
-            </div>
-          )}
-
-          {/* Main question */}
-          {(() => {
-            const text = String(mainWord || '');
-            const len = text.length;
-            let fontSize = 'clamp(20px, min(5.2vw, 7vh), 56px)';
-            let lineHeight = getScriptLineHeight(text);
-            let padding = '8px 16px';
-            if (len > 100) {
-              fontSize = 'clamp(16px, min(3vw, 3.5vh), 24px)';
-              lineHeight = Math.max(getScriptLineHeight(text), 1.5);
-              padding = '12px 20px';
-            } else if (len > 80) {
-              fontSize = 'clamp(17px, min(3.2vw, 4vh), 28px)';
-              lineHeight = Math.max(getScriptLineHeight(text), 1.4);
-              padding = '10px 18px';
-            } else if (len > 60) {
-              fontSize = 'clamp(18px, min(4vw, 5vh), 48px)';
-              lineHeight = Math.max(getScriptLineHeight(text), 1.2);
-              padding = '6px 12px';
-            } else if (len > 40) {
-              fontSize = 'clamp(20px, min(5vw, 6vh), 56px)';
-              lineHeight = Math.max(getScriptLineHeight(text), 1.15);
-              padding = '6px 14px';
-            } else if (len > 28) {
-              fontSize = 'clamp(22px, min(5.5vw, 7vh), 64px)';
-              lineHeight = getScriptLineHeight(text);
-              padding = '8px 16px';
-            }
-            return (
-              <div className="target-word-glow practice-main-target" data-testid="target-word" style={{
-                fontSize,
-                fontWeight: 900,
-                marginTop: 0,
-                marginBottom: transliteration ? '6px' : '0px',
-                lineHeight,
-                letterSpacing: '-0.02em',
-                maxWidth: '100%',
-                background: 'linear-gradient(135deg, rgba(79,70,229,0.035), rgba(139,92,246,0.015))',
-                borderRadius: '20px',
-                padding,
-                border: '2px solid rgba(79,70,229,0.08)',
-                boxShadow: '0 6px 30px rgba(79,70,229,0.08)',
-                whiteSpace: 'normal',
-                wordBreak: 'break-word',
-                overflowWrap: 'break-word',
-                overflow: 'visible',
-                position: 'relative',
-                zIndex: 2,
-                minHeight: 0,
-                textAlign: 'center'
-              }}>
-                <GradientText
-                  progress={activeProgress}
-                  gradientColors="red, orange, yellow, green, blue, indigo, violet"
-                  neutralColor="var(--text-tertiary)"
-                  style={{ textAlign: 'center', width: '100%' }}
-                  className={getScriptFontClass(mainWord || '')}
-                >
-                  {mainWord}
-                </GradientText>
-                <div style={{ position: 'absolute', right: 8, top: 8, zIndex: 3, display: 'flex', gap: 8, alignItems: 'center' }}>
-                  {String(mode || '').toLowerCase().includes('kannada') && (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => setTrlOpen(v => !v)}
-                        aria-haspopup="dialog"
-                        aria-expanded={trlOpen}
-                        aria-label="Transliterate to English"
-                        title="Transliterate to English"
-                        style={{
-                          border: '1px solid rgba(79,70,229,0.3)',
-                          background: 'white',
-                          color: 'var(--text-primary)',
-                          borderRadius: 10,
-                          padding: '6px 8px',
-                          cursor: 'pointer',
-                          boxShadow: '0 8px 18px rgba(15, 23, 42, 0.08)'
-                        }}
-                      >
-                        ಅ→A
-                      </button>
-                      <button
-                        type="button"
-                        onClick={handleSpeak}
-                        disabled={speaking}
-                        aria-label="Speak word"
-                        title="Speak word (Anushka voice, 0.5x pace)"
-                        style={{
-                          border: '1px solid rgba(79,70,229,0.3)',
-                          background: 'white',
-                          color: 'var(--text-primary)',
-                          borderRadius: 10,
-                          padding: '6px 8px',
-                          cursor: speaking ? 'not-allowed' : 'pointer',
-                          boxShadow: '0 8px 18px rgba(15, 23, 42, 0.08)'
-                        }}
-                      >
-                        {speaking ? '🔉' : '🔊'}
-                      </button>
-                      {trlOpen && (
-                        <div
-                          role="dialog"
-                          aria-label="Transliterate options"
-                          style={{
-                            position: 'absolute',
-                            right: 0,
-                            top: 'calc(100% + 8px)',
-                            background: 'white',
-                            color: 'var(--text-primary)',
-                            border: '1px solid rgba(15,23,42,0.12)',
-                            borderRadius: 12,
-                            boxShadow: '0 18px 36px rgba(15, 23, 42, 0.18)',
-                            padding: 12,
-                            width: 320,
-                            zIndex: 10,
-                            fontSize: 14,
-                            lineHeight: 1.4
-                          }}
-                          onClick={e => e.stopPropagation()}
-                        >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                            <div style={{ fontWeight: 600 }}>Kannada → Hindi (देवनागरी)</div>
-                            <button type="button" onClick={() => setTrlOpen(false)} style={{ border: 'none', background: 'transparent', cursor: 'pointer' }} aria-label="Close">✕</button>
-                          </div>
-                          <div style={{ marginTop: 10, display: 'flex', gap: 8 }}>
-                            <button
-                              type="button"
-                              onClick={async () => {
-                                try {
-                                  if (!mainWord) return;
-                                  setTrlBusy(true);
-                                  // Kannada → Hindi (Devanagari) via Aksharamukha (no API key required)
-                                  const { transliterated_text } = await transliterateKannadaToHindi(String(mainWord));
-                                  setTrlOutput(transliterated_text);
-                                } catch (e) {
-                                  console.error('Transliterate error:', e);
-                                  setTrlOutput('Oops — transliteration failed.');
-                                } finally {
-                                  setTrlBusy(false);
-                                }
-                              }}
-                              disabled={trlBusy}
-                              style={{ border: 'none', background: 'linear-gradient(135deg,#60a5fa,#38bdf8)', color: '#0f172a', borderRadius: 8, padding: '6px 10px', cursor: trlBusy ? 'not-allowed' : 'pointer', minWidth: 100 }}
-                            >
-                              {trlBusy ? 'Working…' : 'Transliterate'}
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => { try { navigator.clipboard.writeText(trlOutput || ''); } catch {} }}
-                              disabled={!trlOutput}
-                              style={{ border: '1px solid rgba(15,23,42,0.12)', background: 'white', borderRadius: 8, padding: '6px 10px', cursor: !trlOutput ? 'not-allowed' : 'pointer' }}
-                            >
-                              Copy
-                            </button>
-                          </div>
-                          <div style={{ marginTop: 8, background: '#f8fafc', border: '1px dashed rgba(15,23,42,0.15)', borderRadius: 8, padding: 10, maxHeight: 140, overflow: 'auto' }} aria-live="polite">
-                            {trlOutput ? (
-                              <div className={getScriptFontClass(trlOutput)} style={{ fontSize: 16 }}>{trlOutput}</div>
-                            ) : (
-                              <div style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>Output will appear here</div>
-                            )}
-                          </div>
-                          <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-tertiary)' }}>
-                            Uses Aksharamukha public API (no key required).
-                          </div>
-                        </div>
-                      )}
-                    </>
-                  )}
-                  {isMastered && (
-                      <div aria-hidden className="mastered-badge">
-                        ✅ Mastered
-                      </div>
-                    )}
-                </div>
-                <div aria-live="polite" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>{isMastered ? 'Mastered' : ``}</div>
-              </div>
-            );
-          })()}
-
-          {/* Circular Progress Meter - Shows 1/2 or 2/2 for current word mastery */}
-          {!isMastered && normalizedAttemptStats.total > 0 && (
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              marginTop: '8px',
-              marginBottom: '0px'
-            }}>
-              <CircularProgressMeter 
-                current={masteryProgress} 
-                total={2} 
-                size={36} 
-              />
-            </div>
-          )}
-
-          {/* Construction Mode Component - auto-activated for Devanagari answers */}
-          {constructionMode && status === 'idle' && (
-            <div style={{ marginTop: 24, maxWidth: 600, margin: '24px auto 0' }}>
-              <DevanagariConstructionMode
-                answer={answer || currentWord?.answer}
-                dispatch={dispatch}
-                mode={mode}
-                disabled={status !== 'idle'}
-              />
-            </div>
-          )}
-
-          {/* Only render the details panel when there is content to show (not in English mode, construction mode, or Devanagari practice) */}
-          {showAnswerPanel && hasDetails && !isEnglishMode && !constructionMode && !isDevanagariAnswer && (
-            <div key={mainWord} className="details-panel practice-details" data-testid="details-panel">
-              <div className="answer-panel" data-testid="answer-panel" style={{ width: '100%', maxWidth: '100%', flex: '1 1 auto' }}>
-                {answer && (
-                  <div className={`answer-panel__headline ${getScriptFontClass(answer || '')}`} style={{
-                    maxWidth: '100%',
-                    fontSize: 'clamp(16px, 3vw, 28px)',
-                    lineHeight: 1.4,
-                    wordBreak: 'break-word',
-                    overflowWrap: 'break-word'
-                  }}>{answer}</div>
-                )}
-                {notes && (
-                  <div className={`answer-panel__notes ${getScriptFontClass(notes || '')}`} style={{
-                    maxWidth: '100%',
-                    fontSize: 'clamp(14px, 2.5vw, 22px)',
-                    lineHeight: 1.5,
-                    wordBreak: 'break-word',
-                    overflowWrap: 'break-word'
-                  }}>{notes}</div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Action Buttons Area */}
-        {showCompletionPrompt && (
+    <div
+      className={`word-builder-shell word-builder-shell--${stageTheme}`}
+      data-testid="practice-root"
+    >
+      <header className="word-builder-header">
+        <div className={`stage-chip stage-chip--${stageTheme}`}>{stageLabel}</div>
+        {progressMeta.total > 0 && (
           <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="completion-dialog-title"
-            aria-describedby="completion-dialog-description"
-            style={{
-              position: 'fixed',
-              inset: 0,
-              background: 'rgba(15,23,42,0.45)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 4000,
-              padding: '24px'
-            }}
+            className="progress-trail"
+            role="img"
+            aria-label={`Progress ${progressMeta.current} of ${progressMeta.total}`}
           >
-            <div
-              style={{
-                background: '#ffffff',
-                borderRadius: 18,
-                boxShadow: '0 28px 60px rgba(15, 23, 42, 0.35)',
-                width: 'min(92vw, 460px)',
-                maxWidth: '100%',
-                padding: '28px 24px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 18,
-              }}
-            >
-              <h2
-                id="completion-dialog-title"
-                style={{ margin: 0, fontSize: '1.35rem', fontWeight: 700, color: 'var(--text-primary)' }}
-              >
-                Set complete! 🎉
-              </h2>
-              <p
-                id="completion-dialog-description"
-                style={{ margin: 0, lineHeight: 1.5, fontSize: '0.95rem', color: 'var(--text-secondary)' }}
-              >
-                {sessionGuidance?.message || 'All done for this practice set! Time to celebrate those neurons.'}
-              </p>
-
-              {totalSessionQuestions > 0 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                    Progress this set: {sessionMasteredCount}/{totalSessionQuestions} mastered
-                    {sessionCompletionPercent !== null ? ` (${sessionCompletionPercent}%)` : ''}
-                  </div>
-                  <div
-                    role="presentation"
-                    aria-hidden
-                    style={{
-                      display: 'flex',
-                      height: 10,
-                      borderRadius: 999,
-                      overflow: 'hidden',
-                      background: 'rgba(15, 23, 42, 0.1)'
-                    }}
-                  >
-                    {sessionCompletionSegments.length > 0 ? (
-                      sessionCompletionSegments.map(segment => (
-                        <span
-                          key={`completion-segment-${segment.key}`}
-                          style={{
-                            width: `${(segment.value / totalSessionQuestions) * 100}%`,
-                            background: segment.color,
-                            transition: 'width 220ms ease-out'
-                          }}
-                        />
-                      ))
-                    ) : (
-                      <span style={{ width: '100%', background: 'rgba(203, 213, 225, 0.6)' }} />
-                    )}
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: 12,
-                      fontSize: '0.78rem',
-                      color: 'var(--text-secondary)'
-                    }}
-                  >
-                    {sessionCompletionSegments.map(segment => (
-                      <span key={`completion-legend-${segment.key}`} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <span
-                          aria-hidden
-                          style={{
-                            width: 9,
-                            height: 9,
-                            borderRadius: '50%',
-                            background: segment.color
-                          }}
-                        />
-                        {segment.label} {segment.value}
-                      </span>
-                    ))}
-                    {sessionCompletionSegments.length === 0 && (
-                      <span>Keep practicing to see your progress fill up.</span>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {autoAdvanceSeconds !== null && autoAdvanceSeconds > 0 && (
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
-                  Continuing automatically in&nbsp;
-                  {Math.max(autoAdvanceSeconds, 1)} second{Math.max(autoAdvanceSeconds, 1) === 1 ? '' : 's'}…
-                </div>
-              )}
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-                <button
-                  type="button"
-                  onClick={handleContinueAfterCompletion}
-                  style={{
-                    flex: '1 1 160px',
-                    padding: '12px 16px',
-                    borderRadius: 12,
-                    border: 'none',
-                    fontSize: '0.95rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    background: 'linear-gradient(135deg, #34d399, #10b981)',
-                    color: '#064e3b',
-                    boxShadow: '0 12px 24px rgba(16, 185, 129, 0.28)'
-                  }}
-                >
-                  Practice next set
-                </button>
-                {onReturnHome && (
-                  <button
-                    type="button"
-                    onClick={handleReturnHomeClick}
-                    style={{
-                      flex: '1 1 160px',
-                      padding: '12px 16px',
-                      borderRadius: 12,
-                      border: '1px solid rgba(15, 23, 42, 0.12)',
-                      fontSize: '0.95rem',
-                      fontWeight: 600,
-                      cursor: 'pointer',
-                      background: '#ffffff',
-                      color: 'var(--text-primary)',
-                      boxShadow: '0 4px 14px rgba(15, 23, 42, 0.12)'
-                    }}
-                  >
-                    Return to Home
-                  </button>
-                )}
-                <button
-                  type="button"
-                  onClick={handleStayHere}
-                  style={{
-                    flex: '1 1 140px',
-                    padding: '12px 16px',
-                    borderRadius: 12,
-                    border: 'none',
-                    fontSize: '0.95rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    background: '#f9fafb',
-                    color: 'var(--text-secondary)',
-                    boxShadow: '0 2px 10px rgba(15, 23, 42, 0.08)'
-                  }}
-                >
-                  Stay here
-                </button>
-              </div>
-            </div>
+            {Array.from({ length: progressMeta.total }).map((_, idx) => (
+              <span
+                key={idx}
+                className={[
+                  'progress-token',
+                  idx < progressMeta.current ? 'progress-token--filled' : 'progress-token--empty',
+                  `progress-token--${stageTheme}`,
+                ].filter(Boolean).join(' ')}
+              />
+            ))}
           </div>
         )}
+        {attemptStats && (
+          <div className="progress-chip progress-chip--attempts" aria-label="Attempts">
+            ✓ {attemptStats.correct} · ✗ {attemptStats.incorrect}
+          </div>
+        )}
+      </header>
 
-        <PracticeActionBarPortal>
-          <PracticeActionBar>
-        {!isEnglishMode && !constructionMode && (
-          <PracticeActionButton
-            data-testid="btn-reveal"
-            variant="reveal"
-            onClick={() => { 
-              if (interactionLocked) return;
-              onRevealAnswer && onRevealAnswer(!isAnswerRevealed); 
-            }}
-            disabled={interactionLocked}
-            aria-label={isAnswerRevealed ? 'Hide coaching hint' : 'Show coaching hint'}
-            style={{
-              opacity: interactionLocked ? 0.6 : 1,
-              cursor: interactionLocked ? 'not-allowed' : 'pointer'
-            }}
+      <section className="listen-row" aria-live="polite">
+        <div>
+          <p className="listen-title">Listen and build the word</p>
+          {transliteration && <p className="listen-subtitle">{transliteration}</p>}
+        </div>
+        <div className="listen-actions">
+          <button
+            type="button"
+            className="listen-button"
+            onClick={handleSpeak}
+            disabled={speaking}
           >
-            <span role="img" aria-label={isAnswerRevealed ? 'hide' : 'reveal'}>{isAnswerRevealed ? '🙈' : '🔍'}</span>
-            {isAnswerRevealed ? 'Hide coach hint' : 'Show coach hint'}
-          </PracticeActionButton>
-        )}
+            {speaking ? 'Playing…' : '🔊 Hear it'}
+          </button>
+          <button
+            type="button"
+            className="listen-button listen-button--ghost"
+            onClick={handleResetBoard}
+          >
+            ↺ Reset
+          </button>
+        </div>
+      </section>
 
-        {/* Show all buttons always (when not in construction mode), but enable/disable appropriately */}
-        {!constructionMode && (
-        <PracticeActionButton
-          data-testid="btn-correct"
-          variant="primary"
-          onClick={() => {
-            if (interactionLocked) return;
-            if (isTestMode) {
-              onCorrect && onCorrect();
-              handleProgression();
-              return;
-            }
-            setStatus('pending');
-            onCorrect && onCorrect();
-          }}
-          disabled={interactionLocked}
-          aria-label="Kid answered correctly"
-          style={{
-            opacity: interactionLocked ? 0.4 : 1,
-            cursor: interactionLocked ? 'not-allowed' : 'pointer'
-          }}
+      <section className="word-board" aria-label="Word construction area">
+        {slots.map((tile, index) => {
+          const tileId = tile?.id;
+          const isDragging = draggingId === tileId;
+          const hasMismatch = mismatchMap.has(tileId);
+          const match = slotMatches[index];
+          const flash = slotFlashes[index];
+          const slotClass = [
+            'word-slot',
+            tile ? 'word-slot--filled' : '',
+            hasMismatch ? 'word-slot--hint' : '',
+            match ? 'word-slot--settled' : '',
+            flash?.type === 'correct' ? 'word-slot--flash-correct' : '',
+            flash?.type === 'wrong' ? 'word-slot--flash-wrong' : '',
+          ].filter(Boolean).join(' ');
+          return (
+            <div
+              key={`${resetKeyRef.current}-${index}`}
+              className={slotClass}
+              onDragOver={(event) => event.preventDefault()}
+              onDrop={(event) => handleDropOnSlot(event, index)}
+              role="button"
+              tabIndex={0}
+              onClick={() => tile && handleSlotClick(tile.id)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  if (tile) handleSlotClick(tile.id);
+                }
+              }}
+              aria-label={tile ? `Slot ${index + 1}, occupied with ${tile.value}` : `Empty slot ${index + 1}`}
+            >
+              <WordTile
+                tile={tile}
+                draggable
+                onClick={() => tile && handleSlotClick(tile.id)}
+                onDragStart={(event) => {
+                  if (!tile) return;
+                  setDraggingId(tile.id);
+                  event.dataTransfer?.setData('text/plain', tile.id);
+                  event.dataTransfer?.setDragImage?.(event.currentTarget, 20, 20);
+                }}
+                onDragEnd={() => setDraggingId(null)}
+                isDragging={isDragging}
+                className={[
+                  match ? 'word-tile--settled' : '',
+                  flash?.type === 'correct' ? 'word-tile--flash-correct' : '',
+                  flash?.type === 'wrong' ? 'word-tile--flash-wrong' : '',
+                ].filter(Boolean).join(' ')}
+              />
+            </div>
+          );
+        })}
+      </section>
+
+      <section
+        className="word-pool"
+        onDragOver={(event) => event.preventDefault()}
+        onDrop={handleDropOnPool}
+        aria-label="Letter tiles to drag"
+      >
+        {pool.length === 0 ? (
+          <p className="word-pool__empty">All tiles placed. Tap a tile to move it back.</p>
+        ) : (
+          pool.map(tile => (
+            <WordTile
+              key={tile.id}
+              tile={tile}
+              draggable
+              isDragging={draggingId === tile.id}
+              onClick={() => handleTileClick(tile.id)}
+              onDragStart={(event) => {
+                setDraggingId(tile.id);
+                event.dataTransfer?.setData('text/plain', tile.id);
+                event.dataTransfer?.setDragImage?.(event.currentTarget, 20, 20);
+              }}
+              onDragEnd={() => setDraggingId(null)}
+            />
+          ))
+        )}
+      </section>
+
+      {feedback && (
+        <div className={`word-builder-feedback word-builder-feedback--${status}`}>
+          <span role="img" aria-hidden="true">{status === 'correct' ? '🌟' : '💡'}</span>
+          <span>{feedback}</span>
+        </div>
+      )}
+
+      {answerVisible && (answer || notes) && (
+        <aside className="word-builder-answer">
+          <h3>Answer key</h3>
+          {answer && <p className={getScriptFontClass(answer)}>{answer}</p>}
+          {notes && <p className="answer-notes">{notes}</p>}
+        </aside>
+      )}
+
+      <footer className="word-builder-controls">
+        <button
+          type="button"
+          className="control-button control-button--primary"
+          onClick={handleCheckAnswer}
+          disabled={!isComplete || status === 'correct'}
         >
-          <span role="img" aria-label="thumbs up">👍</span>
-          Kid got it
-        </PracticeActionButton>
-        )}
-
-        {!constructionMode && (
-        <PracticeActionButton
-          data-testid="btn-wrong"
-          variant="secondary"
-          onClick={() => {
-            if (interactionLocked) return;
-            if (isTestMode) {
-              onWrong && onWrong();
-              handleProgression();
-              return;
-            }
-            setStatus('pending');
-            onWrong && onWrong();
-          }}
-          disabled={interactionLocked}
-          aria-label="Kid needs another try"
-          style={{
-            opacity: interactionLocked ? 0.4 : 1,
-            cursor: interactionLocked ? 'not-allowed' : 'pointer'
-          }}
+          Check my word
+        </button>
+        <button
+          type="button"
+          className="control-button"
+          onClick={toggleAnswer}
         >
-          <span role="img" aria-label="try again">↺</span>
-          Needs another try
-        </PracticeActionButton>
-        )}
-
-        {/* Show Next button when waiting for progression */}
-        {!constructionMode && (
-        <PracticeActionButton
+          {answerVisible ? 'Hide hints' : 'Show hints'}
+        </button>
+        <button
+          type="button"
+          className="control-button control-button--buddy"
+          onClick={() => setChatOpen(true)}
+        >
+          <span className="buddy-avatar" aria-hidden="true">
+            <span className="buddy-face">
+              <span className="buddy-eye buddy-eye--left" />
+              <span className="buddy-eye buddy-eye--right" />
+              <span className="buddy-smile" />
+            </span>
+            <span className="buddy-body" />
+          </span>
+          <span className="buddy-label">Ask Letter Buddy</span>
+        </button>
+        <button
+          type="button"
+          className="control-button control-button--next"
           data-testid="btn-next"
-          variant="primary"
-          onClick={handleManualNext}
-          disabled={nextDisabled}
-          aria-label="Move to next question"
-          style={{
-            opacity: nextDisabled ? 0.4 : 1,
-            cursor: nextDisabled ? 'not-allowed' : 'pointer'
-          }}
+          onClick={onNext}
+          disabled={status !== 'correct'}
         >
-          <span role="img" aria-label="next">→</span>
-          Next
-        </PracticeActionButton>
-        )}
-        </PracticeActionBar>
-      </PracticeActionBarPortal>
+          Next word →
+        </button>
+      </footer>
 
+      <div className="word-builder-actionbar">
+        <button
+          type="button"
+          className="actionbar-button actionbar-button--success"
+          data-testid="btn-correct"
+          onClick={handleMarkSuccess}
+        >
+          ✅ I built it!
+        </button>
+        <button
+          type="button"
+          className="actionbar-button actionbar-button--struggle"
+          data-testid="btn-wrong"
+          onClick={handleMarkStruggle}
+        >
+          🤔 I need help
+        </button>
+      </div>
+
+      {progressMeta.total > 0 && (
+        <section
+          className="word-garden"
+          aria-label={`Word garden progress ${progressMeta.current} of ${progressMeta.total}`}
+        >
+          {Array.from({ length: progressMeta.total }).map((_, idx) => (
+            <div
+              key={idx}
+              className={[
+                'word-garden-flower',
+                idx < progressMeta.current ? 'word-garden-flower--sprouted' : 'word-garden-flower--seed',
+                idx === gardenBloomIndex ? 'word-garden-flower--bloom' : '',
+              ].filter(Boolean).join(' ')}
+            />
+          ))}
+        </section>
+      )}
+
+      {chatOpen && (
+        <AlphabetChatBot
+          visible={chatOpen}
+          onClose={() => setChatOpen(false)}
+          letter={mainWord}
+        />
+      )}
     </div>
   );
 }

@@ -1,3285 +1,389 @@
 [
   {
-    "id": "swaragalu_01",
+    "id": "vowel_01_a",
     "question": "ಅ",
-    "answer": "The A sound in ABOUT",
-    "notes": "",
+    "wordKannada": "ಅ",
+    "transliteration": "a",
+    "notes": "Short vowel sound like the first sound in 'amma'.",
+    "category": "letter",
     "complexity": 1
   },
   {
-    "id": "swaragalu_02",
+    "id": "vowel_02_aa",
     "question": "ಆ",
-    "answer": "The AA sound in ARC",
-    "notes": "",
+    "wordKannada": "ಆ",
+    "transliteration": "aa",
+    "notes": "Long 'aa' sound—open your mouth wide as in 'aata'.",
+    "category": "letter",
     "complexity": 1
   },
   {
-    "id": "swaragalu_03",
+    "id": "vowel_03_i",
     "question": "ಇ",
-    "answer": "The I sound in INK",
-    "notes": "",
+    "wordKannada": "ಇ",
+    "transliteration": "i",
+    "notes": "Short 'i' sound like in 'illi'.",
+    "category": "letter",
     "complexity": 1
   },
   {
-    "id": "swaragalu_04",
+    "id": "vowel_04_ii",
     "question": "ಈ",
-    "answer": "The EE sound in EEL",
-    "notes": "",
+    "wordKannada": "ಈ",
+    "transliteration": "ee",
+    "notes": "Long 'ee' sound like in 'eege'.",
+    "category": "letter",
     "complexity": 1
   },
   {
-    "id": "swaragalu_05",
+    "id": "vowel_05_u",
     "question": "ಉ",
-    "answer": "The U sound in PUT",
-    "notes": "",
+    "wordKannada": "ಉ",
+    "transliteration": "u",
+    "notes": "Short 'u' sound—pucker lips like in 'udaya'.",
+    "category": "letter",
     "complexity": 1
   },
   {
-    "id": "swaragalu_06",
+    "id": "vowel_06_oo",
     "question": "ಊ",
-    "answer": "The OO sound in POOL",
-    "notes": "",
+    "wordKannada": "ಊ",
+    "transliteration": "oo",
+    "notes": "Long 'oo' sound like in 'oota'.",
+    "category": "letter",
     "complexity": 1
   },
   {
-    "id": "swaragalu_07",
+    "id": "vowel_07_ru",
     "question": "ಋ",
-    "answer": "The RI sound in RIVER (short 'ri')",
-    "notes": "",
+    "wordKannada": "ಋ",
+    "transliteration": "ru",
+    "notes": "Curl the tongue back for the special 'ru' vowel.",
+    "category": "letter",
     "complexity": 1
   },
   {
-    "id": "swaragalu_08",
+    "id": "vowel_08_e",
     "question": "ಎ",
-    "answer": "The E sound in GET",
-    "notes": "",
+    "wordKannada": "ಎ",
+    "transliteration": "e",
+    "notes": "Short 'e' sound like in 'ello'.",
+    "category": "letter",
     "complexity": 1
   },
   {
-    "id": "swaragalu_09",
+    "id": "vowel_09_ee",
     "question": "ಏ",
-    "answer": "The AY sound in SAY",
-    "notes": "",
+    "wordKannada": "ಏ",
+    "transliteration": "ē",
+    "notes": "Long 'ē' sound like in 'ēṇa'.",
+    "category": "letter",
     "complexity": 1
   },
   {
-    "id": "swaragalu_10",
+    "id": "vowel_10_ai",
     "question": "ಐ",
-    "answer": "The I sound in ICE",
-    "notes": "",
-    "complexity": 1
+    "wordKannada": "ಐ",
+    "transliteration": "ai",
+    "notes": "Blend 'a' and 'ee' to say 'ai' as in 'aidu'.",
+    "category": "letter",
+    "complexity": 2
   },
   {
-    "id": "swaragalu_11",
+    "id": "vowel_11_o",
     "question": "ಒ",
-    "answer": "The O sound in OFF",
-    "notes": "",
-    "complexity": 1
+    "wordKannada": "ಒ",
+    "transliteration": "o",
+    "notes": "Short 'o' sound like in 'oli'.",
+    "category": "letter",
+    "complexity": 2
   },
   {
-    "id": "swaragalu_12",
+    "id": "vowel_12_oo",
     "question": "ಓ",
-    "answer": "The O sound in GO",
-    "notes": "",
-    "complexity": 1
+    "wordKannada": "ಓ",
+    "transliteration": "ō",
+    "notes": "Long 'ō' sound like in 'ōdu'.",
+    "category": "letter",
+    "complexity": 2
   },
   {
-    "id": "swaragalu_13",
+    "id": "vowel_13_au",
     "question": "ಔ",
-    "answer": "The OU sound in HOUSE",
-    "notes": "",
-    "complexity": 1
+    "wordKannada": "ಔ",
+    "transliteration": "au",
+    "notes": "Mix 'a' and 'oo' to say 'au' as in 'aushadha'.",
+    "category": "letter",
+    "complexity": 2
   },
   {
-    "id": "swaragalu_14",
-    "question": "ಅಂ",
-    "answer": "The N sound at the end of SUNG (nasalized A)",
-    "notes": "",
-    "complexity": 1
-  },
-  {
-    "id": "swaragalu_15",
-    "question": "ಅಃ",
-    "answer": "The AH sound in HUT with extra breath",
-    "notes": "",
-    "complexity": 1
-  },
-  {
-    "id": "vyanjanagalu_01",
+    "id": "consonant_01_ka",
     "question": "ಕ",
-    "answer": "The K sound in KITE",
-    "notes": "",
+    "wordKannada": "ಕ",
+    "transliteration": "ka",
+    "notes": "Hard 'ka' sound like in 'kannada'.",
+    "category": "letter",
     "complexity": 2
   },
   {
-    "id": "vyanjanagalu_02",
+    "id": "consonant_02_kha",
     "question": "ಖ",
-    "answer": "The KH sound in KHAKI (k + extra air)",
-    "notes": "",
+    "wordKannada": "ಖ",
+    "transliteration": "kha",
+    "notes": "A puffed 'kha' sound—add a little breath.",
+    "category": "letter",
     "complexity": 2
   },
   {
-    "id": "vyanjanagalu_03",
+    "id": "consonant_03_ga",
     "question": "ಗ",
-    "answer": "The G sound in GO",
-    "notes": "",
+    "wordKannada": "ಗ",
+    "transliteration": "ga",
+    "notes": "Soft 'ga' sound like in 'guri'.",
+    "category": "letter",
     "complexity": 2
   },
   {
-    "id": "vyanjanagalu_04",
+    "id": "consonant_04_gha",
     "question": "ಘ",
-    "answer": "The GH sound with extra air (like Hindi घ)",
-    "notes": "",
+    "wordKannada": "ಘ",
+    "transliteration": "gha",
+    "notes": "Breathy 'gha' sound—feel the air glide out.",
+    "category": "letter",
     "complexity": 2
   },
   {
-    "id": "vyanjanagalu_05",
+    "id": "consonant_05_nga",
     "question": "ಙ",
-    "answer": "The N sound at the end of SING",
-    "notes": "",
+    "wordKannada": "ಙ",
+    "transliteration": "ṅa",
+    "notes": "Nasal 'nga' sound like the tail in 'benga'.",
+    "category": "letter",
     "complexity": 2
   },
   {
-    "id": "vyanjanagalu_06",
+    "id": "consonant_06_ca",
     "question": "ಚ",
-    "answer": "The CH sound in CHURCH",
-    "notes": "",
+    "wordKannada": "ಚ",
+    "transliteration": "ca",
+    "notes": "Choppy 'cha' sound like in 'chitra'.",
+    "category": "letter",
     "complexity": 2
   },
   {
-    "id": "vyanjanagalu_07",
+    "id": "consonant_07_cha",
     "question": "ಛ",
-    "answer": "The CH sound with extra air (like Hindi छ)",
-    "notes": "",
+    "wordKannada": "ಛ",
+    "transliteration": "cha",
+    "notes": "A stronger 'cha' with a puff of air.",
+    "category": "letter",
     "complexity": 2
   },
   {
-    "id": "vyanjanagalu_08",
+    "id": "consonant_08_ja",
     "question": "ಜ",
-    "answer": "The J sound in JAM",
-    "notes": "",
+    "wordKannada": "ಜ",
+    "transliteration": "ja",
+    "notes": "Smooth 'ja' sound like in 'janu'.",
+    "category": "letter",
     "complexity": 2
   },
   {
-    "id": "vyanjanagalu_09",
+    "id": "consonant_09_jha",
     "question": "ಝ",
-    "answer": "The JH sound (j + extra air, like Hindi झ)",
-    "notes": "",
+    "wordKannada": "ಝ",
+    "transliteration": "jha",
+    "notes": "A buzzing 'jha' sound—add a breathy push.",
+    "category": "letter",
     "complexity": 2
   },
   {
-    "id": "vyanjanagalu_10",
+    "id": "consonant_10_yna",
     "question": "ಞ",
-    "answer": "The NY sound in CANYON",
-    "notes": "",
+    "wordKannada": "ಞ",
+    "transliteration": "ña",
+    "notes": "Palatal 'nya' sound like in 'canya'.",
+    "category": "letter",
     "complexity": 2
   },
   {
-    "id": "vyanjanagalu_11",
+    "id": "consonant_11_tta",
     "question": "ಟ",
-    "answer": "The T sound in TOMATO (tongue curled back, like Hindi ट)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಟ",
+    "transliteration": "ṭa",
+    "notes": "Retroflex 'ṭa'—curl your tongue back.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_12",
+    "id": "consonant_12_ttha",
     "question": "ಠ",
-    "answer": "The T sound with extra air (retroflex, like Hindi ठ)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಠ",
+    "transliteration": "ṭha",
+    "notes": "Retroflex 'ṭha' with a strong puff.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_13",
+    "id": "consonant_13_dda",
     "question": "ಡ",
-    "answer": "The D sound (retroflex, like Hindi ड)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಡ",
+    "transliteration": "ḍa",
+    "notes": "Retroflex 'ḍa' sound like in 'hoda'.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_14",
+    "id": "consonant_14_ddha",
     "question": "ಢ",
-    "answer": "The D sound with extra air (retroflex, like Hindi ढ)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಢ",
+    "transliteration": "ḍha",
+    "notes": "Breathy retroflex 'ḍha' sound.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_15",
+    "id": "consonant_15_nna",
     "question": "ಣ",
-    "answer": "The N sound in GANESHA (retroflex, like Hindi ण)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಣ",
+    "transliteration": "ṇa",
+    "notes": "Retroflex 'na'—tongue curled back.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_16",
+    "id": "consonant_16_ta",
     "question": "ತ",
-    "answer": "The T sound in TOP (tongue at the teeth, like Hindi त)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ತ",
+    "transliteration": "ta",
+    "notes": "Dental 'ta' sound like in 'tale'.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_17",
+    "id": "consonant_17_tha",
     "question": "ಥ",
-    "answer": "The T sound with extra air (dental, like Hindi थ)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಥ",
+    "transliteration": "tha",
+    "notes": "Dental 'tha' with a soft puff.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_18",
+    "id": "consonant_18_da",
     "question": "ದ",
-    "answer": "The D sound in DOG (dental, like Hindi द)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ದ",
+    "transliteration": "da",
+    "notes": "Dental 'da' sound like in 'dari'.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_19",
+    "id": "consonant_19_dha",
     "question": "ಧ",
-    "answer": "The D sound with extra air (dental, like Hindi ध)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಧ",
+    "transliteration": "dha",
+    "notes": "Breathy dental 'dha' sound.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_20",
+    "id": "consonant_20_na",
     "question": "ನ",
-    "answer": "The N sound in NOT (dental, like Hindi न)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ನ",
+    "transliteration": "na",
+    "notes": "Plain 'na' like in 'nadi'.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_21",
+    "id": "consonant_21_pa",
     "question": "ಪ",
-    "answer": "The P sound in PEN",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಪ",
+    "transliteration": "pa",
+    "notes": "Soft 'pa' sound like in 'pata'.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_22",
-    "question": "ಫ",
-    "answer": "The PH sound in PHOTO (p + extra air, like Hindi फ)",
-    "notes": "",
-    "complexity": 2
-  },
-  {
-    "id": "vyanjanagalu_23",
+    "id": "consonant_22_ba",
     "question": "ಬ",
-    "answer": "The B sound in BAT",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಬ",
+    "transliteration": "ba",
+    "notes": "Rounded 'ba' sound like in 'banda'.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_24",
-    "question": "ಭ",
-    "answer": "The BH sound in BHAJAN (like Hindi भ)",
-    "notes": "",
-    "complexity": 2
-  },
-  {
-    "id": "vyanjanagalu_25",
+    "id": "consonant_23_ma",
     "question": "ಮ",
-    "answer": "The M sound in MAN",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಮ",
+    "transliteration": "ma",
+    "notes": "Nasal 'ma' sound like in 'mane'.",
+    "category": "letter",
+    "complexity": 3
   },
   {
-    "id": "vyanjanagalu_26",
+    "id": "consonant_24_ya",
     "question": "ಯ",
-    "answer": "The Y sound in YES",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಯ",
+    "transliteration": "ya",
+    "notes": "Glide 'ya' sound like in 'yana'.",
+    "category": "letter",
+    "complexity": 4
   },
   {
-    "id": "vyanjanagalu_27",
+    "id": "consonant_25_ra",
     "question": "ರ",
-    "answer": "The R sound in ROTI (tapped R, like Hindi र)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ರ",
+    "transliteration": "ra",
+    "notes": "Tap 'ra' sound like in 'rama'.",
+    "category": "letter",
+    "complexity": 4
   },
   {
-    "id": "vyanjanagalu_28",
+    "id": "consonant_26_la",
     "question": "ಲ",
-    "answer": "The L sound in LET",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಲ",
+    "transliteration": "la",
+    "notes": "Soft 'la' sound like in 'lake'.",
+    "category": "letter",
+    "complexity": 4
   },
   {
-    "id": "vyanjanagalu_29",
+    "id": "consonant_27_va",
     "question": "ವ",
-    "answer": "The V/W sound in VAN (between v and w)",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ವ",
+    "transliteration": "va",
+    "notes": "Blend of 'va' and 'wa' like in 'vana'.",
+    "category": "letter",
+    "complexity": 4
   },
   {
-    "id": "vyanjanagalu_30",
+    "id": "consonant_28_sha",
     "question": "ಶ",
-    "answer": "The SH sound in SHE",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಶ",
+    "transliteration": "śa",
+    "notes": "Palatal 'sha' sound.",
+    "category": "letter",
+    "complexity": 4
   },
   {
-    "id": "vyanjanagalu_31",
-    "question": "ಷ",
-    "answer": "The SH sound (tongue curled back, like Hindi ष)",
-    "notes": "",
-    "complexity": 2
-  },
-  {
-    "id": "vyanjanagalu_32",
+    "id": "consonant_29_sa",
     "question": "ಸ",
-    "answer": "The S sound in SUN",
-    "notes": "",
-    "complexity": 2
+    "wordKannada": "ಸ",
+    "transliteration": "sa",
+    "notes": "Plain 'sa' sound like in 'sari'.",
+    "category": "letter",
+    "complexity": 4
   },
   {
-    "id": "vyanjanagalu_33",
+    "id": "consonant_30_ha",
     "question": "ಹ",
-    "answer": "The H sound in HAT",
-    "notes": "",
-    "complexity": 2
-  },
-  {
-    "id": "vyanjanagalu_34",
-    "question": "ಳ",
-    "answer": "The L sound (tongue curled back, like Hindi ळ)",
-    "notes": "",
-    "complexity": 2
-  },
-  {
-    "id": "matregalu_01",
-    "question": "ಾ",
-    "answer": "Hindi Matra: ा | Sound: aa",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_02",
-    "question": "ಿ",
-    "answer": "Hindi Matra: ि | Sound: i",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_03",
-    "question": "ೀ",
-    "answer": "Hindi Matra: ी | Sound: ee",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_04",
-    "question": "ು",
-    "answer": "Hindi Matra: ु | Sound: u",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_05",
-    "question": "ೂ",
-    "answer": "Hindi Matra: ू | Sound: oo",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_06",
-    "question": "ೃ",
-    "answer": "Hindi Matra: ृ | Sound: ri",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_07",
-    "question": "ೆ",
-    "answer": "Hindi Matra: े | Sound: e",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_08",
-    "question": "ೇ",
-    "answer": "Hindi Matra: े | Sound: e",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_09",
-    "question": "ೈ",
-    "answer": "Hindi Matra: ै | Sound: ai",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_10",
-    "question": "ೊ",
-    "answer": "Hindi Matra: ो | Sound: o",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_11",
-    "question": "ೋ",
-    "answer": "Hindi Matra: ो | Sound: o",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "matregalu_12",
-    "question": "ೌ",
-    "answer": "Hindi Matra: ौ | Sound: au",
-    "notes": "",
-    "complexity": 3
-  },
-  {
-    "id": "barakhadi_001",
-    "question": "ಕಾ",
-    "answer": "Hindi: का",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_002",
-    "question": "ಕಿ",
-    "answer": "Hindi: कि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_003",
-    "question": "ಕೀ",
-    "answer": "Hindi: की",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_004",
-    "question": "ಕು",
-    "answer": "Hindi: कु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_005",
-    "question": "ಕೂ",
-    "answer": "Hindi: कू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_006",
-    "question": "ಕೃ",
-    "answer": "Hindi: कृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_007",
-    "question": "ಕೆ",
-    "answer": "Hindi: के — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_008",
-    "question": "ಕೇ",
-    "answer": "Hindi: के — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_009",
-    "question": "ಕೈ",
-    "answer": "Hindi: कै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_010",
-    "question": "ಕೊ",
-    "answer": "Hindi: को — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_011",
-    "question": "ಕೋ",
-    "answer": "Hindi: को — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_012",
-    "question": "ಕೌ",
-    "answer": "Hindi: कौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_013",
-    "question": "ಖಾ",
-    "answer": "Hindi: खा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_014",
-    "question": "ಖಿ",
-    "answer": "Hindi: खि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_015",
-    "question": "ಖೀ",
-    "answer": "Hindi: खी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_016",
-    "question": "ಖು",
-    "answer": "Hindi: खु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_017",
-    "question": "ಖೂ",
-    "answer": "Hindi: खू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_018",
-    "question": "ಖೃ",
-    "answer": "Hindi: खृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_019",
-    "question": "ಖೆ",
-    "answer": "Hindi: खे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_020",
-    "question": "ಖೇ",
-    "answer": "Hindi: खे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_021",
-    "question": "ಖೈ",
-    "answer": "Hindi: खै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_022",
-    "question": "ಖೊ",
-    "answer": "Hindi: खो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_023",
-    "question": "ಖೋ",
-    "answer": "Hindi: खो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_024",
-    "question": "ಖೌ",
-    "answer": "Hindi: खौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_025",
-    "question": "ಗಾ",
-    "answer": "Hindi: गा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_026",
-    "question": "ಗಿ",
-    "answer": "Hindi: गि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_027",
-    "question": "ಗೀ",
-    "answer": "Hindi: गी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_028",
-    "question": "ಗು",
-    "answer": "Hindi: गु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_029",
-    "question": "ಗೂ",
-    "answer": "Hindi: गू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_030",
-    "question": "ಗೃ",
-    "answer": "Hindi: गृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_031",
-    "question": "ಗೆ",
-    "answer": "Hindi: गे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_032",
-    "question": "ಗೇ",
-    "answer": "Hindi: गे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_033",
-    "question": "ಗೈ",
-    "answer": "Hindi: गै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_034",
-    "question": "ಗೊ",
-    "answer": "Hindi: गो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_035",
-    "question": "ಗೋ",
-    "answer": "Hindi: गो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_036",
-    "question": "ಗೌ",
-    "answer": "Hindi: गौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_037",
-    "question": "ಘಾ",
-    "answer": "Hindi: घा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_038",
-    "question": "ಘಿ",
-    "answer": "Hindi: घि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_039",
-    "question": "ಘೀ",
-    "answer": "Hindi: घी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_040",
-    "question": "ಘು",
-    "answer": "Hindi: घु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_041",
-    "question": "ಘೂ",
-    "answer": "Hindi: घू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_042",
-    "question": "ಘೃ",
-    "answer": "Hindi: घृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_043",
-    "question": "ಘೆ",
-    "answer": "Hindi: घे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_044",
-    "question": "ಘೇ",
-    "answer": "Hindi: घे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_045",
-    "question": "ಘೈ",
-    "answer": "Hindi: घै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_046",
-    "question": "ಘೊ",
-    "answer": "Hindi: घो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_047",
-    "question": "ಘೋ",
-    "answer": "Hindi: घो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_048",
-    "question": "ಘೌ",
-    "answer": "Hindi: घौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_049",
-    "question": "ಙಾ",
-    "answer": "Hindi: ङा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_050",
-    "question": "ಙಿ",
-    "answer": "Hindi: ङि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_051",
-    "question": "ಙೀ",
-    "answer": "Hindi: ङी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_052",
-    "question": "ಙು",
-    "answer": "Hindi: ङु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_053",
-    "question": "ಙೂ",
-    "answer": "Hindi: ङू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_054",
-    "question": "ಙೃ",
-    "answer": "Hindi: ङृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_055",
-    "question": "ಙೆ",
-    "answer": "Hindi: ङे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_056",
-    "question": "ಙೇ",
-    "answer": "Hindi: ङे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_057",
-    "question": "ಙೈ",
-    "answer": "Hindi: ङै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_058",
-    "question": "ಙೊ",
-    "answer": "Hindi: ङो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_059",
-    "question": "ಙೋ",
-    "answer": "Hindi: ङो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_060",
-    "question": "ಙೌ",
-    "answer": "Hindi: ङौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_061",
-    "question": "ಚಾ",
-    "answer": "Hindi: चा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_062",
-    "question": "ಚಿ",
-    "answer": "Hindi: चि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_063",
-    "question": "ಚೀ",
-    "answer": "Hindi: ची",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_064",
-    "question": "ಚು",
-    "answer": "Hindi: चु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_065",
-    "question": "ಚೂ",
-    "answer": "Hindi: चू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_066",
-    "question": "ಚೃ",
-    "answer": "Hindi: चृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_067",
-    "question": "ಚೆ",
-    "answer": "Hindi: चे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_068",
-    "question": "ಚೇ",
-    "answer": "Hindi: चे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_069",
-    "question": "ಚೈ",
-    "answer": "Hindi: चै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_070",
-    "question": "ಚೊ",
-    "answer": "Hindi: चो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_071",
-    "question": "ಚೋ",
-    "answer": "Hindi: चो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_072",
-    "question": "ಚೌ",
-    "answer": "Hindi: चौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_073",
-    "question": "ಛಾ",
-    "answer": "Hindi: छा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_074",
-    "question": "ಛಿ",
-    "answer": "Hindi: छि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_075",
-    "question": "ಛೀ",
-    "answer": "Hindi: छी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_076",
-    "question": "ಛು",
-    "answer": "Hindi: छु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_077",
-    "question": "ಛೂ",
-    "answer": "Hindi: छू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_078",
-    "question": "ಛೃ",
-    "answer": "Hindi: छृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_079",
-    "question": "ಛೆ",
-    "answer": "Hindi: छे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_080",
-    "question": "ಛೇ",
-    "answer": "Hindi: छे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_081",
-    "question": "ಛೈ",
-    "answer": "Hindi: छै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_082",
-    "question": "ಛೊ",
-    "answer": "Hindi: छो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_083",
-    "question": "ಛೋ",
-    "answer": "Hindi: छो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_084",
-    "question": "ಛೌ",
-    "answer": "Hindi: छौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_085",
-    "question": "ಜಾ",
-    "answer": "Hindi: जा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_086",
-    "question": "ಜಿ",
-    "answer": "Hindi: जि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_087",
-    "question": "ಜೀ",
-    "answer": "Hindi: जी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_088",
-    "question": "ಜು",
-    "answer": "Hindi: जु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_089",
-    "question": "ಜೂ",
-    "answer": "Hindi: जू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_090",
-    "question": "ಜೃ",
-    "answer": "Hindi: जृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_091",
-    "question": "ಜೆ",
-    "answer": "Hindi: जे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_092",
-    "question": "ಜೇ",
-    "answer": "Hindi: जे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_093",
-    "question": "ಜೈ",
-    "answer": "Hindi: जै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_094",
-    "question": "ಜೊ",
-    "answer": "Hindi: जो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_095",
-    "question": "ಜೋ",
-    "answer": "Hindi: जो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_096",
-    "question": "ಜೌ",
-    "answer": "Hindi: जौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_097",
-    "question": "ಝಾ",
-    "answer": "Hindi: झा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_098",
-    "question": "ಝಿ",
-    "answer": "Hindi: झि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_099",
-    "question": "ಝೀ",
-    "answer": "Hindi: झी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_100",
-    "question": "ಝು",
-    "answer": "Hindi: झु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_101",
-    "question": "ಝೂ",
-    "answer": "Hindi: झू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_102",
-    "question": "ಝೃ",
-    "answer": "Hindi: झृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_103",
-    "question": "ಝೆ",
-    "answer": "Hindi: झे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_104",
-    "question": "ಝೇ",
-    "answer": "Hindi: झे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_105",
-    "question": "ಝೈ",
-    "answer": "Hindi: झै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_106",
-    "question": "ಝೊ",
-    "answer": "Hindi: झो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_107",
-    "question": "ಝೋ",
-    "answer": "Hindi: झो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_108",
-    "question": "ಝೌ",
-    "answer": "Hindi: झौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_109",
-    "question": "ಞಾ",
-    "answer": "Hindi: ञा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_110",
-    "question": "ಞಿ",
-    "answer": "Hindi: ञि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_111",
-    "question": "ಞೀ",
-    "answer": "Hindi: ञी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_112",
-    "question": "ಞು",
-    "answer": "Hindi: ञु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_113",
-    "question": "ಞೂ",
-    "answer": "Hindi: ञू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_114",
-    "question": "ಞೃ",
-    "answer": "Hindi: ञृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_115",
-    "question": "ಞೆ",
-    "answer": "Hindi: ञे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_116",
-    "question": "ಞೇ",
-    "answer": "Hindi: ञे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_117",
-    "question": "ಞೈ",
-    "answer": "Hindi: ञै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_118",
-    "question": "ಞೊ",
-    "answer": "Hindi: ञो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_119",
-    "question": "ಞೋ",
-    "answer": "Hindi: ञो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_120",
-    "question": "ಞೌ",
-    "answer": "Hindi: ञौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_121",
-    "question": "ಟಾ",
-    "answer": "Hindi: टा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_122",
-    "question": "ಟಿ",
-    "answer": "Hindi: टि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_123",
-    "question": "ಟೀ",
-    "answer": "Hindi: टी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_124",
-    "question": "ಟು",
-    "answer": "Hindi: टु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_125",
-    "question": "ಟೂ",
-    "answer": "Hindi: टू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_126",
-    "question": "ಟೃ",
-    "answer": "Hindi: टृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_127",
-    "question": "ಟೆ",
-    "answer": "Hindi: टे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_128",
-    "question": "ಟೇ",
-    "answer": "Hindi: टे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_129",
-    "question": "ಟೈ",
-    "answer": "Hindi: टै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_130",
-    "question": "ಟೊ",
-    "answer": "Hindi: टो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_131",
-    "question": "ಟೋ",
-    "answer": "Hindi: टो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_132",
-    "question": "ಟೌ",
-    "answer": "Hindi: टौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_133",
-    "question": "ಠಾ",
-    "answer": "Hindi: ठा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_134",
-    "question": "ಠಿ",
-    "answer": "Hindi: ठि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_135",
-    "question": "ಠೀ",
-    "answer": "Hindi: ठी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_136",
-    "question": "ಠು",
-    "answer": "Hindi: ठु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_137",
-    "question": "ಠೂ",
-    "answer": "Hindi: ठू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_138",
-    "question": "ಠೃ",
-    "answer": "Hindi: ठृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_139",
-    "question": "ಠೆ",
-    "answer": "Hindi: ठे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_140",
-    "question": "ಠೇ",
-    "answer": "Hindi: ठे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_141",
-    "question": "ಠೈ",
-    "answer": "Hindi: ठै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_142",
-    "question": "ಠೊ",
-    "answer": "Hindi: ठो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_143",
-    "question": "ಠೋ",
-    "answer": "Hindi: ठो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_144",
-    "question": "ಠೌ",
-    "answer": "Hindi: ठौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_145",
-    "question": "ಡಾ",
-    "answer": "Hindi: डा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_146",
-    "question": "ಡಿ",
-    "answer": "Hindi: डि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_147",
-    "question": "ಡೀ",
-    "answer": "Hindi: डी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_148",
-    "question": "ಡು",
-    "answer": "Hindi: डु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_149",
-    "question": "ಡೂ",
-    "answer": "Hindi: डू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_150",
-    "question": "ಡೃ",
-    "answer": "Hindi: डृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_151",
-    "question": "ಡೆ",
-    "answer": "Hindi: डे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_152",
-    "question": "ಡೇ",
-    "answer": "Hindi: डे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_153",
-    "question": "ಡೈ",
-    "answer": "Hindi: डै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_154",
-    "question": "ಡೊ",
-    "answer": "Hindi: डो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_155",
-    "question": "ಡೋ",
-    "answer": "Hindi: डो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_156",
-    "question": "ಡೌ",
-    "answer": "Hindi: डौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_157",
-    "question": "ಢಾ",
-    "answer": "Hindi: ढा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_158",
-    "question": "ಢಿ",
-    "answer": "Hindi: ढि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_159",
-    "question": "ಢೀ",
-    "answer": "Hindi: ढी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_160",
-    "question": "ಢು",
-    "answer": "Hindi: ढु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_161",
-    "question": "ಢೂ",
-    "answer": "Hindi: ढू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_162",
-    "question": "ಢೃ",
-    "answer": "Hindi: ढृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_163",
-    "question": "ಢೆ",
-    "answer": "Hindi: ढे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_164",
-    "question": "ಢೇ",
-    "answer": "Hindi: ढे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_165",
-    "question": "ಢೈ",
-    "answer": "Hindi: ढै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_166",
-    "question": "ಢೊ",
-    "answer": "Hindi: ढो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_167",
-    "question": "ಢೋ",
-    "answer": "Hindi: ढो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_168",
-    "question": "ಢೌ",
-    "answer": "Hindi: ढौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_169",
-    "question": "ಣಾ",
-    "answer": "Hindi: णा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_170",
-    "question": "ಣಿ",
-    "answer": "Hindi: णि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_171",
-    "question": "ಣೀ",
-    "answer": "Hindi: णी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_172",
-    "question": "ಣು",
-    "answer": "Hindi: णु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_173",
-    "question": "ಣೂ",
-    "answer": "Hindi: णू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_174",
-    "question": "ಣೃ",
-    "answer": "Hindi: णृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_175",
-    "question": "ಣೆ",
-    "answer": "Hindi: णे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_176",
-    "question": "ಣೇ",
-    "answer": "Hindi: णे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_177",
-    "question": "ಣೈ",
-    "answer": "Hindi: णै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_178",
-    "question": "ಣೊ",
-    "answer": "Hindi: णो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_179",
-    "question": "ಣೋ",
-    "answer": "Hindi: णो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_180",
-    "question": "ಣೌ",
-    "answer": "Hindi: णौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_181",
-    "question": "ತಾ",
-    "answer": "Hindi: ता",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_182",
-    "question": "ತಿ",
-    "answer": "Hindi: ति",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_183",
-    "question": "ತೀ",
-    "answer": "Hindi: ती",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_184",
-    "question": "ತು",
-    "answer": "Hindi: तु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_185",
-    "question": "ತೂ",
-    "answer": "Hindi: तू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_186",
-    "question": "ತೃ",
-    "answer": "Hindi: तृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_187",
-    "question": "ತೆ",
-    "answer": "Hindi: ते — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_188",
-    "question": "ತೇ",
-    "answer": "Hindi: ते — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_189",
-    "question": "ತೈ",
-    "answer": "Hindi: तै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_190",
-    "question": "ತೊ",
-    "answer": "Hindi: तो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_191",
-    "question": "ತೋ",
-    "answer": "Hindi: तो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_192",
-    "question": "ತೌ",
-    "answer": "Hindi: तौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_193",
-    "question": "ಥಾ",
-    "answer": "Hindi: था",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_194",
-    "question": "ಥಿ",
-    "answer": "Hindi: थि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_195",
-    "question": "ಥೀ",
-    "answer": "Hindi: थी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_196",
-    "question": "ಥು",
-    "answer": "Hindi: थु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_197",
-    "question": "ಥೂ",
-    "answer": "Hindi: थू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_198",
-    "question": "ಥೃ",
-    "answer": "Hindi: थृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_199",
-    "question": "ಥೆ",
-    "answer": "Hindi: थे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_200",
-    "question": "ಥೇ",
-    "answer": "Hindi: थे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_201",
-    "question": "ಥೈ",
-    "answer": "Hindi: थै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_202",
-    "question": "ಥೊ",
-    "answer": "Hindi: थो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_203",
-    "question": "ಥೋ",
-    "answer": "Hindi: थो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_204",
-    "question": "ಥೌ",
-    "answer": "Hindi: थौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_205",
-    "question": "ದಾ",
-    "answer": "Hindi: दा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_206",
-    "question": "ದಿ",
-    "answer": "Hindi: दि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_207",
-    "question": "ದೀ",
-    "answer": "Hindi: दी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_208",
-    "question": "ದು",
-    "answer": "Hindi: दु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_209",
-    "question": "ದೂ",
-    "answer": "Hindi: दू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_210",
-    "question": "ದೃ",
-    "answer": "Hindi: दृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_211",
-    "question": "ದೆ",
-    "answer": "Hindi: दे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_212",
-    "question": "ದೇ",
-    "answer": "Hindi: दे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_213",
-    "question": "ದೈ",
-    "answer": "Hindi: दै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_214",
-    "question": "ದೊ",
-    "answer": "Hindi: दो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_215",
-    "question": "ದೋ",
-    "answer": "Hindi: दो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_216",
-    "question": "ದೌ",
-    "answer": "Hindi: दौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_217",
-    "question": "ಧಾ",
-    "answer": "Hindi: धा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_218",
-    "question": "ಧಿ",
-    "answer": "Hindi: धि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_219",
-    "question": "ಧೀ",
-    "answer": "Hindi: धी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_220",
-    "question": "ಧು",
-    "answer": "Hindi: धु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_221",
-    "question": "ಧೂ",
-    "answer": "Hindi: धू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_222",
-    "question": "ಧೃ",
-    "answer": "Hindi: धृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_223",
-    "question": "ಧೆ",
-    "answer": "Hindi: धे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_224",
-    "question": "ಧೇ",
-    "answer": "Hindi: धे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_225",
-    "question": "ಧೈ",
-    "answer": "Hindi: धै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_226",
-    "question": "ಧೊ",
-    "answer": "Hindi: धो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_227",
-    "question": "ಧೋ",
-    "answer": "Hindi: धो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_228",
-    "question": "ಧೌ",
-    "answer": "Hindi: धौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_229",
-    "question": "ನಾ",
-    "answer": "Hindi: ना",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_230",
-    "question": "ನಿ",
-    "answer": "Hindi: नि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_231",
-    "question": "ನೀ",
-    "answer": "Hindi: नी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_232",
-    "question": "ನು",
-    "answer": "Hindi: नु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_233",
-    "question": "ನೂ",
-    "answer": "Hindi: नू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_234",
-    "question": "ನೃ",
-    "answer": "Hindi: नृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_235",
-    "question": "ನೆ",
-    "answer": "Hindi: ने — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_236",
-    "question": "ನೇ",
-    "answer": "Hindi: ने — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_237",
-    "question": "ನೈ",
-    "answer": "Hindi: नै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_238",
-    "question": "ನೊ",
-    "answer": "Hindi: नो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_239",
-    "question": "ನೋ",
-    "answer": "Hindi: नो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_240",
-    "question": "ನೌ",
-    "answer": "Hindi: नौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_241",
-    "question": "ಪಾ",
-    "answer": "Hindi: पा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_242",
-    "question": "ಪಿ",
-    "answer": "Hindi: पि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_243",
-    "question": "ಪೀ",
-    "answer": "Hindi: पी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_244",
-    "question": "ಪು",
-    "answer": "Hindi: पु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_245",
-    "question": "ಪೂ",
-    "answer": "Hindi: पू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_246",
-    "question": "ಪೃ",
-    "answer": "Hindi: पृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_247",
-    "question": "ಪೆ",
-    "answer": "Hindi: पे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_248",
-    "question": "ಪೇ",
-    "answer": "Hindi: पे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_249",
-    "question": "ಪೈ",
-    "answer": "Hindi: पै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_250",
-    "question": "ಪೊ",
-    "answer": "Hindi: पो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_251",
-    "question": "ಪೋ",
-    "answer": "Hindi: पो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_252",
-    "question": "ಪೌ",
-    "answer": "Hindi: पौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_253",
-    "question": "ಫಾ",
-    "answer": "Hindi: फा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_254",
-    "question": "ಫಿ",
-    "answer": "Hindi: फि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_255",
-    "question": "ಫೀ",
-    "answer": "Hindi: फी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_256",
-    "question": "ಫು",
-    "answer": "Hindi: फु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_257",
-    "question": "ಫೂ",
-    "answer": "Hindi: फू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_258",
-    "question": "ಫೃ",
-    "answer": "Hindi: फृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_259",
-    "question": "ಫೆ",
-    "answer": "Hindi: फे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_260",
-    "question": "ಫೇ",
-    "answer": "Hindi: फे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_261",
-    "question": "ಫೈ",
-    "answer": "Hindi: फै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_262",
-    "question": "ಫೊ",
-    "answer": "Hindi: फो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_263",
-    "question": "ಫೋ",
-    "answer": "Hindi: फो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_264",
-    "question": "ಫೌ",
-    "answer": "Hindi: फौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_265",
-    "question": "ಬಾ",
-    "answer": "Hindi: बा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_266",
-    "question": "ಬಿ",
-    "answer": "Hindi: बि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_267",
-    "question": "ಬೀ",
-    "answer": "Hindi: बी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_268",
-    "question": "ಬು",
-    "answer": "Hindi: बु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_269",
-    "question": "ಬೂ",
-    "answer": "Hindi: बू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_270",
-    "question": "ಬೃ",
-    "answer": "Hindi: बृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_271",
-    "question": "ಬೆ",
-    "answer": "Hindi: बे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_272",
-    "question": "ಬೇ",
-    "answer": "Hindi: बे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_273",
-    "question": "ಬೈ",
-    "answer": "Hindi: बै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_274",
-    "question": "ಬೊ",
-    "answer": "Hindi: बो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_275",
-    "question": "ಬೋ",
-    "answer": "Hindi: बो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_276",
-    "question": "ಬೌ",
-    "answer": "Hindi: बौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_277",
-    "question": "ಭಾ",
-    "answer": "Hindi: भा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_278",
-    "question": "ಭಿ",
-    "answer": "Hindi: भि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_279",
-    "question": "ಭೀ",
-    "answer": "Hindi: भी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_280",
-    "question": "ಭು",
-    "answer": "Hindi: भु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_281",
-    "question": "ಭೂ",
-    "answer": "Hindi: भू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_282",
-    "question": "ಭೃ",
-    "answer": "Hindi: भृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_283",
-    "question": "ಭೆ",
-    "answer": "Hindi: भे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_284",
-    "question": "ಭೇ",
-    "answer": "Hindi: भे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_285",
-    "question": "ಭೈ",
-    "answer": "Hindi: भै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_286",
-    "question": "ಭೊ",
-    "answer": "Hindi: भो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_287",
-    "question": "ಭೋ",
-    "answer": "Hindi: भो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_288",
-    "question": "ಭೌ",
-    "answer": "Hindi: भौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_289",
-    "question": "ಮಾ",
-    "answer": "Hindi: मा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_290",
-    "question": "ಮಿ",
-    "answer": "Hindi: मि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_291",
-    "question": "ಮೀ",
-    "answer": "Hindi: मी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_292",
-    "question": "ಮು",
-    "answer": "Hindi: मु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_293",
-    "question": "ಮೂ",
-    "answer": "Hindi: मू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_294",
-    "question": "ಮೃ",
-    "answer": "Hindi: मृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_295",
-    "question": "ಮೆ",
-    "answer": "Hindi: मे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_296",
-    "question": "ಮೇ",
-    "answer": "Hindi: मे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_297",
-    "question": "ಮೈ",
-    "answer": "Hindi: मै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_298",
-    "question": "ಮೊ",
-    "answer": "Hindi: मो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_299",
-    "question": "ಮೋ",
-    "answer": "Hindi: मो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_300",
-    "question": "ಮೌ",
-    "answer": "Hindi: मौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_301",
-    "question": "ಯಾ",
-    "answer": "Hindi: या",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_302",
-    "question": "ಯಿ",
-    "answer": "Hindi: यि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_303",
-    "question": "ಯೀ",
-    "answer": "Hindi: यी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_304",
-    "question": "ಯು",
-    "answer": "Hindi: यु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_305",
-    "question": "ಯೂ",
-    "answer": "Hindi: यू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_306",
-    "question": "ಯೃ",
-    "answer": "Hindi: यृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_307",
-    "question": "ಯೆ",
-    "answer": "Hindi: ये — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_308",
-    "question": "ಯೇ",
-    "answer": "Hindi: ये — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_309",
-    "question": "ಯೈ",
-    "answer": "Hindi: यै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_310",
-    "question": "ಯೊ",
-    "answer": "Hindi: यो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_311",
-    "question": "ಯೋ",
-    "answer": "Hindi: यो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_312",
-    "question": "ಯೌ",
-    "answer": "Hindi: यौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_313",
-    "question": "ರಾ",
-    "answer": "Hindi: रा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_314",
-    "question": "ರಿ",
-    "answer": "Hindi: रि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_315",
-    "question": "ರೀ",
-    "answer": "Hindi: री",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_316",
-    "question": "ರು",
-    "answer": "Hindi: रु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_317",
-    "question": "ರೂ",
-    "answer": "Hindi: रू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_318",
-    "question": "ರೃ",
-    "answer": "Hindi: रृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_319",
-    "question": "ರೆ",
-    "answer": "Hindi: रे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_320",
-    "question": "ರೇ",
-    "answer": "Hindi: रे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_321",
-    "question": "ರೈ",
-    "answer": "Hindi: रै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_322",
-    "question": "ರೊ",
-    "answer": "Hindi: रो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_323",
-    "question": "ರೋ",
-    "answer": "Hindi: रो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_324",
-    "question": "ರೌ",
-    "answer": "Hindi: रौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_325",
-    "question": "ಲಾ",
-    "answer": "Hindi: ला",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_326",
-    "question": "ಲಿ",
-    "answer": "Hindi: लि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_327",
-    "question": "ಲೀ",
-    "answer": "Hindi: ली",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_328",
-    "question": "ಲು",
-    "answer": "Hindi: लु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_329",
-    "question": "ಲೂ",
-    "answer": "Hindi: लू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_330",
-    "question": "ಲೃ",
-    "answer": "Hindi: लृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_331",
-    "question": "ಲೆ",
-    "answer": "Hindi: ले — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_332",
-    "question": "ಲೇ",
-    "answer": "Hindi: ले — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_333",
-    "question": "ಲೈ",
-    "answer": "Hindi: लै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_334",
-    "question": "ಲೊ",
-    "answer": "Hindi: लो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_335",
-    "question": "ಲೋ",
-    "answer": "Hindi: लो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_336",
-    "question": "ಲೌ",
-    "answer": "Hindi: लौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_337",
-    "question": "ವಾ",
-    "answer": "Hindi: वा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_338",
-    "question": "ವಿ",
-    "answer": "Hindi: वि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_339",
-    "question": "ವೀ",
-    "answer": "Hindi: वी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_340",
-    "question": "ವು",
-    "answer": "Hindi: वु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_341",
-    "question": "ವೂ",
-    "answer": "Hindi: वू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_342",
-    "question": "ವೃ",
-    "answer": "Hindi: वृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_343",
-    "question": "ವೆ",
-    "answer": "Hindi: वे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_344",
-    "question": "ವೇ",
-    "answer": "Hindi: वे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_345",
-    "question": "ವೈ",
-    "answer": "Hindi: वै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_346",
-    "question": "ವೊ",
-    "answer": "Hindi: वो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_347",
-    "question": "ವೋ",
-    "answer": "Hindi: वो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_348",
-    "question": "ವೌ",
-    "answer": "Hindi: वौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_349",
-    "question": "ಶಾ",
-    "answer": "Hindi: शा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_350",
-    "question": "ಶಿ",
-    "answer": "Hindi: शि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_351",
-    "question": "ಶೀ",
-    "answer": "Hindi: शी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_352",
-    "question": "ಶು",
-    "answer": "Hindi: शु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_353",
-    "question": "ಶೂ",
-    "answer": "Hindi: शू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_354",
-    "question": "ಶೃ",
-    "answer": "Hindi: शृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_355",
-    "question": "ಶೆ",
-    "answer": "Hindi: शे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_356",
-    "question": "ಶೇ",
-    "answer": "Hindi: शे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_357",
-    "question": "ಶೈ",
-    "answer": "Hindi: शै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_358",
-    "question": "ಶೊ",
-    "answer": "Hindi: शो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_359",
-    "question": "ಶೋ",
-    "answer": "Hindi: शो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_360",
-    "question": "ಶೌ",
-    "answer": "Hindi: शौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_361",
-    "question": "ಷಾ",
-    "answer": "Hindi: षा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_362",
-    "question": "ಷಿ",
-    "answer": "Hindi: षि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_363",
-    "question": "ಷೀ",
-    "answer": "Hindi: षी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_364",
-    "question": "ಷು",
-    "answer": "Hindi: षु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_365",
-    "question": "ಷೂ",
-    "answer": "Hindi: षू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_366",
-    "question": "ಷೃ",
-    "answer": "Hindi: षृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_367",
-    "question": "ಷೆ",
-    "answer": "Hindi: षे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_368",
-    "question": "ಷೇ",
-    "answer": "Hindi: षे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_369",
-    "question": "ಷೈ",
-    "answer": "Hindi: षै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_370",
-    "question": "ಷೊ",
-    "answer": "Hindi: षो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_371",
-    "question": "ಷೋ",
-    "answer": "Hindi: षो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_372",
-    "question": "ಷೌ",
-    "answer": "Hindi: षौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_373",
-    "question": "ಸಾ",
-    "answer": "Hindi: सा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_374",
-    "question": "ಸಿ",
-    "answer": "Hindi: सि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_375",
-    "question": "ಸೀ",
-    "answer": "Hindi: सी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_376",
-    "question": "ಸು",
-    "answer": "Hindi: सु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_377",
-    "question": "ಸೂ",
-    "answer": "Hindi: सू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_378",
-    "question": "ಸೃ",
-    "answer": "Hindi: सृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_379",
-    "question": "ಸೆ",
-    "answer": "Hindi: से — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_380",
-    "question": "ಸೇ",
-    "answer": "Hindi: से — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_381",
-    "question": "ಸೈ",
-    "answer": "Hindi: सै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_382",
-    "question": "ಸೊ",
-    "answer": "Hindi: सो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_383",
-    "question": "ಸೋ",
-    "answer": "Hindi: सो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_384",
-    "question": "ಸೌ",
-    "answer": "Hindi: सौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_385",
-    "question": "ಹಾ",
-    "answer": "Hindi: हा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_386",
-    "question": "ಹಿ",
-    "answer": "Hindi: हि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_387",
-    "question": "ಹೀ",
-    "answer": "Hindi: ही",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_388",
-    "question": "ಹು",
-    "answer": "Hindi: हु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_389",
-    "question": "ಹೂ",
-    "answer": "Hindi: हू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_390",
-    "question": "ಹೃ",
-    "answer": "Hindi: हृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_391",
-    "question": "ಹೆ",
-    "answer": "Hindi: हे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_392",
-    "question": "ಹೇ",
-    "answer": "Hindi: हे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_393",
-    "question": "ಹೈ",
-    "answer": "Hindi: है",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_394",
-    "question": "ಹೊ",
-    "answer": "Hindi: हो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_395",
-    "question": "ಹೋ",
-    "answer": "Hindi: हो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_396",
-    "question": "ಹೌ",
-    "answer": "Hindi: हौ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_397",
-    "question": "ಳಾ",
-    "answer": "Hindi: ळा",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_398",
-    "question": "ಳಿ",
-    "answer": "Hindi: ळि",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_399",
-    "question": "ಳೀ",
-    "answer": "Hindi: ळी",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_400",
-    "question": "ಳು",
-    "answer": "Hindi: ळु",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_401",
-    "question": "ಳೂ",
-    "answer": "Hindi: ळू",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_402",
-    "question": "ಳೃ",
-    "answer": "Hindi: ळृ",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_403",
-    "question": "ಳೆ",
-    "answer": "Hindi: ळे — short e sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_404",
-    "question": "ಳೇ",
-    "answer": "Hindi: ळे — long ē sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_405",
-    "question": "ಳೈ",
-    "answer": "Hindi: ळै",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_406",
-    "question": "ಳೊ",
-    "answer": "Hindi: ळो — short o sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_407",
-    "question": "ಳೋ",
-    "answer": "Hindi: ळो — long ō sound",
-    "notes": "",
-    "complexity": 4
-  },
-  {
-    "id": "barakhadi_408",
-    "question": "ಳೌ",
-    "answer": "Hindi: ळौ",
-    "notes": "",
+    "wordKannada": "ಹ",
+    "transliteration": "ha",
+    "notes": "Breathy 'ha' sound like in 'hasi'.",
+    "category": "letter",
     "complexity": 4
   }
 ]

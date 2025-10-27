@@ -17,6 +17,10 @@ export interface QuestionBankItem {
   question: string;
   answer?: string;
   notes?: string;
+  wordKannada?: string;
+  transliteration?: string;
+  transliterationHi?: string;
+  category?: string;
 }
 
 // Subject configuration interface
@@ -48,11 +52,15 @@ export function loadSubjectWords(bankData: QuestionBankItem[], language: string)
   return bankData.reduce((acc, item) => {
     acc[item.id] = {
       id: item.id,
-      text: item.question,                    // Map 'question' to 'text' for Word interface
+      text: item.question,
       language: language,
       complexityLevel: item.complexity,
-      answer: item.answer,                    // Optional answer field
-      notes: item.notes,                      // Optional notes field
+      wordKannada: item.wordKannada ?? item.question,
+      transliteration: item.transliteration,
+      transliterationHi: item.transliterationHi,
+      answer: item.answer,
+      notes: item.notes,
+      category: item.category,
       attempts: [],
       step: 0,
       cooldownSessionsLeft: 0,
@@ -74,7 +82,7 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     displayIcon: '🇮🇳',
     displayLabel: 'Kannada Words',
     promptLabel: 'Build this word',
-    parentInstruction: 'Help your learner build the Kannada word and say it aloud together.',
+    parentInstruction: 'Help your learner drag the Kannada tiles into the right order, sound each syllable, and then read the whole word together.',
     supportsRevision: true,
     revisionPanel: {
       title: 'Kannada Revision',
