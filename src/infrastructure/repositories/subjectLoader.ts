@@ -42,6 +42,8 @@ export interface SubjectConfig {
     secondaryField?: WordDisplayField;
     notesField?: WordDisplayField;
   };
+  defaultComplexityLevel?: number;
+  minGraphemes?: number;
 }
 
 /**
@@ -84,6 +86,8 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     promptLabel: 'Build this word',
     parentInstruction: 'Help your learner drag the Kannada tiles into the right order, sound each syllable, and then read the whole word together.',
     supportsRevision: true,
+    defaultComplexityLevel: 2,
+    minGraphemes: 2,
     revisionPanel: {
       title: 'Kannada Revision',
       buttonLabel: 'Review',
@@ -101,6 +105,8 @@ export const SUBJECT_CONFIGS: SubjectConfig[] = [
     promptLabel: 'Say the letter',
     parentInstruction: 'Trace the letter in the air and repeat the sound together.',
     supportsRevision: true,
+    defaultComplexityLevel: 1,
+    minGraphemes: 1,
     revisionPanel: {
       title: 'Alphabet Revision',
       buttonLabel: 'Review Letters',

@@ -162,9 +162,7 @@ export async function seedSingleWordSession(page: Page, word: { id: string; text
   if (await startPracticeBtn.isVisible()) {
     console.log('✅ Found Start Practice button, clicking...');
     await startPracticeBtn.click();
-    
-    // Wait for practice screen to load and correct button to appear
-    await page.getByTestId('btn-correct').waitFor({ state: 'visible', timeout: 10000 });
+    await page.getByTestId('practice-root').waitFor({ state: 'visible', timeout: 10000 });
     console.log('✅ Practice session started successfully');
   }
 

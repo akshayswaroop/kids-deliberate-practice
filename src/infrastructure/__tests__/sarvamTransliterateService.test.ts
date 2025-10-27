@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { transliterateText } from '../services/transliterate/sarvamTransliterateService';
+import * as sarvamApiKey from '../../utils/sarvamApiKey';
 
 describe('transliterateText', () => {
   const originalFetch = global.fetch;
@@ -9,6 +10,7 @@ describe('transliterateText', () => {
     (global as any).fetch = vi.fn();
     // Ensure a key exists for UI-only mode
     (import.meta as any).env = { ...(originalEnv || {}), VITE_SARVAM_API_KEY: 'test-key' } as any;
+    vi.spyOn(sarvamApiKey, 'getSarvamApiKey').mockReturnValue('test-key');
   });
 
   afterEach(() => {

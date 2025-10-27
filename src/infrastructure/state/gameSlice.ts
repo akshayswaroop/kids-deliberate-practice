@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './gameState';
 import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
-import { loadAllWords } from '../repositories/subjectLoader';
+import { loadAllWords, SUBJECT_CONFIGS } from '../repositories/subjectLoader';
 import { INTRO_TOUR_VERSION } from '../config/guidance';
 // Thunks moved to gameActions.ts
 
@@ -26,10 +26,12 @@ export const makeUser = (displayName?: string) => ({
   sessions: {},
   activeSessions: {},
   settings: {
-    // Generic defaults - subjects get added dynamically as they're encountered
-    sessionSizes: {}, // Will be populated as subjects are used
-    languages: [], // Will be populated from available subjects
-    complexityLevels: {} // Will be populated as subjects are used
+    sessionSizes: {},
+    languages: SUBJECT_CONFIGS.map(config => config.name),
+    complexityLevels: SUBJECT_CONFIGS.reduce((acc, config) => {
+      acc[config.language] = config.defaultComplexityLevel ?? 1;
+      return acc;
+    }, {} as Record<string, number>)
   },
   experience: createDefaultExperience(),
 });

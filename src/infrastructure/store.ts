@@ -2,7 +2,76 @@ import { configureStore } from '@reduxjs/toolkit';
 import gameReducer from './state/gameSlice';
 import type { RootState as GameState } from './state/gameState';
 import { traceMiddleware } from '../app/tracing/traceMiddleware';
-import { loadAllWords } from './repositories/subjectLoader';
+import { loadAllWords, SUBJECT_CONFIGS } from './repositories/subjectLoader';
+
+const DEFAULT_LANGUAGE = SUBJECT_CONFIGS[0]?.name ?? 'kannada';
+
+const ensureArray = <T>(value: T[] | undefined | null): T[] => {
+  return Array.isArray(value) ? value : [];
+};
+
+const ensureRecord = <T>(value: Record<string, T> | undefined | null): Record<string, T> => {
+  return value && typeof value === 'object' ? value : {};
+};
+
+const ensureExperience = (experience: any) => {
+  if (experience && typeof experience === 'object') {
+    const coachmarks = ensureRecord<boolean>(experience.coachmarks);
+    return {
+      hasSeenIntro: !!experience.hasSeenIntro,
+      coachmarks: {
+        streak: !!coachmarks.streak,
+        profiles: !!coachmarks.profiles,
+      },
+      hasSeenParentGuide: !!experience.hasSeenParentGuide,
+      hasSeenWhyRepeat: !!experience.hasSeenWhyRepeat,
+      seenIntroVersion: experience.seenIntroVersion,
+    };
+  }
+
+  return {
+    hasSeenIntro: false,
+    coachmarks: {
+      streak: false,
+      profiles: false,
+    },
+    hasSeenParentGuide: false,
+    hasSeenWhyRepeat: false,
+    seenIntroVersion: undefined,
+  };
+};
+
+function normalizeUser(user: any) {
+  if (!user || typeof user !== 'object') return;
+
+  user.words = ensureRecord(user.words);
+  user.sessions = ensureRecord(user.sessions);
+  user.activeSessions = ensureRecord(user.activeSessions);
+
+  const settings = ensureRecord<any>(user.settings);
+  settings.sessionSizes = ensureRecord<number>(settings.sessionSizes);
+  settings.complexityLevels = ensureRecord<number>(settings.complexityLevels);
+
+  const existingLanguages = ensureArray<string>(settings.languages);
+  const languageSet = new Set(existingLanguages.filter(Boolean));
+
+  if (languageSet.size === 0 && DEFAULT_LANGUAGE) {
+    languageSet.add(DEFAULT_LANGUAGE);
+  }
+
+  for (const config of SUBJECT_CONFIGS) {
+    if (config.language && settings.complexityLevels[config.language] == null) {
+      settings.complexityLevels[config.language] = config.defaultComplexityLevel ?? 1;
+    }
+    if (config.name && !languageSet.has(config.name) && !languageSet.has(config.language)) {
+      languageSet.add(config.name);
+    }
+  }
+
+  settings.languages = Array.from(languageSet);
+  user.settings = settings;
+  user.experience = ensureExperience(user.experience);
+}
 
 function loadGameState(): GameState | undefined {
   try {
@@ -43,7 +112,7 @@ export function createAppStore(opts?: { persist?: boolean; preloadedState?: { ga
     try {
       const initialWords = loadAllWords();
       Object.values((preloadedState.game as any).users || {}).forEach((user: any) => {
-        user.words = user.words || {};
+        user.words = ensureRecord(user.words);
         Object.entries(initialWords).forEach(([wordId, wordObj]) => {
           if (!user.words[wordId]) {
             user.words[wordId] = { ...wordObj };
@@ -55,7 +124,11 @@ export function createAppStore(opts?: { persist?: boolean; preloadedState?: { ga
             }
           }
         });
+        normalizeUser(user);
       });
+      if (preloadedState.game && preloadedState.game.currentUserId && !preloadedState.game.users[preloadedState.game.currentUserId]) {
+        preloadedState.game.currentUserId = null;
+      }
     } catch {
       // Ignore merge failures to avoid breaking app startup
     }

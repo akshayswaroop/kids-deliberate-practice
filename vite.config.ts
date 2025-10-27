@@ -17,7 +17,15 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': 'http://localhost:8787'
+    },
+    watch: {
+      ignored: [
+        '**/.reports/**'
+      ]
     }
+  },
+  optimizeDeps: {
+    entries: ['index.html']
   },
 
   test: {

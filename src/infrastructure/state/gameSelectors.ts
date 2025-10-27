@@ -247,10 +247,12 @@ export function selectWordsByComplexityLevel(state: RootState, languages: string
   if (!user) return {};
   
   const filteredWords: Record<string, Word> = {};
+  const settings = user.settings ?? { complexityLevels: {} as Record<string, number> };
+  const complexityLevels = settings.complexityLevels ?? {};
   
   for (const [wordId, word] of Object.entries(user.words)) {
     if (languages.includes(word.language)) {
-      const userLevel = user.settings.complexityLevels[word.language] || 1;
+      const userLevel = complexityLevels[word.language] || 1;
       if (word.complexityLevel <= userLevel) {
         filteredWords[wordId] = word;
       }
@@ -264,7 +266,8 @@ export function selectCurrentLanguagePreferences(state: RootState): string[] {
   if (!state.currentUserId) return [];
   const user = state.users[state.currentUserId];
   if (!user) return [];
-  return user.settings.languages;
+  const languages = user.settings?.languages;
+  return Array.isArray(languages) ? languages : [];
 }
 
 // Get current complexity levels for each language
@@ -272,7 +275,7 @@ export function selectComplexityLevels(state: RootState): Record<string, number>
   if (!state.currentUserId) return {};
   const user = state.users[state.currentUserId];
   if (!user) return {};
-  return user.settings.complexityLevels;
+  return user.settings?.complexityLevels ?? {};
 }
 
 // Check if user should progress to next complexity level for a language
@@ -566,7 +569,7 @@ export function selectSessionGuidance(
 
   // Check if there are more complexity levels available
   // Look for unmastered words at higher complexity levels in the same language/mode
-  const currentLevel = user.settings.complexityLevels[session.mode || 'english'] || 1;
+  const currentLevel = user.settings?.complexityLevels?.[session.mode || 'english'] || 1;
   const hasWordsAtHigherLevels = Object.values(user.words).some(word => 
     word.language === (session.mode || 'english') && 
     word.complexityLevel > currentLevel &&

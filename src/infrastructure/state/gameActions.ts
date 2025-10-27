@@ -8,6 +8,27 @@ import {
 import { SessionGenerationService } from '../../domain/services/SessionGenerationService';
 import type { Session, Word } from './gameState';
 import { MasteryConfiguration } from '../../domain/value-objects/MasteryConfiguration';
+import { SUBJECT_CONFIGS } from '../repositories/subjectLoader';
+
+const countGraphemes = (value: string | undefined | null): number => {
+  if (!value) return 0;
+  const text = value.trim();
+  if (!text) return 0;
+  try {
+    if (typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function') {
+      const segmenter = new Intl.Segmenter('kn', { granularity: 'grapheme' });
+      let count = 0;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      for (const _ of segmenter.segment(text)) {
+        count += 1;
+      }
+      return count;
+    }
+  } catch {
+    // Fallback to naive grapheme counting
+  }
+  return Array.from(text).length;
+};
 
 /**
  * Pure function: Select next practice index from unmastered words
@@ -109,9 +130,17 @@ export const handleNextPressed = (payload: { mode: string }) => (dispatch: any, 
     
     if (allWordsArr.length > 0) {
       const sessionSize = selectSessionSizeForMode(freshState as any, payload.mode);
+      const modeConfig = SUBJECT_CONFIGS.find(config => config.name === payload.mode || config.language === payload.mode);
+      const minGraphemes = modeConfig?.minGraphemes ?? 1;
+      const practiceCandidates = allWordsArr.filter(word => {
+        const surface = (word.wordKannada || word.text || '').trim();
+        if (!surface) return false;
+        return countGraphemes(surface) >= minGraphemes;
+      });
+      const sessionWordPool = practiceCandidates.length > 0 ? practiceCandidates : allWordsArr;
       
       // Use domain service for session word selection
-      const ids = SessionGenerationService.selectSessionWords(allWordsArr as Word[], sessionSize);
+      const ids = SessionGenerationService.selectSessionWords(sessionWordPool as Word[], sessionSize);
 
       const newSessionId = generateSessionId(); // Use helper with injected time
       const now = Date.now(); // Get time once at the edge
@@ -229,9 +258,18 @@ export const ensureActiveSession = (payload: { mode: string }) => (dispatch: any
   const allWordsArr = Object.values(availableWords || {});
   if (allWordsArr.length === 0) return;
 
+  const modeConfig = SUBJECT_CONFIGS.find(config => config.name === payload.mode || config.language === payload.mode);
+  const minGraphemes = modeConfig?.minGraphemes ?? 1;
+  const practiceCandidates = allWordsArr.filter(word => {
+    const surface = (word.wordKannada || word.text || '').trim();
+    if (!surface) return false;
+    return countGraphemes(surface) >= minGraphemes;
+  });
+  const sessionWordPool = practiceCandidates.length > 0 ? practiceCandidates : allWordsArr;
+
   // Use domain service for session word selection
   const ids = SessionGenerationService.selectSessionWords(
-    allWordsArr as Word[],
+    sessionWordPool as Word[],
     selectSessionSizeForMode(state as any, payload.mode)
   );
 

@@ -4,8 +4,21 @@ import { synthesizeSpeech } from '../../infrastructure/services/tts/sarvamTtsSer
 import AlphabetChatBot from './AlphabetChatBot.jsx';
 import { getScriptFontClass } from '../../utils/scriptDetector';
 
-const segmentWord = (word) => {
+const splitKannadaSyllable = (value) => {
+  if (!value) return [];
+  const chars = Array.from(value);
+  if (chars.length === 1) return chars;
+  const base = chars[0];
+  const rest = chars.slice(1);
+  return [base, ...rest];
+};
+
+const segmentWord = (word, wordDetails) => {
   if (!word) return [];
+  const processed = splitKannadaSyllable(word);
+  if (processed.length > 1) {
+    return processed.map(part => part.trim()).filter(Boolean);
+  }
   try {
     if (typeof Intl !== 'undefined' && Intl.Segmenter) {
       const segmenter = new Intl.Segmenter('kn', { granularity: 'grapheme' });
@@ -14,7 +27,17 @@ const segmentWord = (word) => {
   } catch {
     // Fallback to plain splitting
   }
-  return Array.from(word);
+  const fallback = Array.from(word);
+  if (fallback.length <= 1 && wordDetails?.answer && wordDetails.answer.includes('+')) {
+    const parts = wordDetails.answer
+      .split('+')
+      .map(part => part.trim())
+      .filter(Boolean);
+    if (parts.length > 1) {
+      return parts;
+    }
+  }
+  return fallback;
 };
 
 const shuffle = (items) => {
@@ -87,9 +110,13 @@ export default function PracticeCard({
   const [draggingId, setDraggingId] = React.useState(null);
   const [slotMatches, setSlotMatches] = React.useState([]);
   const [slotFlashes, setSlotFlashes] = React.useState([]);
+  const [showTrophy, setShowTrophy] = React.useState(false);
+  const [trophyBurstKey, setTrophyBurstKey] = React.useState(0);
+  const trophyTimeoutRef = React.useRef(null);
+  const nextAdvanceRef = React.useRef(null);
   const resetKeyRef = React.useRef(0);
 
-  const segments = React.useMemo(() => segmentWord(mainWord), [mainWord]);
+  const segments = React.useMemo(() => segmentWord(mainWord, currentWord), [mainWord, currentWord]);
   const stageLabel = React.useMemo(() => buildStageLabel(currentWord), [currentWord]);
   const stageTheme = React.useMemo(() => {
     const key = (stageLabel || '').toLowerCase();
@@ -104,20 +131,6 @@ export default function PracticeCard({
     const safeTotal = Math.max(total, 0);
     return { total: safeTotal, current };
   }, [sessionProgress]);
-  const [gardenBloomIndex, setGardenBloomIndex] = React.useState(null);
-  const previousProgressRef = React.useRef(progressMeta.current);
-
-  const handleMarkSuccess = React.useCallback(() => {
-    onCorrect?.();
-    setStatus('correct');
-    setFeedback('Locked in! Ready for the next word.');
-  }, [onCorrect]);
-
-  const handleMarkStruggle = React.useCallback(() => {
-    onWrong?.();
-    setStatus('incorrect');
-    setFeedback('No worries—let’s fix it together.');
-  }, [onWrong]);
 
   React.useEffect(() => {
     setAnswerVisible(!!isAnswerRevealed);
@@ -162,22 +175,6 @@ export default function PracticeCard({
       }, 600);
     }
   }, []);
-
-  React.useEffect(() => {
-    const prev = previousProgressRef.current ?? 0;
-    if (progressMeta.current > prev) {
-      setGardenBloomIndex(progressMeta.current - 1);
-    } else if (progressMeta.current === 0) {
-      setGardenBloomIndex(null);
-    }
-    previousProgressRef.current = progressMeta.current;
-  }, [progressMeta.current]);
-
-  React.useEffect(() => {
-    if (gardenBloomIndex === null || gardenBloomIndex < 0) return;
-    const timer = window.setTimeout(() => setGardenBloomIndex(null), 900);
-    return () => window.clearTimeout(timer);
-  }, [gardenBloomIndex]);
 
   const moveTileToSlot = React.useCallback((tileId, slotIndex) => {
     setPool(prevPool => {
@@ -272,6 +269,14 @@ export default function PracticeCard({
     if (guess === mainWord) {
       if (status !== 'correct') {
         onCorrect?.();
+        triggerTrophy();
+        if (nextAdvanceRef.current) {
+          window.clearTimeout(nextAdvanceRef.current);
+        }
+        nextAdvanceRef.current = window.setTimeout(() => {
+          onNext?.();
+          nextAdvanceRef.current = null;
+        }, 1500);
       }
       setStatus('correct');
       setFeedback('Brilliant! You built it perfectly.');
@@ -295,6 +300,15 @@ export default function PracticeCard({
     setDraggingId(null);
     setSlotMatches(Array(segments.length).fill(false));
     setSlotFlashes(Array(segments.length).fill(null));
+    setShowTrophy(false);
+    if (trophyTimeoutRef.current) {
+      window.clearTimeout(trophyTimeoutRef.current);
+      trophyTimeoutRef.current = null;
+    }
+    if (nextAdvanceRef.current) {
+      window.clearTimeout(nextAdvanceRef.current);
+      nextAdvanceRef.current = null;
+    }
     if (answerVisible) {
       setAnswerVisible(false);
       onRevealAnswer?.(false);
@@ -328,11 +342,34 @@ export default function PracticeCard({
     onRevealAnswer?.(next);
   };
 
+  const triggerTrophy = React.useCallback(() => {
+    setTrophyBurstKey(prev => prev + 1);
+    setShowTrophy(true);
+    if (trophyTimeoutRef.current) {
+      window.clearTimeout(trophyTimeoutRef.current);
+    }
+    trophyTimeoutRef.current = window.setTimeout(() => {
+      setShowTrophy(false);
+      trophyTimeoutRef.current = null;
+    }, 1600);
+  }, []);
+
+  React.useEffect(() => {
+    return () => {
+      if (trophyTimeoutRef.current) {
+        window.clearTimeout(trophyTimeoutRef.current);
+      }
+      if (nextAdvanceRef.current) {
+        window.clearTimeout(nextAdvanceRef.current);
+      }
+    };
+  }, []);
+
   const showHint = status === 'incorrect' && lastBuilt && lastBuilt !== mainWord;
   const mismatchMap = React.useMemo(() => {
     if (!showHint) return new Set();
     const set = new Set();
-    const parts = segmentWord(mainWord);
+    const parts = segmentWord(mainWord, currentWord);
     slots.forEach((tile, index) => {
       if (!tile) return;
       if (tile.value !== parts[index]) {
@@ -347,6 +384,26 @@ export default function PracticeCard({
       className={`word-builder-shell word-builder-shell--${stageTheme}`}
       data-testid="practice-root"
     >
+      {showTrophy && (
+        <div
+          key={trophyBurstKey}
+          className="trophy-burst"
+          role="status"
+          aria-live="polite"
+          aria-label="Trophy earned! Great job."
+        >
+          <span className="trophy-burst__icon" aria-hidden="true">
+            🏆
+          </span>
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <span
+              key={idx}
+              className={`trophy-burst__confetti trophy-burst__confetti--${idx + 1}`}
+              aria-hidden="true"
+            />
+          ))}
+        </div>
+      )}
       <header className="word-builder-header">
         <div className={`stage-chip stage-chip--${stageTheme}`}>{stageLabel}</div>
         {progressMeta.total > 0 && (
@@ -536,43 +593,6 @@ export default function PracticeCard({
           Next word →
         </button>
       </footer>
-
-      <div className="word-builder-actionbar">
-        <button
-          type="button"
-          className="actionbar-button actionbar-button--success"
-          data-testid="btn-correct"
-          onClick={handleMarkSuccess}
-        >
-          ✅ I built it!
-        </button>
-        <button
-          type="button"
-          className="actionbar-button actionbar-button--struggle"
-          data-testid="btn-wrong"
-          onClick={handleMarkStruggle}
-        >
-          🤔 I need help
-        </button>
-      </div>
-
-      {progressMeta.total > 0 && (
-        <section
-          className="word-garden"
-          aria-label={`Word garden progress ${progressMeta.current} of ${progressMeta.total}`}
-        >
-          {Array.from({ length: progressMeta.total }).map((_, idx) => (
-            <div
-              key={idx}
-              className={[
-                'word-garden-flower',
-                idx < progressMeta.current ? 'word-garden-flower--sprouted' : 'word-garden-flower--seed',
-                idx === gardenBloomIndex ? 'word-garden-flower--bloom' : '',
-              ].filter(Boolean).join(' ')}
-            />
-          ))}
-        </section>
-      )}
 
       {chatOpen && (
         <AlphabetChatBot

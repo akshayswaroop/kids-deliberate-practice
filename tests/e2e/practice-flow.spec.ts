@@ -17,11 +17,11 @@ test.describe('Story: Practicing a seeded word', () => {
               words: {
                 w1: {
                   id: 'w1',
-                  text: 'Hello',
-                  transliteration: 'Hello',
-                  language: 'english',
+                  text: 'ಗಾ',
+                  wordKannada: 'ಗಾ',
+                  language: 'kannada',
                   complexityLevel: 1,
-                  answer: 'World',
+                  answer: 'Meaning',
                   notes: 'Note',
                   attempts: [],
                   step: 0,
@@ -38,8 +38,9 @@ test.describe('Story: Practicing a seeded word', () => {
                   revealed: false,
                 },
               },
-              activeSessions: { english: 's1' },
-              settings: { sessionSizes: {}, languages: ['english'], complexityLevels: { english: 1 } },
+              activeSessions: { kannada: 's1' },
+              currentMode: 'kannada',
+              settings: { sessionSizes: {}, languages: ['kannada'], complexityLevels: { kannada: 1 } },
             },
           },
           currentUserId: 'test',
@@ -50,34 +51,17 @@ test.describe('Story: Practicing a seeded word', () => {
   await dismissPracticeIntroIfPresent(page);
     });
 
-    await test.step('When the learner marks the card as correct', async () => {
+    await test.step('When the learner assembles the tiles and checks their answer', async () => {
       // Ensure any overlays (session start/end) are dismissed right before interacting
       await dismissPracticeIntroIfPresent(page);
-      // As an immediate last-resort, forcibly hide any overlay elements and remove overlay-open class
-      await page.evaluate(() => {
-        const ids = ['practice-intro-overlay']; // Removed ready-to-practice-card and session-end-card as they no longer exist
-        ids.forEach((id) => {
-          const el = document.querySelector(`[data-testid="${id}"]`) as HTMLElement | null;
-          if (el) {
-            el.style.display = 'none';
-            el.style.pointerEvents = 'none';
-            el.setAttribute('data-e2e-forced-hidden', '1');
-          }
-        });
-        // Remove overlay-open class to ensure buttons are visible
-        document.body.classList.remove('overlay-open');
-      });
-      await expect(page.getByTestId('btn-correct')).toBeVisible();
-      await expect(page.getByTestId('btn-wrong')).toBeVisible();
-      try {
-        await page.getByTestId('btn-correct').click();
-      } catch (e) {
-        // As a last resort, dispatch a DOM click which bypasses pointer interception
-        await page.evaluate(() => {
-          const el = document.querySelector('[data-testid="btn-correct"]') as HTMLElement | null;
-          if (el) el.click();
-        });
+      const targetSegments = ['ಗ', 'ಾ'];
+      for (const segment of targetSegments) {
+        await page.locator(`[data-segment="${segment}"]`).first().click();
       }
+      const checkButton = page.getByRole('button', { name: /check my word/i });
+      await expect(checkButton).toBeEnabled();
+      await checkButton.click();
+      await expect(page.getByText('Brilliant! You built it perfectly.', { exact: false })).toBeVisible();
     });
 
     await test.step('Then the practice state records the attempt', async () => {
@@ -87,6 +71,7 @@ test.describe('Story: Practicing a seeded word', () => {
         const uid = state.game.currentUserId;
         const word = state.game.users[uid].words['w1'];
         expect(Array.isArray(word.attempts)).toBeTruthy();
+        expect(word.attempts.length).toBeGreaterThan(0);
       }
     });
   });

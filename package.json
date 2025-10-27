@@ -3,18 +3,22 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": "^20.0.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "npm run test:all",
-    "test:all": "npm run test:unit && npx playwright test --config=playwright.config.ts --reporter=list",
+    "test:all": "npm run test:unit && npx playwright test --config=playwright.config.ts",
     "test:unit": "vitest run --config vitest.config.unit.ts",
     "test:unit:watch": "vitest --config vitest.config.unit.ts",
     "test:ui": "vitest --config vitest.config.unit.ts --ui",
     "test:report": "vitest run --config vitest.config.unit.ts --reporter=html",
-    "test:open-report": "open ./test-results/index.html",
+    "test:open-report": "open ./.reports/vitest/index.html",
     "postinstall": "husky install",
     "validate": "./scripts/validate-dev.sh",
     "check-runtime": "node scripts/check-runtime-errors.js",
@@ -38,7 +42,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.1",
     "@eslint/js": "^9.36.0",
-    "@playwright/test": "^1.55.1",
+    "@playwright/test": "^1.56.1",
     "@storybook/addon-a11y": "^9.1.10",
     "@storybook/addon-docs": "^9.1.10",
     "@storybook/addon-onboarding": "^9.1.10",

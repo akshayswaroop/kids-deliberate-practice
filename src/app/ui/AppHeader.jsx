@@ -101,8 +101,20 @@ export default function AppHeader({
         </h1>
       </div>
 
+      {/* Middle: Subject selector */}
+      {modeOptions.length > 0 && (
+        <div style={{ flex: '0 0 auto', minWidth: 200 }} className="hide-on-mobile-subject">
+          <ModeSelector mode={mode} options={modeOptions} onSetMode={onSetMode} compact />
+        </div>
+      )}
+
       {/* Right: Stats and Controls */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'flex-end', flexWrap: 'nowrap', flex: '0 0 auto' }}>
+        {modeOptions.length > 0 && (
+          <div className="show-on-mobile-subject" style={{ display: 'none' }}>
+            <ModeSelector mode={mode} options={modeOptions} onSetMode={onSetMode} compact />
+          </div>
+        )}
         {statsSlot || null}
 
         {showRevisionButton && (
