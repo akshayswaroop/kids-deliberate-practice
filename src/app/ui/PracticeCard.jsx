@@ -3,6 +3,85 @@ import './PracticeCard.css';
 import { synthesizeSpeech } from '../../infrastructure/services/tts/sarvamTtsService';
 import AlphabetChatBot from './AlphabetChatBot.jsx';
 import { getScriptFontClass } from '../../utils/scriptDetector';
+import kannadaAlphabetBank from '../../assets/kannada_alphabets_bank.json';
+
+const extractOrdinal = (id = '') => {
+  const match = id.match(/_(\d+)_?/);
+  return match ? Number.parseInt(match[1], 10) : Number.MAX_SAFE_INTEGER;
+};
+
+const vowels = (Array.isArray(kannadaAlphabetBank) ? kannadaAlphabetBank : [])
+  .filter(entry => typeof entry?.id === 'string' && entry.id.startsWith('vowel_'))
+  .sort((a, b) => extractOrdinal(a.id) - extractOrdinal(b.id));
+
+const consonants = (Array.isArray(kannadaAlphabetBank) ? kannadaAlphabetBank : [])
+  .filter(entry => typeof entry?.id === 'string' && entry.id.startsWith('consonant_'))
+  .sort((a, b) => extractOrdinal(a.id) - extractOrdinal(b.id));
+
+const padIndex = (value) => String(value).padStart(2, '0');
+
+const LETTER_AUDIO_FILE_MAP = new Map(
+  [
+    ...vowels.map((entry, idx) => [entry.question.trim(), `swaragalu_${padIndex(idx + 1)}`]),
+    ...consonants.map((entry, idx) => [entry.question.trim(), `vyanjanagalu_${padIndex(idx + 1)}`]),
+  ],
+);
+
+const LETTER_AUDIO_ID_LOOKUP = new Map(
+  (Array.isArray(kannadaAlphabetBank) ? kannadaAlphabetBank : [])
+    .filter((entry) => entry?.question && entry?.id)
+    .map((entry) => [entry.question.trim(), entry.id])
+);
+
+const MATRA_AUDIO_FILE_MAP = {
+  'ಾ': 'matregalu_01',
+  'ಿ': 'matregalu_02',
+  'ೀ': 'matregalu_03',
+  'ು': 'matregalu_04',
+  'ೂ': 'matregalu_05',
+  'ೃ': 'matregalu_06',
+  'ೆ': 'matregalu_07',
+  'ೇ': 'matregalu_08',
+  'ೈ': 'matregalu_09',
+  'ೊ': 'matregalu_10',
+  'ೋ': 'matregalu_11',
+  'ೌ': 'matregalu_12',
+};
+
+const SEGMENT_AUDIO_FILE_MAP = new Map([
+  ...LETTER_AUDIO_FILE_MAP,
+  ...Object.entries(MATRA_AUDIO_FILE_MAP),
+]);
+
+const MATRA_AUDIO_ID_MAP = {
+  'ಾ': 'matra_long_aa',
+  'ಿ': 'matra_short_i',
+  'ೀ': 'matra_long_ii',
+  'ು': 'matra_short_u',
+  'ೂ': 'matra_long_uu',
+  'ೃ': 'matra_ru',
+  'ೆ': 'matra_short_e',
+  'ೇ': 'matra_long_ee',
+  'ೈ': 'matra_ai',
+  'ೊ': 'matra_short_o',
+  'ೋ': 'matra_long_oo',
+  'ೌ': 'matra_au',
+  'ಂ': 'anusvara',
+  'ಃ': 'visarga',
+  '್': 'virama',
+};
+
+const getSegmentAudioId = (segment) => {
+  if (!segment) return undefined;
+  const trimmed = segment.trim();
+  return LETTER_AUDIO_ID_LOOKUP.get(trimmed) || MATRA_AUDIO_ID_MAP[trimmed] || undefined;
+};
+
+const JOURNEY_STAGES = [
+  { key: 'letters', label: 'Letters' },
+  { key: 'matra', label: 'Matra Combos' },
+  { key: 'words', label: 'Word Builder' },
+];
 
 const splitKannadaSyllable = (value) => {
   if (!value) return [];
@@ -96,6 +175,7 @@ export default function PracticeCard({
   isAnswerRevealed,
   currentUserId,
   sessionProgress,
+  sessionStats,
   attemptStats,
   currentWord,
 }) {
@@ -115,6 +195,73 @@ export default function PracticeCard({
   const trophyTimeoutRef = React.useRef(null);
   const nextAdvanceRef = React.useRef(null);
   const resetKeyRef = React.useRef(0);
+  const segmentAudioCacheRef = React.useRef(new Map());
+  const segmentAudioInflightRef = React.useRef(new Map());
+  const lastPlayedAudioRef = React.useRef(null);
+
+  const playUrl = React.useCallback((url, { revokeOnEnd = false } = {}) => {
+    if (!url) return Promise.resolve();
+
+    if (lastPlayedAudioRef.current) {
+      try {
+        lastPlayedAudioRef.current.pause();
+        lastPlayedAudioRef.current.currentTime = 0;
+      } catch {
+        // ignore pause errors
+      }
+    }
+
+    return new Promise((resolve, reject) => {
+      const audio = new Audio(url);
+      lastPlayedAudioRef.current = audio;
+
+      const cleanup = (shouldRevoke = revokeOnEnd) => {
+        if (lastPlayedAudioRef.current === audio) {
+          lastPlayedAudioRef.current = null;
+        }
+        if (shouldRevoke && url.startsWith('blob:')) {
+          try {
+            URL.revokeObjectURL(url);
+          } catch {
+            // ignore revoke errors
+          }
+        }
+      };
+
+      audio.onended = () => {
+        cleanup(true);
+        resolve();
+      };
+
+      audio.onerror = () => {
+        cleanup(true);
+        reject(new Error('Audio playback failed'));
+      };
+
+      audio.play().catch((error) => {
+        cleanup(true);
+        reject(error);
+      });
+    });
+  }, []);
+
+  const speakWithWebSpeech = React.useCallback((text) => {
+    if (typeof window === 'undefined' || !text) return false;
+    const { speechSynthesis, SpeechSynthesisUtterance } = window;
+    if (!speechSynthesis || typeof SpeechSynthesisUtterance !== 'function') {
+      return false;
+    }
+    try {
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'kn-IN';
+      utterance.rate = 0.9;
+      speechSynthesis.speak(utterance);
+      return true;
+    } catch {
+      return false;
+    }
+  }, []);
 
   const segments = React.useMemo(() => segmentWord(mainWord, currentWord), [mainWord, currentWord]);
   const stageLabel = React.useMemo(() => buildStageLabel(currentWord), [currentWord]);
@@ -125,12 +272,98 @@ export default function PracticeCard({
     return 'letters';
   }, [stageLabel]);
   const isComplete = React.useMemo(() => slots.every(Boolean), [slots]);
-  const progressMeta = React.useMemo(() => {
-    const total = sessionProgress?.total ?? 0;
-    const current = Math.min(sessionProgress?.current ?? 0, total);
+  const fetchSegmentAudio = React.useCallback((segment) => {
+    const trimmed = segment?.trim();
+    if (!trimmed) return Promise.resolve(null);
+
+    const staticFile = SEGMENT_AUDIO_FILE_MAP.get(trimmed);
+    if (staticFile) {
+      const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+      const url = `${base}/audio/kannada/${staticFile}.wav`;
+      const payload = { url, isObjectUrl: false };
+      segmentAudioCacheRef.current.set(trimmed, payload);
+      return Promise.resolve(payload);
+    }
+
+    const cached = segmentAudioCacheRef.current.get(trimmed);
+    if (cached) {
+      return Promise.resolve(cached);
+    }
+
+    const inflight = segmentAudioInflightRef.current.get(trimmed);
+    if (inflight) {
+      return inflight;
+    }
+
+    const wordId = getSegmentAudioId(trimmed);
+    const promise = synthesizeSpeech(trimmed, {
+      target_language_code: 'kn-IN',
+      enable_preprocessing: true,
+      wordId,
+      speech_sample_rate: 22050,
+    })
+      .then(({ audioUrl }) => {
+        const payload = {
+          url: audioUrl,
+          isObjectUrl: audioUrl.startsWith('blob:'),
+        };
+        segmentAudioCacheRef.current.set(trimmed, payload);
+        segmentAudioInflightRef.current.delete(trimmed);
+        return payload;
+      })
+      .catch((error) => {
+        segmentAudioInflightRef.current.delete(trimmed);
+        throw error;
+      });
+
+    segmentAudioInflightRef.current.set(trimmed, promise);
+    return promise;
+  }, []);
+
+  const playSegmentSound = React.useCallback(async (segment) => {
+    const trimmed = segment?.trim();
+    if (!trimmed) return;
+
+    try {
+      const payload = await fetchSegmentAudio(trimmed);
+      if (!payload || !payload.url) return;
+      await playUrl(payload.url, { revokeOnEnd: payload.isObjectUrl });
+    } catch {
+      segmentAudioCacheRef.current.delete(trimmed);
+      try {
+        const { audioUrl } = await synthesizeSpeech(trimmed, {
+          target_language_code: 'kn-IN',
+          enable_preprocessing: true,
+        });
+        await playUrl(audioUrl, { revokeOnEnd: true });
+        return;
+      } catch {
+        // ignore and try web speech fallback
+      }
+      speakWithWebSpeech(trimmed);
+    }
+  }, [fetchSegmentAudio, playUrl, speakWithWebSpeech]);
+  const missionStats = React.useMemo(() => {
+    const total = sessionStats?.totalQuestions ?? sessionProgress?.total ?? 0;
+    const mastered = sessionStats?.masteredInSession ?? 0;
+    const attempted = sessionStats?.questionsCompleted ?? sessionProgress?.current ?? 0;
     const safeTotal = Math.max(total, 0);
-    return { total: safeTotal, current };
-  }, [sessionProgress]);
+    const safeTrophies = Math.min(Math.max(mastered, 0), safeTotal || mastered);
+    const safeAttempted = Math.min(Math.max(attempted, 0), safeTotal || attempted);
+    return {
+      total: safeTotal,
+      trophies: safeTrophies,
+      attempted: safeAttempted,
+    };
+  }, [sessionProgress, sessionStats]);
+  const missionTarget = missionStats.total || 10;
+  const trophyCount = Math.min(missionStats.trophies, missionTarget);
+  const attemptedCount = Math.min(missionStats.attempted, missionTarget);
+  const missionPercent = missionTarget > 0 ? Math.min(100, Math.round((trophyCount / missionTarget) * 100)) : 0;
+  const currentJourneyIndex = React.useMemo(() => {
+    const idx = JOURNEY_STAGES.findIndex(stage => stage.key === stageTheme);
+    return idx === -1 ? 0 : idx;
+  }, [stageTheme]);
 
   React.useEffect(() => {
     setAnswerVisible(!!isAnswerRevealed);
@@ -251,6 +484,10 @@ export default function PracticeCard({
   };
 
   const handleTileClick = (tileId) => {
+    const tile = pool.find(item => item.id === tileId);
+    if (tile) {
+      void playSegmentSound(tile.value);
+    }
     const nextSlot = slots.findIndex(slot => !slot);
     if (nextSlot === -1) {
       return;
@@ -259,6 +496,10 @@ export default function PracticeCard({
   };
 
   const handleSlotClick = (tileId) => {
+    const tile = slots.find(slot => slot?.id === tileId);
+    if (tile) {
+      void playSegmentSound(tile.value);
+    }
     returnTileToPool(tileId);
   };
 
@@ -322,16 +563,16 @@ export default function PracticeCard({
       const { audioUrl } = await synthesizeSpeech(mainWord, {
         target_language_code: 'kn-IN',
         enable_preprocessing: true,
+        wordId: (currentWord?.id ?? wordId) || undefined,
+        speech_sample_rate: 22050,
       });
-      const audio = new Audio(audioUrl);
-      audio.onended = () => {
-        try { URL.revokeObjectURL(audioUrl); } catch {}
-        setSpeaking(false);
-      };
-      await audio.play().catch(() => {
-        setSpeaking(false);
-      });
+      await playUrl(audioUrl, { revokeOnEnd: true });
     } catch {
+      const spoke = speakWithWebSpeech(mainWord);
+      if (!spoke) {
+        // optional: could surface UI feedback later
+      }
+    } finally {
       setSpeaking(false);
     }
   };
@@ -352,6 +593,30 @@ export default function PracticeCard({
       setShowTrophy(false);
       trophyTimeoutRef.current = null;
     }, 1600);
+  }, []);
+
+  React.useEffect(() => {
+    return () => {
+      segmentAudioCacheRef.current.forEach((entry) => {
+        if (entry?.isObjectUrl) {
+          try {
+            URL.revokeObjectURL(entry.url);
+          } catch {
+            // ignore revoke errors
+          }
+        }
+      });
+      segmentAudioCacheRef.current.clear();
+      segmentAudioInflightRef.current.clear();
+      if (lastPlayedAudioRef.current) {
+        try {
+          lastPlayedAudioRef.current.pause();
+        } catch {
+          // ignore pause errors
+        }
+        lastPlayedAudioRef.current = null;
+      }
+    };
   }, []);
 
   React.useEffect(() => {
@@ -406,22 +671,28 @@ export default function PracticeCard({
       )}
       <header className="word-builder-header">
         <div className={`stage-chip stage-chip--${stageTheme}`}>{stageLabel}</div>
-        {progressMeta.total > 0 && (
-          <div
-            className="progress-trail"
-            role="img"
-            aria-label={`Progress ${progressMeta.current} of ${progressMeta.total}`}
-          >
-            {Array.from({ length: progressMeta.total }).map((_, idx) => (
-              <span
-                key={idx}
-                className={[
-                  'progress-token',
-                  idx < progressMeta.current ? 'progress-token--filled' : 'progress-token--empty',
-                  `progress-token--${stageTheme}`,
-                ].filter(Boolean).join(' ')}
-              />
-            ))}
+        {missionTarget > 0 && (
+          <div className="progress-stack" aria-live="polite">
+            <div
+              className="progress-trail"
+              role="img"
+              aria-label={`Trophies ${trophyCount} of ${missionTarget}`}
+            >
+              {Array.from({ length: missionTarget }).map((_, idx) => {
+                const tokenClass = idx < trophyCount
+                  ? 'progress-token--filled'
+                  : idx < attemptedCount
+                    ? 'progress-token--attempted'
+                    : 'progress-token--empty';
+                return (
+                  <span
+                    key={idx}
+                    className={['progress-token', tokenClass].join(' ')}
+                  />
+                );
+              })}
+            </div>
+            <span className="progress-stack__label">🏆 {trophyCount} / {missionTarget}</span>
           </div>
         )}
         {attemptStats && (
@@ -430,6 +701,54 @@ export default function PracticeCard({
           </div>
         )}
       </header>
+
+      {missionTarget > 0 && (
+        <section
+          className="mission-banner"
+          aria-label={`Mission progress ${trophyCount} of ${missionTarget} trophies`}
+        >
+          <div className="mission-banner__copy">
+            <span className="mission-banner__title">Today's mission</span>
+            <span className="mission-banner__subtitle">
+              Earn {missionTarget} trophies to finish this quest.
+            </span>
+          </div>
+          <div className="mission-banner__progress">
+            <div
+              className="mission-banner__meter"
+              role="progressbar"
+              aria-valuemin={0}
+              aria-valuemax={missionTarget}
+              aria-valuenow={trophyCount}
+            >
+              <span
+                className="mission-banner__meter-fill"
+                style={{ width: `${missionPercent}%` }}
+              />
+            </div>
+            <span className="mission-banner__count">{trophyCount} / {missionTarget}</span>
+          </div>
+        </section>
+      )}
+
+      <section className="journey-rail" aria-label="Learning journey milestones">
+        {JOURNEY_STAGES.map((stage, idx) => {
+          const status = idx < currentJourneyIndex ? 'complete' : idx === currentJourneyIndex ? 'current' : 'upcoming';
+          return (
+            <div key={stage.key} className={`journey-step journey-step--${status}`}>
+              <div className="journey-step__marker">
+                {status === 'complete' ? '✓' : idx + 1}
+              </div>
+              <div className="journey-step__body">
+                <span className="journey-step__label">{stage.label}</span>
+                <span className="journey-step__status">
+                  {status === 'complete' ? 'Completed' : status === 'current' ? 'In progress' : 'Next up'}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </section>
 
       <section className="listen-row" aria-live="polite">
         <div>
@@ -599,6 +918,9 @@ export default function PracticeCard({
           visible={chatOpen}
           onClose={() => setChatOpen(false)}
           letter={mainWord}
+          learnerId={currentUserId ?? null}
+          missionTarget={missionTarget}
+          defaultSessionSize={missionTarget}
         />
       )}
     </div>
